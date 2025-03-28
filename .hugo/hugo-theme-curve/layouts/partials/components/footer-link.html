@@ -1,42 +1,42 @@
 <div class="footer-link">
-  {{ if .Site.Params.footer.showBar }}
-  <div class="footer-bar">
-    <span class="site-title">{{ .Site.Title }}</span>
-    <span class="site-desc">{{ .Site.Params.siteMeta.description }}</span>
-    <a href="/" class="to-home">了解更多</a>
-  </div>
-  {{ end }}
-
-  <div class="footer-social">
-    {{ range first (div (len .Site.Params.footer.social) 2) .Site.Params.footer.social }}
-    <a href="{{ .link }}" target="_blank" class="social-link">
-      <i class="iconfont icon-{{ .icon }}"></i>
-    </a>
-    {{ end }}
-
-    <div class="logo" title="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-      <img src="{{ .Site.Params.siteMeta.author.avatar }}" alt="author" class="author" />
+    {{ if .Site.Params.footer.showBar }}
+    <div class="footer-bar">
+      <span class="site-title">{{ .Site.Title }}</span>
+      <span class="site-desc">{{ .Site.Params.siteMeta.description }}</span>
+      <a href="/" class="to-home">了解更多</a>
     </div>
-
-    {{ range last (div (len .Site.Params.footer.social) 2) .Site.Params.footer.social }}
-    <a href="{{ .link }}" target="_blank" class="social-link">
-      <i class="iconfont icon-{{ .icon }}"></i>
-    </a>
     {{ end }}
-  </div>
-
-  <div class="footer-sitemap">
-    {{ range .Site.Params.footer.links }}
-    <div class="sitemap-item">
-      <span class="title">{{ .text }}</span>
-      <div class="links">
-        {{ range .items }}
-        <a href="{{ .link }}" {{ if .newTab }}target="_blank"{{ end }} class="link-text">
-          {{ .text }}
-        </a>
-        {{ end }}
+  
+    <div class="footer-social">
+      {{ range first (div (len .Site.Params.footer.social) 2) .Site.Params.footer.social }}
+      <a href="{{ .link }}" target="_blank" class="social-link">
+        <i class="iconfont icon-{{ .icon }}"></i>
+      </a>
+      {{ end }}
+  
+      <div class="logo" title="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <img src="/images/icons8-stellar-128.png" alt="author" class="author" />
       </div>
+  
+      {{ range last (div (len .Site.Params.footer.social) 2) .Site.Params.footer.social }}
+      <a href="{{ .link }}" target="_blank" class="social-link">
+        <i class="iconfont icon-{{ .icon }}"></i>
+      </a>
+      {{ end }}
     </div>
-    {{ end }}
+  
+    <div class="footer-sitemap">
+      {{ range .Site.Params.footer.links }}
+      <div class="sitemap-item">
+        <span class="title">{{ .text }}</span>
+        <div class="links">
+          {{ range .items }}
+          <a href="{{ .link }}" {{ if .newTab }}target="_blank"{{ end }} class="link-text">
+            {{ .text }}
+          </a>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
   </div>
-</div>
