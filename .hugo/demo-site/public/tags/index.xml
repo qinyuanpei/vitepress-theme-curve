@@ -6,20 +6,342 @@
     <description>Recent content in Tags on 元视角</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 27 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 09 Mar 2025 20:42:23 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Markdown</title>
-      <link>http://localhost:1313/tags/markdown/</link>
+      <title>Agent</title>
+      <link>http://localhost:1313/tags/agent/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/markdown/</guid>
+      <guid>http://localhost:1313/tags/agent/</guid>
       <description></description>
     </item>
     <item>
-      <title>示例</title>
-      <link>http://localhost:1313/tags/%E7%A4%BA%E4%BE%8B/</link>
+      <title>Function Calling</title>
+      <link>http://localhost:1313/tags/function-calling/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/%E7%A4%BA%E4%BE%8B/</guid>
+      <guid>http://localhost:1313/tags/function-calling/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MCP</title>
+      <link>http://localhost:1313/tags/mcp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/mcp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Semantic Kernel</title>
+      <link>http://localhost:1313/tags/semantic-kernel/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/semantic-kernel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>动漫</title>
+      <link>http://localhost:1313/tags/%E5%8A%A8%E6%BC%AB/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E5%8A%A8%E6%BC%AB/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>哪吒</title>
+      <link>http://localhost:1313/tags/%E5%93%AA%E5%90%92/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E5%93%AA%E5%90%92/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>封神</title>
+      <link>http://localhost:1313/tags/%E5%B0%81%E7%A5%9E/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E5%B0%81%E7%A5%9E/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>影评</title>
+      <link>http://localhost:1313/tags/%E5%BD%B1%E8%AF%84/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E5%BD%B1%E8%AF%84/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>K-Means</title>
+      <link>http://localhost:1313/tags/k-means/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/k-means/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Scikit-Learn</title>
+      <link>http://localhost:1313/tags/scikit-learn/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/scikit-learn/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>人脸分类</title>
+      <link>http://localhost:1313/tags/%E4%BA%BA%E8%84%B8%E5%88%86%E7%B1%BB/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E4%BA%BA%E8%84%B8%E5%88%86%E7%B1%BB/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>机器学习</title>
+      <link>http://localhost:1313/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>聚类</title>
+      <link>http://localhost:1313/tags/%E8%81%9A%E7%B1%BB/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E8%81%9A%E7%B1%BB/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HttpClient</title>
+      <link>http://localhost:1313/tags/httpclient/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/httpclient/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mock</title>
+      <link>http://localhost:1313/tags/mock/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/mock/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>扩展</title>
+      <link>http://localhost:1313/tags/%E6%89%A9%E5%B1%95/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E6%89%A9%E5%B1%95/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>管道</title>
+      <link>http://localhost:1313/tags/%E7%AE%A1%E9%81%93/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E7%AE%A1%E9%81%93/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>低代码</title>
+      <link>http://localhost:1313/tags/%E4%BD%8E%E4%BB%A3%E7%A0%81/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E4%BD%8E%E4%BB%A3%E7%A0%81/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>感悟</title>
+      <link>http://localhost:1313/tags/%E6%84%9F%E6%82%9F/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E6%84%9F%E6%82%9F/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>编程</title>
+      <link>http://localhost:1313/tags/%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E7%BC%96%E7%A8%8B/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>行业</title>
+      <link>http://localhost:1313/tags/%E8%A1%8C%E4%B8%9A/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E8%A1%8C%E4%B8%9A/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HashSet</title>
+      <link>http://localhost:1313/tags/hashset/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/hashset/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>源码</title>
+      <link>http://localhost:1313/tags/%E6%BA%90%E7%A0%81/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E6%BA%90%E7%A0%81/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>面试</title>
+      <link>http://localhost:1313/tags/%E9%9D%A2%E8%AF%95/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E9%9D%A2%E8%AF%95/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lambda</title>
+      <link>http://localhost:1313/tags/lambda/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/lambda/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linq</title>
+      <link>http://localhost:1313/tags/linq/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/linq/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>表达式树</title>
+      <link>http://localhost:1313/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%91/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%91/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>.NET Core</title>
+      <link>http://localhost:1313/tags/.net-core/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/.net-core/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SignalR</title>
+      <link>http://localhost:1313/tags/signalr/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/signalr/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>迁移</title>
+      <link>http://localhost:1313/tags/%E8%BF%81%E7%A7%BB/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E8%BF%81%E7%A7%BB/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hangfire</title>
+      <link>http://localhost:1313/tags/hangfire/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/hangfire/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HTTP</title>
+      <link>http://localhost:1313/tags/http/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/http/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kindle</title>
+      <link>http://localhost:1313/tags/kindle/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/kindle/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>爱情</title>
+      <link>http://localhost:1313/tags/%E7%88%B1%E6%83%85/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E7%88%B1%E6%83%85/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>读书</title>
+      <link>http://localhost:1313/tags/%E8%AF%BB%E4%B9%A6/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E8%AF%BB%E4%B9%A6/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>.NET</title>
+      <link>http://localhost:1313/tags/.net/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/.net/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>http://localhost:1313/tags/linux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mono</title>
+      <link>http://localhost:1313/tags/mono/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/mono/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>跨平台</title>
+      <link>http://localhost:1313/tags/%E8%B7%A8%E5%B9%B3%E5%8F%B0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E8%B7%A8%E5%B9%B3%E5%8F%B0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>RPG</title>
+      <link>http://localhost:1313/tags/rpg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/rpg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Unity3D</title>
+      <link>http://localhost:1313/tags/unity3d/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/unity3d/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>仙剑奇侠传</title>
+      <link>http://localhost:1313/tags/%E4%BB%99%E5%89%91%E5%A5%87%E4%BE%A0%E4%BC%A0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E4%BB%99%E5%89%91%E5%A5%87%E4%BE%A0%E4%BC%A0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>游戏</title>
+      <link>http://localhost:1313/tags/%E6%B8%B8%E6%88%8F/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E6%B8%B8%E6%88%8F/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>数据</title>
+      <link>http://localhost:1313/tags/%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E6%95%B0%E6%8D%AE/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>状态</title>
+      <link>http://localhost:1313/tags/%E7%8A%B6%E6%80%81/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E7%8A%B6%E6%80%81/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Love2D</title>
+      <link>http://localhost:1313/tags/love2d/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/love2d/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>游戏开发</title>
+      <link>http://localhost:1313/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>贪吃蛇</title>
+      <link>http://localhost:1313/tags/%E8%B4%AA%E5%90%83%E8%9B%87/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E8%B4%AA%E5%90%83%E8%9B%87/</guid>
       <description></description>
     </item>
   </channel>

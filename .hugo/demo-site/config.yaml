@@ -63,9 +63,11 @@ params:
   # 站点信息
   siteMeta:
     title: "Curve Theme"
+    since: 2014
     description: "纵有疾风起，人生不言弃"
     author:
       name: "飞鸿踏雪"
+      link: "https://blog.yuanpei.me"
       avatar: "/images/avatar.jpg"
 
   # 文章设置
@@ -105,6 +107,13 @@ params:
       thank: "🙏 感谢您赐予我前进的力量"
       tip: "赞赏金额将全部用于开源项目维护，以及服务器、域名及各类云服务的开销"
 
+    # 相关文章设置
+    relatedPost:
+      enable: true
+      title: "相关推荐"
+      count: 2  # 显示数量
+      shuffle: true  # 是否显示随机跳转按钮
+
   background:
     image: 'https://tuapi.eees.cc/api.php?category={dongman,fengjing}&type=302'
 
@@ -141,3 +150,123 @@ params:
       showCover:
         enable: true
         defaultCover: ["/images/default-cover.jpg"]
+
+  comments:
+    enabled: true
+    provider: waline
+
+    disqusjs:
+      shortname:
+      apiUrl:
+      apiKey:
+      admin:
+      adminLabel:
+
+    utterances:
+      repo:
+      issueTerm: pathname
+      label:
+
+    remark42:
+      host:
+      site:
+      locale:
+
+    vssue:
+      platform:
+      owner:
+      repo:
+      clientId:
+      clientSecret:
+      autoCreateIssue: false
+
+      # Waline client configuration see: https://waline.js.org/en/reference/client.html
+    waline:
+      serverURL: https://waline.yuanpei.me/
+      lang: zh
+      visitor: false
+      avatar:
+      emoji:
+        - https://cdn.jsdelivr.net/gh/walinejs/emojis/weibo
+      requiredMeta:
+        - name
+        - mail
+        - url
+      locale:
+        admin: Admin
+        placeholder: 云中谁寄锦书来，雁字回时，月满西楼。
+
+    twikoo:
+      envId:
+      region:
+      path:
+      lang:
+
+      # See https://cactus.chat/docs/reference/web-client/#configuration for description of the various options
+    cactus:
+      defaultHomeserverUrl: "https://matrix.cactus.chat:8448"
+      serverName: "cactus.chat"
+      siteName: "Snowfly" # You must insert a unique identifier here matching the one you registered (See https://cactus.chat/docs/getting-started/quick-start/#register-your-site)
+            
+    giscus:
+      repo:
+      repoID:
+      category:
+      categoryID:
+      mapping:
+      lightTheme:
+      darkTheme:
+      reactionsEnabled: 1
+      emitMetadata: 0
+
+    gitalk:
+      owner: 
+      admin:  
+      repo: 
+      clientID: 
+      clientSecret: 
+        
+    cusdis:
+      host: 
+      id: 
+
+  # 侧栏设置
+  weidgets:
+    hello:
+      enable: true
+      text: ""
+      showType: "avatar"
+
+  footer:
+    icp:
+      enable: false
+      text: 豫ICP备2022018134号-1
+      url: https://beian.miit.gov.cn/
+    cdn:
+      enable: false
+      text: 又拍云
+      url: https://www.upyun.com/
+    
+markup:
+    goldmark:
+        renderer:
+            ## Set to true if you have HTML content inside Markdown
+            unsafe: false
+    tableOfContents:
+        endLevel: 4
+        ordered: true
+        startLevel: 1
+    highlight:
+        noClasses: false
+        lineNos: false
+
+related:
+    includeNewer: true
+    threshold: 60
+    toLower: false
+    indices:
+        - name: tags
+          weight: 100
+
+        - name: categories
+          weight: 200

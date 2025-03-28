@@ -1,0 +1,31 @@
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css"/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+    .waline-container .vcount {
+        color: var(--card-text-color-main);
+    }
+</style>
+
+{{ with .Site.Params.comments.waline }}
+    <script type="module">
+        import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+        init({
+            el: '#waline',
+            serverURL: '{{ .serverURL }}',
+            lang: '{{ .lang }}',
+            dark: 'auto',
+            path: window.location.href,
+            requiredMeta: ['nick','mail'],
+            emoji: [
+                '//unpkg.com/@waline/emojis@1.2.0/weibo'
+            ],
+            reaction: false,
+        });
+      </script>
+{{ end }}

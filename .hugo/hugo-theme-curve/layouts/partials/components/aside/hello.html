@@ -1,26 +1,25 @@
-{{ $hello := .Site.Params.theme.aside.hello }}
-<div class="aside-hello s-card">
-  {{ with $hello.avatar }}
-    <div class="avatar">
-      <img src="{{ . }}" alt="avatar" />
+{{ if .Site.Params.weidgets.hello.enable }}
+<div class="hello s-card weidgets">
+  <span class="tip" >中午好，吃饱了精神好！</span>
+  <div class="content">
+    <div class="site-logo">
+      {{ partial "components/aside/avatar.html" . }}
     </div>
-  {{ end }}
-  
-  {{ with $hello.name }}
-    <div class="name">{{ . }}</div>
-  {{ end }}
-  
-  {{ with $hello.description }}
-    <div class="description">{{ . }}</div>
-  {{ end }}
-  
-  {{ with $hello.socials }}
-    <div class="socials">
-      {{ range . }}
-        <a href="{{ .link }}" target="_blank" rel="noopener noreferrer" title="{{ .name }}">
-          <i class="{{ .icon }}"></i>
-        </a>
-      {{ end }}
+    <span class="site-desc">{{ .Site.Params.weidgets.hello.text }}</span>
+  </div>
+  <div class="info">
+    <div class="name">
+      <span class="author">{{ .Site.Params.siteMeta.author.name }}</span>
+      <span class="desc">{{ .Site.Params.siteMeta.description }}</span>
     </div>
-  {{ end }}
-</div> 
+    <div class="link">
+      <a href="https://github.com/imsyy/" target="_blank" class="social-link">
+        <i class="iconfont icon-github"></i>
+      </a>
+      <a href="mailto:one@imsyy.top" target="_blank" class="social-link">
+        <i class="iconfont icon-email"></i>
+      </a>
+    </div>
+  </div>
+</div>
+{{ end }}

@@ -1,0 +1,31 @@
+<div class="clock">
+    <div class="clock-content">
+        <div id="clock-pointer-hour" class="pointer hour" />
+        <div id="clock-pointer-minute" class="pointer minute" />
+        <div id="clock-pointer-second" class="pointer second" />
+    </div>
+</div>
+<script>
+    const calculateRotation = (time, total) => {
+        return (time / total) * 360;
+    };
+
+    const changeStyle = (eleHour, eleMinute, eleSecond) => {
+        const now = new Date();
+        const hour = now.getHours() % 12;
+        const minute = now.getMinutes();
+        const second = now.getSeconds();
+        eleHour.style.transform = `rotate(${calculateRotation(hour/60)}deg)`;
+        eleMinute.style.transform = `rotate(${calculateRotation(minute/60)}deg)`;
+        eleSecond.style.transform = `rotate(${calculateRotation(second/60)}deg)`;
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const eleHour = document.querySelector('#clock-pointer-hour');
+        const eleMinute = document.querySelector('#clock-pointer-minute');
+        const eleSecond = document.querySelector('#clock-pointer-second');
+
+        changeStyle(eleHour, eleMinute, eleSecond);
+        setInterval(() => changeStyle(eleHour, eleMinute, eleSecond), 1000);
+    });
+</script>

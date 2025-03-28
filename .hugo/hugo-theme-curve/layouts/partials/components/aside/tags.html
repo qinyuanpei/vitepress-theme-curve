@@ -1,11 +1,11 @@
 {{ $tags := .Site.Taxonomies.tags }}
-<div class="aside-tags s-card weidgets">
+<div class="tags-cloud s-card weidgets">
   <div class="title">
     <i class="iconfont icon-hashtag"></i>
     <span class="title-name">热门标签</span>
   </div>
   <div class="all-tags">
-      {{ range $name, $taxonomy := $tags }}
+    {{ range $name, $taxonomy := $tags }}
         {{ with $.Site.GetPage (printf "/tags/%s" $name) }}
           <a href="{{ .RelPermalink }}" class="tags">
             <span class="name">{{ .Title }}</span>
@@ -14,4 +14,5 @@
         {{ end }}
       {{ end }}
   </div>
-</div> 
+  <a href="/pages/tags" class="more-tags">查看全部</a>
+</div>

@@ -1,0 +1,12 @@
+{{ if .Site.Params.comments.enabled }}
+<div id="main-comment" class="comment">
+    <div v-if="!fill" class="title">
+        <span class="name">
+            <i class="iconfont icon-chat"></i>
+            评论
+        </span>
+        <span class="tool"> 隐私政策 </span>
+    </div>
+    {{ partial (printf "components/comments/provider/%s" .Site.Params.comments.provider) . }}
+</div>
+{{ end }}

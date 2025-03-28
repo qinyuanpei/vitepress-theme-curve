@@ -1,0 +1,64 @@
+{{ if .Site.Params.article.relatedPost.enable }}
+  {{ $limit := (.Site.Params.article.relatedPost.count | default 2) }}
+  {{ $related := (where (.Site.RegularPages.Related .) "Params.hidden" "!=" true) | first $limit }}
+  
+  {{ if $related }}
+  <div class="related-post">
+    <div class="title">
+      <span class="name">
+        <i class="iconfont icon-star"></i>
+        {{ .Site.Params.article.relatedPost.title | default "相关推荐" }}
+      </span>
+      {{ if .Site.Params.article.relatedPost.shuffle }}
+      <span class="shuffle" onclick="window.location.href='{{ range first 1 (shuffle .Site.RegularPages) }}{{ .RelPermalink }}{{ end }}'">
+        随便逛逛
+      </span>
+      {{ end }}
+    </div>
+
+    <!-- 文章列表 -->
+    {{ partial "components/post-list.html" (dict "posts" $related "simple" true) }}
+  </div>
+  {{ end }}
+{{ end }}
+
+<style>
+.related-post {
+  margin-top: 1rem;
+}
+
+.related-post .title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 3rem 0 1rem 0;
+  padding: 0 6px;
+}
+
+.related-post .title .name {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.related-post .title .name .iconfont {
+  font-size: 26px;
+  font-weight: normal;
+  margin-right: 8px;
+}
+
+.related-post .title .shuffle {
+  opacity: 0.6;
+  font-size: 14px;
+  transition: color 0.3s, opacity 0.3s;
+  cursor: pointer;
+}
+
+.related-post .title .shuffle:hover {
+  opacity: 1;
+  color: var(--main-color);
+}
+</style>

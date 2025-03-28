@@ -1,1 +1,105 @@
- 
+{{ if (.Scratch.Get "hasTOC") }}
+<div class="toc s-card">
+    <div class="toc-title">
+        <i class="iconfont icon-toc"></i>
+        <span class="name">{{ T "article.tableOfContents" }}</span>
+    </div>
+    <!-- 使用 Hugo 的 .TableOfContents 替代 Vue 的动态渲染 -->
+    <div id="toc-all" class="toc-list">
+        {{ .TableOfContents }}
+    </div>
+</div>
+
+<!-- 添加必要的 JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tocAll = document.getElementById('toc-all');
+    const bufferheight = 120;
+    
+    // 处理目录项点击
+    tocAll.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+            e.preventDefault();
+            const href = e.target.getAttribute('href');
+            const headerDom = document.querySelector(href);
+            if (headerDom) {
+                const headerTop = headerDom.offsetTop;
+                window.scroll({ 
+                    top: headerTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+
+    // 滚动监听高亮
+    function activeTocItem() {
+        const headers = Array.from(document.querySelectorAll('h2, h3')).filter(
+            header => header.parentElement.tagName.toLowerCase() === 'div'
+        );
+
+        headers.forEach(header => {
+            const rect = header.getBoundingClientRect();
+            if (rect.top - bufferheight <= 0 && rect.bottom + bufferheight >= 0) {
+                // 移除所有活动类
+                tocAll.querySelectorAll('a').forEach(a => {
+                    a.classList.remove('active');
+                });
+                // 添加当前活动类
+                const anchor = tocAll.querySelector(`a[href="#${header.id}"]`);
+                if (anchor) {
+                    anchor.classList.add('active');
+                }
+            }
+        });
+    }
+
+    // 添加滚动监听
+    window.addEventListener('scroll', activeTocItem);
+});
+</script>
+
+<!-- 添加必要的样式 -->
+<style>
+.toc {
+    position: relative;
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+/* ... 其他样式保持不变 ... */
+
+.toc-list a {
+    display: block;
+    margin: 4px 0;
+    padding: 6px 12px;
+    border-radius: 8px;
+    opacity: 0.6;
+    transition: color 0.3s, opacity 0.3s, font-size 0.3s, background-color 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.toc-list a.active {
+    opacity: 1;
+    color: var(--main-color);
+    background-color: var(--main-color-bg);
+}
+
+.toc-list a:hover {
+    opacity: 1;
+    color: var(--main-color);
+    background-color: var(--main-color-bg);
+}
+
+/* 调整 Hugo 生成的目录结构样式 */
+.toc-list nav#TableOfContents > ul > li > a {
+    font-weight: bold;
+}
+
+.toc-list nav#TableOfContents > ul > li > ul > li > a {
+    font-size: 14px;
+    margin-left: 20px;
+}
+</style>
+{{ end }} 
