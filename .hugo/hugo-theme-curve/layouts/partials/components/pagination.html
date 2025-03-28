@@ -1,41 +1,210 @@
-{{ $total := .total }}
-{{ $page := .page }}
-{{ $limit := .limit }}
-{{ $useParams := .useParams }}
-{{ $routePath := .routePath }}
-
-{{ $totalPages := div (add $total $limit -1) $limit }}
-
+{{ if .Paginator }}
 <div class="pagination">
-  {{ if gt $totalPages 1 }}
-    <div class="pagination-list">
-      <!-- 上一页 -->
-      {{ if gt $page 1 }}
-        {{ $prevPage := sub $page 1 }}
-        <a href="{{ if $useParams }}{{ $routePath }}?page={{ $prevPage }}{{ else }}/page/{{ $prevPage }}/{{ end }}" 
-           class="page-item prev">
-          <i class="iconfont icon-left"></i>
-        </a>
-      {{ end }}
-      
-      <!-- 页码 -->
-      {{ range $i := seq $totalPages }}
-        {{ if eq $i $page }}
-          <span class="page-item active">{{ $i }}</span>
-        {{ else }}
-          <a href="{{ if $useParams }}{{ $routePath }}?page={{ $i }}{{ else }}/page/{{ $i }}/{{ end }}" 
-             class="page-item">{{ $i }}</a>
-        {{ end }}
-      {{ end }}
-      
-      <!-- 下一页 -->
-      {{ if lt $page $totalPages }}
-        {{ $nextPage := add $page 1 }}
-        <a href="{{ if $useParams }}{{ $routePath }}?page={{ $nextPage }}{{ else }}/page/{{ $nextPage }}/{{ end }}" 
-           class="page-item next">
-          <i class="iconfont icon-right"></i>
-        </a>
-      {{ end }}
+  <!-- 上一页 -->
+  {{ if .Paginator.HasPrev }}
+    <div class="page-item prev" onclick="window.location.href='{{ .Paginator.Prev.URL }}'">
+      <i class="iconfont icon-page-right"></i>
+      <span class="page-text">上页</span>
     </div>
   {{ end }}
-</div> 
+
+  <!-- 页码 -->
+  <div class="page-number">
+    <!-- 第一页 -->
+    <div class="page-item{{ if eq .Paginator.PageNumber 1 }} choose{{ end }}" 
+         onclick="window.location.href='{{ .Paginator.First.URL }}'">
+      <span class="page-num">1</span>
+    </div>
+
+    <!-- 省略号和中间页码 -->
+    {{ $paginator := .Paginator }}
+    {{ $wingSize := 2 }}
+    {{ $startPage := cond (gt (sub $paginator.PageNumber $wingSize) 2) (sub $paginator.PageNumber $wingSize) 2 }}
+    {{ $endPage := cond (lt (add $paginator.PageNumber $wingSize) (sub $paginator.TotalPages 1)) (add $paginator.PageNumber $wingSize) (sub $paginator.TotalPages 1) }}
+
+    {{ if gt $startPage 2 }}
+      <div class="point">...</div>
+    {{ end }}
+
+    {{ range $paginator.Pagers }}
+      {{ if and (ge .PageNumber $startPage) (le .PageNumber $endPage) }}
+        <div class="page-item{{ if eq .PageNumber $paginator.PageNumber }} choose{{ end }}"
+             onclick="window.location.href='{{ .URL }}'">
+          <span class="page-num">{{ .PageNumber }}</span>
+        </div>
+      {{ end }}
+    {{ end }}
+
+    {{ if lt $endPage (sub $paginator.TotalPages 1) }}
+      <div class="point">...</div>
+    {{ end }}
+
+    <!-- 最后一页 -->
+    {{ if gt $paginator.TotalPages 1 }}
+      <div class="page-item{{ if eq $paginator.PageNumber $paginator.TotalPages }} choose{{ end }}"
+           onclick="window.location.href='{{ $paginator.Last.URL }}'">
+        <span class="page-num">{{ $paginator.TotalPages }}</span>
+      </div>
+    {{ end }}
+
+    <!-- 快速跳转 -->
+    <div class="fast-jump" title="快速跳转">
+      <input type="number" id="pageJumpInput" 
+             min="1" 
+             max="{{ $paginator.TotalPages }}" 
+             onfocus="this.parentElement.classList.add('focus')"
+             onblur="this.parentElement.classList.remove('focus')"
+             onkeydown="if(event.key === 'Enter') jumpToPage(this.value, {{ $paginator.TotalPages }})">
+      <i class="iconfont icon-arrow-right" onclick="jumpToPage(document.getElementById('pageJumpInput').value, {{ $paginator.TotalPages }})"></i>
+    </div>
+  </div>
+
+  <!-- 下一页 -->
+  {{ if .Paginator.HasNext }}
+    <div class="page-item next" onclick="window.location.href='{{ .Paginator.Next.URL }}'">
+      <span class="page-text">下页</span>
+      <i class="iconfont icon-page-right"></i>
+    </div>
+  {{ end }}
+</div>
+
+<style>
+.pagination {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+  height: 40px;
+  animation: fade-up 0.6s 0.4s backwards;
+}
+
+.page-item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--main-card-background);
+  border: 1px solid var(--main-card-border);
+  box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.page-item.prev,
+.page-item.next {
+  position: absolute;
+  width: 80px;
+  left: 0;
+}
+
+.page-item.prev .iconfont {
+  transform: rotate(180deg);
+}
+
+.page-item.next {
+  left: auto;
+  right: 0;
+}
+
+.page-item:hover {
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.page-item.choose {
+  color: var(--main-card-background);
+  border-color: var(--main-color);
+  background-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.page-text {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.page-item:hover .page-text {
+  opacity: 1;
+}
+
+.page-number {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.point {
+  margin: 0 4px;
+  transform: translateY(-8px);
+  font-size: 22px;
+}
+
+.fast-jump {
+  position: relative;
+  margin: 0 6px;
+}
+
+.fast-jump input {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  padding: 0 8px;
+  font-size: 16px;
+  color: var(--main-font-color);
+  background-color: var(--main-card-background);
+  border: 1px solid var(--main-card-border);
+  box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+  transition: all 0.3s;
+}
+
+.fast-jump.focus input,
+.fast-jump:hover input {
+  width: 100px;
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+@media (max-width: 768px) {
+  .page-number {
+    display: none;
+  }
+  .page-item:first-child {
+    margin-right: 10px;
+  }
+  .page-item:last-child {
+    margin-left: 10px;
+  }
+}
+</style>
+
+<script>
+function jumpToPage(page, totalPages) {
+  page = parseInt(page);
+  if (!page || page < 1) page = 1;
+  if (page > totalPages) page = totalPages;
+  
+  // 构建分页 URL
+  let url = window.location.pathname;
+  if (page === 1) {
+    url = url.replace(/\/page\/\d+/, '');
+  } else {
+    if (url.includes('/page/')) {
+      url = url.replace(/\/page\/\d+/, `/page/${page}`);
+    } else {
+      url = url.replace(/\/$/, '') + `/page/${page}`;
+    }
+  }
+  
+  window.location.href = url;
+}
+</script> 
+{{ end }}

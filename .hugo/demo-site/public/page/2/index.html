@@ -886,16 +886,203 @@
       
       
       
-
-
-
-
-
-
-
 <div class="pagination">
   
-</div> 
+  
+    <div class="page-item prev" onclick="window.location.href='\/'">
+      <i class="iconfont icon-page-right"></i>
+      <span class="page-text">上页</span>
+    </div>
+  
+
+  
+  <div class="page-number">
+    
+    <div class="page-item" 
+         onclick="window.location.href='\/'">
+      <span class="page-num">1</span>
+    </div>
+
+    
+    
+    
+    
+    
+
+    
+
+    
+      
+    
+      
+    
+
+    
+
+    
+    
+      <div class="page-item choose"
+           onclick="window.location.href='\/page\/2\/'">
+        <span class="page-num">2</span>
+      </div>
+    
+
+    
+    <div class="fast-jump" title="快速跳转">
+      <input type="number" id="pageJumpInput" 
+             min="1" 
+             max="2" 
+             onfocus="this.parentElement.classList.add('focus')"
+             onblur="this.parentElement.classList.remove('focus')"
+             onkeydown="if(event.key === 'Enter') jumpToPage(this.value,  2 )">
+      <i class="iconfont icon-arrow-right" onclick="jumpToPage(document.getElementById('pageJumpInput').value,  2 )"></i>
+    </div>
+  </div>
+
+  
+  
+</div>
+
+<style>
+.pagination {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+  height: 40px;
+  animation: fade-up 0.6s 0.4s backwards;
+}
+
+.page-item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--main-card-background);
+  border: 1px solid var(--main-card-border);
+  box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.page-item.prev,
+.page-item.next {
+  position: absolute;
+  width: 80px;
+  left: 0;
+}
+
+.page-item.prev .iconfont {
+  transform: rotate(180deg);
+}
+
+.page-item.next {
+  left: auto;
+  right: 0;
+}
+
+.page-item:hover {
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.page-item.choose {
+  color: var(--main-card-background);
+  border-color: var(--main-color);
+  background-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.page-text {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.page-item:hover .page-text {
+  opacity: 1;
+}
+
+.page-number {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.point {
+  margin: 0 4px;
+  transform: translateY(-8px);
+  font-size: 22px;
+}
+
+.fast-jump {
+  position: relative;
+  margin: 0 6px;
+}
+
+.fast-jump input {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  padding: 0 8px;
+  font-size: 16px;
+  color: var(--main-font-color);
+  background-color: var(--main-card-background);
+  border: 1px solid var(--main-card-border);
+  box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+  transition: all 0.3s;
+}
+
+.fast-jump.focus input,
+.fast-jump:hover input {
+  width: 100px;
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+@media (max-width: 768px) {
+  .page-number {
+    display: none;
+  }
+  .page-item:first-child {
+    margin-right: 10px;
+  }
+  .page-item:last-child {
+    margin-left: 10px;
+  }
+}
+</style>
+
+<script>
+function jumpToPage(page, totalPages) {
+  page = parseInt(page);
+  if (!page || page < 1) page = 1;
+  if (page > totalPages) page = totalPages;
+  
+  
+  let url = window.location.pathname;
+  if (page === 1) {
+    url = url.replace(/\/page\/\d+/, '');
+  } else {
+    if (url.includes('/page/')) {
+      url = url.replace(/\/page\/\d+/, `/page/${page}`);
+    } else {
+      url = url.replace(/\/$/, '') + `/page/${page}`;
+    }
+  }
+  
+  window.location.href = url;
+}
+</script> 
+
     </div>
     
     
