@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Github on 元视角</title>
+    <link>http://localhost:1313/tags/github/</link>
+    <description>Recent content in Github on 元视角</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 02 Jul 2015 09:35:42 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Unity3D 游戏开发之从 Unity3D 项目版本控制说起</title>
+      <link>http://localhost:1313/posts/1320325685/</link>
+      <pubDate>Thu, 02 Jul 2015 09:35:42 +0000</pubDate>
+      <guid>http://localhost:1313/posts/1320325685/</guid>
+      <description>&lt;p&gt;各位朋友，大家好，欢迎大家关注我的博客，我是秦元培，我的独立博客地址是：&lt;a href=&#34;http://qinyuanpei.com&#34;&gt;http://blog.yuanpei.me&lt;/a&gt;、CSDN 博客地址是：&lt;a href=&#34;http://blog.csdn.net/qinyuanpei&#34;&gt;http://blog.csdn.net/qinyuanpei&lt;/a&gt;。今天我想和大家聊聊 Unity3D 游戏项目的版本控制。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

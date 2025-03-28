@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    
+    <title>Unity3D 游戏开发之在 uGUI 中使用不规则精灵制作按钮 - 元视角</title>
+    <meta name="description" content="在这篇博客中，作者讨论了在 Unity 引擎中制作不规则按钮的方法。通过对基于多边形碰撞器和精灵像素检测两种方案的比较和研究，解决了基于多边形碰撞器的问题，并剖析了基于精灵像素检测的内部原理。作者指出精灵像素检测方法易用性更好，但存在对图片类型的限制和像素可读写要求，可能影响执行效率。技术性上作者更推崇基于多边形碰撞器的方法，因为学到了新知识并能解决实际问题，尽管在寻找算法方面耗费精力。文章深入探讨了这两种方法的优缺点，展示了对不规则按钮制作的实际操作和测试。">
+    
+    
+    <link rel="shortcut icon" href="" type="image/x-icon">
+    
+    
+    <meta property="og:title" content="Unity3D 游戏开发之在 uGUI 中使用不规则精灵制作按钮">
+    <meta property="og:description" content="在这篇博客中，作者讨论了在 Unity 引擎中制作不规则按钮的方法。通过对基于多边形碰撞器和精灵像素检测两种方案的比较和研究，解决了基于多边形碰撞器的问题，并剖析了基于精灵像素检测的内部原理。作者指出精灵像素检测方法易用性更好，但存在对图片类型的限制和像素可读写要求，可能影响执行效率。技术性上作者更推崇基于多边形碰撞器的方法，因为学到了新知识并能解决实际问题，尽管在寻找算法方面耗费精力。文章深入探讨了这两种方法的优缺点，展示了对不规则按钮制作的实际操作和测试。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://localhost:1313/posts/1190622881/">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    
+    <link rel="stylesheet" href="/scss/main.min.656e2428f69fccc25611e271078ec105c55633d35f5266cb6afedebefd6ba2da.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_3159629_2j0vwz8wd1k.css">
+    
+    
+    <script src="/js/banner.js" defer></script>
+    
+    
+    
+    
+
+    <link crossorigin="" rel="preconnect" href="https://s1.hdslb.com">
+    <link crossorigin="" rel="preconnect" href="https://mirrors.sustech.edu.cn">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://cdn2.codesign.qq.com/icons/g5ZpEgx3z4VO6j2/latest/iconfont.css">
+    <link rel="preconnect" href="https://use.sevencdn.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link crossorigin="anonymous" href="https://use.sevencdn.com/css2?family=Fira+Code:wght@300..700&amp;display=swap" rel="stylesheet">
+    <link href="https://X5EBEZB53I-dsn.algolia.net" rel="preconnect" crossorigin="">
+</head> <body><div class="background patterns">
+    
+    <div class="bg-mask"></div>
+    
+    
+    <div class="bg-image" style="background-image: url('https://tuapi.eees.cc/api.php?category=%7bdongman,fengjing%7d&amp;type=302')"></div>
+    
+    
+    
+</div> 
+
+<style>
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: -2;
+      &.patterns {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%23494849' fill-opacity='0.08' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E");
+      }
+      &.dark {
+        &.patterns {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%23fcfcfc' fill-opacity='0.08' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E");
+        }
+        .cover {
+          filter: brightness(0.6);
+        }
+      }
+      .cover {
+        width: auto;
+        height: auto;
+        min-height: 100%;
+        opacity: 0;
+        transition:
+          filter 0.3s,
+          opacity 0.3s;
+        &.loaded {
+          opacity: 1;
+        }
+      }
+    }
+    </style>
+    
+        <header class="main-header">
+            <nav class="main-nav">
+                <div class="nav-all">
+                    
+                    <div class="left-nav">
+                        <div class="more-menu nav-btn" title="更多内容">
+                            <i class="iconfont icon-menu"></i><div class="more-menu-panel">
+    <div class="menu-list">
+        
+    </div>
+</div> </div>
+                        <div class="site-name">
+                            元视角
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="nav-center">
+                        <div class="site-menu"><div class="menu-list">
+    
+    <div class="menu-item">
+        <span class="link-btn"> 文库</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 书影音</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 友链</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 关于</span>
+        
+    </div>
+    
+</div> </div>
+                        <span class="site-title">
+                            Unity3D 游戏开发之在 uGUI 中使用不规则精灵制作按钮
+                        </span>
+                    </div>
+                    
+                    
+                    <div class="right-nav">
+                        
+                        <a class="menu-btn nav-btn travellings" title="开往-友链接力" href="https://www.travellings.cn/go.html" target="_blank">
+                            <i class="iconfont icon-subway"></i>
+                        </a>
+                        
+                        <div class="menu-btn nav-btn" title="随机前往一篇文章">
+                            <i class="iconfont icon-shuffle"></i>
+                        </div>
+                        
+                        <div class="menu-btn nav-btn" title="全站搜索">
+                            <i class="iconfont icon-search"></i>
+                        </div>
+                        
+                        <div id="open-control" class="menu-btn nav-btn pc" title="打开中控台">
+                            <i class="iconfont icon-dashboard"></i>
+                        </div>
+                        
+                        <div class="to-top menu-btn" title="返回顶部">
+                            <div class="to-top-btn">
+                                <span class="num">0</span>
+                                <i class="iconfont icon-up"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="menu-btn nav-btn mobile" title="打开菜单">
+                            <i class="iconfont icon-toc"></i>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="mobile-menu">
+    <div class="menu-mask"></div>
+    <div class="menu-content">
+        <div class="menu-header">
+            <div class="site-info">
+                <div class="site-name">元视角</div>
+                <div class="site-description">纵有疾风起，人生不言弃</div>
+            </div>
+        </div>
+        <div class="menu-body">
+            
+            <div class="menu-group">
+                <div class="menu-title">导航</div>
+                <div class="menu-list">
+                    
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>文库</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>书影音</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>友链</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>关于</span>
+                    </a>
+                    
+                </div>
+            </div>
+            
+            <div class="menu-group">
+                <div class="menu-title">更多</div>
+                <div class="menu-list">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <div class="modal search-modal" id="searchModal">
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="iconfont icon-search"></i>
+        <span>全局搜索</span>
+      </div>
+      <div class="modal-close">
+        <i class="iconfont icon-close"></i>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="想要搜点什么" 
+          autocomplete="off"
+          autofocus
+        >
+      </div>
+
+      <div class="search-results" id="searchResults">
+        <div class="no-result" id="noResult" style="display: none;">
+          <i class="iconfont icon-search-empty"></i>
+          <span class="text">搜索结果为空</span>
+        </div>
+        <div class="search-list" id="searchList"></div>
+      </div>
+
+      <div class="search-stats">
+        <span class="text" id="searchStats"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 768px;
+  margin: 80px auto;
+  background-color: var(--main-card-background);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.modal-title .iconfont {
+  margin-right: 0.5rem;
+}
+
+.modal-close {
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.search-box input {
+  width: 100%;
+  outline: none;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 0.6rem 1rem;
+  color: var(--main-font-color);
+  font-family: var(--main-font-family);
+  border: 1px solid var(--main-card-border);
+  background-color: var(--main-card-second-background);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-box input:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.search-results {
+  margin-top: 20px;
+  min-height: 300px;
+}
+
+.no-result {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-result .iconfont {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.no-result .text {
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+.search-list .search-item {
+  margin-bottom: 12px;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--main-card-second-background);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.search-list .search-item:hover {
+  transform: translateY(-2px);
+}
+
+.search-item .title {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.search-item .content {
+  color: var(--main-font-second-color);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.search-stats {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: var(--main-font-second-color);
+}
+
+.highlight {
+  color: var(--main-color);
+  background: transparent;
+}
+</style> </header>
+
+        
+        <main class="main-layout">
+
+
+
+<div class="post">
+    <div class="post-meta">
+        <div class="meta">
+            
+            <div class="categories">
+                
+                
+                <a href="/categories/unity3d" class="cat-item">
+                    <i class="iconfont icon-folder"></i>
+                    <span class="name">Unity3D</span>
+                </a>
+                
+                
+            </div>
+            
+            <div class="tags">
+                
+                
+                <a href="/tags/unity3d" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">Unity3D</span>
+                </a>
+                
+                <a href="/tags/ugui" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">uGUI</span>
+                </a>
+                
+                <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">游戏开发</span>
+                </a>
+                
+                
+            </div>
+        </div>
+        <h1 class="title">
+            Unity3D 游戏开发之在 uGUI 中使用不规则精灵制作按钮
+        </h1>
+        <div class="other-meta">
+            
+            <span class="meta date">
+                <i class="iconfont icon-date"></i>
+                2016-07-08
+            </span>
+            
+            <span class="update meta">
+                <i class="iconfont icon-time"></i>
+                2016-07-08
+            </span>
+            
+            <span class="hot meta">
+                <i class="iconfont icon-fire"></i>
+                <span id="twikoo_visitors" class="artalk-pv-count">0</span>
+            </span>
+            
+            <span class="chat meta hover" data-scroll-to="comments">
+                <i class="iconfont icon-chat"></i>
+                <span id="twikoo_comments" class="artalk-comment-count">0</span>
+            </span>
+        </div>
+    </div>
+    <div class="post-content">
+        <article class="post-article s-card">
+            
+            
+            
+            <div class="expired s-card">
+                本文发表于 <strong>3184</strong> 天前，其中的信息可能已经事过境迁
+            </div>
+            
+
+            
+<div class="article-gpt s-card">
+  <div class="title">
+    <span class="name">
+      <i class="iconfont icon-robot"></i>
+      文章摘要
+      <i class="iconfont icon-up"></i>
+    </span>
+    <span class="logo">FakeGPT</span>
+  </div>
+  <div class="content s-card">
+    <span class="text"></span>
+  </div>
+  <div class="meta">
+    
+    
+  </div>
+</div>
+<script src="https://npm.elemecdn.com/typeit@8.7.1/dist/index.umd.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    new TypeIt(".article-gpt .content .text", {
+        strings: '在这篇博客中，作者讨论了在 Unity 引擎中制作不规则按钮的方法。通过对基于多边形碰撞器和精灵像素检测两种方案的比较和研究，解决了基于多边形碰撞器的问题，并剖析了基于精灵像素检测的内部原理。作者指出精灵像素检测方法易用性更好，但存在对图片类型的限制和像素可读写要求，可能影响执行效率。技术性上作者更推崇基于多边形碰撞器的方法，因为学到了新知识并能解决实际问题，尽管在寻找算法方面耗费精力。文章深入探讨了这两种方法的优缺点，展示了对不规则按钮制作的实际操作和测试。',
+        speed: 10,
+        lifeLike: true,
+        waitUntilVisible: true,
+    }).go();
+});
+</script>
+
+
+
+            
+            <div id="page-content" class="markdown-main-style">
+                <p>各位朋友大家好，欢迎关注我的博客，我的博客地址是：<a href="https://blog.yuanpei.me">https://blog.yuanpei.me</a>。最近因为受到工作上业务因素影响，所以博主在 Unity 引擎上的研究有所停滞。虽然目前的工作内容和 Unity3D 没有直接的关联，可是我觉得工程师应该有这样一种情怀，即工作和兴趣是完全不同的两个概念。编程对我而言，首先是一种兴趣，其次是一份工作。所以我宁愿在每天下班以后继续研究自己感兴趣的东西，而非为了取悦这个世界、为了加班而加班。最近广电总局让整个游戏行业都坐立不安了，因为其新发布的一系列规定，让中国的独立游戏开发者怨声载道。可是我们更应该看到积极的一面是，无数的小游戏公司会在最近数月内大量消失，或许对中国野蛮生长的游戏行业这是一次“形式”上的整顿，可对我们开发者来说，在这个过程中努力提升自我、巩固基础永远比追求时髦、流行的技术或者框架有意义的多，因为热闹的从来都是昙花一现般的璀璨，而永恒的永远都是历久弥新的真理。好了，闲言少叙，今天我们的话题是在 uGUI 中使用不规则精灵制作按钮。</p>
+<h1 id="从用户体验说起">从用户体验说起</h1>
+<p>我们都知道在现代应用程序设计中，用户体验(UX)和用户界面(UI)是两个非常重要的内容。为什么用户体验(UX)和用户界面(UI)会显得如此重要呢？这是因为从普通用户的角度来讲，用户界面(UI)是其接触到一个产品时最先看到的最直观的东西，而在这个过程中产生的直观感受就是用户体验(UX)，所以说到底这是一个产品给用户的“第一印象”。</p>
+<p><img src="/posts/1190622881/20160709212447055.jpg" alt="UX和UI"></p>
+<p>最近百度 UE 总监刘超在 IXDC 峰会上的演讲引起了大家的关注，抛开百度在人才选拔机制中存在的问题以及刘超本人在设计领域是否具备专业能力这两个问题，这件事情真正让大家吐槽的是什么呢？答案是用户体验。虽然 IXDC 并非国际级别的大型会议，但是我相信大家组织这样的活动，其本意是为了探讨交互、设计领域内的新方法和新思维，因为随着互联网行业的发展，交互和设计这个领域越来越被人们所关注，所以在这样一个场合下，当与会嘉宾都在试图向人们输出干货的时候，刘超以一个非常糟糕的“用户体验”来给大家讲什么是用户体验，这件事情起源自刘超的一个个人行为，结果牵一发而动全身，最终升级为百度继“魏则西事件”以后的又一次公关危机。</p>
+<p><img src="/posts/1190622881/20160709212751060.jpg" alt="什么叫设计"></p>
+<p>我到底想说什么呢？我说的本质上就是用户体验的问题，在这个事件中，刘超穿着上的不得体(短裤搭配拖鞋?)、PPT 制作的粗制滥造(校招时所用修改)、演讲过程的敷衍糊弄(说相声、猜谜语)等因素，让刘超在与会者心目中的地位瞬间滑落到冰点，进而引发人们对百度在交互设计领域内的能力的怀疑，联想到百度最近这些年内出现的问题，这件事情难免会被人作为指责百度这家企业价值观问题，我想这是这个事情为什么会让大家如此关注的一个原因吧。</p>
+<p><img src="/posts/1190622881/20160709212618558.jpg" alt="WTF!"></p>
+<p>那么，我们说这些到底和今天的主题有什么关系呢？我想说这当然有关系啊，因为我们提出的这个问题就是一个用户体验的问题。我们知道游戏行业对美术资源高度依赖，不管是 2D 游戏还是 3D 游戏，一个项目组中前期主要的工作量其实都在美术这边，虽然不同的游戏引擎、GUI 框架都为我们提供了标准的控件样式，然而在这样一个注重多样性的时代，默认样式、系统字体都会让人觉得这个产品缺乏新意，因此这种要求体现在游戏项目中就变成了，我们使用大量的图片资源来解决界面和字体的问题。</p>
+<p>例如，我们通常使用 BMFont 来制作位图字体，这是为了同时满足字体的多样性和资源的容量这两个要求。再比如我们在使用 cocos2d-x 和 Unity3D 引擎开发游戏的时候，我们将大量的时间花费在了 UI 的制作上，这一切的一切从本质上来讲都是为了提升产品的童虎体验。这样我们就会遇到一个问题，UI 中的按钮默认情况下都是规则的矩形，而实际上美术提供的素材常常是不规则的，因此如果继续使用以矩形为标准的这套机制，在实际使用中可能出现“用户点击在不该响应的区域结果程序响应了用户操作”这样的问题，为了解决这个问题，提升这一点点细微的用户体验，我们需要花费时间和精力来了解下面这些内容。</p>
+<h1 id="两种不同的方案">两种不同的方案</h1>
+<p>目前，关于这个问题如何，解决通过搜索引擎我们能找到两种不同的方案：</p>
+<ul>
+<li>多边形碰撞器: 该方法是指给精灵(Sprite)添加一个多边形碰撞器(Rolygon Collider)组件，利用该组件来标记精灵的边界，这样通过比较鼠标位置和边界可以判断点击是否发生在精灵内部。这种方法的详细说明可以参考宣雨松的这篇文章：<a href="http://www.xuanyusong.com/archives/3492">UGUI 研究院之不规则按钮的响应区域（十四）</a></li>
+<li>精灵像素检测: 该方法是指通过读取精灵(Sprite)在某一点的像素值(RGBA)，如果该点的像素值中的 Alpha&lt;0.5 则表示该点处是透明的，即用户点击的位置在精灵边界以外，否则用户点击的位置在精灵边界内部。这种方法的详细说明可以参考<a href="http://m.manew.com/forum.php?mod=viewthread&amp;tid=45046&amp;highlight=uGUI%2B%E4%B8%8D%E8%A7%84%E5%88%99&amp;mobile=2">这里</a></li>
+</ul>
+<h2 id="多边形碰撞器">多边形碰撞器</h2>
+<p>多边形碰撞器这种方案从本质上来讲，其核心思路是验证某一点是否在任意多边形内部，因为在这里 RolygonCollider2D 组件的作用体现在：第一，它可以在编辑器下进行可视化编辑对用户友好；第二，它可以在帮助我们标记精灵边界的同时保留顶点信息。所以在这里 RolygonCollider2D 组件相当于为我们提供任意多边形的顶点信息，而接下来我们要做是将鼠标位置转化为屏幕坐标，这样我们就获得了某一点的坐标。整体思路看起来是没有问题的，但我个人以及网友<a href="http://m.manew.com/forum.php?mod=viewthread&amp;tid=41050&amp;highlight=uGUI%2B%E4%B8%8D%E8%A7%84%E5%88%99&amp;mobile=2">AwayMe</a>都认为宣雨松这个算法存在问题，具体的理由如下：</p>
+<ul>
+<li>
+<p>1、uGUI 中的元素采用的是以屏幕中心为原点(0,0)的平面直角坐标系，而普通屏幕坐标采用的是以左下角为原点(0,0)的平面直角坐标系，所以多边形顶点数组和鼠标位置不在一个坐标系内，使用 AABBB 这样的碰撞检测算法存在问题。</p>
+</li>
+<li>
+<p>2、RolygonCollider2D 中的 points 属性即多边形顶点数组存储的是相对于 UI 元素的相对坐标，在进行计算的时候应该统一转化为绝对坐标，这个过程在宣雨松的代码中有所涉及，但我认为对 UI 元素来讲，应该使用 transform.GetComponent<!-- raw HTML omitted -->().position 而非 transform.position，因为 transform.position 最初是给 3D 物体使用的，而实际上这里是存在误差的。</p>
+</li>
+<li>
+<p>3、我怀疑宣雨松提供的这个 ContainsPoint 方法的正确性，因为按照我的理解修改这个方法以后，发现界面响应的情况和实际情况是有所出入的，如下图所示，在整个区域内该方法都返回 false。为了排除因为我的方法而对结果产生的影响，我使用宣雨松的代码进行了测试，结论是这个方法不管进行坐标系的转换与否，它在整个区域内的返回值都是 false，因此我认为这个方法是错误的，虽然从理解算法的角度来看，它应该是根据线性差值来判断点在多边形中每条边的哪一侧的。</p>
+</li>
+</ul>
+<p><img src="/posts/1190622881/20160709211253976.jpg" alt="响应区域说明"></p>
+<p>在评论中网友<a href="http://m.manew.com/forum.php?mod=viewthread&amp;tid=41050&amp;highlight=uGUI%2B%E4%B8%8D%E8%A7%84%E5%88%99&amp;mobile=2">AwayMe</a>指出可以使用多边形碰撞器的 OverlapPoint 方法来判断一个点是否在多边形内部，可是经过我测试，这种方式和宣雨松提供的方法有着类似地问题，无论是否对坐标系进行转换，这个方法都返回 false，响应区域与上图完全一致。</p>
+<p>所以不管网络上有没有高质量的内容，一个核心的问题是你能否从中找到答案。如果你可以直接找到解决方案这可能是最好的结局；如果找不到直接的解决方案，却能够有所启发并独立解决问题，这是我们希望看到的结果。可是有时候人们并不这样想啊，人们想得到的是可以运行的代码而非解决问题的思路，因为可能人们并不想解决这个问题。</p>
+<p>好了，经过知乎上相关<a href="http://www.zhihu.com/question/26551754?f3fb8ead20=b6b9d1289bcc893ff2fa0abd1e65fc52">答案</a>我找到了这篇<a href="http://geomalgorithms.com/a03-_inclusion.html">文章</a>，文章中提到了判断一个点是否在任意多边形内部的两种方法，分别为 Corssing Number 和 Winding Number。这两种方法在理论层面的相关细节请大家自行阅读这篇<a href="http://geomalgorithms.com/a03-_inclusion.html">文章</a>，我们这里选择的是前者，其基本思想是计算从该点引出的射线与多边形边界橡胶的次数，当其为奇数时表示该点在多边形内部，当其为偶数时表示在多边形外部。这里有一个有意思的事情是宣雨松选择的方法应该是著名的<a href="https://www.baidu.com/s?ie=UTF-8&amp;wd=Ray-Crossing">Ray-Crossing</a>算法，可是为什么在这里会出现这样的问题呢？</p>
+<p>孰是孰非，一切都交给实践来证明吧！下面是我根据<a href="http://geomalgorithms.com/a03-_inclusion.html">文章</a>中提供的算法改写的一段 C#代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="kt">bool</span> <span class="n">ContainsPoint2</span><span class="p">(</span><span class="n">Vector2</span><span class="p">[]</span> <span class="n">polyPoints</span><span class="p">,</span><span class="n">Vector2</span> <span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 统计射线和多边形交叉次数</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">cn</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// 遍历多边形顶点数组中的每条边</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">=</span><span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">polyPoints</span><span class="p">.</span><span class="n">Length</span><span class="p">-</span><span class="m">1</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> 
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 正常情况下这一步骤可以忽略这里是为了统一坐标系</span>
+</span></span><span class="line"><span class="cl">		<span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span> <span class="p">+=</span> <span class="n">transform</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">RectTransform</span><span class="p">&gt;</span> <span class="p">().</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span> <span class="p">+=</span> <span class="n">transform</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">RectTransform</span><span class="p">&gt;</span> <span class="p">().</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1">// 从当前位置发射向上向下两条射线</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(((</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span> <span class="p">&lt;=</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="p">(</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">].</span><span class="n">y</span> <span class="p">&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl">			<span class="p">||</span> <span class="p">((</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span> <span class="p">&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="p">(</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">].</span><span class="n">y</span> <span class="p">&lt;=</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//compute the actual edge-ray intersect x-coordinate</span>
+</span></span><span class="line"><span class="cl">			<span class="kt">float</span> <span class="n">vt</span> <span class="p">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)(</span><span class="n">p</span><span class="p">.</span><span class="n">y</span> <span class="p">-</span> <span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">)</span> <span class="p">/</span> <span class="p">(</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">].</span><span class="n">y</span> <span class="p">-</span> <span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="c1">//p.x &lt; intersect</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span> <span class="p">&lt;</span> <span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span> <span class="p">+</span> <span class="n">vt</span> <span class="p">*</span> <span class="p">(</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">].</span><span class="n">x</span> <span class="p">-</span> <span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">				<span class="p">++</span><span class="n">cn</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">// 实际测试发现cn为0的情况即为宣雨松算法中存在的问题</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">// 所以在这里进行屏蔽直接返回false这样就可以让透明区域不再响应</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">cn</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 返回true表示在多边形外部否则表示在多边形内部</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">cn</span> <span class="p">%</span> <span class="m">2</span> <span class="p">==</span> <span class="m">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这段代码说实话我理解的不是很透彻，而且令人费解的是实际结论和算法结论完全相反，因为按照我现在这样的设计，当 cn 为偶数时返回为 true，此时应该表示该点再多边形外部啊，可是事实上我测试这段代码的时候，它居然是可以正常工作的，即当该方法返回 true 的时候我的点击确实是在多边形内部，所以这是一段可以正常工作同时让我感到费解的代码，而且当我屏蔽了 cn 为 0 的这种情况以后，现在它已经可以完美的工作了</p>
+<p><img src="/posts/1190622881/20160709211703131.jpg" alt="正五边形精灵"></p>
+<p>同样的，我们这里使用一张正五边形的精灵图片，然后编写下面的代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 基于多边形碰撞器实现的不规则按钮 
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 作者：PayneQin
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 日期：2016年7月9日
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine.UI</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine.EventSystems</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">class</span> <span class="nc">UnregularButtonWithCollider</span> <span class="p">:</span> <span class="n">MonoBehaviour</span><span class="p">,</span><span class="n">IPointerClickHandler</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="cs">/// &lt;summary&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="cs">/// 多边形碰撞器</span>
+</span></span><span class="line"><span class="cl">	<span class="cs">/// &lt;/summary&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">PolygonCollider2D</span> <span class="n">polygonCollider</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">void</span> <span class="n">Start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 获取多边形碰撞器</span>
+</span></span><span class="line"><span class="cl">		<span class="n">polygonCollider</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">PolygonCollider2D</span><span class="p">&gt;();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kd">public</span> <span class="k">void</span> <span class="n">OnPointerClick</span><span class="p">(</span><span class="n">PointerEventData</span> <span class="n">eventData</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 对2D屏幕坐标系进行转换</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Vector2</span> <span class="n">local</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">local</span><span class="p">.</span><span class="n">x</span> <span class="p">=</span> <span class="n">eventData</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span> <span class="p">-</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">Screen</span><span class="p">.</span><span class="n">width</span> <span class="p">/</span> <span class="m">2.0f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">local</span><span class="p">.</span><span class="n">y</span> <span class="p">=</span> <span class="n">eventData</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span> <span class="p">-</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">Screen</span><span class="p">.</span><span class="n">height</span> <span class="p">/</span> <span class="m">2.0f</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="n">ContainsPoint</span><span class="p">(</span><span class="n">polygonCollider</span><span class="p">.</span><span class="n">points</span><span class="p">,</span><span class="n">local</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span> <span class="p">(</span><span class="s">&#34;这是一个正五边形!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="cs">/// &lt;summary&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="cs">/// 判断指定点是否在给定的任意多边形内</span>
+</span></span><span class="line"><span class="cl">	<span class="cs">/// &lt;/summary&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">bool</span> <span class="n">ContainsPoint</span><span class="p">(</span><span class="n">Vector2</span><span class="p">[]</span> <span class="n">polyPoints</span><span class="p">,</span><span class="n">Vector2</span> <span class="n">p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 统计射线和多边形交叉次数</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">int</span> <span class="n">cn</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">		<span class="c1">// 遍历多边形顶点数组中的每条边</span>
+</span></span><span class="line"><span class="cl">		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">=</span><span class="m">0</span><span class="p">;</span> <span class="n">i</span><span class="p">&lt;</span><span class="n">polyPoints</span><span class="p">.</span><span class="n">Length</span><span class="p">-</span><span class="m">1</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span> 
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">//正常情况下这一步骤可以忽略这里是为了统一坐标系</span>
+</span></span><span class="line"><span class="cl">			<span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span> <span class="p">+=</span> <span class="n">transform</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">RectTransform</span><span class="p">&gt;</span> <span class="p">().</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span> <span class="p">+=</span> <span class="n">transform</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">RectTransform</span><span class="p">&gt;</span> <span class="p">().</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			
+</span></span><span class="line"><span class="cl">			<span class="c1">//从当前位置发射向上向下两条射线</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span><span class="p">(((</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span> <span class="p">&lt;=</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="p">(</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">].</span><span class="n">y</span> <span class="p">&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl">			   <span class="p">||</span> <span class="p">((</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span> <span class="p">&gt;</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="p">(</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">].</span><span class="n">y</span> <span class="p">&lt;=</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">			<span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="c1">//compute the actual edge-ray intersect x-coordinate</span>
+</span></span><span class="line"><span class="cl">				<span class="kt">float</span> <span class="n">vt</span> <span class="p">=</span> <span class="p">(</span><span class="kt">float</span><span class="p">)(</span><span class="n">p</span><span class="p">.</span><span class="n">y</span> <span class="p">-</span> <span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">)</span> <span class="p">/</span> <span class="p">(</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">].</span><span class="n">y</span> <span class="p">-</span> <span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">				
+</span></span><span class="line"><span class="cl">				<span class="c1">//p.x &lt; intersect</span>
+</span></span><span class="line"><span class="cl">				<span class="k">if</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span> <span class="p">&lt;</span> <span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span> <span class="p">+</span> <span class="n">vt</span> <span class="p">*</span> <span class="p">(</span><span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span> <span class="p">+</span> <span class="m">1</span><span class="p">].</span><span class="n">x</span> <span class="p">-</span> <span class="n">polyPoints</span> <span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">					<span class="p">++</span><span class="n">cn</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1">// 实际测试发现cn为0的情况即为宣雨松算法中存在的问题</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 所以在这里进行屏蔽直接返回false这样就可以让透明区域不再响应</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span><span class="p">(</span><span class="n">cn</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1">// 返回true表示在多边形外部否则表示在多边形内部</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">cn</span> <span class="p">%</span> <span class="m">2</span> <span class="p">==</span> <span class="m">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>我们可以发现现在它可以正常工作啦！我们必须意识到的一点是，这个方法的空间复杂度为 O(n-1)，所以随着多边形顶点数目的增加，这个方法的执行效率会越来越低，如果对不规则精灵的边界没有十分苛刻的要求的话，我的建议是我们使用多边形碰撞器标记出一个相对模糊的边界即可，因为现在我们这个方法主要依靠数学计算，没有涉及到摄像机相关计算，所以宣雨松<a href="http://www.xuanyusong.com/archives/3492">博客</a>中有朋友指出他的方法仅仅适用于 Canvas 的模式为 Screen-Space Camera 这种情况，而我目前这个方法对除了 World Space 以外都是可以使用的，我最大的疑虑来自对鼠标位置进行转化的时候是否应该使用 Screen.width 和 Screen.height，因为我担心可能会出现屏幕适配这种需求。</p>
+<p><img src="/posts/1190622881/20160709211338024.jpg" alt="演示效果1"></p>
+<h2 id="精灵像素检测">精灵像素检测</h2>
+<p>精灵像素检测这个方案的灵感来自 Image 组件，我们在 MonoDevelop 或者 Visual Studio 中通过&quot;转到定义&quot;这个功能可以获得 Image 组件的内部细节。我们发现 uGUI 在处理控件是否被点击的时候，主要是根据 IsRaycastLocationValid 这个方法的返回值来进行判断的，而这个方法用到的基本原理则是判断指定点对应像素的 RGBA 数值中的 Alpha 是否大于某个指定临界值。例如，我们知道半透明通常是指 Alpha=0.5，而对一个.png 格式的图片来说半透明甚至完全透明的区域理论上不应该被响应的，所以根据这个原理我们只需要设定一个透明度的临界值然后对当前鼠标位置对应的像素进行判断就可以了，因此这种方法叫做精灵像素检测。</p>
+<p>下面我们来一起看这段 uGUI 的代码，这段代码通过 MonoDevelop 或者 Visual Studio 的&quot;转到定义&quot;功能可以找到，这里我做了简单的注释帮助大家理解代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">IsRaycastLocationValid</span><span class="p">(</span><span class="n">Vector2</span> <span class="n">screenPoint</span><span class="p">,</span> <span class="n">Camera</span> <span class="n">eventCamera</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//当透明度&gt;=1.0时，表示点击在可响应区域返回true</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">m_EventAlphaThreshold</span> <span class="p">&gt;=</span> <span class="m">1f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">//当没有指定精灵时为什么要返回true?</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Sprite</span> <span class="n">overrideSprite</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="n">overrideSprite</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">overrideSprite</span> <span class="p">==</span> <span class="kc">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">	<span class="c1">//坐标系转换	</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Vector2</span> <span class="n">local</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">RectTransformUtility</span><span class="p">.</span><span class="n">ScreenPointToLocalPointInRectangle</span><span class="p">(</span><span class="k">base</span><span class="p">.</span><span class="n">rectTransform</span><span class="p">,</span> <span class="n">screenPoint</span><span class="p">,</span> <span class="n">eventCamera</span><span class="p">,</span> <span class="k">ref</span> <span class="n">local</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Rect</span> <span class="n">pixelAdjustedRect</span> <span class="p">=</span> <span class="k">base</span><span class="p">.</span><span class="n">GetPixelAdjustedRect</span> <span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="n">local</span><span class="p">.</span><span class="n">x</span> <span class="p">+=</span> <span class="k">base</span><span class="p">.</span><span class="n">rectTransform</span><span class="p">.</span><span class="n">get_pivot</span> <span class="p">().</span><span class="n">x</span> <span class="p">*</span> <span class="n">pixelAdjustedRect</span><span class="p">.</span><span class="n">get_width</span> <span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="n">local</span><span class="p">.</span><span class="n">y</span> <span class="p">+=</span> <span class="k">base</span><span class="p">.</span><span class="n">rectTransform</span><span class="p">.</span><span class="n">get_pivot</span> <span class="p">().</span><span class="n">y</span> <span class="p">*</span> <span class="n">pixelAdjustedRect</span><span class="p">.</span><span class="n">get_height</span> <span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="n">local</span> <span class="p">=</span> <span class="k">this</span><span class="p">.</span><span class="n">MapCoordinate</span><span class="p">(</span><span class="n">local</span><span class="p">,</span> <span class="n">pixelAdjustedRect</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Rect</span> <span class="n">textureRect</span> <span class="p">=</span> <span class="n">overrideSprite</span><span class="p">.</span><span class="n">get_textureRect</span> <span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Vector2</span> <span class="n">vector</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Vector2</span><span class="p">(</span><span class="n">local</span><span class="p">.</span><span class="n">x</span> <span class="p">/</span> <span class="n">textureRect</span><span class="p">.</span><span class="n">get_width</span> <span class="p">(),</span> <span class="n">local</span><span class="p">.</span><span class="n">y</span> <span class="p">/</span> <span class="n">textureRect</span><span class="p">.</span><span class="n">get_height</span> <span class="p">());</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">//计算屏幕坐标对应的UV坐标</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">num</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Lerp</span><span class="p">(</span><span class="n">textureRect</span><span class="p">.</span><span class="n">get_x</span> <span class="p">(),</span> <span class="n">textureRect</span><span class="p">.</span><span class="n">get_xMax</span> <span class="p">(),</span> <span class="n">vector</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="p">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">overrideSprite</span><span class="p">.</span><span class="n">get_texture</span><span class="p">().</span><span class="n">get_width</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">float</span> <span class="n">num2</span> <span class="p">=</span> <span class="n">Mathf</span><span class="p">.</span><span class="n">Lerp</span><span class="p">(</span><span class="n">textureRect</span><span class="p">.</span><span class="n">get_y</span> <span class="p">(),</span> <span class="n">textureRect</span><span class="p">.</span><span class="n">get_yMax</span> <span class="p">(),</span> <span class="n">vector</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="p">/</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">overrideSprite</span><span class="p">.</span><span class="n">get_texture</span><span class="p">().</span><span class="n">get_height</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">bool</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="c1">//核心方法：像素检测</span>
+</span></span><span class="line"><span class="cl">	<span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">result</span> <span class="p">=</span> <span class="p">(</span><span class="n">overrideSprite</span><span class="p">.</span><span class="n">get_texture</span><span class="p">().</span><span class="n">GetPixelBilinear</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">num2</span><span class="p">).</span><span class="n">a</span> <span class="p">&gt;=</span> <span class="k">this</span><span class="p">.</span><span class="n">m_EventAlphaThreshold</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span> 
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">UnityException</span> <span class="n">ex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">LogError</span><span class="p">(</span><span class="s">&#34;Using clickAlphaThreshold lower than 1 on Image whose sprite texture cannot be read. &#34;</span> <span class="p">+</span> <span class="n">ex</span><span class="p">.</span><span class="n">Message</span> <span class="p">+</span> <span class="s">&#34; Also make sure to disable sprite packing for this sprite.&#34;</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">result</span> <span class="p">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		
+</span></span><span class="line"><span class="cl">	<span class="c1">//返回结果	</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>从这段代码中我们可以看出，这个方法核心在第 31 行代码，即传入一个 UV 坐标返回一个 RGBA 数值并将其和临界值相比较。可是在此之前，我们看到在引入 uGUI 及其专属组件 RectTransform 以后，现在 Unity 中的坐标系转换变得更加复杂了，我个人看到这部分代码是相当凌乱的，或许我应该找时间补习下矩阵变换了吧。所以现在我们就有思路啦，我们有两种方式，第一种基于这个思路重新定制一个 Image 组件;第二种直接修改 Image 组件的 eventAlphaThreshold 属性。考虑到坐标系转换这里非常复杂，显然第二种方式更容易接受，为什么这里可以直接修改 eventAlphaThreshold 属性呢，因为它在 Image 组件内部和代码中的 m_EventAlphaThreshold 相关联，这就是这篇<a href="http://m.manew.com/forum.php?mod=viewthread&amp;tid=45046&amp;highlight=uGUI%2B%E4%B8%8D%E8%A7%84%E5%88%99&amp;mobile=2">文章</a>的完整解释啦！</p>
+<p><img src="/posts/1190622881/20160709211445948.jpg" alt="圆形精灵图片"></p>
+<p>好了，现在我们来一个简单的测试，我们这里准备一张圆形的精灵图片(如上图)，然后编写下面的代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 基于精灵像素检测实现的不规则按钮 
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 作者：PayneQin
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 日期：2016年7月9日
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine.UI</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">UnityEngine.EventSystems</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">class</span> <span class="nc">UnregularButtonWithPixel</span> <span class="p">:</span> <span class="n">MonoBehaviour</span><span class="p">,</span><span class="n">IPointerClickHandler</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="cs">/// &lt;summary&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="cs">/// Image组件</span>
+</span></span><span class="line"><span class="cl">	<span class="cs">/// &lt;/summary&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">private</span> <span class="n">Image</span> <span class="n">image</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="cs">/// &lt;summary&gt;</span>
+</span></span><span class="line"><span class="cl">	<span class="cs">/// 透明度临界值</span>
+</span></span><span class="line"><span class="cl">	<span class="cs">/// &lt;/summary&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="na">	[Range(0.0f,0.5f)]</span>
+</span></span><span class="line"><span class="cl">	<span class="kd">public</span> <span class="kt">float</span> <span class="n">Alpha</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kd">public</span> <span class="k">void</span> <span class="n">Start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//获取Image组件</span>
+</span></span><span class="line"><span class="cl">		<span class="n">image</span> <span class="p">=</span> <span class="n">transform</span><span class="p">.</span><span class="n">GetComponent</span><span class="p">&lt;</span><span class="n">Image</span><span class="p">&gt;();</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//设定透明度临界值</span>
+</span></span><span class="line"><span class="cl">		<span class="n">image</span><span class="p">.</span><span class="n">eventAlphaThreshold</span> <span class="p">=</span> <span class="n">Alpha</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kd">public</span> <span class="k">void</span> <span class="n">OnPointerClick</span><span class="p">(</span><span class="n">PointerEventData</span> <span class="n">eventData</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;这是一个圆形!&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>这里我为了让大家在学(复)习(制)的时候更容易理解，我在 Click 事件的响应上，使用的是实现 IPointerClickHandler 接口这种方法，希望通过动态绑定这种方式添加事件响应的可以自己解决，我是不会为了满足你们的好(懒)奇(惰)而奉献出我的 EventTriggerListener 的代码的。好了，现在我们要做的就是为需要响应点击的不规则精灵附加该脚本，这样就可以解决不规则精灵响应的问题了。这种方法使用起来非常简单，需要注意的是：图片的类型必须是 Advance 且保证可读可写。因为我们在脚本中访问了像素，而简单伴随着的代价就是我们无法使用图集、该图片在内存中会复制一份，所以在项目性能上允许的情况下这种方法还是可以考虑使用的。</p>
+<p><img src="/posts/1190622881/20160709211620591.jpg" alt="演示效果2"></p>
+<h1 id="小结">小结</h1>
+<p>本文通过对网络上两种比较通用的不规则按钮制作方案进行对比和研究，解决了基于多边形碰撞器实现不规则按钮这个过程中存在的问题，剖析了基于精灵像素检测实现不规则按钮 这个过程的内部原理，从易用性角度来讲，后者要优于前者，而这种方法的缺陷主要来自于它对图片类型的限制以及允许像素可读写这两个方面，它必须是 Advance 类型，所以普通的 Texture 或者 Sprite 拥有的特性在这里它都无法享受，比如我们无法为其做颜色渐变这类 Tween 动画、无法使用精灵特有的图集特性等等，于此同时它必须允许像素可读写，因此在实际使用中它会在内存中复制一份，在执行效率上可能会受到影响。而从技术性角度来讲，我个人更推推崇前者，因为在这个过程中我们学到了新的知识，明白了如何利用一个算法来解决实际的问题，而且它不会限制我们对精灵的使用，所有精灵拥有的特性在这里我们都可以使用，无非是在寻找算法、解决问题的过程中我们耗费了大量精力，可是这是值得的啊，不是吗？这就是我们做这件事情的意义所在。从昨天开始研究这两个问题到今天写完整篇文章，整个人是非常疲惫的，欢迎大家继续关注我的博客，今天的内容就是这样啦，谢谢大家！</p>
+            </div>
+
+            
+            
+            
+<div class="copyright s-card">
+  <div class="title">
+    <span class="post-name">Unity3D 游戏开发之在 uGUI 中使用不规则精灵制作按钮</span>
+    
+    <a :href="http://localhost:1313/posts/1190622881/" class="post-link" target="_blank">
+      http://localhost:1313/posts/1190622881/
+    </a>
+    
+  </div>
+  <div class="post-meta">
+    <div class="meta-item">
+      <span class="tip">作者</span>
+      <span class="name">飞鸿踏雪</span>
+    </div>
+    
+    <div class="meta-item">
+      <span class="tip">发布于</span>
+      <span class="name">2016-07-08</span>
+    </div>
+    
+    
+    <div class="meta-item">
+      <span class="tip">更新于</span>
+      <span class="name">2016-07-08</span>
+    </div>
+    
+    
+    <div class="meta-item cc">
+      <span class="tip">许可协议</span>
+      <a class="name" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+        CC BY-NC-SA 4.0
+      </a>
+    </div>
+    
+  </div>
+  <span class="meta-tip">署名-非商业性使用-相同方式共享 4.0 国际</span>
+</div>
+
+            
+
+            
+            <div class="other-meta">
+                <div class="all-tags">
+                    
+                    
+                    <a href="/tags/unity3d" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">Unity3D</span>
+                    </a>
+                    
+                    <a href="/tags/ugui" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">uGUI</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">游戏开发</span>
+                    </a>
+                    
+                    
+                </div>
+                <a href="https://eqnxweimkr5.feishu.cn/share/base/form/shrcnCXCPmxCKKJYI3RKUfefJre" 
+                   class="report" 
+                   target="_blank">
+                    <i class="iconfont icon-report"></i>
+                    反馈与投诉
+                </a>
+            </div>
+
+            
+            
+<div class="reward">
+  <div class="reward-btn" onclick="document.getElementById('rewardModal').style.display='block'">
+    <i class="iconfont icon-reward"></i>
+    <span class="text">赞赏博主</span>
+  </div>
+
+  
+  <div id="rewardModal" class="modal" style="display: none;">
+    <div class="modal-mask" onclick="document.getElementById('rewardModal').style.display='none'"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <span class="modal-title">
+          <i class="iconfont icon-reward"></i>
+          赞赏博主
+        </span>
+        <span class="modal-close" onclick="document.getElementById('rewardModal').style.display='none'">
+          <i class="iconfont icon-close"></i>
+        </span>
+      </div>
+      
+      <div class="modal-content">
+        <div class="reward-card">
+          <span class="thank">🙏 感谢您赐予我前进的力量</span>
+          <div class="qr">
+            
+            <a href="/images/reward/wechat.jpg" class="qr-img" target="_blank">
+              <img src="/images/reward/wechat.jpg" alt="微信" />
+              <span class="tip">
+                <i class="iconfont icon-wechat-pay"></i>
+                微信
+              </span>
+            </a>
+            
+            
+            
+            <a href="/images/reward/alipay.jpg" class="qr-img" target="_blank">
+              <img src="/images/reward/alipay.jpg" alt="支付宝" />
+              <span class="tip">
+                <i class="iconfont icon-alipay"></i>
+                支付宝
+              </span>
+            </a>
+            
+          </div>
+          
+          <div class="all-list s-card hover">
+            <span class="title">全部赞赏者名单</span>
+            <span class="tip">赞赏金额将全部用于开源项目维护，以及服务器、域名及各类云服务的开销</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+}
+
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 430px;
+  width: 90%;
+  background: var(--main-card-background);
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 1002;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-close {
+  cursor: pointer;
+}
+
+ 
+.reward {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: max-content;
+  margin: 1rem auto;
+  user-select: none;
+}
+
+.reward-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 120px;
+  border-radius: 8px;
+  color: #fff;
+  background-color: var(--main-color-red);
+  transition: box-shadow 0.5s;
+  cursor: pointer;
+}
+
+ 
+</style>
+
+
+
+            
+            
+
+            
+            
+  
+  
+  
+  
+  <div class="related-post">
+    <div class="title">
+      <span class="name">
+        <i class="iconfont icon-star"></i>
+        相关推荐
+      </span>
+      
+      <span class="shuffle" onclick="window.location.href='\/posts\/1085014581\/'">
+        随便逛逛
+      </span>
+      
+    </div>
+
+    
+    
+
+
+
+<div class="post-list ">
+    
+    <article class="post-item s-card">
+        
+        
+        
+        <div class="content">
+            
+            <h2 class="title">
+                <a href="/posts/1320325685/">Unity3D 游戏开发之从 Unity3D 项目版本控制说起</a>
+            </h2>
+            
+            
+            <div class="summary">
+                
+                    在这篇文章中，作者介绍了在 Unity3D 游戏项目中进行版本控制的重要性和方法。作者指出团队合作时需要版本控制来避免代码冲突和确保项目稳定性。在 Unity3D 中，版本控制主要针对 Assets 和 ProjectSetting 文件夹，需要将项目设置为生成 .Meta 文件和将资源模式设置为 Force Text。作者提到了三种主要的版本控制方式：使用 Asset Server、Github 和 SVN，并提供了相关链接和操作指南。最后强调了建立代码提交规范和流程控制规范的重要性。
+                
+            </div>
+            
+            
+            <div class="meta">
+                
+                <div class="date">
+                    <i class="iconfont icon-calendar"></i>
+                    <span>2015-07-02</span>
+                </div>
+                
+                
+                
+                <div class="categories">
+                    <i class="iconfont icon-folder"></i>
+                    
+                    <a href="/categories/unity3d">Unity3D</a>
+                    
+                </div>
+                
+                
+                
+                
+                <div class="tags">
+                    <i class="iconfont icon-tag"></i>
+                    
+                    <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">版本控制</a>
+                    
+                    <a href="/tags/unity3d">Unity3D</a>
+                    
+                    <a href="/tags/svn">SVN</a>
+                    
+                    <a href="/tags/github">Github</a>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </article>
+    
+</div> 
+  </div>
+  
+
+
+<style>
+.related-post {
+  margin-top: 1rem;
+}
+
+.related-post .title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 3rem 0 1rem 0;
+  padding: 0 6px;
+}
+
+.related-post .title .name {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.related-post .title .name .iconfont {
+  font-size: 26px;
+  font-weight: normal;
+  margin-right: 8px;
+}
+
+.related-post .title .shuffle {
+  opacity: 0.6;
+  font-size: 14px;
+  transition: color 0.3s, opacity 0.3s;
+  cursor: pointer;
+}
+
+.related-post .title .shuffle:hover {
+  opacity: 1;
+  color: var(--main-color);
+}
+</style>
+
+
+            
+            <div id="comments">
+                
+<div id="main-comment" class="comment">
+    <div v-if="!fill" class="title">
+        <span class="name">
+            <i class="iconfont icon-chat"></i>
+            评论
+        </span>
+        <span class="tool"> 隐私政策 </span>
+    </div>
+    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css"/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+    .waline-container .vcount {
+        color: var(--card-text-color-main);
+    }
+</style>
+
+
+    <script type="module">
+        import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+        init({
+            el: '#waline',
+            serverURL: 'https:\/\/waline.yuanpei.me\/',
+            lang: 'zh',
+            dark: 'auto',
+            path: window.location.href,
+            requiredMeta: ['nick','mail'],
+            emoji: [
+                '//unpkg.com/@waline/emojis@1.2.0/weibo'
+            ],
+            reaction: false,
+        });
+      </script>
+
+
+</div>
+
+            </div>
+        </article>
+        
+        <aside class="main-aside"><div class="sticky"> 
+<div class="aside-countdown s-card weidgets">
+  <div class="card-title">
+    <i class="fas fa-hourglass-half"></i>
+    <span>倒计时</span>
+  </div>
+  <div class="card-content">
+    
+  </div>
+</div> 
+<div class="tags-cloud s-card weidgets">
+  <div class="title">
+    <i class="iconfont icon-hashtag"></i>
+    <span class="title-name">热门标签</span>
+  </div>
+  <div class="all-tags">
+    
+  </div>
+  <a href="/pages/tags" class="more-tags">查看全部</a>
+</div><div class="tags-cloud s-card weidgets">
+    <div class="title">
+        <i class="iconfont icon-hashtag"></i>
+        <span class="title-name">日历</span>
+    </div>
+    <div class="all-tags">
+        <img id="calendar-cover" src="" style="object-fit: cover; width: 100%; height: 100%; display: none;" />
+    </div>
+</div>
+<script>
+    const getImageUrl = (date) => {
+        const currentYear = date.getFullYear();
+        const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
+        const currentDate = String(date.getDate()).padStart(2, '0');
+        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${currentMonth}${currentDate}.jpg`
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const eleImg = document.querySelector("#calendar-cover");
+        eleImg.onload = () => eleImg.style.display = '';
+        if (document.location.pathname.startsWith('/posts')) {
+            let publishedTime = document.querySelector('meta[property="article:published_time"]').content;
+            publishedTime = publishedTime.substring(0, 10);
+            eleImg.src = getImageUrl(new Date(publishedTime))
+        } else {
+            eleImg.src = getImageUrl(new Date())
+        }
+    });
+</script><div class="site-data s-card weidgets">
+    <div class="title">
+      <i class="iconfont icon-chart"></i>
+      <span class="title-name">站点数据</span>
+    </div>
+    <div class="all-data">
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-article"></i>
+          文章总数
+        </span>
+        <span class="num">277 篇</span>
+      </div>
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-date"></i>
+          建站天数
+        </span>
+        <span class="num">200 天</span>
+      </div>
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-visibility"></i>
+          总访问量
+        </span>
+        <span class="num" id="busuanzi_value_site_pv">0</span>
+      </div>
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-account"></i>
+          总访客数
+        </span>
+        <span class="num" id="busuanzi_value_site_uv">0</span>
+      </div>
+    </div>
+  </div></div>
+  </aside>
+  <style>
+  .main-aside {
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    animation: fade-up 0.6s 0.3s backwards;
+    .weidgets {
+      padding: 18px;
+      margin-bottom: 1rem;
+      :deep(.title) {
+        margin-bottom: 12px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        opacity: 0.75;
+        .iconfont {
+          opacity: 0.6;
+          margin-right: 6px;
+        }
+        .title-name {
+          opacity: 0.8;
+        }
+      }
+    }
+    .sticky {
+      position: sticky;
+      top: calc(60px + 1rem);
+      .weidgets {
+        animation: fade-up 0.6s 0.4s backwards;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  </style>
+  
+    </div>
+</div>
+
+        </main>
+
+        <div class="control-panel">
+    <div class="control-mask"></div>
+    <div class="control-content">
+        <div class="control-header">
+            <div class="control-title">
+                <i class="iconfont icon-dashboard"></i>
+                <span>中控台</span>
+            </div>
+            <div class="control-close">
+                <i class="iconfont icon-close"></i>
+            </div>
+        </div>
+        <div class="control-body">
+            
+            <div class="control-group">
+                <div class="group-title">主题设置</div>
+                <div class="group-content">
+                    
+                    <div class="control-item">
+                        <div class="item-title">主题模式</div>
+                        <div class="item-content">
+                            <div class="theme-switch">
+                                <div class="switch-item" data-theme="light">
+                                    <i class="iconfont icon-sun"></i>
+                                </div>
+                                <div class="switch-item" data-theme="dark">
+                                    <i class="iconfont icon-moon"></i>
+                                </div>
+                                <div class="switch-item" data-theme="auto">
+                                    <i class="iconfont icon-auto"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-item">
+                        <div class="item-title">主题色</div>
+                        <div class="item-content">
+                            <div class="color-switch">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <div class="loading">
+    <div class="loading-content">
+        <div class="loading-icon">
+            <i class="iconfont icon-loading"></i>
+        </div>
+        <div class="loading-text">加载中...</div>
+    </div>
+</div> <div class="footer-link">
+    
+    <div class="footer-bar">
+      <span class="site-title">元视角</span>
+      <span class="site-desc">纵有疾风起，人生不言弃</span>
+      <a href="/" class="to-home">了解更多</a>
+    </div>
+    
+  
+    <div class="footer-social">
+      
+      <a href="https://github.com/yourusername" target="_blank" class="social-link">
+        <i class="iconfont icon-github"></i>
+      </a>
+      
+      <a href="https://twitter.com/yourusername" target="_blank" class="social-link">
+        <i class="iconfont icon-weibo"></i>
+      </a>
+      
+  
+      <div class="logo" title="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <img src="/images/icons8-stellar-128.png" alt="author" class="author" />
+      </div>
+  
+      
+      <a href="mailto:qinyuanpei@163.com" target="_blank" class="social-link">
+        <i class="iconfont icon-email"></i>
+      </a>
+      
+      <a href="https://space.bilibili.com/yourid" target="_blank" class="social-link">
+        <i class="iconfont icon-douban"></i>
+      </a>
+      
+    </div>
+  
+    <div class="footer-sitemap">
+      
+      <div class="sitemap-item">
+        <span class="title">博客</span>
+        <div class="links">
+          
+          <a href="/posts"  class="link-text">
+            近期文章
+          </a>
+          
+          <a href="/categories"  class="link-text">
+            全部分类
+          </a>
+          
+          <a href="/tags"  class="link-text">
+            全部标签
+          </a>
+          
+          <a href="/archives"  class="link-text">
+            文章归档
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">项目</span>
+        <div class="links">
+          
+          <a href="https://example1.com" target="_blank" class="link-text">
+            项目1
+          </a>
+          
+          <a href="https://example2.com" target="_blank" class="link-text">
+            项目2
+          </a>
+          
+          <a href="https://example2.com" target="_blank" class="link-text">
+            项目3
+          </a>
+          
+          <a href="https://example2.com" target="_blank" class="link-text">
+            项目4
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">专栏</span>
+        <div class="links">
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_10852603.html" target="_blank" class="link-text">
+            .NET 源代码探案系列
+          </a>
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_7444699.html" target="_blank" class="link-text">
+            Python 数据挖掘系列
+          </a>
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_11484903.html" target="_blank" class="link-text">
+            分布式丛林探险系列
+          </a>
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_1708629.html" target="_blank" class="link-text">
+            Unity3D 游戏开发系列
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">页面</span>
+        <div class="links">
+          
+          <a href="/guest"  class="link-text">
+            畅所欲言
+          </a>
+          
+          <a href="/books"  class="link-text">
+            阅读记录
+          </a>
+          
+          <a href="/movies"  class="link-text">
+            观影记录
+          </a>
+          
+          <a href="/musics"  class="link-text">
+            听歌记录
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">友情链接</span>
+        <div class="links">
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            张洪
+          </a>
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            张洪
+          </a>
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            张洪
+          </a>
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            更多
+          </a>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div><footer id="main-footer" class="main-footer">
+    <div class="footer-content">
+        <div class="footer-copyright">
+            <span class="time" data-v-6001e979="">@ 2014 - 2025 By </span>
+            <a href="https://www.imsyy.top" class="author link" target="_blank">
+                飞鸿踏雪
+            </a>
+            
+            
+        </div>
+        <div class="meta">
+            <a class="power link" href="https://vitepress.dev/" target="_blank">
+                <span class="by">Powered by</span>
+                <span class="name">Hugo</span>
+            </a>
+            <a class="theme link" href="/pages/theme">
+                <span class="name">主题</span>
+            </a>
+            <a class="rss link" href="https://blog.imsyy.top/rss.xml" target="_blank">
+                <i class="iconfont icon-rss"></i>
+                <span class="name" data-v-6001e979="">订阅</span>
+            </a>
+            <a class="cc link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+                <i class="iconfont icon-line"></i>
+                <i class="iconfont icon-by-line"></i>
+                <i class="iconfont icon-nc-line"></i><i
+                    class="iconfont icon-nd-line"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+
+<script src="/js/search.min.f2af2dfa3be20e8e7e8c8989bab508289b71bf3730bc6e352738f2084973a1ab.js"></script>
+<script>
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        Search.init();
+    });
+</script><div class="modal search-modal" id="searchModal">
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="iconfont icon-search"></i>
+        <span>全局搜索</span>
+      </div>
+      <div class="modal-close">
+        <i class="iconfont icon-close"></i>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="想要搜点什么" 
+          autocomplete="off"
+          autofocus
+        >
+      </div>
+
+      <div class="search-results" id="searchResults">
+        <div class="no-result" id="noResult" style="display: none;">
+          <i class="iconfont icon-search-empty"></i>
+          <span class="text">搜索结果为空</span>
+        </div>
+        <div class="search-list" id="searchList"></div>
+      </div>
+
+      <div class="search-stats">
+        <span class="text" id="searchStats"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 768px;
+  margin: 80px auto;
+  background-color: var(--main-card-background);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.modal-title .iconfont {
+  margin-right: 0.5rem;
+}
+
+.modal-close {
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.search-box input {
+  width: 100%;
+  outline: none;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 0.6rem 1rem;
+  color: var(--main-font-color);
+  font-family: var(--main-font-family);
+  border: 1px solid var(--main-card-border);
+  background-color: var(--main-card-second-background);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-box input:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.search-results {
+  margin-top: 20px;
+  min-height: 300px;
+}
+
+.no-result {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-result .iconfont {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.no-result .text {
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+.search-list .search-item {
+  margin-bottom: 12px;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--main-card-second-background);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.search-list .search-item:hover {
+  transform: translateY(-2px);
+}
+
+.search-item .title {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.search-item .content {
+  color: var(--main-font-second-color);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.search-stats {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: var(--main-font-second-color);
+}
+
+.highlight {
+  color: var(--main-color);
+  background: transparent;
+}
+</style> 
+    </body>
+</html> 

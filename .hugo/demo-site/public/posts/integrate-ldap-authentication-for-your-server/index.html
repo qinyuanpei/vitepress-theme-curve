@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    
+    <title>为你的服务器集成 LDAP 认证 - 元视角</title>
+    <meta name="description" content="这篇文章介绍了作者在企业级应用项目中接触到的面向企业和用户的项目区别，重点讨论了为什么需要 LDAP 认证以及如何在 Nginx 和 Apache 服务器上集成LDAP认证。在具体操作中，展示了如何在 Nginx 中安装nginx-auth-ldap 模块以及在 Apach e中使用 mod-authnz-ldap 模块实现 LDAP 认证，并简要介绍了在后端实现 Basic 认证的流程。文章最后总结了 Nginx 和 Apache 在 LDAP 认证方面的不同之处，并对企业级应用的认证方案提出了讨论。">
+    
+    
+    <link rel="shortcut icon" href="" type="image/x-icon">
+    
+    
+    <meta property="og:title" content="为你的服务器集成 LDAP 认证">
+    <meta property="og:description" content="这篇文章介绍了作者在企业级应用项目中接触到的面向企业和用户的项目区别，重点讨论了为什么需要 LDAP 认证以及如何在 Nginx 和 Apache 服务器上集成LDAP认证。在具体操作中，展示了如何在 Nginx 中安装nginx-auth-ldap 模块以及在 Apach e中使用 mod-authnz-ldap 模块实现 LDAP 认证，并简要介绍了在后端实现 Basic 认证的流程。文章最后总结了 Nginx 和 Apache 在 LDAP 认证方面的不同之处，并对企业级应用的认证方案提出了讨论。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://localhost:1313/posts/integrate-ldap-authentication-for-your-server/">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    
+    <link rel="stylesheet" href="/scss/main.min.656e2428f69fccc25611e271078ec105c55633d35f5266cb6afedebefd6ba2da.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_3159629_2j0vwz8wd1k.css">
+    
+    
+    <script src="/js/banner.js" defer></script>
+    
+    
+    
+    
+
+    <link crossorigin="" rel="preconnect" href="https://s1.hdslb.com">
+    <link crossorigin="" rel="preconnect" href="https://mirrors.sustech.edu.cn">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://cdn2.codesign.qq.com/icons/g5ZpEgx3z4VO6j2/latest/iconfont.css">
+    <link rel="preconnect" href="https://use.sevencdn.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link crossorigin="anonymous" href="https://use.sevencdn.com/css2?family=Fira+Code:wght@300..700&amp;display=swap" rel="stylesheet">
+    <link href="https://X5EBEZB53I-dsn.algolia.net" rel="preconnect" crossorigin="">
+</head> <body><div class="background patterns">
+    
+    <div class="bg-mask"></div>
+    
+    
+    <div class="bg-image" style="background-image: url('https://tuapi.eees.cc/api.php?category=%7bdongman,fengjing%7d&amp;type=302')"></div>
+    
+    
+    
+</div> 
+
+<style>
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: -2;
+      &.patterns {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%23494849' fill-opacity='0.08' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E");
+      }
+      &.dark {
+        &.patterns {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%23fcfcfc' fill-opacity='0.08' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E");
+        }
+        .cover {
+          filter: brightness(0.6);
+        }
+      }
+      .cover {
+        width: auto;
+        height: auto;
+        min-height: 100%;
+        opacity: 0;
+        transition:
+          filter 0.3s,
+          opacity 0.3s;
+        &.loaded {
+          opacity: 1;
+        }
+      }
+    }
+    </style>
+    
+        <header class="main-header">
+            <nav class="main-nav">
+                <div class="nav-all">
+                    
+                    <div class="left-nav">
+                        <div class="more-menu nav-btn" title="更多内容">
+                            <i class="iconfont icon-menu"></i><div class="more-menu-panel">
+    <div class="menu-list">
+        
+    </div>
+</div> </div>
+                        <div class="site-name">
+                            元视角
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="nav-center">
+                        <div class="site-menu"><div class="menu-list">
+    
+    <div class="menu-item">
+        <span class="link-btn"> 文库</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 书影音</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 友链</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 关于</span>
+        
+    </div>
+    
+</div> </div>
+                        <span class="site-title">
+                            为你的服务器集成 LDAP 认证
+                        </span>
+                    </div>
+                    
+                    
+                    <div class="right-nav">
+                        
+                        <a class="menu-btn nav-btn travellings" title="开往-友链接力" href="https://www.travellings.cn/go.html" target="_blank">
+                            <i class="iconfont icon-subway"></i>
+                        </a>
+                        
+                        <div class="menu-btn nav-btn" title="随机前往一篇文章">
+                            <i class="iconfont icon-shuffle"></i>
+                        </div>
+                        
+                        <div class="menu-btn nav-btn" title="全站搜索">
+                            <i class="iconfont icon-search"></i>
+                        </div>
+                        
+                        <div id="open-control" class="menu-btn nav-btn pc" title="打开中控台">
+                            <i class="iconfont icon-dashboard"></i>
+                        </div>
+                        
+                        <div class="to-top menu-btn" title="返回顶部">
+                            <div class="to-top-btn">
+                                <span class="num">0</span>
+                                <i class="iconfont icon-up"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="menu-btn nav-btn mobile" title="打开菜单">
+                            <i class="iconfont icon-toc"></i>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="mobile-menu">
+    <div class="menu-mask"></div>
+    <div class="menu-content">
+        <div class="menu-header">
+            <div class="site-info">
+                <div class="site-name">元视角</div>
+                <div class="site-description">纵有疾风起，人生不言弃</div>
+            </div>
+        </div>
+        <div class="menu-body">
+            
+            <div class="menu-group">
+                <div class="menu-title">导航</div>
+                <div class="menu-list">
+                    
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>文库</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>书影音</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>友链</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>关于</span>
+                    </a>
+                    
+                </div>
+            </div>
+            
+            <div class="menu-group">
+                <div class="menu-title">更多</div>
+                <div class="menu-list">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <div class="modal search-modal" id="searchModal">
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="iconfont icon-search"></i>
+        <span>全局搜索</span>
+      </div>
+      <div class="modal-close">
+        <i class="iconfont icon-close"></i>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="想要搜点什么" 
+          autocomplete="off"
+          autofocus
+        >
+      </div>
+
+      <div class="search-results" id="searchResults">
+        <div class="no-result" id="noResult" style="display: none;">
+          <i class="iconfont icon-search-empty"></i>
+          <span class="text">搜索结果为空</span>
+        </div>
+        <div class="search-list" id="searchList"></div>
+      </div>
+
+      <div class="search-stats">
+        <span class="text" id="searchStats"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 768px;
+  margin: 80px auto;
+  background-color: var(--main-card-background);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.modal-title .iconfont {
+  margin-right: 0.5rem;
+}
+
+.modal-close {
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.search-box input {
+  width: 100%;
+  outline: none;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 0.6rem 1rem;
+  color: var(--main-font-color);
+  font-family: var(--main-font-family);
+  border: 1px solid var(--main-card-border);
+  background-color: var(--main-card-second-background);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-box input:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.search-results {
+  margin-top: 20px;
+  min-height: 300px;
+}
+
+.no-result {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-result .iconfont {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.no-result .text {
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+.search-list .search-item {
+  margin-bottom: 12px;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--main-card-second-background);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.search-list .search-item:hover {
+  transform: translateY(-2px);
+}
+
+.search-item .title {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.search-item .content {
+  color: var(--main-font-second-color);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.search-stats {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: var(--main-font-second-color);
+}
+
+.highlight {
+  color: var(--main-color);
+  background: transparent;
+}
+</style> </header>
+
+        
+        <main class="main-layout">
+
+
+
+<div class="post">
+    <div class="post-meta">
+        <div class="meta">
+            
+            <div class="categories">
+                
+                
+                <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80" class="cat-item">
+                    <i class="iconfont icon-folder"></i>
+                    <span class="name">编程语言</span>
+                </a>
+                
+                
+            </div>
+            
+            <div class="tags">
+                
+                
+                <a href="/tags/apache" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">Apache</span>
+                </a>
+                
+                <a href="/tags/nginx" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">Nginx</span>
+                </a>
+                
+                <a href="/tags/ldap" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">LDAP</span>
+                </a>
+                
+                <a href="/tags/%E8%AE%A4%E8%AF%81" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">认证</span>
+                </a>
+                
+                
+            </div>
+        </div>
+        <h1 class="title">
+            为你的服务器集成 LDAP 认证
+        </h1>
+        <div class="other-meta">
+            
+            <span class="meta date">
+                <i class="iconfont icon-date"></i>
+                2022-11-15
+            </span>
+            
+            <span class="update meta">
+                <i class="iconfont icon-time"></i>
+                2022-11-15
+            </span>
+            
+            <span class="hot meta">
+                <i class="iconfont icon-fire"></i>
+                <span id="twikoo_visitors" class="artalk-pv-count">0</span>
+            </span>
+            
+            <span class="chat meta hover" data-scroll-to="comments">
+                <i class="iconfont icon-chat"></i>
+                <span id="twikoo_comments" class="artalk-comment-count">0</span>
+            </span>
+        </div>
+    </div>
+    <div class="post-content">
+        <article class="post-article s-card">
+            
+            
+            
+            <div class="expired s-card">
+                本文发表于 <strong>863</strong> 天前，其中的信息可能已经事过境迁
+            </div>
+            
+
+            
+<div class="article-gpt s-card">
+  <div class="title">
+    <span class="name">
+      <i class="iconfont icon-robot"></i>
+      文章摘要
+      <i class="iconfont icon-up"></i>
+    </span>
+    <span class="logo">FakeGPT</span>
+  </div>
+  <div class="content s-card">
+    <span class="text"></span>
+  </div>
+  <div class="meta">
+    
+    
+  </div>
+</div>
+<script src="https://npm.elemecdn.com/typeit@8.7.1/dist/index.umd.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    new TypeIt(".article-gpt .content .text", {
+        strings: '这篇文章介绍了作者在企业级应用项目中接触到的面向企业和用户的项目区别，重点讨论了为什么需要 LDAP 认证以及如何在 Nginx 和 Apache 服务器上集成LDAP认证。在具体操作中，展示了如何在 Nginx 中安装nginx-auth-ldap 模块以及在 Apach e中使用 mod-authnz-ldap 模块实现 LDAP 认证，并简要介绍了在后端实现 Basic 认证的流程。文章最后总结了 Nginx 和 Apache 在 LDAP 认证方面的不同之处，并对企业级应用的认证方案提出了讨论。',
+        speed: 10,
+        lifeLike: true,
+        waitUntilVisible: true,
+    }).go();
+});
+</script>
+
+
+
+            
+            <div id="page-content" class="markdown-main-style">
+                <p>回顾我这些年的工作经历，面向企业(2B)和面向用户(2C)的项目都曾接触过。我个人觉得，面向企业的项目更注重业务，参与决策的人数多、周期长，目的是为企业提供生产经营价值，如缩减成本、提升效率等等，而面向用户的项目更注重体验，参与决策的人数少、周期短，目的是为消费者提供更多的使用价值，本质上是为了圈揽用户和抢夺流量。我在参与这些项目的过程中发现，企业级应用的研发更注重与第三方软件如 SAP、金蝶、用友、ERP 等等的整合，因此，类似单点登录、数据同步这样的需求非常普遍。每当这个时候，我就不由地想起一位前辈。</p>
+<p><img src="/posts/integrate-ldap-authentication-for-your-server/time-ge417ba6ed_1280.jpg" alt="时间就像沙漏里的沙一样流逝"></p>
+<p>当我还在 Automation 打杂的时候，前辈总是一脸得意地问我：“听说过 AD Domain 吗？”。那时，初出茅庐的我年少轻狂，不好意思说我不会，立马敷衍道：“当然听说过，只是一直没用过”。前辈目光如炬，大抵是看出我心虚，立马不屑一顾地回应道：“那就是不会”。过了几秒钟，前辈不紧不慢地接着说道：“只有学会了 AD Domain，你才算是一只脚踏进了企业级应用开发这个领域，知道吗？”，我点了点头，心道：“这不就和茴香豆的茴字有五种写法一样无聊吗？”。多年后，当 LDAP 这个字眼再次映入眼帘的时候，我内心终于清楚地知道：我错了。</p>
+<h1 id="为什么需要-ldap-认证">为什么需要 LDAP 认证</h1>
+<p>我错在哪里了呢？我想，要回答这个问题，还是需要从企业管理的角度来着手。一个面向用户(2C)的产品，其用户基本上是不受地域因素限制的，而对于一个面向企业(2B)的产品，其用户基本上是在一个层次分明、有着明显边界的范围内。运营一个企业，除了业务系统以外，可能还需要 OA、财务、ERP 等等外围软件的支持，如果是一家互联网公司，可能还需要 DevOps、监控、协作等等方面的支撑。此时，从企业的角度自然是希望可以统一账号体系，这样就衍生出了各种各样的单点登陆和认证方案，单单是博主接触过的就有：<a href="https://oauth.net/2/">OAuth2</a>、<a href="https://www.apereo.org/projects/cas">CAS</a>、<a href="https://www.keycloak.org/">Keycloak</a>、<a href="docs.identityserver.io/en/latest/">IdentityServer4</a>，这些方案可以说是各有千秋，此中曲折我们按下不表。</p>
+<p><img src="/posts/integrate-ldap-authentication-for-your-server/AD_On_Windows_Server.png" alt="运行在 Windows Server 上的 AD"></p>
+<p>这里博主想说的是，一旦企业通过 AD Domain 或者说 <a href="https://learn.microsoft.com/zh-cn/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview">Active Directory</a> 来管理用户，就自然而然地牵扯出域登录或者域账号登录的问题。这类围绕 AD Domain 或者说域的问题，我们都可以考虑使用 LDAP 认证或者 <a href="https://web.mit.edu/Kerberos/">Kerberos</a> 认证，特别是后者，主流的软件如 Kafka、Zookeeper、MySQL 等等均支持这一协议，它可以实现在登录本地账户后，免登录打开一个网站的效果。可想而知，这是一个对企业而言极具诱惑力的特性，一个账号打通所有基础设施。当然，我承认 Kerberos 这个协议是非常复杂的，绝非三言两语可以厘清其中的千丝万缕，所以，我们今天只是聊聊 LDAP 认证这个话题。</p>
+<p><img src="/posts/integrate-ldap-authentication-for-your-server/LDAP_Browser.png" alt="通过 LDAP Browser 访问 AD"></p>
+<p>可能大家会纠结，LDAP 和 Active Directory 这两者间的关系，事实上， LDAP 是指轻量目录访问协议(Lightweight Directory Access Protocol)，而 Active Directory 则是微软针对该协议的一种实现。当然，微软为了解决域控的问题，利用 LDAP 存储了一部分私有的数据。所以，两者的关系就像是接口和实现类，我们这里只需要 Active Directory 当成一台 LDAP 服务器即可。关于 Active Directory 的基础知识，这里不再做更多的科普。总而言之，通过 LDAP 我们可以对某个网站实现认证，从而达到保护资源的目的。譬如博主目前参与的前端项目，它是没有常规的登录、注册页面的，它采用的就是域账号登录的形式。下面，我们来看看如何集成 LDAP 认证。</p>
+<h1 id="如何集成-ldap-认证">如何集成 LDAP 认证</h1>
+<p>结合博主在上文中描述的场景，假设我们有一个前端项目通过 Nginx 或者 Apache 进行托管。通常情况下，我们可以直接访问这些前端页面，这意味这些资源是不受任何保护的。对企业来说，它更希望将这些资源保护起来，以确保只有它的员工或者说加入域的用户才可以访问，此时，我们该如何解决这个问题呢？</p>
+<h2 id="nginx-篇">Nginx 篇</h2>
+<p>以 Nginx 为例，我们可以通过 <a href="https://github.com/kvspb/nginx-auth-ldap">nginx-auth-ldap</a> 这个模块来解决这个问题。下面是一个简单的示意图，其基本思路是：在输入用户名和密码后，该模块会连接 LDAP 服务器对用户身份进行校验，如果校验通过，则会以 Basic 认证的的方式生成 <code>Authorization</code> 请求头；反之，将会返回 401 状态码，表示认证失败。</p>
+<p><img src="/posts/integrate-ldap-authentication-for-your-server/LDAP-Auth-With-Nginx.drawio.png" alt="Nginx 集成 LDAP 示意图"></p>
+<p>注意到，这是一个第三方的模块，不管你是通过 Docker 或者主机来部署 Nginx，它都不会包含这个模块，此时，我们就需要为 Nginx 安装这个模块。因为 Nginx 采用的是静态编译的策略，所以，安装模块本质上就是同时拉取 Nginx 和模块的源码，然后重新编译生成二进制文件的过程。首先，我们来下载该模块的源码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/kvspb/nginx-auth-ldap.git /usr/src/nginx-auth-ldap/<span class="p">;</span> 
+</span></span></code></pre></div><p>接下来，我们需要下载 Nginx 源码，无论你是在全新安装的 Nginx 上安装模块，还是在一个安装好的 Nginx 上安装模块，这一步都是必须的，千言万语汇成一句话：Nginx 采用的是静态编译的策略。博主这里是在 <code>nginx:stable-alpine</code> 这个镜像的基础上安装模块：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget http://nginx.org/download/nginx-1.22.1.tar.gz
+</span></span><span class="line"><span class="cl">tar -zxvf nginx-1.22.1.tar.gz
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> nginx-1.22.1
+</span></span></code></pre></div><p>接下来，如果是全新安装 Nginx，那么，你可以像下面这样列出常用的模块，然后用 <code>--add-module</code> 参数指向当前模块的路径：<code>/usr/src/nginx-auth-ldap/</code> 。请注意，下面的参数经过简化，并不代表实际使用的参数：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">./configure <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --prefix<span class="o">=</span>/etc/nginx <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --sbin-path<span class="o">=</span>/usr/sbin/nginx <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --with-http_addition_module <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --with-http_auth_request_module <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  --add-module<span class="o">=</span>/usr/src/nginx-auth-ldap/ 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">make <span class="o">&amp;&amp;</span> make install 
+</span></span></code></pre></div><p>如果是安装好的 Nginx，那么，这个参数就必须从当前的 Nginx 上继承过来，否则，已经安装好的模块将不会参与编译。原本博主非常喜欢 Nginx ，可这一条博主实在不能容忍，这完全是在用户面前摆烂，难道使用了哪些了模块你心里没点数吗？非要逼着用户去帮你维护这些配置信息？这些又臭又长的参数真的不考虑做持久化吗？吐槽完 Nginx，我们继续来填坑，为了获取 Nginx 当前的配置参数，你可以使用 <code>nginx -V</code> 这个命令(注意：这个 <code>V</code> 必须要大写)，此时，我们就可以得到下面的答案：</p>
+<p><img src="/posts/integrate-ldap-authentication-for-your-server/Nginx-Configure-Parameters.png" alt="获取 Nginx 配置参数"></p>
+<p>这意味着什么呢？这意味着你需要把红框里的这一堆参数放到 <code>./configure</code> 后面，然后再像上面一样添加 <code>--add-module</code> 参数，这简直是造孽啊！为了简化这个过程，我改进了一下脚本：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 匹配 configure arguments ，然后再从第 21 个字符开始截取，即冒号后面的所有内容</span>
+</span></span><span class="line"><span class="cl"><span class="nv">NGINX_CONFIG</span><span class="o">=</span><span class="k">$(</span>nginx -V 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> grep <span class="s1">&#39;configure arguments&#39;</span> <span class="p">|</span> cut -c21-<span class="k">)</span>
+</span></span><span class="line"><span class="cl">./configure <span class="nv">$NGINX_CONFIG</span> --add-module<span class="o">=</span>/usr/src/nginx-auth-ldap/ 
+</span></span><span class="line"><span class="cl">make <span class="o">&amp;&amp;</span> make install
+</span></span></code></pre></div><p>当然，如果你亲自折腾过这一切，就知道这是痴心妄想，因为提取出来的这组参数会提示各种各样的错误，总之，你需要按照实际的情况来对这组参数就行调整，看着  <a href="https://github.com/Regularly-Archive/2022/blob/main/src/vue-ldap/Dockerfile_Nginx">Dockerfile</a> 里比裹脚布还要长的参数，Nginx 官方难道你们不会心痛吗？当然，当你熬过这一切以后，我们就可以着手 Nginx 的配置啦：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-nginx" data-lang="nginx"><span class="line"><span class="cl"><span class="k">http</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># 定义 LDAP 服务器
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="kn">ldap_server</span> <span class="s">ldap</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># LDAP 服务器地址，使用 sAMAccountName 还是 uid 以实际的 AD 配置为准
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kn">url</span> <span class="s">ldap://&lt;IP&gt;:389/OU=OPS,DC=company,DC=com?sAMAccountName?one</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 管理员账号, CN/OU/DC 以实际的 AD 配置为准
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kn">binddn</span> <span class="s">&#34;CN=&lt;Administrator&gt;,OU=OPS,DC=company,DC=com&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 管理员密码
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kn">binddn_passwd</span> <span class="s">&#34;&lt;Password&gt;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">group_attribute</span> <span class="s">uniquemember</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">group_attribute_is_dn</span> <span class="no">on</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">require</span> <span class="s">valid_user</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kn">server</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">listen</span>  <span class="mi">80</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">server_name</span>  <span class="s">localhost</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># 启用 LDAP 认证
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kn">auth_ldap</span> <span class="s">&#34;Forbidden&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="kn">auth_ldap_servers</span> <span class="s">ldap</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="kn">root</span> <span class="s">/usr/nginx/wwwroot</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="kn">index</span> <span class="s">index.html</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>可以注意到，我们只需要按实际域控来配置 <code>ldap_server</code> 节点，然后为受保护的资源启用 LDAP 认证即可。此时，如果访问前端页面，浏览器将会提示输入用户名和密码：</p>
+<p><img src="/posts/integrate-ldap-authentication-for-your-server/%E9%9B%86%E6%88%90-LDAP-%E8%AE%A4%E8%AF%81-01.png" alt="Nginx 集成 LDAP 效果演示-1"></p>
+<p>如果我们输入的用户名或者密码不正确会怎么样呢？浏览器将会孜孜不倦地提示你输入用户名和密码。如果我们点击取消会怎么样呢？此时，如下图所示，它将会返回 <code>401</code> 状态码，表示认证失败：</p>
+<p><img src="/posts/integrate-ldap-authentication-for-your-server/%E9%9B%86%E6%88%90-LDAP-%E8%AE%A4%E8%AF%81-06.png" alt="Nginx 集成 LDAP 效果演示-2"></p>
+<p>此外，我们可以注意到，一旦认证通过，我们就可以正常访问前端页面。与此同时，所有的请求都会自动带上 <code>Authorization</code> 请求头，显然，这是一个 Basic 认证：</p>
+<p><img src="/posts/integrate-ldap-authentication-for-your-server/%E9%9B%86%E6%88%90-LDAP-%E8%AE%A4%E8%AF%81-03.png" alt="Nginx 集成 LDAP 效果演示-3"></p>
+<p><img src="/posts/integrate-ldap-authentication-for-your-server/%E9%9B%86%E6%88%90-LDAP-%E8%AE%A4%E8%AF%81-05.png" alt="Nginx 集成 LDAP 效果演示-5"></p>
+<p>至此，我们就实现了 Nginx 下的 LDAP 认证集成。</p>
+<h2 id="apache-篇">Apache 篇</h2>
+<p>虽然 Nginx 比 Apache 更轻量、社区更活跃，可是在模块管理这方面，Apache 是完全吊打 Nginx 的，类似地，Apache 通过 <code>mod-authnz-ldap</code> 这个模块来实现 LDAP 认证的集成，并且这个模块有二进制包，可以直接通过包管理器来安装，从这方面来看，Nginx 完全不如 Apache ：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 安装模块</span>
+</span></span><span class="line"><span class="cl">apt-get update<span class="p">;</span>
+</span></span><span class="line"><span class="cl">apt-get install -y libldap2 mod_ldap mod-authnz-ldap<span class="p">;</span> 
+</span></span><span class="line"><span class="cl"><span class="c1"># 启用模块</span>
+</span></span><span class="line"><span class="cl">a2enmod ldap<span class="p">;</span> 
+</span></span><span class="line"><span class="cl">a2enmod authnz_ldap<span class="p">;</span> 
+</span></span></code></pre></div><p>接下来，我们只需要修改一下 Apache 的配置文件即可：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;VirtualHost</span> <span class="err">*:80</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  ServerName localhost
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  ServerAdmin webmaster@localhost
+</span></span><span class="line"><span class="cl">  DocumentRoot /var/www/html
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  LogLevel debug
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  ErrorLog ${APACHE_LOG_DIR}/error.log
+</span></span><span class="line"><span class="cl">  CustomLog ${APACHE_LOG_DIR}/access.log combined
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;Location</span> <span class="err">&#34;/&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    AuthType Basic
+</span></span><span class="line"><span class="cl">    AuthName &#34;LDAP SSO&#34;
+</span></span><span class="line"><span class="cl">    AuthBasicProvider ldap
+</span></span><span class="line"><span class="cl">    AuthLDAPBindDN &#34;CN=<span class="nt">&lt;Administrator&gt;</span>,OU=OPS,DC=company,DC=com&#34;
+</span></span><span class="line"><span class="cl">    AuthLDAPBindPassword &#34;<span class="nt">&lt;Password&gt;</span>&#34;
+</span></span><span class="line"><span class="cl">    AuthLDAPURL ldap://<span class="nt">&lt;IP&gt;</span>:389/OU=OPS,DC=company,DC=com?sAMAccountName?one
+</span></span><span class="line"><span class="cl">    Require valid-user
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/Location&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/VirtualHost&gt;</span>
+</span></span></code></pre></div><p>可以注意到，两者的配置是非常相似，可以实现相同的效果，这里就不再详细展示啦！</p>
+<h2 id="backend-篇">Backend 篇</h2>
+<p>在前面的示意图里，我们看到还有 <code>Backend</code> 这样一个环节。其实，很多时候，我觉得企业级应用的开发非常别扭，因为它总是在现代中透着些古板，说它现代是因为它在跟进微服务、前后端分离、容器化这些流行趋势，说它古板是因为它总在尝试用新技术做旧时代的东西。譬如，前后端分离以后，JWT 是最常见的认证方式，在这种模式下，服务就应该是无状态的，可实际开发中它还是会搞出来一个 Session 的概念，难道现在还是汤姆猫的时代吗？这个域账号登录的想法确实不错，可它和现在主流的 JWT 是不兼容的，除非在服务器端实现了 Basic 认证。下面是 ASP.NET Core 中实现 Basic 认证的一个简单流程：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="kd">async</span> <span class="n">Task</span> <span class="n">Invoke</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">try</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 1.提取用户信息</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">header</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Headers</span><span class="p">[</span><span class="s">&#34;Authorization&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">authHeader</span> <span class="p">=</span> <span class="n">AuthenticationHeaderValue</span><span class="p">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">header</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">authParams</span> <span class="p">=</span> <span class="n">Convert</span><span class="p">.</span><span class="n">FromBase64String</span><span class="p">(</span><span class="n">authHeader</span><span class="p">.</span><span class="n">Parameter</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">credentials</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetString</span><span class="p">(</span><span class="n">authParams</span><span class="p">).</span><span class="n">Split</span><span class="p">(</span><span class="sc">&#39;:&#39;</span><span class="p">,</span> <span class="m">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">username</span> <span class="p">=</span> <span class="n">credentials</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">password</span> <span class="p">=</span> <span class="n">credentials</span><span class="p">[</span><span class="m">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">// 2.验证用户信息</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">user</span> <span class="p">=</span> <span class="k">await</span> <span class="n">_userService</span><span class="p">.</span><span class="n">Authenticate</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">user</span> <span class="p">!=</span> <span class="kc">null</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 3.指定当前用户</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">var</span> <span class="n">claims</span> <span class="p">=</span> <span class="k">new</span><span class="p">[]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">Claim</span><span class="p">(</span><span class="n">ClaimTypes</span><span class="p">.</span><span class="n">NameIdentifier</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">Id</span><span class="p">.</span><span class="n">ToString</span><span class="p">()),</span>
+</span></span><span class="line"><span class="cl">                <span class="k">new</span> <span class="n">Claim</span><span class="p">(</span><span class="n">ClaimTypes</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="n">UserName</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="p">};</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">var</span> <span class="n">identity</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ClaimsIdentity</span><span class="p">(</span><span class="n">claims</span><span class="p">,</span> <span class="s">&#34;Basic&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">var</span> <span class="n">principal</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ClaimsPrincipal</span><span class="p">(</span><span class="n">identity</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">context</span><span class="p">.</span><span class="n">User</span> <span class="p">=</span> <span class="n">principal</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">catch</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">_next</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>可以看到，Basic 认证的过程其实就是从 <code>Authorization</code> 请求头里提取用户信息并进行验证的过程，博主这里是以中间件的形式来进行说明。按照一般的做法，你可能需要继承 <code>AuthenticationHandler</code> 并重写 <code>HandleAuthenticateAsync()</code> 和 <code>HandleChallengeAsync()</code> 这两个方法，思路其实是完全一样的，这里就不再详细展开说啦！总而言之，如果前端想结合 LDAP 做身份认证，需要后端提供相应的支持。当然，如果你可以在请求传入到后端前自动产生一个 JWT 令牌，那再好不过啦！</p>
+<h1 id="本文小结">本文小结</h1>
+<p>本文分享了 Nginx 和 Apache 结合 LDAP 实现身份认证的过程，背景则是企业级应用开发过程中对单点登陆、域账号登录的诉求。在这个过程中，博主对 Nginx 和 Apache 这两款服务器的差异有了更深刻的认识。考虑到 Nginx 采用的静态编译的策略，因此，给 Nginx 安装模块，本质上就是重新编译 Nginx 的过程，这个过程可谓是痛并快乐着，就像你在文章里看到的那样，博主已经不止一次吐槽过 Nginx 这个奇葩的模块管理方式。相比之下，Apache 的舒适感简直爆棚，因为它的模块都可以直接通过包管理器来安装。当我们为网站集成了 LDAP 认证以后，它会在打开站点时提示输入用户名和密码，一旦身份验证通过，Nginx 或者 Apache 会自动地为每个请求生成 <code>Authorization</code> 请求头，考虑到这个认证方式和目前主流的 JWT 认证不兼容，因此，这个方案需要后端实现 Basic 认证。在此基础上，博主提供了一个 ASP.NET Core 实现 Basic 认证的示例。有趣的是，虽然 Kerberos 协议被指出存在安全漏洞，可它还是在用 Basic 认证来传递用户信息，那么，你告诉我，企业应用需要的这种认证方案，到底是好是坏呢？</p>
+
+            </div>
+
+            
+            
+            
+<div class="copyright s-card">
+  <div class="title">
+    <span class="post-name">为你的服务器集成 LDAP 认证</span>
+    
+    <a :href="http://localhost:1313/posts/integrate-ldap-authentication-for-your-server/" class="post-link" target="_blank">
+      http://localhost:1313/posts/integrate-ldap-authentication-for-your-server/
+    </a>
+    
+  </div>
+  <div class="post-meta">
+    <div class="meta-item">
+      <span class="tip">作者</span>
+      <span class="name">飞鸿踏雪</span>
+    </div>
+    
+    <div class="meta-item">
+      <span class="tip">发布于</span>
+      <span class="name">2022-11-15</span>
+    </div>
+    
+    
+    <div class="meta-item">
+      <span class="tip">更新于</span>
+      <span class="name">2022-11-15</span>
+    </div>
+    
+    
+    <div class="meta-item cc">
+      <span class="tip">许可协议</span>
+      <a class="name" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+        CC BY-NC-SA 4.0
+      </a>
+    </div>
+    
+  </div>
+  <span class="meta-tip">署名-非商业性使用-相同方式共享 4.0 国际</span>
+</div>
+
+            
+
+            
+            <div class="other-meta">
+                <div class="all-tags">
+                    
+                    
+                    <a href="/tags/apache" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">Apache</span>
+                    </a>
+                    
+                    <a href="/tags/nginx" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">Nginx</span>
+                    </a>
+                    
+                    <a href="/tags/ldap" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">LDAP</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%AE%A4%E8%AF%81" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">认证</span>
+                    </a>
+                    
+                    
+                </div>
+                <a href="https://eqnxweimkr5.feishu.cn/share/base/form/shrcnCXCPmxCKKJYI3RKUfefJre" 
+                   class="report" 
+                   target="_blank">
+                    <i class="iconfont icon-report"></i>
+                    反馈与投诉
+                </a>
+            </div>
+
+            
+            
+<div class="reward">
+  <div class="reward-btn" onclick="document.getElementById('rewardModal').style.display='block'">
+    <i class="iconfont icon-reward"></i>
+    <span class="text">赞赏博主</span>
+  </div>
+
+  
+  <div id="rewardModal" class="modal" style="display: none;">
+    <div class="modal-mask" onclick="document.getElementById('rewardModal').style.display='none'"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <span class="modal-title">
+          <i class="iconfont icon-reward"></i>
+          赞赏博主
+        </span>
+        <span class="modal-close" onclick="document.getElementById('rewardModal').style.display='none'">
+          <i class="iconfont icon-close"></i>
+        </span>
+      </div>
+      
+      <div class="modal-content">
+        <div class="reward-card">
+          <span class="thank">🙏 感谢您赐予我前进的力量</span>
+          <div class="qr">
+            
+            <a href="/images/reward/wechat.jpg" class="qr-img" target="_blank">
+              <img src="/images/reward/wechat.jpg" alt="微信" />
+              <span class="tip">
+                <i class="iconfont icon-wechat-pay"></i>
+                微信
+              </span>
+            </a>
+            
+            
+            
+            <a href="/images/reward/alipay.jpg" class="qr-img" target="_blank">
+              <img src="/images/reward/alipay.jpg" alt="支付宝" />
+              <span class="tip">
+                <i class="iconfont icon-alipay"></i>
+                支付宝
+              </span>
+            </a>
+            
+          </div>
+          
+          <div class="all-list s-card hover">
+            <span class="title">全部赞赏者名单</span>
+            <span class="tip">赞赏金额将全部用于开源项目维护，以及服务器、域名及各类云服务的开销</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+}
+
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 430px;
+  width: 90%;
+  background: var(--main-card-background);
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 1002;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-close {
+  cursor: pointer;
+}
+
+ 
+.reward {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: max-content;
+  margin: 1rem auto;
+  user-select: none;
+}
+
+.reward-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 120px;
+  border-radius: 8px;
+  color: #fff;
+  background-color: var(--main-color-red);
+  transition: box-shadow 0.5s;
+  cursor: pointer;
+}
+
+ 
+</style>
+
+
+
+            
+            
+
+            
+            
+  
+  
+  
+  
+  <div class="related-post">
+    <div class="title">
+      <span class="name">
+        <i class="iconfont icon-star"></i>
+        相关推荐
+      </span>
+      
+      <span class="shuffle" onclick="window.location.href='\/posts\/1071063696\/'">
+        随便逛逛
+      </span>
+      
+    </div>
+
+    
+    
+
+
+
+<div class="post-list ">
+    
+    <article class="post-item s-card">
+        
+        
+        
+        <div class="content">
+            
+            <h2 class="title">
+                <a href="/posts/semantic-kernel-mcp-agent-context-enhanced-exploration/">Semantic Kernel × MCP：智能体的上下文增强探索</a>
+            </h2>
+            
+            
+            <div class="summary">
+                
+                    本文深入探讨了 MCP（模型上下文协议），由 Anthropic 设计的开放协议，它如同 AI 领域的 USB 接口，旨在通过统一接口解决大模型连接不同数据源和工具的问题。文章详细介绍了 MCP 的架构、核心角色、工作原理以及如何与 Semantic Kernel 集成，为 .NET 开发者提供高效接入社区 MCP 服务器的方法，减少重复性平台对接工作。此外，还展示了 MCP 在操作浏览器、访问文件系统等场景中的应用效果，并探讨了其局限性及未来发展方向。在 AI 技术快速发展的背景下，MCP 的出现为实现 AI 模型的 “万物互联” 提供了可能，值得开发者关注与探索。
+                
+            </div>
+            
+            
+            <div class="meta">
+                
+                <div class="date">
+                    <i class="iconfont icon-calendar"></i>
+                    <span>2025-03-09</span>
+                </div>
+                
+                
+                
+                <div class="categories">
+                    <i class="iconfont icon-folder"></i>
+                    
+                    <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80">编程语言</a>
+                    
+                </div>
+                
+                
+                
+                
+                <div class="tags">
+                    <i class="iconfont icon-tag"></i>
+                    
+                    <a href="/tags/mcp">MCP</a>
+                    
+                    <a href="/tags/agent">Agent</a>
+                    
+                    <a href="/tags/semantic-kernel">Semantic Kernel</a>
+                    
+                    <a href="/tags/function-calling">Function Calling</a>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </article>
+    
+    <article class="post-item s-card">
+        
+        
+        
+        <div class="content">
+            
+            <h2 class="title">
+                <a href="/posts/face-photo-fast-classification-using-k-means-clustering/">基于 K-Means 聚类分析实现人脸照片的快速分类</a>
+            </h2>
+            
+            
+            <div class="summary">
+                
+                    本文介绍了使用 K-Means 聚类算法对人脸照片进行自动分类的方法，解决了 “脸盲症” 问题。通过 Dlib 提取人脸特征向量，并利用 Scikit-Learn 的 K-Means 聚类分析，能够快速将大量人脸照片按人物进行分类。文章详细讲解了 K-Means 算法的原理、K 值确定方法，以及如何使用 PCA 降维和 Matplotlib 可视化聚类结果。该技术方案帮助用户高效地整理和管理照片，避免了人工分类的繁琐过程。尽管 K-Means 算法简单高效，但其对簇数和初始中心的选择较为敏感，可能不适用于噪声数据和非凸形簇，建议在实际应用中结合 DBSCAN 等算法以提高聚类效果。
+                
+            </div>
+            
+            
+            <div class="meta">
+                
+                <div class="date">
+                    <i class="iconfont icon-calendar"></i>
+                    <span>2025-01-14</span>
+                </div>
+                
+                
+                
+                <div class="categories">
+                    <i class="iconfont icon-folder"></i>
+                    
+                    <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80">编程语言</a>
+                    
+                </div>
+                
+                
+                
+                
+                <div class="tags">
+                    <i class="iconfont icon-tag"></i>
+                    
+                    <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0">机器学习</a>
+                    
+                    <a href="/tags/%E4%BA%BA%E8%84%B8%E5%88%86%E7%B1%BB">人脸分类</a>
+                    
+                    <a href="/tags/k-means">K-Means</a>
+                    
+                    <a href="/tags/scikit-learn">Scikit-Learn</a>
+                    
+                    <a href="/tags/%E8%81%9A%E7%B1%BB">聚类</a>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </article>
+    
+</div> 
+  </div>
+  
+
+
+<style>
+.related-post {
+  margin-top: 1rem;
+}
+
+.related-post .title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 3rem 0 1rem 0;
+  padding: 0 6px;
+}
+
+.related-post .title .name {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.related-post .title .name .iconfont {
+  font-size: 26px;
+  font-weight: normal;
+  margin-right: 8px;
+}
+
+.related-post .title .shuffle {
+  opacity: 0.6;
+  font-size: 14px;
+  transition: color 0.3s, opacity 0.3s;
+  cursor: pointer;
+}
+
+.related-post .title .shuffle:hover {
+  opacity: 1;
+  color: var(--main-color);
+}
+</style>
+
+
+            
+            <div id="comments">
+                
+<div id="main-comment" class="comment">
+    <div v-if="!fill" class="title">
+        <span class="name">
+            <i class="iconfont icon-chat"></i>
+            评论
+        </span>
+        <span class="tool"> 隐私政策 </span>
+    </div>
+    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css"/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+    .waline-container .vcount {
+        color: var(--card-text-color-main);
+    }
+</style>
+
+
+    <script type="module">
+        import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+        init({
+            el: '#waline',
+            serverURL: 'https:\/\/waline.yuanpei.me\/',
+            lang: 'zh',
+            dark: 'auto',
+            path: window.location.href,
+            requiredMeta: ['nick','mail'],
+            emoji: [
+                '//unpkg.com/@waline/emojis@1.2.0/weibo'
+            ],
+            reaction: false,
+        });
+      </script>
+
+
+</div>
+
+            </div>
+        </article>
+        
+        <aside class="main-aside"><div class="sticky"> 
+<div class="aside-countdown s-card weidgets">
+  <div class="card-title">
+    <i class="fas fa-hourglass-half"></i>
+    <span>倒计时</span>
+  </div>
+  <div class="card-content">
+    
+  </div>
+</div> 
+<div class="tags-cloud s-card weidgets">
+  <div class="title">
+    <i class="iconfont icon-hashtag"></i>
+    <span class="title-name">热门标签</span>
+  </div>
+  <div class="all-tags">
+    
+  </div>
+  <a href="/pages/tags" class="more-tags">查看全部</a>
+</div><div class="site-data s-card weidgets">
+    <div class="title">
+      <i class="iconfont icon-chart"></i>
+      <span class="title-name">站点数据</span>
+    </div>
+    <div class="all-data">
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-article"></i>
+          文章总数
+        </span>
+        <span class="num">277 篇</span>
+      </div>
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-date"></i>
+          建站天数
+        </span>
+        <span class="num">200 天</span>
+      </div>
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-visibility"></i>
+          总访问量
+        </span>
+        <span class="num" id="busuanzi_value_site_pv">0</span>
+      </div>
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-account"></i>
+          总访客数
+        </span>
+        <span class="num" id="busuanzi_value_site_uv">0</span>
+      </div>
+    </div>
+  </div></div>
+  </aside>
+  <style>
+  .main-aside {
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    animation: fade-up 0.6s 0.3s backwards;
+    .weidgets {
+      padding: 18px;
+      margin-bottom: 1rem;
+      :deep(.title) {
+        margin-bottom: 12px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        opacity: 0.75;
+        .iconfont {
+          opacity: 0.6;
+          margin-right: 6px;
+        }
+        .title-name {
+          opacity: 0.8;
+        }
+      }
+    }
+    .sticky {
+      position: sticky;
+      top: calc(60px + 1rem);
+      .weidgets {
+        animation: fade-up 0.6s 0.4s backwards;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  </style>
+  
+    </div>
+</div>
+
+        </main>
+
+        <div class="footer-link">
+    
+    <div class="footer-bar">
+      <span class="site-title">元视角</span>
+      <span class="site-desc">纵有疾风起，人生不言弃</span>
+      <a href="/" class="to-home">了解更多</a>
+    </div>
+    
+  
+    <div class="footer-social">
+      
+      <a href="https://github.com/yourusername" target="_blank" class="social-link">
+        <i class="iconfont icon-github"></i>
+      </a>
+      
+      <a href="https://twitter.com/yourusername" target="_blank" class="social-link">
+        <i class="iconfont icon-weibo"></i>
+      </a>
+      
+  
+      <div class="logo" title="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <img src="/images/icons8-stellar-128.png" alt="author" class="author" />
+      </div>
+  
+      
+      <a href="mailto:qinyuanpei@163.com" target="_blank" class="social-link">
+        <i class="iconfont icon-email"></i>
+      </a>
+      
+      <a href="https://space.bilibili.com/yourid" target="_blank" class="social-link">
+        <i class="iconfont icon-douban"></i>
+      </a>
+      
+    </div>
+  
+    <div class="footer-sitemap">
+      
+      <div class="sitemap-item">
+        <span class="title">博客</span>
+        <div class="links">
+          
+          <a href="/posts"  class="link-text">
+            近期文章
+          </a>
+          
+          <a href="/categories"  class="link-text">
+            全部分类
+          </a>
+          
+          <a href="/tags"  class="link-text">
+            全部标签
+          </a>
+          
+          <a href="/archives"  class="link-text">
+            文章归档
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">项目</span>
+        <div class="links">
+          
+          <a href="https://example1.com" target="_blank" class="link-text">
+            项目1
+          </a>
+          
+          <a href="https://example2.com" target="_blank" class="link-text">
+            项目2
+          </a>
+          
+          <a href="https://example2.com" target="_blank" class="link-text">
+            项目3
+          </a>
+          
+          <a href="https://example2.com" target="_blank" class="link-text">
+            项目4
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">专栏</span>
+        <div class="links">
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_10852603.html" target="_blank" class="link-text">
+            .NET 源代码探案系列
+          </a>
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_7444699.html" target="_blank" class="link-text">
+            Python 数据挖掘系列
+          </a>
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_11484903.html" target="_blank" class="link-text">
+            分布式丛林探险系列
+          </a>
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_1708629.html" target="_blank" class="link-text">
+            Unity3D 游戏开发系列
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">页面</span>
+        <div class="links">
+          
+          <a href="/guest"  class="link-text">
+            畅所欲言
+          </a>
+          
+          <a href="/books"  class="link-text">
+            阅读记录
+          </a>
+          
+          <a href="/movies"  class="link-text">
+            观影记录
+          </a>
+          
+          <a href="/musics"  class="link-text">
+            听歌记录
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">友情链接</span>
+        <div class="links">
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            张洪
+          </a>
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            张洪
+          </a>
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            张洪
+          </a>
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            更多
+          </a>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div><footer id="main-footer" class="main-footer">
+    <div class="footer-content">
+        <div class="footer-copyright">
+            <span class="time" data-v-6001e979="">@ 2014 - 2025 By </span>
+            <a href="https://www.imsyy.top" class="author link" target="_blank">
+                飞鸿踏雪
+            </a>
+            
+            
+        </div>
+        <div class="meta">
+            <a class="power link" href="https://vitepress.dev/" target="_blank">
+                <span class="by">Powered by</span>
+                <span class="name">Hugo</span>
+            </a>
+            <a class="theme link" href="/pages/theme">
+                <span class="name">主题</span>
+            </a>
+            <a class="rss link" href="https://blog.imsyy.top/rss.xml" target="_blank">
+                <i class="iconfont icon-rss"></i>
+                <span class="name" data-v-6001e979="">订阅</span>
+            </a>
+            <a class="cc link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+                <i class="iconfont icon-line"></i>
+                <i class="iconfont icon-by-line"></i>
+                <i class="iconfont icon-nc-line"></i><i
+                    class="iconfont icon-nd-line"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+
+<script src="/js/search.min.f2af2dfa3be20e8e7e8c8989bab508289b71bf3730bc6e352738f2084973a1ab.js"></script>
+<script>
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        Search.init();
+    });
+</script><div class="modal search-modal" id="searchModal">
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="iconfont icon-search"></i>
+        <span>全局搜索</span>
+      </div>
+      <div class="modal-close">
+        <i class="iconfont icon-close"></i>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="想要搜点什么" 
+          autocomplete="off"
+          autofocus
+        >
+      </div>
+
+      <div class="search-results" id="searchResults">
+        <div class="no-result" id="noResult" style="display: none;">
+          <i class="iconfont icon-search-empty"></i>
+          <span class="text">搜索结果为空</span>
+        </div>
+        <div class="search-list" id="searchList"></div>
+      </div>
+
+      <div class="search-stats">
+        <span class="text" id="searchStats"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 768px;
+  margin: 80px auto;
+  background-color: var(--main-card-background);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.modal-title .iconfont {
+  margin-right: 0.5rem;
+}
+
+.modal-close {
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.search-box input {
+  width: 100%;
+  outline: none;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 0.6rem 1rem;
+  color: var(--main-font-color);
+  font-family: var(--main-font-family);
+  border: 1px solid var(--main-card-border);
+  background-color: var(--main-card-second-background);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-box input:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.search-results {
+  margin-top: 20px;
+  min-height: 300px;
+}
+
+.no-result {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-result .iconfont {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.no-result .text {
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+.search-list .search-item {
+  margin-bottom: 12px;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--main-card-second-background);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.search-list .search-item:hover {
+  transform: translateY(-2px);
+}
+
+.search-item .title {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.search-item .content {
+  color: var(--main-font-second-color);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.search-stats {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: var(--main-font-second-color);
+}
+
+.highlight {
+  color: var(--main-color);
+  background: transparent;
+}
+</style> 
+    </body>
+</html> 

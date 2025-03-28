@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    
+    <title>Unity3D 游戏开发之从 Unity3D 项目版本控制说起 - 元视角</title>
+    <meta name="description" content="在这篇文章中，作者介绍了在 Unity3D 游戏项目中进行版本控制的重要性和方法。作者指出团队合作时需要版本控制来避免代码冲突和确保项目稳定性。在 Unity3D 中，版本控制主要针对 Assets 和 ProjectSetting 文件夹，需要将项目设置为生成 .Meta 文件和将资源模式设置为 Force Text。作者提到了三种主要的版本控制方式：使用 Asset Server、Github 和 SVN，并提供了相关链接和操作指南。最后强调了建立代码提交规范和流程控制规范的重要性。">
+    
+    
+    <link rel="shortcut icon" href="" type="image/x-icon">
+    
+    
+    <meta property="og:title" content="Unity3D 游戏开发之从 Unity3D 项目版本控制说起">
+    <meta property="og:description" content="在这篇文章中，作者介绍了在 Unity3D 游戏项目中进行版本控制的重要性和方法。作者指出团队合作时需要版本控制来避免代码冲突和确保项目稳定性。在 Unity3D 中，版本控制主要针对 Assets 和 ProjectSetting 文件夹，需要将项目设置为生成 .Meta 文件和将资源模式设置为 Force Text。作者提到了三种主要的版本控制方式：使用 Asset Server、Github 和 SVN，并提供了相关链接和操作指南。最后强调了建立代码提交规范和流程控制规范的重要性。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://localhost:1313/posts/1320325685/">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    
+    <link rel="stylesheet" href="/scss/main.min.656e2428f69fccc25611e271078ec105c55633d35f5266cb6afedebefd6ba2da.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_3159629_2j0vwz8wd1k.css">
+    
+    
+    <script src="/js/banner.js" defer></script>
+    
+    
+    
+    
+
+    <link crossorigin="" rel="preconnect" href="https://s1.hdslb.com">
+    <link crossorigin="" rel="preconnect" href="https://mirrors.sustech.edu.cn">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://cdn2.codesign.qq.com/icons/g5ZpEgx3z4VO6j2/latest/iconfont.css">
+    <link rel="preconnect" href="https://use.sevencdn.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link crossorigin="anonymous" href="https://use.sevencdn.com/css2?family=Fira+Code:wght@300..700&amp;display=swap" rel="stylesheet">
+    <link href="https://X5EBEZB53I-dsn.algolia.net" rel="preconnect" crossorigin="">
+</head> <body><div class="background patterns">
+    
+    <div class="bg-mask"></div>
+    
+    
+    <div class="bg-image" style="background-image: url('https://tuapi.eees.cc/api.php?category=%7bdongman,fengjing%7d&amp;type=302')"></div>
+    
+    
+    
+</div> 
+
+<style>
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: -2;
+      &.patterns {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%23494849' fill-opacity='0.08' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E");
+      }
+      &.dark {
+        &.patterns {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%23fcfcfc' fill-opacity='0.08' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E");
+        }
+        .cover {
+          filter: brightness(0.6);
+        }
+      }
+      .cover {
+        width: auto;
+        height: auto;
+        min-height: 100%;
+        opacity: 0;
+        transition:
+          filter 0.3s,
+          opacity 0.3s;
+        &.loaded {
+          opacity: 1;
+        }
+      }
+    }
+    </style>
+    
+        <header class="main-header">
+            <nav class="main-nav">
+                <div class="nav-all">
+                    
+                    <div class="left-nav">
+                        <div class="more-menu nav-btn" title="更多内容">
+                            <i class="iconfont icon-menu"></i><div class="more-menu-panel">
+    <div class="menu-list">
+        
+    </div>
+</div> </div>
+                        <div class="site-name">
+                            元视角
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="nav-center">
+                        <div class="site-menu"><div class="menu-list">
+    
+    <div class="menu-item">
+        <span class="link-btn"> 文库</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 书影音</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 友链</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 关于</span>
+        
+    </div>
+    
+</div> </div>
+                        <span class="site-title">
+                            Unity3D 游戏开发之从 Unity3D 项目版本控制说起
+                        </span>
+                    </div>
+                    
+                    
+                    <div class="right-nav">
+                        
+                        <a class="menu-btn nav-btn travellings" title="开往-友链接力" href="https://www.travellings.cn/go.html" target="_blank">
+                            <i class="iconfont icon-subway"></i>
+                        </a>
+                        
+                        <div class="menu-btn nav-btn" title="随机前往一篇文章">
+                            <i class="iconfont icon-shuffle"></i>
+                        </div>
+                        
+                        <div class="menu-btn nav-btn" title="全站搜索">
+                            <i class="iconfont icon-search"></i>
+                        </div>
+                        
+                        <div id="open-control" class="menu-btn nav-btn pc" title="打开中控台">
+                            <i class="iconfont icon-dashboard"></i>
+                        </div>
+                        
+                        <div class="to-top menu-btn" title="返回顶部">
+                            <div class="to-top-btn">
+                                <span class="num">0</span>
+                                <i class="iconfont icon-up"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="menu-btn nav-btn mobile" title="打开菜单">
+                            <i class="iconfont icon-toc"></i>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="mobile-menu">
+    <div class="menu-mask"></div>
+    <div class="menu-content">
+        <div class="menu-header">
+            <div class="site-info">
+                <div class="site-name">元视角</div>
+                <div class="site-description">纵有疾风起，人生不言弃</div>
+            </div>
+        </div>
+        <div class="menu-body">
+            
+            <div class="menu-group">
+                <div class="menu-title">导航</div>
+                <div class="menu-list">
+                    
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>文库</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>书影音</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>友链</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>关于</span>
+                    </a>
+                    
+                </div>
+            </div>
+            
+            <div class="menu-group">
+                <div class="menu-title">更多</div>
+                <div class="menu-list">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <div class="modal search-modal" id="searchModal">
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="iconfont icon-search"></i>
+        <span>全局搜索</span>
+      </div>
+      <div class="modal-close">
+        <i class="iconfont icon-close"></i>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="想要搜点什么" 
+          autocomplete="off"
+          autofocus
+        >
+      </div>
+
+      <div class="search-results" id="searchResults">
+        <div class="no-result" id="noResult" style="display: none;">
+          <i class="iconfont icon-search-empty"></i>
+          <span class="text">搜索结果为空</span>
+        </div>
+        <div class="search-list" id="searchList"></div>
+      </div>
+
+      <div class="search-stats">
+        <span class="text" id="searchStats"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 768px;
+  margin: 80px auto;
+  background-color: var(--main-card-background);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.modal-title .iconfont {
+  margin-right: 0.5rem;
+}
+
+.modal-close {
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.search-box input {
+  width: 100%;
+  outline: none;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 0.6rem 1rem;
+  color: var(--main-font-color);
+  font-family: var(--main-font-family);
+  border: 1px solid var(--main-card-border);
+  background-color: var(--main-card-second-background);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-box input:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.search-results {
+  margin-top: 20px;
+  min-height: 300px;
+}
+
+.no-result {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-result .iconfont {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.no-result .text {
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+.search-list .search-item {
+  margin-bottom: 12px;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--main-card-second-background);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.search-list .search-item:hover {
+  transform: translateY(-2px);
+}
+
+.search-item .title {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.search-item .content {
+  color: var(--main-font-second-color);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.search-stats {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: var(--main-font-second-color);
+}
+
+.highlight {
+  color: var(--main-color);
+  background: transparent;
+}
+</style> </header>
+
+        
+        <main class="main-layout">
+
+
+
+<div class="post">
+    <div class="post-meta">
+        <div class="meta">
+            
+            <div class="categories">
+                
+                
+                <a href="/categories/unity3d" class="cat-item">
+                    <i class="iconfont icon-folder"></i>
+                    <span class="name">Unity3D</span>
+                </a>
+                
+                
+            </div>
+            
+            <div class="tags">
+                
+                
+                <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">版本控制</span>
+                </a>
+                
+                <a href="/tags/unity3d" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">Unity3D</span>
+                </a>
+                
+                <a href="/tags/svn" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">SVN</span>
+                </a>
+                
+                <a href="/tags/github" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">Github</span>
+                </a>
+                
+                
+            </div>
+        </div>
+        <h1 class="title">
+            Unity3D 游戏开发之从 Unity3D 项目版本控制说起
+        </h1>
+        <div class="other-meta">
+            
+            <span class="meta date">
+                <i class="iconfont icon-date"></i>
+                2015-07-02
+            </span>
+            
+            <span class="update meta">
+                <i class="iconfont icon-time"></i>
+                2015-07-02
+            </span>
+            
+            <span class="hot meta">
+                <i class="iconfont icon-fire"></i>
+                <span id="twikoo_visitors" class="artalk-pv-count">0</span>
+            </span>
+            
+            <span class="chat meta hover" data-scroll-to="comments">
+                <i class="iconfont icon-chat"></i>
+                <span id="twikoo_comments" class="artalk-comment-count">0</span>
+            </span>
+        </div>
+    </div>
+    <div class="post-content">
+        <article class="post-article s-card">
+            
+            
+            
+            <div class="expired s-card">
+                本文发表于 <strong>3556</strong> 天前，其中的信息可能已经事过境迁
+            </div>
+            
+
+            
+<div class="article-gpt s-card">
+  <div class="title">
+    <span class="name">
+      <i class="iconfont icon-robot"></i>
+      文章摘要
+      <i class="iconfont icon-up"></i>
+    </span>
+    <span class="logo">FakeGPT</span>
+  </div>
+  <div class="content s-card">
+    <span class="text"></span>
+  </div>
+  <div class="meta">
+    
+    
+  </div>
+</div>
+<script src="https://npm.elemecdn.com/typeit@8.7.1/dist/index.umd.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    new TypeIt(".article-gpt .content .text", {
+        strings: '在这篇文章中，作者介绍了在 Unity3D 游戏项目中进行版本控制的重要性和方法。作者指出团队合作时需要版本控制来避免代码冲突和确保项目稳定性。在 Unity3D 中，版本控制主要针对 Assets 和 ProjectSetting 文件夹，需要将项目设置为生成 .Meta 文件和将资源模式设置为 Force Text。作者提到了三种主要的版本控制方式：使用 Asset Server、Github 和 SVN，并提供了相关链接和操作指南。最后强调了建立代码提交规范和流程控制规范的重要性。',
+        speed: 10,
+        lifeLike: true,
+        waitUntilVisible: true,
+    }).go();
+});
+</script>
+
+
+
+            
+            <div id="page-content" class="markdown-main-style">
+                <p>各位朋友，大家好，欢迎大家关注我的博客，我是秦元培，我的独立博客地址是：<a href="http://qinyuanpei.com">http://blog.yuanpei.me</a>、CSDN 博客地址是：<a href="http://blog.csdn.net/qinyuanpei">http://blog.csdn.net/qinyuanpei</a>。今天我想和大家聊聊 Unity3D 游戏项目的版本控制。</p>
+<h1 id="为什么要进行版本控制">为什么要进行版本控制</h1>
+<p>当我一个人写代码的时候，在我的脑海中是不存在版本控制这个概念的，因为我对整个项目的代码如数家珍。可是当我和一群人在一起写代码的时候，我可能并不会清楚团队中有谁修改了哪一行代码，即使是一个变量的名称或者是一个函数的名称，在我毫不知情的情况下，可能这样的修改会使得程序无法运行，这个时候我需要版本控制；尽管 Unity3D 是一个适合小团队开发的游戏引擎，可是即使再小的团队同样会有不同的分工，当大家需要将各自的工作合并到一个完整的项目中的时候，这个时候我需要版本控制；当我需要了解团队成员实际的编程能力的时候，最好的方法是让他们参与到一个项目的开发中，这样我可以从他提交代码的情况了解他的工作能力，这个时候我需要版本控制；当我希望时时刻刻对项目进行备份，并在某一个关键的时刻将项目恢复到一个正确的状态的时候，复制、黏贴不会让这个工作变得简单，这个时候我需要版本控制。</p>
+<h1 id="怎样在-unity3d-中进行版本控制">怎样在 Unity3D 中进行版本控制</h1>
+<p>在 Unity3D 中进行版本控制主要针对 Assets 和 ProjectSetting 这两个文件夹，因为除此以外的文件和文件夹都是 Unity3D 在运行过程中产生的临时文件，这些文件会在使用 Unity3D 打开项目后重新生成，因此无需对这些文件或文件夹进行版本控制。好了，在了解了 Unity3D 版本控制中需要关注的主要内容后，接下来我们要关注的是怎样让版本控制的软件对我们提交的内容进行差异化识别，我们知道版本控制的一个核心任务就是将服务器上的文件和本地的文件进行比对，找出哪些文件是最新生成的、哪些文件是被修改过的等等。因此为了方便版本控制软件对文件进行比对，常常需要项目变动的这些因素转化为文本形式，如果熟悉 Github 的朋友应该知道，Github 中判断两个文件的差异就是根据文本(代码)来比较的，因此在 Unity3D 中使用版本控制同样需要遵循这个原则，好在 Unity3D 在管理 Unity3D 项目时已经考虑到了这一点，通常在对 Unity3D 项目进行版本控制的时候，我们需要做这样的事情：</p>
+<ul>
+<li>
+<p>通过 Edit-&gt;Project Settings-&gt;Editor 菜单打开编辑器设置选项，将 Version Control 选项下的 Mode 设为 Visual Meta Files，这样 Unity3D 将为项目中的每个文件或者每个文件夹生成对应的.Meta 文件。该文件是一个文本文件，记录了对应文件的相关信息，版本控制软件可以以此来对文件版本进行对比和合并操作。</p>
+</li>
+<li>
+<p>Unity3D 中的资源默认是以二进制的形式进行组织的，这种组织方式对版本控制来说是不合适的，因此需要通过通过 Edit-&gt;Project Settings-&gt;Editor 菜单打开编辑器设置选项，将 Asset Serialization 下的 Mode 设为 Force Text。</p>
+</li>
+<li>
+<p>通过 Edit-&gt;Prefences-&gt;External Tools 找到 Revision Control Diff/Merge 选项，在安装了版本控制软件后可以在这里找到相关的选项，以博主为例，博主使用的是 TortoiseSVN，这里的选项是 TortoiseMegre。目前 Unity3D 支持的版本控制软件有 SourceGear DiffMerge、TKDiff、P4Megre、TortoiseMegre、WinMegre、PlasticSCM Megre。</p>
+</li>
+</ul>
+<p><img src="/posts/1320325685/20150702094529611.jpg" alt="编辑器设置"></p>
+<p><img src="/posts/1320325685/20150702094714776.jpg" alt="编辑器设置"></p>
+<p>好了，在完成以上准备工作后，我们就可以开始进行 Unity3D 项目的版本控制了，目前在 Unity3D 中我们主要有以下三种方式来对 Unity3D 项目进行版本控制：</p>
+<h2 id="使用-asset-server-进行版本控制">使用 Asset Server 进行版本控制</h2>
+<p>Unity3D 的<a href="http://unity3d.com/unity/team/assetserver/">Asset Server</a>是一个 Unity3D 内部集成的版本控制软件，它和我们熟知的 SVN 类似，适合在小团队内进行版本控制，这是一个收费软件，尽管在某些方面它甚至比 SVN 还要方便，不过在实际的项目中使用这个的还是比较少的，所以如果大家对这个感兴趣，可以从这里了解它的具体情况，这里我们不打算介绍这个软件的使用。</p>
+<p><a href="http://blog.csdn.net/amazonzx/article/details/7980117">Unity3D 游戏制作（四）——Asset Server 搭建</a></p>
+<p><a href="http://tieba.baidu.com/p/2419391804">【教程】Asset Server（联合开发）</a></p>
+<h2 id="使用-github-进行版本控制">使用 Github 进行版本控制</h2>
+<p>使用 Github 进行版本控制时可以在 Git 仓库中添加一个.gitignore 文件来对项目中需要同步的文件进行过滤，在文章开始我们已经知道 Unity3D 项目的版本控制主要针对 Assets 和 ProjectSetting 这两个文件，因此.gitignore 的内容可以这样填写:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plain" data-lang="plain"><span class="line"><span class="cl">Library/
+</span></span><span class="line"><span class="cl">Temp/
+</span></span><span class="line"><span class="cl">*.sln
+</span></span><span class="line"><span class="cl">*.csproj
+</span></span><span class="line"><span class="cl">*.sln
+</span></span><span class="line"><span class="cl">*.userprefs
+</span></span><span class="line"><span class="cl">*.unityproj
+</span></span><span class="line"><span class="cl">*.DS_Store
+</span></span></code></pre></div><p>这样每次提交文件的时候 Github 将忽略这些文件的更改。关于 Github 的使用及其相关命令可以查看这里：</p>
+<p><a href="http://www.cnblogs.com/lwzz/archive/2013/02/23/2921426.html">总结自己的 Git 常用命令</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2014/06/git_remote.html">Git 远程操作详解</a></p>
+<p>Github 中每个仓库的容量限制为 1G，适合小项目的版本控制，对于大型项目的版本控制应该考虑使用 SVN。</p>
+<h2 id="使用-svn-进行版本控制">使用 SVN 进行版本控制</h2>
+<p>使用 SVN 进行版本控制时可以通过右键菜单将某些文件和文件夹添加到忽略的文件列表中，这样 SVN 在每次提交文件的时候将忽略这些文件的更改。这块儿其实和 Github 的.gitignore 是相同的。SVN 常用的软件组合是 TortoiseSVN(客户端)+VisualSVN Server(服务端)，具体内容请参考这 2 篇文章：<a href="http://www.cnblogs.com/armyfai/p/3985660.html">SVN 使用教程总结</a>和<a href="http://blog.chinaunix.net/uid-27004869-id-4112057.html">客户端 TortoiseSVN 的安装及使用方法</a></p>
+<h1 id="小结">小结</h1>
+<p>不管使用什么版本控制软件，建立相关的代码提交规范和流程控制规范都是必要的，因此在团队中应该有一个人负责对团队成员提交的代码进行审核和规范化，这样可以减少因为因为代码提交而产生的各种问题。好了，今天这篇文章先写到这里了，希望大家喜欢！</p>
+            </div>
+
+            
+            
+            
+<div class="copyright s-card">
+  <div class="title">
+    <span class="post-name">Unity3D 游戏开发之从 Unity3D 项目版本控制说起</span>
+    
+    <a :href="http://localhost:1313/posts/1320325685/" class="post-link" target="_blank">
+      http://localhost:1313/posts/1320325685/
+    </a>
+    
+  </div>
+  <div class="post-meta">
+    <div class="meta-item">
+      <span class="tip">作者</span>
+      <span class="name">飞鸿踏雪</span>
+    </div>
+    
+    <div class="meta-item">
+      <span class="tip">发布于</span>
+      <span class="name">2015-07-02</span>
+    </div>
+    
+    
+    <div class="meta-item">
+      <span class="tip">更新于</span>
+      <span class="name">2015-07-02</span>
+    </div>
+    
+    
+    <div class="meta-item cc">
+      <span class="tip">许可协议</span>
+      <a class="name" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+        CC BY-NC-SA 4.0
+      </a>
+    </div>
+    
+  </div>
+  <span class="meta-tip">署名-非商业性使用-相同方式共享 4.0 国际</span>
+</div>
+
+            
+
+            
+            <div class="other-meta">
+                <div class="all-tags">
+                    
+                    
+                    <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">版本控制</span>
+                    </a>
+                    
+                    <a href="/tags/unity3d" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">Unity3D</span>
+                    </a>
+                    
+                    <a href="/tags/svn" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">SVN</span>
+                    </a>
+                    
+                    <a href="/tags/github" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">Github</span>
+                    </a>
+                    
+                    
+                </div>
+                <a href="https://eqnxweimkr5.feishu.cn/share/base/form/shrcnCXCPmxCKKJYI3RKUfefJre" 
+                   class="report" 
+                   target="_blank">
+                    <i class="iconfont icon-report"></i>
+                    反馈与投诉
+                </a>
+            </div>
+
+            
+            
+<div class="reward">
+  <div class="reward-btn" onclick="document.getElementById('rewardModal').style.display='block'">
+    <i class="iconfont icon-reward"></i>
+    <span class="text">赞赏博主</span>
+  </div>
+
+  
+  <div id="rewardModal" class="modal" style="display: none;">
+    <div class="modal-mask" onclick="document.getElementById('rewardModal').style.display='none'"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <span class="modal-title">
+          <i class="iconfont icon-reward"></i>
+          赞赏博主
+        </span>
+        <span class="modal-close" onclick="document.getElementById('rewardModal').style.display='none'">
+          <i class="iconfont icon-close"></i>
+        </span>
+      </div>
+      
+      <div class="modal-content">
+        <div class="reward-card">
+          <span class="thank">🙏 感谢您赐予我前进的力量</span>
+          <div class="qr">
+            
+            <a href="/images/reward/wechat.jpg" class="qr-img" target="_blank">
+              <img src="/images/reward/wechat.jpg" alt="微信" />
+              <span class="tip">
+                <i class="iconfont icon-wechat-pay"></i>
+                微信
+              </span>
+            </a>
+            
+            
+            
+            <a href="/images/reward/alipay.jpg" class="qr-img" target="_blank">
+              <img src="/images/reward/alipay.jpg" alt="支付宝" />
+              <span class="tip">
+                <i class="iconfont icon-alipay"></i>
+                支付宝
+              </span>
+            </a>
+            
+          </div>
+          
+          <div class="all-list s-card hover">
+            <span class="title">全部赞赏者名单</span>
+            <span class="tip">赞赏金额将全部用于开源项目维护，以及服务器、域名及各类云服务的开销</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+}
+
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 430px;
+  width: 90%;
+  background: var(--main-card-background);
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 1002;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-close {
+  cursor: pointer;
+}
+
+ 
+.reward {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: max-content;
+  margin: 1rem auto;
+  user-select: none;
+}
+
+.reward-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 120px;
+  border-radius: 8px;
+  color: #fff;
+  background-color: var(--main-color-red);
+  transition: box-shadow 0.5s;
+  cursor: pointer;
+}
+
+ 
+</style>
+
+
+
+            
+            
+
+            
+            
+  
+  
+  
+  
+  <div class="related-post">
+    <div class="title">
+      <span class="name">
+        <i class="iconfont icon-star"></i>
+        相关推荐
+      </span>
+      
+      <span class="shuffle" onclick="window.location.href='\/posts\/semantic-kernel-mcp-agent-context-enhanced-exploration\/'">
+        随便逛逛
+      </span>
+      
+    </div>
+
+    
+    
+
+
+
+<div class="post-list ">
+    
+    <article class="post-item s-card">
+        
+        
+        
+        <div class="content">
+            
+            <h2 class="title">
+                <a href="/posts/1190622881/">Unity3D 游戏开发之在 uGUI 中使用不规则精灵制作按钮</a>
+            </h2>
+            
+            
+            <div class="summary">
+                
+                    在这篇博客中，作者讨论了在 Unity 引擎中制作不规则按钮的方法。通过对基于多边形碰撞器和精灵像素检测两种方案的比较和研究，解决了基于多边形碰撞器的问题，并剖析了基于精灵像素检测的内部原理。作者指出精灵像素检测方法易用性更好，但存在对图片类型的限制和像素可读写要求，可能影响执行效率。技术性上作者更推崇基于多边形碰撞器的方法，因为学到了新知识并能解决实际问题，尽管在寻找算法方面耗费精力。文章深入探讨了这两种方法的优缺点，展示了对不规则按钮制作的实际操作和测试。
+                
+            </div>
+            
+            
+            <div class="meta">
+                
+                <div class="date">
+                    <i class="iconfont icon-calendar"></i>
+                    <span>2016-07-08</span>
+                </div>
+                
+                
+                
+                <div class="categories">
+                    <i class="iconfont icon-folder"></i>
+                    
+                    <a href="/categories/unity3d">Unity3D</a>
+                    
+                </div>
+                
+                
+                
+                
+                <div class="tags">
+                    <i class="iconfont icon-tag"></i>
+                    
+                    <a href="/tags/unity3d">Unity3D</a>
+                    
+                    <a href="/tags/ugui">uGUI</a>
+                    
+                    <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91">游戏开发</a>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </article>
+    
+</div> 
+  </div>
+  
+
+
+<style>
+.related-post {
+  margin-top: 1rem;
+}
+
+.related-post .title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 3rem 0 1rem 0;
+  padding: 0 6px;
+}
+
+.related-post .title .name {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.related-post .title .name .iconfont {
+  font-size: 26px;
+  font-weight: normal;
+  margin-right: 8px;
+}
+
+.related-post .title .shuffle {
+  opacity: 0.6;
+  font-size: 14px;
+  transition: color 0.3s, opacity 0.3s;
+  cursor: pointer;
+}
+
+.related-post .title .shuffle:hover {
+  opacity: 1;
+  color: var(--main-color);
+}
+</style>
+
+
+            
+            <div id="comments">
+                
+<div id="main-comment" class="comment">
+    <div v-if="!fill" class="title">
+        <span class="name">
+            <i class="iconfont icon-chat"></i>
+            评论
+        </span>
+        <span class="tool"> 隐私政策 </span>
+    </div>
+    <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css"/>
+<div id="waline" class="waline-container"></div>
+<style>
+    .waline-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+    .waline-container .vcount {
+        color: var(--card-text-color-main);
+    }
+</style>
+
+
+    <script type="module">
+        import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+        init({
+            el: '#waline',
+            serverURL: 'https:\/\/waline.yuanpei.me\/',
+            lang: 'zh',
+            dark: 'auto',
+            path: window.location.href,
+            requiredMeta: ['nick','mail'],
+            emoji: [
+                '//unpkg.com/@waline/emojis@1.2.0/weibo'
+            ],
+            reaction: false,
+        });
+      </script>
+
+
+</div>
+
+            </div>
+        </article>
+        
+        <aside class="main-aside"><div class="sticky"> 
+<div class="aside-countdown s-card weidgets">
+  <div class="card-title">
+    <i class="fas fa-hourglass-half"></i>
+    <span>倒计时</span>
+  </div>
+  <div class="card-content">
+    
+  </div>
+</div> 
+<div class="tags-cloud s-card weidgets">
+  <div class="title">
+    <i class="iconfont icon-hashtag"></i>
+    <span class="title-name">热门标签</span>
+  </div>
+  <div class="all-tags">
+    
+  </div>
+  <a href="/pages/tags" class="more-tags">查看全部</a>
+</div><div class="tags-cloud s-card weidgets">
+    <div class="title">
+        <i class="iconfont icon-hashtag"></i>
+        <span class="title-name">日历</span>
+    </div>
+    <div class="all-tags">
+        <img id="calendar-cover" src="" style="object-fit: cover; width: 100%; height: 100%; display: none;" />
+    </div>
+</div>
+<script>
+    const getImageUrl = (date) => {
+        const currentYear = date.getFullYear();
+        const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
+        const currentDate = String(date.getDate()).padStart(2, '0');
+        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${currentMonth}${currentDate}.jpg`
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const eleImg = document.querySelector("#calendar-cover");
+        eleImg.onload = () => eleImg.style.display = '';
+        if (document.location.pathname.startsWith('/posts')) {
+            let publishedTime = document.querySelector('meta[property="article:published_time"]').content;
+            publishedTime = publishedTime.substring(0, 10);
+            eleImg.src = getImageUrl(new Date(publishedTime))
+        } else {
+            eleImg.src = getImageUrl(new Date())
+        }
+    });
+</script><div class="site-data s-card weidgets">
+    <div class="title">
+      <i class="iconfont icon-chart"></i>
+      <span class="title-name">站点数据</span>
+    </div>
+    <div class="all-data">
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-article"></i>
+          文章总数
+        </span>
+        <span class="num">277 篇</span>
+      </div>
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-date"></i>
+          建站天数
+        </span>
+        <span class="num">200 天</span>
+      </div>
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-visibility"></i>
+          总访问量
+        </span>
+        <span class="num" id="busuanzi_value_site_pv">0</span>
+      </div>
+      <div class="data-item">
+        <span class="name">
+          <i class="iconfont icon-account"></i>
+          总访客数
+        </span>
+        <span class="num" id="busuanzi_value_site_uv">0</span>
+      </div>
+    </div>
+  </div></div>
+  </aside>
+  <style>
+  .main-aside {
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    animation: fade-up 0.6s 0.3s backwards;
+    .weidgets {
+      padding: 18px;
+      margin-bottom: 1rem;
+      :deep(.title) {
+        margin-bottom: 12px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        opacity: 0.75;
+        .iconfont {
+          opacity: 0.6;
+          margin-right: 6px;
+        }
+        .title-name {
+          opacity: 0.8;
+        }
+      }
+    }
+    .sticky {
+      position: sticky;
+      top: calc(60px + 1rem);
+      .weidgets {
+        animation: fade-up 0.6s 0.4s backwards;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  </style>
+  
+    </div>
+</div>
+
+        </main>
+
+        <div class="control-panel">
+    <div class="control-mask"></div>
+    <div class="control-content">
+        <div class="control-header">
+            <div class="control-title">
+                <i class="iconfont icon-dashboard"></i>
+                <span>中控台</span>
+            </div>
+            <div class="control-close">
+                <i class="iconfont icon-close"></i>
+            </div>
+        </div>
+        <div class="control-body">
+            
+            <div class="control-group">
+                <div class="group-title">主题设置</div>
+                <div class="group-content">
+                    
+                    <div class="control-item">
+                        <div class="item-title">主题模式</div>
+                        <div class="item-content">
+                            <div class="theme-switch">
+                                <div class="switch-item" data-theme="light">
+                                    <i class="iconfont icon-sun"></i>
+                                </div>
+                                <div class="switch-item" data-theme="dark">
+                                    <i class="iconfont icon-moon"></i>
+                                </div>
+                                <div class="switch-item" data-theme="auto">
+                                    <i class="iconfont icon-auto"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-item">
+                        <div class="item-title">主题色</div>
+                        <div class="item-content">
+                            <div class="color-switch">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <div class="loading">
+    <div class="loading-content">
+        <div class="loading-icon">
+            <i class="iconfont icon-loading"></i>
+        </div>
+        <div class="loading-text">加载中...</div>
+    </div>
+</div> <div class="footer-link">
+    
+    <div class="footer-bar">
+      <span class="site-title">元视角</span>
+      <span class="site-desc">纵有疾风起，人生不言弃</span>
+      <a href="/" class="to-home">了解更多</a>
+    </div>
+    
+  
+    <div class="footer-social">
+      
+      <a href="https://github.com/yourusername" target="_blank" class="social-link">
+        <i class="iconfont icon-github"></i>
+      </a>
+      
+      <a href="https://twitter.com/yourusername" target="_blank" class="social-link">
+        <i class="iconfont icon-weibo"></i>
+      </a>
+      
+  
+      <div class="logo" title="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <img src="/images/icons8-stellar-128.png" alt="author" class="author" />
+      </div>
+  
+      
+      <a href="mailto:qinyuanpei@163.com" target="_blank" class="social-link">
+        <i class="iconfont icon-email"></i>
+      </a>
+      
+      <a href="https://space.bilibili.com/yourid" target="_blank" class="social-link">
+        <i class="iconfont icon-douban"></i>
+      </a>
+      
+    </div>
+  
+    <div class="footer-sitemap">
+      
+      <div class="sitemap-item">
+        <span class="title">博客</span>
+        <div class="links">
+          
+          <a href="/posts"  class="link-text">
+            近期文章
+          </a>
+          
+          <a href="/categories"  class="link-text">
+            全部分类
+          </a>
+          
+          <a href="/tags"  class="link-text">
+            全部标签
+          </a>
+          
+          <a href="/archives"  class="link-text">
+            文章归档
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">项目</span>
+        <div class="links">
+          
+          <a href="https://example1.com" target="_blank" class="link-text">
+            项目1
+          </a>
+          
+          <a href="https://example2.com" target="_blank" class="link-text">
+            项目2
+          </a>
+          
+          <a href="https://example2.com" target="_blank" class="link-text">
+            项目3
+          </a>
+          
+          <a href="https://example2.com" target="_blank" class="link-text">
+            项目4
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">专栏</span>
+        <div class="links">
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_10852603.html" target="_blank" class="link-text">
+            .NET 源代码探案系列
+          </a>
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_7444699.html" target="_blank" class="link-text">
+            Python 数据挖掘系列
+          </a>
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_11484903.html" target="_blank" class="link-text">
+            分布式丛林探险系列
+          </a>
+          
+          <a href="https://blog.csdn.net/qinyuanpei/category_1708629.html" target="_blank" class="link-text">
+            Unity3D 游戏开发系列
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">页面</span>
+        <div class="links">
+          
+          <a href="/guest"  class="link-text">
+            畅所欲言
+          </a>
+          
+          <a href="/books"  class="link-text">
+            阅读记录
+          </a>
+          
+          <a href="/movies"  class="link-text">
+            观影记录
+          </a>
+          
+          <a href="/musics"  class="link-text">
+            听歌记录
+          </a>
+          
+        </div>
+      </div>
+      
+      <div class="sitemap-item">
+        <span class="title">友情链接</span>
+        <div class="links">
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            张洪
+          </a>
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            张洪
+          </a>
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            张洪
+          </a>
+          
+          <a href="https://blog.zhheo.com/"  class="link-text">
+            更多
+          </a>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div><footer id="main-footer" class="main-footer">
+    <div class="footer-content">
+        <div class="footer-copyright">
+            <span class="time" data-v-6001e979="">@ 2014 - 2025 By </span>
+            <a href="https://www.imsyy.top" class="author link" target="_blank">
+                飞鸿踏雪
+            </a>
+            
+            
+        </div>
+        <div class="meta">
+            <a class="power link" href="https://vitepress.dev/" target="_blank">
+                <span class="by">Powered by</span>
+                <span class="name">Hugo</span>
+            </a>
+            <a class="theme link" href="/pages/theme">
+                <span class="name">主题</span>
+            </a>
+            <a class="rss link" href="https://blog.imsyy.top/rss.xml" target="_blank">
+                <i class="iconfont icon-rss"></i>
+                <span class="name" data-v-6001e979="">订阅</span>
+            </a>
+            <a class="cc link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+                <i class="iconfont icon-line"></i>
+                <i class="iconfont icon-by-line"></i>
+                <i class="iconfont icon-nc-line"></i><i
+                    class="iconfont icon-nd-line"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+
+<script src="/js/search.min.f2af2dfa3be20e8e7e8c8989bab508289b71bf3730bc6e352738f2084973a1ab.js"></script>
+<script>
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        Search.init();
+    });
+</script><div class="modal search-modal" id="searchModal">
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="iconfont icon-search"></i>
+        <span>全局搜索</span>
+      </div>
+      <div class="modal-close">
+        <i class="iconfont icon-close"></i>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="searchInput"
+          placeholder="想要搜点什么" 
+          autocomplete="off"
+          autofocus
+        >
+      </div>
+
+      <div class="search-results" id="searchResults">
+        <div class="no-result" id="noResult" style="display: none;">
+          <i class="iconfont icon-search-empty"></i>
+          <span class="text">搜索结果为空</span>
+        </div>
+        <div class="search-list" id="searchList"></div>
+      </div>
+
+      <div class="search-stats">
+        <span class="text" id="searchStats"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 768px;
+  margin: 80px auto;
+  background-color: var(--main-card-background);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.modal-title .iconfont {
+  margin-right: 0.5rem;
+}
+
+.modal-close {
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.search-box input {
+  width: 100%;
+  outline: none;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 0.6rem 1rem;
+  color: var(--main-font-color);
+  font-family: var(--main-font-family);
+  border: 1px solid var(--main-card-border);
+  background-color: var(--main-card-second-background);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-box input:focus {
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.search-results {
+  margin-top: 20px;
+  min-height: 300px;
+}
+
+.no-result {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-result .iconfont {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.no-result .text {
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+.search-list .search-item {
+  margin-bottom: 12px;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--main-card-second-background);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.search-list .search-item:hover {
+  transform: translateY(-2px);
+}
+
+.search-item .title {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.search-item .content {
+  color: var(--main-font-second-color);
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.search-stats {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: var(--main-font-second-color);
+}
+
+.highlight {
+  color: var(--main-color);
+  background: transparent;
+}
+</style> 
+    </body>
+</html> 

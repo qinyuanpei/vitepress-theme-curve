@@ -23,10 +23,31 @@
       <description></description>
     </item>
     <item>
+      <title>前端开发</title>
+      <link>http://localhost:1313/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>独立博客</title>
+      <link>http://localhost:1313/categories/%E7%8B%AC%E7%AB%8B%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/%E7%8B%AC%E7%AB%8B%E5%8D%9A%E5%AE%A2/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>读书笔记</title>
       <link>http://localhost:1313/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Unity3D</title>
+      <link>http://localhost:1313/categories/unity3d/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/categories/unity3d/</guid>
       <description></description>
     </item>
     <item>

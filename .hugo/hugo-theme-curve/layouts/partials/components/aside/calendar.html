@@ -1,0 +1,29 @@
+<div class="tags-cloud s-card weidgets">
+    <div class="title">
+        <i class="iconfont icon-hashtag"></i>
+        <span class="title-name">日历</span>
+    </div>
+    <div class="all-tags">
+        <img id="calendar-cover" src="https://img.owspace.com/Public/uploads/Download/2025/0328.jpg" style="object-fit: cover; width: 100%; height: 100%; display: none;" />
+    </div>
+</div>
+<script>
+    const getImageUrl = (date) => {
+        const currentYear = date.getFullYear();
+        const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
+        const currentDate = String(date.getDate()).padStart(2, '0');
+        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${currentMonth}${currentDate}.jpg`
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const eleImg = document.querySelector("#calendar-cover");
+        eleImg.onload = () => eleImg.style.display = '';
+        if (document.location.pathname.startsWith('/posts')) {
+            let publishedTime = document.querySelector('meta[property="article:published_time"]').content;
+            publishedTime = publishedTime.substring(0, 10);
+            eleImg.src = getImageUrl(new Date(publishedTime))
+        } else {
+            eleImg.src = getImageUrl(new Date())
+        }
+    });
+</script>

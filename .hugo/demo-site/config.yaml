@@ -2,6 +2,7 @@ baseURL: 'http://example.org/'
 languageCode: 'zh-cn'
 title: '元视角'
 theme: 'hugo-theme-curve'
+paginate: 15
 
 # 菜单信息
 menu:
@@ -360,3 +361,7 @@ related:
 
         - name: categories
           weight: 200
+
+permalinks:
+    post: /posts/:slug/
+    page: /:slug/

@@ -1,0 +1,153 @@
+﻿---
+categories:
+- 前端开发
+copyright: true
+date: 2022-05-17 13:30:47
+description: 本文介绍了在「微雨燕双飞」的一天中，作者接到朋友询问前端容器化部署问题的电话。作者分享了使用 Docker 容器化部署前端项目的实践教程，以 Vue.js 为例。通过编写 Dockerfile 实现多阶段构建，包括使用 node.js 构建前端项目和部署到 Nginx 静态文件服务器等步骤。另外，还提及了 Nginx 的配置以及使用 OpenSSL 创建证书的过程。最后，作者鼓励读者根据教程进一步完善部署，并展望了未来将撰写关于 ASP.NET Core 测试的文章。
+image: /posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/cover.jpg
+slug: A-Simplified-Tutorial-On-Containerized-Deployment-Of-Front-End-Projects-For-Vue
+tags:
+- 容器
+- Vue
+- Nginx
+- Envoy
+title: Vue.js 前端项目容器化部署实践极简教程
+toc: true
+---
+
+大概一周前，在某个「微雨燕双飞」的下午，我正穿梭于熙熙攘攘的车流人海当中，而被雨水濯洗过的天空略显灰白，傍晚亮起的路灯恍惚中有种朝阳初升的错觉，内心更是涌现出一种「一蓑烟雨任平生」的豁达，我还没来得及给这场内心戏添油加醋，兴哥的电话突然打断了我的思绪。一番攀谈交心，我了解到，他想问的是前端容器化部署的相关问题。虽然，靠着兴哥的睿智、果敢，他第二天就想明白了整个事情的来龙去脉；但是，这完全不影响我水一篇博客出来。所以，今天这篇文章，我们来聊聊前端项目的容器化部署，并提供一个极简的实践教程，这里以 `Vue.js` 为例，希望对大家有所启发。
+
+![你说，这像太阳吗？](/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/light-like-a-sun.jpg)
+
+首先，我们来编写 `Dockerfile`，这里采用的是多阶段构建的做法，第一个阶段，即 `build`，主要是利用 [node.js](https://nodejs.org/en/) 基础镜像来实现前端项目的发布，所以，你可以看到 `package.json`、`npm install` 以及考虑到国情的 `cnpm install` 这些前端项目中喜闻乐见的东西，安装完依赖以后我们通过 `npm run build` 来完成打包，这取决于你项目中实际使用的脚本或者命令，如果你不喜欢 `npm`，你同样可以用 `yarn` 来编写这些指令，只要你喜欢就好。做人嘛，最重要的是开心！
+
+```dockerfile
+# build
+FROM node:lts-alpine as build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install -g cnpm --registry=https://registry.npm.taobao.org
+RUN cnpm install
+COPY . .
+RUN npm run build
+
+# deploy
+FROM nginx:stable-alpine as deploy
+COPY --from=build /app/dist/ /usr/nginx/wwwroot
+COPY /nginx/nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+OK，第二个阶段，即 `deploy`，前端发布出来的产物是无法直接在浏览器里打开的，这一点你平时用 [Vue.js](https://vuejs.org/) 的脚手架的话应该会注意到。所以，此时我们需要一个静态文件服务器来托管这些产物，这些产物通常会被放到 `dist` 目录，因此，在这一阶段主要就是把这个目录里的内容拷贝到 [Nginx](https://nginx.org/en/) 下面，这里我们用的是 `wwwroot`。当然，如果你还怀念曾经的 LAMP 組合，同样可以替换为 [Apache](https://apache.org/)。我们在这个世界的一切努力，无非是为了比别人多一种选择，甚至有时候你完全没有选择。可是在计算机的世界里，你可以尽情地去创造，而这则是我的选择，从我高中在班级电脑上写出第一个 Visual Basic 程序开始，我庆幸能一直坚持这份热爱到现在。
+
+```nginx
+worker_processes 1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include  mime.types;
+    default_type  application/octet-stream;
+    sendfile  on;
+    keepalive_timeout  65;
+    server {
+        listen  80;
+        server_name  localhost;
+        root /usr/nginx/wwwroot;
+        index index.html;
+    }
+}
+```
+
+这里提到了 `Nginx`，那么，自然而然地，对于 `Nginx` 的配置问题就无可避免。可惜，事实是：**每一个声称配置文件更灵活的人，从来都不会去摆弄配置文件，只有程序员天天和这些配置文件打交道**。幸运的是，对于简单的静态文件服务器而言，它的配置并不算特别复杂，还记得前面的  `wwwroot` 吗？其实，它是在这里定义的，对应了 `server` 节点中的 `root` 属性，从这里我们可以看到，容器内部默认监听 80 端口，默认页面是 index.html。如果你现在还不太了解 Nginx 的配置文件，相信我，这几个配置已足够你快速上手啦！我不大愿意再写教程的原因是，我不喜欢每个步骤都要截图，并且还要在图上做好标记。显然，对于程序员而言，懒惰是一种美德。
+
+```yaml
+version: "3.8"
+
+services:
+  font_mock:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: font_mock
+    ports:
+      - "50001:80"
+    volumes:
+      - '/etc/localtime:/etc/localtime:ro'
+    networks:
+      envoymesh:
+networks:
+  envoymesh: {}
+```
+
+好了，现在万事具备，我们再来写一个 `docker-compose.yaml` 来对服务进行编排，可以注意到，我们把 `50001` 端口绑定到了 `80` 端口，这就和前面呼应上了，对不对？剩下的就没什么好说的啦，不再一一赘述，如果你看不懂，可以先去了解一下 [docker-compose](https://docs.docker.com/compose/)。此时，我们运行 `docker-compose up` 命令，就可以看到下面的结果：
+
+![通过 Docker 部署前端项目](/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/Vue.js-With-Docker.png)
+
+没错，我为了节省写作时间，直接使用了 [在 Vue.js 中使用 Mock.js 实现接口模拟](/posts/interface-mock-implemention-using-mock.js-in-vue.js/) 这篇文章里的项目，果然，我再次完美发扬了 “懒惰” 这种优秀的美德，总而言之，到这里我们已经成功地通过容器技术部署了一个前端项目，在这个基础上，你还可以接入 `Envoy` 这个代理层 或者 是为 `Nginx` 添加 `SSL` 证书等等...当然，这些都是后话啦，各位比我聪明千倍、万倍的读者朋友们可以进一步去完善它，这篇短浅易懂的文章就当作诸位的入门教程好啦，愿「他山之石，可以攻玉」，谢谢大家，本文完！
+ 
+```bash
+# 创建 CA 密钥
+openssl genrsa -out ca.key 1024
+# 利用 CA 密钥生成自签名 CA 证书
+openssl req -new -x509 -days 3650 -key ca.key -out ca.crt
+# 创建服务器端证书密钥
+openssl genrsa -des3 -out server.key 1024
+# 生成服务器端证书
+openssl req -new -key server.key -out server.csr
+# 利用 CA 证书对服务器端证书进行签名
+openssl ca -in server.csr -out server.crt -cert ca.crt -keyfile ca.key
+```
+
+此时，我们会得到服务器端证书文件 `server.crt` 以及密钥文件 `server.key`，我们将其配置到 `Nginx` 中即可，下面是修改后的 `Nginx` 配置文件：
+
+```nginx
+worker_processes 1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+ 
+    sendfile        on;
+    keepalive_timeout  65;
+ 
+    server {
+        listen  80;
+        listen  443 ssl;
+        server_name  localhost;
+        
+        # 证书文件
+        ssl_certificate      /usr/nginx/ssl/server.crt;
+        # 密钥文件
+        ssl_certificate_key  /usr/nginx/ssl/server.key;
+        # SSL 会话缓存大小为：1M
+        ssl_session_cache    shared:SSL:1m;
+        # SSL 会话超时时间为：5min
+        ssl_session_timeout  5m;
+        # 支持 TLS1.0/1.1/1.2 三个版本
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers  HIGH:!aNULL:!MD5;
+        ssl_prefer_server_ciphers  on;
+
+        root /usr/nginx/wwwroot;
+        index index.html;
+    }
+}
+```
+
+需要注意的是，在创建证书时，对应的 `Common Name` 应该和网站的域名保持一致，这里的示例域名为：`https://www.snowfly.com`，在本地调试的时候，我们可以通过修改 `hosts` 文件来进行测试：
+
+![通过 OpenSSL 创建证书](/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/OpenSSL_Certificates.png)
+
+通常，你需要把自己创建的证书导入到 `受信任的根证书颁发机构` 这个分类下面，这样，就可以通过 `HTTPS` 协议访问你的站点啦！
+
+![在浏览器中查看 HTTPS 证书](/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/OpenSSL_Certificates_2.png)
+
+> 番外预告！！！接下来会写一篇关于 ASP.NET Core 单元/集成测试的文章，敬请期待！

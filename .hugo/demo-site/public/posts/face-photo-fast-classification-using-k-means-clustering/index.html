@@ -213,7 +213,7 @@
             </div>
         </div>
     </div>
-</div> <div class="search-modal" id="searchModal">
+</div> <div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -906,7 +906,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/3099575458\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/ne-zha-2\/'">
         随便逛逛
       </span>
       
@@ -980,13 +980,13 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="content">
             
             <h2 class="title">
-                <a href="/posts/2070070822/">使用 HttpMessageHandler 实现 HttpClient 请求管道自定义</a>
+                <a href="/posts/practice-local-ai-knowledg-base-based-on-llama-and-langchain/">基于 LLaMA 和 LangChain 实践本地 AI 知识库</a>
             </h2>
             
             
             <div class="summary">
                 
-                    博客园上介绍了利用 HttpMessageHandler 实现 Http 请求模拟的方案，探讨了HttpMessageHandler在Http请求管道中的作用和实现方式。讨论了HttpMessageHandler与DelegatingHandler的区别，以及如何自定义请求管道并展示了日志记录、请求重试和接口模拟的应用。通过示例展示了如何使用HttpMessageHandler实现这些功能，最后总结了HttpMessageHandler在扩展性、认证头处理等方面的应用。整体内容深入浅出地介绍了HttpMessageHandler的功能和实践。
+                    本文讨论了人工智能领域的最新发展，主要围绕着基于 Transformer 和 MoE 架构的多模态模型 Gemini 1.5 Pro，以及 OpenAI 推出的支持从文字生成视频的模型 Sora。文章提到通用人工智能（AGI）的实现正在加速，指出 AI 应用落地的主要实践围绕大模型微调、提示词工程和知识增强展开。在介绍 LangChain 中的知识库构建过程中，涉及Loader、Splitter、Embeddings 和 VectorStore 等步骤。此外，还讨论了 RAG 和 GPTs 在实践中的应用，以及LangChain 中的 Chain 概念，以及如何将其与大语言模型和知识库结合以实现 Q&amp;A 和 对话式检索。文章最后呼吁关注LangChain 的最新发展和替代品 AutoChain、Embedchain。
                 
             </div>
             
@@ -995,7 +995,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 
                 <div class="date">
                     <i class="iconfont icon-calendar"></i>
-                    <span>2021-04-28</span>
+                    <span>2024-02-29</span>
                 </div>
                 
                 
@@ -1013,13 +1013,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="tags">
                     <i class="iconfont icon-tag"></i>
                     
-                    <a href="/tags/httpclient">HttpClient</a>
+                    <a href="/tags/llama">LLaMA</a>
                     
-                    <a href="/tags/mock">Mock</a>
+                    <a href="/tags/langchain">LangChain</a>
                     
-                    <a href="/tags/%E7%AE%A1%E9%81%93">管道</a>
+                    <a href="/tags/rag">RAG</a>
                     
-                    <a href="/tags/%E6%89%A9%E5%B1%95">扩展</a>
+                    <a href="/tags/gpts">GPTs</a>
                     
                 </div>
                 
@@ -1141,7 +1141,35 @@ document.addEventListener("DOMContentLoaded", function () {
     
   </div>
   <a href="/pages/tags" class="more-tags">查看全部</a>
-</div><div class="site-data s-card weidgets">
+</div><div class="tags-cloud s-card weidgets">
+    <div class="title">
+        <i class="iconfont icon-hashtag"></i>
+        <span class="title-name">日历</span>
+    </div>
+    <div class="all-tags">
+        <img id="calendar-cover" src="" style="object-fit: cover; width: 100%; height: 100%; display: none;" />
+    </div>
+</div>
+<script>
+    const getImageUrl = (date) => {
+        const currentYear = date.getFullYear();
+        const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
+        const currentDate = String(date.getDate()).padStart(2, '0');
+        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${currentMonth}${currentDate}.jpg`
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const eleImg = document.querySelector("#calendar-cover");
+        eleImg.onload = () => eleImg.style.display = '';
+        if (document.location.pathname.startsWith('/posts')) {
+            let publishedTime = document.querySelector('meta[property="article:published_time"]').content;
+            publishedTime = publishedTime.substring(0, 10);
+            eleImg.src = getImageUrl(new Date(publishedTime))
+        } else {
+            eleImg.src = getImageUrl(new Date())
+        }
+    });
+</script><div class="site-data s-card weidgets">
     <div class="title">
       <i class="iconfont icon-chart"></i>
       <span class="title-name">站点数据</span>
@@ -1465,7 +1493,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener('DOMContentLoaded', () => {
         Search.init();
     });
-</script><div class="search-modal" id="searchModal">
+</script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -1624,15 +1652,5 @@ document.addEventListener("DOMContentLoaded", function () {
   background: transparent;
 }
 </style> 
-
-        
-        
-        <script src="/js/search.min.f2af2dfa3be20e8e7e8c8989bab508289b71bf3730bc6e352738f2084973a1ab.js"></script>
-        <script>
-            
-            document.addEventListener('DOMContentLoaded', () => {
-                Search.init();
-            });
-        </script>
     </body>
 </html> 

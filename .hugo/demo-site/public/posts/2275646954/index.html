@@ -213,7 +213,7 @@
             </div>
         </div>
     </div>
-</div> <div class="search-modal" id="searchModal">
+</div> <div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -705,6 +705,81 @@ document.addEventListener("DOMContentLoaded", function () {
   
   
   
+  <div class="related-post">
+    <div class="title">
+      <span class="name">
+        <i class="iconfont icon-star"></i>
+        相关推荐
+      </span>
+      
+      <span class="shuffle" onclick="window.location.href='\/posts\/169430744\/'">
+        随便逛逛
+      </span>
+      
+    </div>
+
+    
+    
+
+
+
+<div class="post-list ">
+    
+    <article class="post-item s-card">
+        
+        
+        
+        <div class="content">
+            
+            <h2 class="title">
+                <a href="/posts/352037321/">我是猫，一只特立独行的猫</a>
+            </h2>
+            
+            
+            <div class="summary">
+                
+                    夏目漱石的《我是猫》是一本以猫的视角叙述的小说，探讨了人类社会和知识分子的心理状态。通过猫的观察，揭示了人类的荒谬与困境，同时反映了日本文化中对猫的神圣地位。小说深刻刻画了人类与猫之间的关系，探讨了人类的自负和矛盾。作者以独特的视角呈现了对现实世界的讽刺和同情，探讨了人类的欲望和困境。通过猫的观察，小说揭示了人类社会的种种荒谬和无奈。
+                
+            </div>
+            
+            
+            <div class="meta">
+                
+                <div class="date">
+                    <i class="iconfont icon-calendar"></i>
+                    <span>2018-03-06</span>
+                </div>
+                
+                
+                
+                <div class="categories">
+                    <i class="iconfont icon-folder"></i>
+                    
+                    <a href="/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0">读书笔记</a>
+                    
+                </div>
+                
+                
+                
+                
+                <div class="tags">
+                    <i class="iconfont icon-tag"></i>
+                    
+                    <a href="/tags/%E5%A4%8F%E7%9B%AE%E6%BC%B1%E7%9F%B3">夏目漱石</a>
+                    
+                    <a href="/tags/%E6%97%A5%E6%9C%AC%E6%96%87%E5%AD%A6">日本文学</a>
+                    
+                    <a href="/tags/%E6%88%91%E6%98%AF%E7%8C%AB">我是猫</a>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </article>
+    
+</div> 
+  </div>
+  
 
 
 <style>
@@ -816,7 +891,35 @@ document.addEventListener("DOMContentLoaded", function () {
     
   </div>
   <a href="/pages/tags" class="more-tags">查看全部</a>
-</div><div class="site-data s-card weidgets">
+</div><div class="tags-cloud s-card weidgets">
+    <div class="title">
+        <i class="iconfont icon-hashtag"></i>
+        <span class="title-name">日历</span>
+    </div>
+    <div class="all-tags">
+        <img id="calendar-cover" src="" style="object-fit: cover; width: 100%; height: 100%; display: none;" />
+    </div>
+</div>
+<script>
+    const getImageUrl = (date) => {
+        const currentYear = date.getFullYear();
+        const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
+        const currentDate = String(date.getDate()).padStart(2, '0');
+        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${currentMonth}${currentDate}.jpg`
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const eleImg = document.querySelector("#calendar-cover");
+        eleImg.onload = () => eleImg.style.display = '';
+        if (document.location.pathname.startsWith('/posts')) {
+            let publishedTime = document.querySelector('meta[property="article:published_time"]').content;
+            publishedTime = publishedTime.substring(0, 10);
+            eleImg.src = getImageUrl(new Date(publishedTime))
+        } else {
+            eleImg.src = getImageUrl(new Date())
+        }
+    });
+</script><div class="site-data s-card weidgets">
     <div class="title">
       <i class="iconfont icon-chart"></i>
       <span class="title-name">站点数据</span>
@@ -1140,7 +1243,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener('DOMContentLoaded', () => {
         Search.init();
     });
-</script><div class="search-modal" id="searchModal">
+</script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -1299,15 +1402,5 @@ document.addEventListener("DOMContentLoaded", function () {
   background: transparent;
 }
 </style> 
-
-        
-        
-        <script src="/js/search.min.f2af2dfa3be20e8e7e8c8989bab508289b71bf3730bc6e352738f2084973a1ab.js"></script>
-        <script>
-            
-            document.addEventListener('DOMContentLoaded', () => {
-                Search.init();
-            });
-        </script>
     </body>
 </html> 

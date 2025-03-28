@@ -213,7 +213,7 @@
             </div>
         </div>
     </div>
-</div> <div class="search-modal" id="searchModal">
+</div> <div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -912,7 +912,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/2275646954\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/ne-zha-2\/'">
         随便逛逛
       </span>
       
@@ -984,13 +984,13 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="content">
             
             <h2 class="title">
-                <a href="/posts/semantic-kernel-mcp-agent-context-enhanced-exploration/">Semantic Kernel × MCP：智能体的上下文增强探索</a>
+                <a href="/posts/1989654282/">使用 .NET Core 和 Vue 搭建 WebSocket 聊天室</a>
             </h2>
             
             
             <div class="summary">
                 
-                    本文深入探讨了 MCP（模型上下文协议），由 Anthropic 设计的开放协议，它如同 AI 领域的 USB 接口，旨在通过统一接口解决大模型连接不同数据源和工具的问题。文章详细介绍了 MCP 的架构、核心角色、工作原理以及如何与 Semantic Kernel 集成，为 .NET 开发者提供高效接入社区 MCP 服务器的方法，减少重复性平台对接工作。此外，还展示了 MCP 在操作浏览器、访问文件系统等场景中的应用效果，并探讨了其局限性及未来发展方向。在 AI 技术快速发展的背景下，MCP 的出现为实现 AI 模型的 “万物互联” 提供了可能，值得开发者关注与探索。
+                    本文介绍了 WebSocket 的基本概念和应用。WebSocket 是建立在 HTTP 协议基础上的双向通信协议，弥补了 HTTP 协议请求-响应模型的不足，使客户端和服务器可以实现双向通信。文章以构建WebSocket 聊天室为例，展示了如何在 ASP.NET Core 中实现服务端 WebSocket 和使用原生 WebSocket API 和 Vue 实现客户端功能。另外，文章还介绍了 ASP.NET Core 中间件的概念和作用。通过实例展示了 WebSocket 握手请求和响应的过程，以及服务端如何响应 WebSocket 请求。文章深入浅出地解释了 WebSocket 的原理和应用，为读者提供了全面的了解和实践指导。
                 
             </div>
             
@@ -999,7 +999,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 
                 <div class="date">
                     <i class="iconfont icon-calendar"></i>
-                    <span>2025-03-09</span>
+                    <span>2018-08-01</span>
                 </div>
                 
                 
@@ -1017,13 +1017,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="tags">
                     <i class="iconfont icon-tag"></i>
                     
-                    <a href="/tags/mcp">MCP</a>
+                    <a href="/tags/websocket">WebSocket</a>
                     
-                    <a href="/tags/agent">Agent</a>
+                    <a href="/tags/.net-core">.NET Core</a>
                     
-                    <a href="/tags/semantic-kernel">Semantic Kernel</a>
-                    
-                    <a href="/tags/function-calling">Function Calling</a>
+                    <a href="/tags/vue">Vue</a>
                     
                 </div>
                 
@@ -1145,7 +1143,35 @@ document.addEventListener("DOMContentLoaded", function () {
     
   </div>
   <a href="/pages/tags" class="more-tags">查看全部</a>
-</div><div class="site-data s-card weidgets">
+</div><div class="tags-cloud s-card weidgets">
+    <div class="title">
+        <i class="iconfont icon-hashtag"></i>
+        <span class="title-name">日历</span>
+    </div>
+    <div class="all-tags">
+        <img id="calendar-cover" src="" style="object-fit: cover; width: 100%; height: 100%; display: none;" />
+    </div>
+</div>
+<script>
+    const getImageUrl = (date) => {
+        const currentYear = date.getFullYear();
+        const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
+        const currentDate = String(date.getDate()).padStart(2, '0');
+        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${currentMonth}${currentDate}.jpg`
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const eleImg = document.querySelector("#calendar-cover");
+        eleImg.onload = () => eleImg.style.display = '';
+        if (document.location.pathname.startsWith('/posts')) {
+            let publishedTime = document.querySelector('meta[property="article:published_time"]').content;
+            publishedTime = publishedTime.substring(0, 10);
+            eleImg.src = getImageUrl(new Date(publishedTime))
+        } else {
+            eleImg.src = getImageUrl(new Date())
+        }
+    });
+</script><div class="site-data s-card weidgets">
     <div class="title">
       <i class="iconfont icon-chart"></i>
       <span class="title-name">站点数据</span>
@@ -1469,7 +1495,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener('DOMContentLoaded', () => {
         Search.init();
     });
-</script><div class="search-modal" id="searchModal">
+</script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -1628,15 +1654,5 @@ document.addEventListener("DOMContentLoaded", function () {
   background: transparent;
 }
 </style> 
-
-        
-        
-        <script src="/js/search.min.f2af2dfa3be20e8e7e8c8989bab508289b71bf3730bc6e352738f2084973a1ab.js"></script>
-        <script>
-            
-            document.addEventListener('DOMContentLoaded', () => {
-                Search.init();
-            });
-        </script>
     </body>
 </html> 

@@ -214,7 +214,7 @@
             </div>
         </div>
     </div>
-</div> <div class="search-modal" id="searchModal">
+</div> <div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -621,6 +621,18 @@
     
       
         
+          <a href="/pages/categories/unity3d" class="type-item">
+            unity3d
+          </a>
+        
+      
+        
+          <a href="/pages/categories/%e5%89%8d%e7%ab%af%e5%bc%80%e5%8f%91" class="type-item">
+            前端开发
+          </a>
+        
+      
+        
           <a href="/pages/categories/%e5%8d%95%e6%9c%ba%e6%b8%b8%e6%88%8f" class="type-item">
             单机游戏
           </a>
@@ -629,6 +641,12 @@
         
           <a href="/pages/categories/%e6%b8%b8%e6%88%8f%e5%bc%80%e5%8f%91" class="type-item">
             游戏开发
+          </a>
+        
+      
+        
+          <a href="/pages/categories/%e7%8b%ac%e7%ab%8b%e5%8d%9a%e5%ae%a2" class="type-item">
+            独立博客
           </a>
         
       
@@ -729,16 +747,191 @@
       
       
       
-
-
-
-
-
-
-
 <div class="pagination">
   
-</div> 
+  
+
+  
+  <div class="page-number">
+    
+    <div class="page-item choose" 
+         onclick="window.location.href='\/tags\/k-means\/'">
+      <span class="page-num">1</span>
+    </div>
+
+    
+    
+    
+    
+    
+
+    
+
+    
+      
+    
+
+    
+
+    
+    
+
+    
+    <div class="fast-jump" title="快速跳转">
+      <input type="number" id="pageJumpInput" 
+             min="1" 
+             max="1" 
+             onfocus="this.parentElement.classList.add('focus')"
+             onblur="this.parentElement.classList.remove('focus')"
+             onkeydown="if(event.key === 'Enter') jumpToPage(this.value,  1 )">
+      <i class="iconfont icon-arrow-right" onclick="jumpToPage(document.getElementById('pageJumpInput').value,  1 )"></i>
+    </div>
+  </div>
+
+  
+  
+</div>
+
+<style>
+.pagination {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+  height: 40px;
+  animation: fade-up 0.6s 0.4s backwards;
+}
+
+.page-item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--main-card-background);
+  border: 1px solid var(--main-card-border);
+  box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.page-item.prev,
+.page-item.next {
+  position: absolute;
+  width: 80px;
+  left: 0;
+}
+
+.page-item.prev .iconfont {
+  transform: rotate(180deg);
+}
+
+.page-item.next {
+  left: auto;
+  right: 0;
+}
+
+.page-item:hover {
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.page-item.choose {
+  color: var(--main-card-background);
+  border-color: var(--main-color);
+  background-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+.page-text {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.page-item:hover .page-text {
+  opacity: 1;
+}
+
+.page-number {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.point {
+  margin: 0 4px;
+  transform: translateY(-8px);
+  font-size: 22px;
+}
+
+.fast-jump {
+  position: relative;
+  margin: 0 6px;
+}
+
+.fast-jump input {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  padding: 0 8px;
+  font-size: 16px;
+  color: var(--main-font-color);
+  background-color: var(--main-card-background);
+  border: 1px solid var(--main-card-border);
+  box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+  transition: all 0.3s;
+}
+
+.fast-jump.focus input,
+.fast-jump:hover input {
+  width: 100px;
+  border-color: var(--main-color);
+  box-shadow: 0 8px 16px -4px var(--main-color-bg);
+}
+
+@media (max-width: 768px) {
+  .page-number {
+    display: none;
+  }
+  .page-item:first-child {
+    margin-right: 10px;
+  }
+  .page-item:last-child {
+    margin-left: 10px;
+  }
+}
+</style>
+
+<script>
+function jumpToPage(page, totalPages) {
+  page = parseInt(page);
+  if (!page || page < 1) page = 1;
+  if (page > totalPages) page = totalPages;
+  
+  
+  let url = window.location.pathname;
+  if (page === 1) {
+    url = url.replace(/\/page\/\d+/, '');
+  } else {
+    if (url.includes('/page/')) {
+      url = url.replace(/\/page\/\d+/, `/page/${page}`);
+    } else {
+      url = url.replace(/\/$/, '') + `/page/${page}`;
+    }
+  }
+  
+  window.location.href = url;
+}
+</script> 
+
     </div>
     
     
@@ -795,7 +988,14 @@
         
           <a href="/tags/.net-core/" class="tags">
             <span class="name">.NET Core</span>
-            <sup class="num">2</sup>
+            <sup class="num">3</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/abp/" class="tags">
+            <span class="name">ABP</span>
+            <sup class="num">1</sup>
           </a>
         
       
@@ -807,8 +1007,57 @@
         
       
         
+          <a href="/tags/apache/" class="tags">
+            <span class="name">Apache</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/cdn/" class="tags">
+            <span class="name">CDN</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/dlib/" class="tags">
+            <span class="name">Dlib</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/envoy/" class="tags">
+            <span class="name">Envoy</span>
+            <sup class="num">4</sup>
+          </a>
+        
+      
+        
           <a href="/tags/function-calling/" class="tags">
             <span class="name">Function Calling</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/github/" class="tags">
+            <span class="name">Github</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/gpts/" class="tags">
+            <span class="name">GPTs</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/grafana/" class="tags">
+            <span class="name">Grafana</span>
             <sup class="num">1</sup>
           </a>
         
@@ -828,6 +1077,13 @@
         
       
         
+          <a href="/tags/hexo/" class="tags">
+            <span class="name">Hexo</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
           <a href="/tags/http/" class="tags">
             <span class="name">HTTP</span>
             <sup class="num">1</sup>
@@ -837,6 +1093,13 @@
         
           <a href="/tags/httpclient/" class="tags">
             <span class="name">HttpClient</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/jsdelivr/" class="tags">
+            <span class="name">JsDelivr</span>
             <sup class="num">1</sup>
           </a>
         
@@ -863,6 +1126,20 @@
         
       
         
+          <a href="/tags/langchain/" class="tags">
+            <span class="name">LangChain</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/ldap/" class="tags">
+            <span class="name">LDAP</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
           <a href="/tags/linq/" class="tags">
             <span class="name">Linq</span>
             <sup class="num">1</sup>
@@ -872,6 +1149,13 @@
         
           <a href="/tags/linux/" class="tags">
             <span class="name">Linux</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/llama/" class="tags">
+            <span class="name">LLaMA</span>
             <sup class="num">1</sup>
           </a>
         
@@ -893,13 +1177,48 @@
         
           <a href="/tags/mock/" class="tags">
             <span class="name">Mock</span>
-            <sup class="num">1</sup>
+            <sup class="num">2</sup>
           </a>
         
       
         
           <a href="/tags/mono/" class="tags">
             <span class="name">Mono</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/nginx/" class="tags">
+            <span class="name">Nginx</span>
+            <sup class="num">2</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/opencv/" class="tags">
+            <span class="name">OpenCV</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/prometheus/" class="tags">
+            <span class="name">Prometheus</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/python/" class="tags">
+            <span class="name">Python</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/rag/" class="tags">
+            <span class="name">RAG</span>
             <sup class="num">1</sup>
           </a>
         
@@ -933,8 +1252,36 @@
         
       
         
+          <a href="/tags/svn/" class="tags">
+            <span class="name">SVN</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/ugui/" class="tags">
+            <span class="name">UGUI</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
           <a href="/tags/unity3d/" class="tags">
             <span class="name">Unity3D</span>
+            <sup class="num">3</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/vue/" class="tags">
+            <span class="name">Vue</span>
+            <sup class="num">6</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/websocket/" class="tags">
+            <span class="name">WebSocket</span>
             <sup class="num">1</sup>
           </a>
         
@@ -961,6 +1308,27 @@
         
       
         
+          <a href="/tags/%E5%85%AB%E5%8D%A6/" class="tags">
+            <span class="name">八卦</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E5%88%86%E9%A1%B5/" class="tags">
+            <span class="name">分页</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E5%89%8D%E7%AB%AF/" class="tags">
+            <span class="name">前端</span>
+            <sup class="num">3</sup>
+          </a>
+        
+      
+        
           <a href="/tags/%E5%8A%A8%E6%BC%AB/" class="tags">
             <span class="name">动漫</span>
             <sup class="num">1</sup>
@@ -968,8 +1336,36 @@
         
       
         
+          <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" class="tags">
+            <span class="name">反向代理</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
           <a href="/tags/%E5%93%AA%E5%90%92/" class="tags">
             <span class="name">哪吒</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" class="tags">
+            <span class="name">图像处理</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E5%A4%8F%E7%9B%AE%E6%BC%B1%E7%9F%B3/" class="tags">
+            <span class="name">夏目漱石</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E5%AE%B9%E5%99%A8/" class="tags">
+            <span class="name">容器</span>
             <sup class="num">1</sup>
           </a>
         
@@ -989,8 +1385,29 @@
         
       
         
+          <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" class="tags">
+            <span class="name">微服务</span>
+            <sup class="num">3</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E6%80%9D%E8%80%83/" class="tags">
+            <span class="name">思考</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
           <a href="/tags/%E6%84%9F%E6%82%9F/" class="tags">
             <span class="name">感悟</span>
+            <sup class="num">2</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E6%88%91%E6%98%AF%E7%8C%AB/" class="tags">
+            <span class="name">我是猫</span>
             <sup class="num">1</sup>
           </a>
         
@@ -1005,6 +1422,20 @@
         
           <a href="/tags/%E6%95%B0%E6%8D%AE/" class="tags">
             <span class="name">数据</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E6%97%A5%E5%89%A7/" class="tags">
+            <span class="name">日剧</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E6%97%A5%E6%9C%AC%E6%96%87%E5%AD%A6/" class="tags">
+            <span class="name">日本文学</span>
             <sup class="num">1</sup>
           </a>
         
@@ -1026,13 +1457,20 @@
         
           <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" class="tags">
             <span class="name">游戏开发</span>
-            <sup class="num">1</sup>
+            <sup class="num">2</sup>
           </a>
         
       
         
           <a href="/tags/%E6%BA%90%E7%A0%81/" class="tags">
             <span class="name">源码</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E7%86%B5%E5%A2%9E%E5%AE%9A%E5%BE%8B/" class="tags">
+            <span class="name">熵增定律</span>
             <sup class="num">1</sup>
           </a>
         
@@ -1045,8 +1483,57 @@
         
       
         
+          <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" class="tags">
+            <span class="name">版本控制</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
           <a href="/tags/%E7%8A%B6%E6%80%81/" class="tags">
             <span class="name">状态</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E7%94%9F%E6%B4%BB/" class="tags">
+            <span class="name">生活</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E7%94%B5%E5%BD%B1/" class="tags">
+            <span class="name">电影</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E7%9B%91%E6%8E%A7/" class="tags">
+            <span class="name">监控</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E7%A0%94%E5%8F%91/" class="tags">
+            <span class="name">研发</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" class="tags">
+            <span class="name">程序员</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E7%A9%BF%E6%90%AD/" class="tags">
+            <span class="name">穿搭</span>
             <sup class="num">1</sup>
           </a>
         
@@ -1066,6 +1553,13 @@
         
       
         
+          <a href="/tags/%E7%BD%91%E5%85%B3/" class="tags">
+            <span class="name">网关</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
           <a href="/tags/%E8%81%9A%E7%B1%BB/" class="tags">
             <span class="name">聚类</span>
             <sup class="num">1</sup>
@@ -1080,6 +1574,13 @@
         
       
         
+          <a href="/tags/%E8%A1%A8%E5%8D%95/" class="tags">
+            <span class="name">表单</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
           <a href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%91/" class="tags">
             <span class="name">表达式树</span>
             <sup class="num">1</sup>
@@ -1087,8 +1588,22 @@
         
       
         
+          <a href="/tags/%E8%AE%A4%E8%AF%81/" class="tags">
+            <span class="name">认证</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
           <a href="/tags/%E8%AF%BB%E4%B9%A6/" class="tags">
             <span class="name">读书</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="tags">
+            <span class="name">负载均衡</span>
             <sup class="num">1</sup>
           </a>
         
@@ -1108,8 +1623,22 @@
         
       
         
+          <a href="/tags/%E8%B7%AF%E7%94%B1/" class="tags">
+            <span class="name">路由</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
           <a href="/tags/%E8%BF%81%E7%A7%BB/" class="tags">
             <span class="name">迁移</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E9%9A%8F%E7%AC%94/" class="tags">
+            <span class="name">随笔</span>
             <sup class="num">1</sup>
           </a>
         
@@ -1121,9 +1650,44 @@
           </a>
         
       
+        
+          <a href="/tags/%E9%AA%8C%E8%AF%81/" class="tags">
+            <span class="name">验证</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
   </div>
   <a href="/pages/tags" class="more-tags">查看全部</a>
-</div><div class="site-data s-card weidgets">
+</div><div class="tags-cloud s-card weidgets">
+    <div class="title">
+        <i class="iconfont icon-hashtag"></i>
+        <span class="title-name">日历</span>
+    </div>
+    <div class="all-tags">
+        <img id="calendar-cover" src="" style="object-fit: cover; width: 100%; height: 100%; display: none;" />
+    </div>
+</div>
+<script>
+    const getImageUrl = (date) => {
+        const currentYear = date.getFullYear();
+        const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
+        const currentDate = String(date.getDate()).padStart(2, '0');
+        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${currentMonth}${currentDate}.jpg`
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const eleImg = document.querySelector("#calendar-cover");
+        eleImg.onload = () => eleImg.style.display = '';
+        if (document.location.pathname.startsWith('/posts')) {
+            let publishedTime = document.querySelector('meta[property="article:published_time"]').content;
+            publishedTime = publishedTime.substring(0, 10);
+            eleImg.src = getImageUrl(new Date(publishedTime))
+        } else {
+            eleImg.src = getImageUrl(new Date())
+        }
+    });
+</script><div class="site-data s-card weidgets">
     <div class="title">
       <i class="iconfont icon-chart"></i>
       <span class="title-name">站点数据</span>
@@ -1465,7 +2029,7 @@ window.addEventListener('beforeunload', function() {
     document.addEventListener('DOMContentLoaded', () => {
         Search.init();
     });
-</script><div class="search-modal" id="searchModal">
+</script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -1624,15 +2188,5 @@ window.addEventListener('beforeunload', function() {
   background: transparent;
 }
 </style> 
-
-        
-        
-        <script src="/js/search.min.f2af2dfa3be20e8e7e8c8989bab508289b71bf3730bc6e352738f2084973a1ab.js"></script>
-        <script>
-            
-            document.addEventListener('DOMContentLoaded', () => {
-                Search.init();
-            });
-        </script>
     </body>
 </html> 
