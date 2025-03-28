@@ -246,7 +246,95 @@ params:
       enable: false
       text: 又拍云
       url: https://www.upyun.com/
+
+    showBar: true
+     # 社交链接
+    social:
+      - icon: "github"
+        link: "https://github.com/yourusername"
+      - icon: "weibo"
+        link: "https://twitter.com/yourusername"
+      - icon: "email"
+        link: "mailto:qinyuanpei@163.com"
+      - icon: "douban"
+        link: "https://space.bilibili.com/yourid"
     
+    # 底部链接
+    links:
+      - text: "博客"
+        items:
+          - text: "近期文章"
+            link: "/posts"
+            newTab: false
+          - text: "全部分类"
+            link: "/categories"
+            newTab: false
+          - text: "全部标签"
+            link: "/tags"
+            newTab: false
+          - text: "文章归档"
+            link: "/archives"
+            newTab: false
+      
+      - text: "项目"
+        items:
+          - text: "项目1"
+            link: "https://example1.com"
+            newTab: true
+          - text: "项目2"
+            link: "https://example2.com"
+            newTab: true
+          - text: "项目3"
+            link: "https://example2.com"
+            newTab: true
+          - text: "项目4"
+            link: "https://example2.com"
+            newTab: true
+
+      - text: "专栏"
+        items:
+          - text: ".NET 源代码探案系列"
+            link: "https://blog.csdn.net/qinyuanpei/category_10852603.html"
+            newTab: true
+          - text: "Python 数据挖掘系列"
+            link: "https://blog.csdn.net/qinyuanpei/category_7444699.html"
+            newTab: true
+          - text: "分布式丛林探险系列"
+            link: "https://blog.csdn.net/qinyuanpei/category_11484903.html"
+            newTab: true
+          - text: "Unity3D 游戏开发系列"
+            link: "https://blog.csdn.net/qinyuanpei/category_1708629.html"
+            newTab: true
+
+      - text: "页面"
+        items:
+          - text: "畅所欲言"
+            link: "/guest"
+            newTab: false
+          - text: "阅读记录"
+            link: "/books"
+            newTab: false
+          - text: "观影记录"
+            link: "/movies"
+            newTab: false
+          - text: "听歌记录"
+            link: "/musics"
+            newTab: false
+      
+      - text: "友情链接"
+        items:
+          - text: "张洪"
+            link: "https://blog.zhheo.com/"
+            newTab: false
+          - text: "张洪"
+            link: "https://blog.zhheo.com/"
+            newTab: false
+          - text: "张洪"
+            link: "https://blog.zhheo.com/"
+            newTab: false
+          - text: "更多"
+            link: "https://blog.zhheo.com/"
+            newTab: false
 markup:
     goldmark:
         renderer:
