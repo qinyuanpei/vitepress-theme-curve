@@ -59,6 +59,8 @@ menu:
           icon: "info"
 
 params:
+  mainSections:
+    - posts
   showHeader: true
   # 站点信息
   siteMeta:
