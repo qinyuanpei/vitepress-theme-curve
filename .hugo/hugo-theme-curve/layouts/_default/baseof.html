@@ -44,6 +44,10 @@
                         <div class="menu-btn nav-btn" title="全站搜索">
                             <i class="iconfont icon-search"></i>
                         </div>
+                        <!-- 主题切换 -->
+                        <div class="menu-btn nav-btn" id="themeToggle" title="切换主题模式">
+                            <i class="iconfont icon-sun" id="themeIcon"></i>
+                        </div>
                         <!-- 中控台 -->
                         <div id="open-control" class="menu-btn nav-btn pc" title="打开中控台">
                             <i class="iconfont icon-dashboard"></i>
@@ -84,5 +88,7 @@
         
         <!-- 搜索 -->
         {{- partial "components/search.html" }}
+
+        <!-- 在 scripts.html 之后添加 -->
     </body>
 </html> 

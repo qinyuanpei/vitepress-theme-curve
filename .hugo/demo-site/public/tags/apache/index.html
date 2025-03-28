@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/css/style.css">
     
     
-    <link rel="stylesheet" href="/scss/main.min.656e2428f69fccc25611e271078ec105c55633d35f5266cb6afedebefd6ba2da.css">
+    <link rel="stylesheet" href="/scss/main.min.6df0ab3c0e2f4e8b38b5d91046f8d3225bfc72028b2a55cb71541a9ad32c09e1.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_3159629_2j0vwz8wd1k.css">
     
     
@@ -148,6 +148,10 @@
                         
                         <div class="menu-btn nav-btn" title="全站搜索">
                             <i class="iconfont icon-search"></i>
+                        </div>
+                        
+                        <div class="menu-btn nav-btn" id="themeToggle" title="切换主题模式">
+                            <i class="iconfont icon-sun" id="themeIcon"></i>
                         </div>
                         
                         <div id="open-control" class="menu-btn nav-btn pc" title="打开中控台">
@@ -1945,7 +1949,9 @@ window.addEventListener('beforeunload', function() {
     document.addEventListener('DOMContentLoaded', () => {
         Search.init();
     });
-</script><div class="modal search-modal" id="searchModal">
+</script>
+
+<script src="/js/theme.min.df71ca7373c5884a4022a354b524ddee31ff8069b6ff5151b5950296b2d3a7a8.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -2104,5 +2110,7 @@ window.addEventListener('beforeunload', function() {
   background: transparent;
 }
 </style> 
+
+        
     </body>
 </html> 

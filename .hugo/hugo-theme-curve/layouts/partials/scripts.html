@@ -7,3 +7,5 @@
         Search.init();
     });
 </script>
+{{ $theme := resources.Get "js/theme.js" | minify | fingerprint }}
+<script src="{{ $theme.RelPermalink }}"></script>
