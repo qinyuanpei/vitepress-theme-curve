@@ -1,0 +1,10 @@
+<div class="more-menu-panel">
+    <div class="menu-list">
+        {{ range .Site.Params.moreMenu }}
+        <a class="menu-item" href="{{ .link }}" {{ if .blank }}target="_blank"{{ end }}>
+            <i class="iconfont {{ .icon }}"></i>
+            <span>{{ .name }}</span>
+        </a>
+        {{ end }}
+    </div>
+</div> 

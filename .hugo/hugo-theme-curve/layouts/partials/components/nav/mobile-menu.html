@@ -1,0 +1,40 @@
+<div class="mobile-menu">
+    <div class="menu-mask"></div>
+    <div class="menu-content">
+        <div class="menu-header">
+            <div class="site-info">
+                <div class="site-name">{{ .Site.Title }}</div>
+                <div class="site-description">{{ .Site.Params.siteMeta.description }}</div>
+            </div>
+        </div>
+        <div class="menu-body">
+            <!-- 主菜单 -->
+            <div class="menu-group">
+                <div class="menu-title">导航</div>
+                <div class="menu-list">
+                    {{ $currentPage := . }}
+                    {{ range .Site.Menus.main }}
+                    <a class="menu-item{{ if $currentPage.IsMenuCurrent "main" . }} active{{ end }}" href="{{ .URL }}" {{ if .Params.blank }}target="_blank"{{ end }}>
+                        {{ if .Pre }}
+                        <i class="iconfont {{ .Pre }}"></i>
+                        {{ end }}
+                        <span>{{ .Name }}</span>
+                    </a>
+                    {{ end }}
+                </div>
+            </div>
+            <!-- 更多菜单 -->
+            <div class="menu-group">
+                <div class="menu-title">更多</div>
+                <div class="menu-list">
+                    {{ range .Site.Params.moreMenu }}
+                    <a class="menu-item" href="{{ .link }}" {{ if .blank }}target="_blank"{{ end }}>
+                        <i class="iconfont {{ .icon }}"></i>
+                        <span>{{ .name }}</span>
+                    </a>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

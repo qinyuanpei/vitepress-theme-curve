@@ -1,0 +1,12 @@
+name = "Curve"
+license = "MIT"
+licenselink = "https://github.com/yourusername/hugo-theme-curve/blob/master/LICENSE"
+description = "A clean and modern Hugo theme ported from VitePress"
+homepage = "https://github.com/yourusername/hugo-theme-curve"
+tags = ["blog", "responsive", "clean", "modern"]
+features = ["blog", "responsive"]
+min_version = "0.41.0"
+
+[author]
+  name = "Your Name"
+  homepage = "https://your-website.com" 

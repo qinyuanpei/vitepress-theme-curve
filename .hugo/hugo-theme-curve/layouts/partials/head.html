@@ -1,0 +1,48 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- 网站标题和描述 -->
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ if .IsHome }}{{ .Site.Params.siteMeta.description }}{{ else }}{{ .Description }}{{ end }}">
+    
+    <!-- 网站图标 -->
+    <link rel="shortcut icon" href="{{ .Site.Params.siteMeta.favicon }}" type="image/x-icon">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+    <meta property="og:description" content="{{ if .IsHome }}{{ .Site.Params.siteMeta.description }}{{ else }}{{ .Description }}{{ end }}">
+    <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+    <meta property="og:url" content="{{ .Permalink }}">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    {{ $sass := resources.Get "scss/main.scss" }}
+    {{ $style := $sass | resources.ToCSS | minify | resources.Fingerprint "sha256" }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_3159629_2j0vwz8wd1k.css">
+    
+    <!-- JavaScript -->
+    <script src="/js/banner.js" defer></script>
+    
+    <!-- RSS -->
+    {{ range .AlternativeOutputFormats -}}
+        {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+    {{ end -}}
+    
+    <!-- 自定义头部内容 -->
+    {{ if .Site.Params.customHead }}
+        {{ .Site.Params.customHead | safeHTML }}
+    {{ end }}
+
+    <link crossorigin="" rel="preconnect" href="https://s1.hdslb.com">
+    <link crossorigin="" rel="preconnect" href="https://mirrors.sustech.edu.cn">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://cdn2.codesign.qq.com/icons/g5ZpEgx3z4VO6j2/latest/iconfont.css">
+    <link rel="preconnect" href="https://use.sevencdn.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link crossorigin="anonymous" href="https://use.sevencdn.com/css2?family=Fira+Code:wght@300..700&amp;display=swap" rel="stylesheet">
+    <link href="https://X5EBEZB53I-dsn.algolia.net" rel="preconnect" crossorigin="">
+</head> 

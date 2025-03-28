@@ -1,0 +1,82 @@
+.copyright {
+    position: relative;
+    background-color: var(--main-card-second-background) !important;
+    padding: 18px !important;
+    margin-top: 2rem;
+    overflow: hidden;
+
+    .title {
+        display: flex;
+        flex-direction: column;
+
+        .post-link {
+            margin-top: 2px;
+            font-size: 14px;
+            opacity: 0.6;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    .post-meta {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 1rem 0;
+        padding: unset !important;
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            margin-right: 2rem;
+
+            .name {
+                margin-top: 4px;
+                font-size: 14px;
+                opacity: 0.6;
+                transition:
+                    color 0.3s,
+                    opacity 0.3s;
+                cursor: pointer;
+            }
+
+            &.cc {
+                .name {
+                    &:hover {
+                        opacity: 1;
+                        color: var(--main-color);
+                    }
+                }
+            }
+        }
+    }
+
+    .meta-tip {
+        opacity: 0.4;
+    }
+
+    &::after {
+        content: "\e021";
+        position: absolute;
+        top: -4rem;
+        right: -4rem;
+        font-family: "iconfont";
+        opacity: 0.1;
+        font-size: 16rem;
+        transform: rotate(334deg);
+    }
+
+    @media (max-width: 768px) {
+        .post-meta {
+            display: none;
+        }
+
+        .meta-tip {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+    }
+}

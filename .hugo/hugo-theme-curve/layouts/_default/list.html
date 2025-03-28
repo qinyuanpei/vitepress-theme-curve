@@ -1,0 +1,89 @@
+{{ define "main" }}
+{{ $showHeader := .Params.showHeader | default true }}
+{{ $showCategories := .Params.showCategories | default false }}
+{{ $showTags := .Params.showTags | default false }}
+{{ $postSize := default 10 .Site.Params.theme.postSize }}
+{{ $currentPage := .Paginator.PageNumber }}
+
+<!-- 计算文章总数 -->
+{{ $allPosts := .Pages }}
+{{ if $showCategories }}
+  {{ $allPosts = (index .Site.Taxonomies.categories $showCategories) }}
+{{ else if $showTags }}
+  {{ $allPosts = (index .Site.Taxonomies.tags $showTags) }}
+{{ end }}
+
+<!-- 布局配置 -->
+{{ $layoutType := .Site.Params.theme.cover.twoColumns | default false }}
+{{ $gridStyle := "" }}
+{{ if $layoutType }}
+  {{ $gridStyle = "layout-grid" }}
+{{ end }}
+
+<div class="home">
+  {{ if $showHeader }}
+    {{ partial "components/banner.html" (dict 
+      "height" .Site.Params.theme.bannerType
+      "type" "text"
+      "context" .
+    ) }}
+  {{ end }}
+  
+  <div class="home-content">
+    <div class="posts-content">
+      <!-- 分类总览 -->
+      {{ $typeBarData := dict 
+        "type" (cond $showTags "tags" "categories")
+        "currentTypeName" (cond $showCategories $showCategories (cond $showTags $showTags ""))
+        "context" .
+      }}
+      {{ partial "components/type-bar.html" $typeBarData }}
+      
+      <!-- 文章列表 -->
+      {{ $postListData := dict 
+        "posts" .Paginator.Pages
+        "layoutType" $layoutType
+        "gridStyle" $gridStyle
+        "context" .
+      }}
+      {{ partial "components/post-list.html" $postListData }}
+      
+      <!-- 分页 -->
+      {{ $paginationData := dict 
+        "total" (len $allPosts)
+        "page" $currentPage
+        "limit" $postSize
+        "useParams" (or $showCategories $showTags)
+        "routePath" (cond $showCategories 
+          (printf "/pages/categories/%s" $showCategories)
+          (cond $showTags 
+            (printf "/pages/tags/%s" $showTags)
+            ""))
+        "context" .
+      }}
+      {{ partial "components/pagination.html" $paginationData }}
+    </div>
+    
+    <!-- 侧边栏 -->
+    {{ partial "components/aside.html" . }}
+  </div>
+</div>
+
+<!-- 滚动位置记忆功能 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const scrollY = localStorage.getItem('lastScrollY');
+  if (scrollY) {
+    window.scrollTo({
+      top: parseInt(scrollY),
+      behavior: 'smooth'
+    });
+    localStorage.removeItem('lastScrollY');
+  }
+});
+
+window.addEventListener('beforeunload', function() {
+  localStorage.setItem('lastScrollY', window.scrollY.toString());
+});
+</script>
+{{ end }} 

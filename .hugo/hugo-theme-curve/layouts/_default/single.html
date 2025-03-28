@@ -1,0 +1,114 @@
+{{ define "main" }}
+<div class="post">
+    <div class="post-meta">
+        <div class="meta">
+            <!-- 分类 -->
+            <div class="categories">
+                {{ with .Params.categories }}
+                {{ range . }}
+                <a href="/categories/{{ . | urlize }}" class="cat-item">
+                    <i class="iconfont icon-folder"></i>
+                    <span class="name">{{ . }}</span>
+                </a>
+                {{ end }}
+                {{ end }}
+            </div>
+            <!-- 标签 -->
+            <div class="tags">
+                {{ with .Params.tags }}
+                {{ range . }}
+                <a href="/tags/{{ . | urlize }}" class="tag-item">
+                    <i class="iconfont icon-hashtag"></i>
+                    <span class="name">{{ . }}</span>
+                </a>
+                {{ end }}
+                {{ end }}
+            </div>
+        </div>
+        <h1 class="title">
+            {{ .Title | default "未命名文章" }}
+        </h1>
+        <div class="other-meta">
+            <!-- 发布日期 -->
+            <span class="meta date">
+                <i class="iconfont icon-date"></i>
+                {{ .Date.Format "2006-01-02" }}
+            </span>
+            <!-- 更新日期 -->
+            <span class="update meta">
+                <i class="iconfont icon-time"></i>
+                {{ .Lastmod.Format "2006-01-02" }}
+            </span>
+            <!-- 热度 -->
+            <span class="hot meta">
+                <i class="iconfont icon-fire"></i>
+                <span id="twikoo_visitors" class="artalk-pv-count">0</span>
+            </span>
+            <!-- 评论数 -->
+            <span class="chat meta hover" data-scroll-to="comments">
+                <i class="iconfont icon-chat"></i>
+                <span id="twikoo_comments" class="artalk-comment-count">0</span>
+            </span>
+        </div>
+    </div>
+    <div class="post-content">
+        <article class="post-article s-card">
+            <!-- 过期提醒 -->
+            {{ $days := div (sub now.Unix .Date.Unix) 86400 }}
+            {{ if ge $days 180 }}
+            <div class="expired s-card">
+                本文发表于 <strong>{{ $days }}</strong> 天前，其中的信息可能已经事过境迁
+            </div>
+            {{ end }}
+
+            {{ partial "components/post/article-gpt.html" . }}
+
+            <!-- 文章内容 -->
+            <div id="page-content" class="markdown-main-style">
+                {{ .Content }}
+            </div>
+
+            <!-- 版权信息 -->
+            {{ if ne .Params.copyright false }}
+            {{ partial "components/post/copyright.html" . }}
+            {{ end }}
+
+            <!-- 其他信息 -->
+            <div class="other-meta">
+                <div class="all-tags">
+                    {{ with .Params.tags }}
+                    {{ range . }}
+                    <a href="/tags/{{ . | urlize }}" class="tag-item">
+                        <i class="iconfont icon-hashtag"></i>
+                        <span class="name">{{ . }}</span>
+                    </a>
+                    {{ end }}
+                    {{ end }}
+                </div>
+                <a href="https://eqnxweimkr5.feishu.cn/share/base/form/shrcnCXCPmxCKKJYI3RKUfefJre" 
+                   class="report" 
+                   target="_blank">
+                    <i class="iconfont icon-report"></i>
+                    反馈与投诉
+                </a>
+            </div>
+
+            <!-- 打赏按钮 -->
+            {{ partial "components/post/reward.html" . }}
+
+            <!-- 上一篇/下一篇 -->
+            {{ partial "components/next-post.html" . }}
+
+            <!-- 相关文章 -->
+            {{ partial "components/post/related-post.html" . }}
+
+            <!-- 评论 -->
+            <div id="comments">
+                {{ partial "components/comments.html" . }}
+            </div>
+        </article>
+        <!-- 侧边栏 -->
+        {{ partial "components/aside.html" (dict "context" . "showToc" true) }}
+    </div>
+</div>
+{{ end }} 

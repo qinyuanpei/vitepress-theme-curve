@@ -1,0 +1,50 @@
+<div class="control-panel">
+    <div class="control-mask"></div>
+    <div class="control-content">
+        <div class="control-header">
+            <div class="control-title">
+                <i class="iconfont icon-dashboard"></i>
+                <span>中控台</span>
+            </div>
+            <div class="control-close">
+                <i class="iconfont icon-close"></i>
+            </div>
+        </div>
+        <div class="control-body">
+            <!-- 主题设置 -->
+            <div class="control-group">
+                <div class="group-title">主题设置</div>
+                <div class="group-content">
+                    <!-- 主题模式 -->
+                    <div class="control-item">
+                        <div class="item-title">主题模式</div>
+                        <div class="item-content">
+                            <div class="theme-switch">
+                                <div class="switch-item" data-theme="light">
+                                    <i class="iconfont icon-sun"></i>
+                                </div>
+                                <div class="switch-item" data-theme="dark">
+                                    <i class="iconfont icon-moon"></i>
+                                </div>
+                                <div class="switch-item" data-theme="auto">
+                                    <i class="iconfont icon-auto"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 主题色 -->
+                    <div class="control-item">
+                        <div class="item-title">主题色</div>
+                        <div class="item-content">
+                            <div class="color-switch">
+                                {{ range .Site.Params.themeColors }}
+                                <div class="switch-item" data-color="{{ .name }}" style="background-color: {{ .value }}"></div>
+                                {{ end }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

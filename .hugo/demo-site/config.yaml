@@ -1,0 +1,143 @@
+baseURL: 'http://example.org/'
+languageCode: 'zh-cn'
+title: '元视角'
+theme: 'hugo-theme-curve'
+
+# 菜单信息
+menu:
+  main:
+    - name: "文库"
+      weight: 1
+      children:
+        - name: "文章列表"
+          url: "/"
+          weight: 1
+          icon: "home"
+        - name: "全部分类"
+          url: "/categories"
+          weight: 2
+          icon: "category"
+        - name: "全部标签"
+          url: "/tags"
+          weight: 3
+          icon: "tag"
+    
+    - name: "书影音"
+      weight: 2
+      children:
+        - name: "在读"
+          url: "/reading"
+          weight: 1
+          icon: "book"
+        - name: "在看"
+          url: "/watching"
+          weight: 2
+          icon: "tv"
+        - name: "在听"
+          url: "/listening"
+          weight: 3
+          icon: "music"
+    
+    - name: "友链"
+      weight: 3
+      children:
+        - name: "友情链接"
+          url: "/friends"
+          weight: 1
+          icon: "users"
+    
+    - name: "关于"
+      weight: 4
+      children:
+        - name: "留言板"
+          url: "/guestbook"
+          weight: 1
+          icon: "message"
+        - name: "关于本站"
+          url: "/about"
+          weight: 2
+          icon: "info"
+
+params:
+  showHeader: true
+  # 站点信息
+  siteMeta:
+    title: "Curve Theme"
+    description: "纵有疾风起，人生不言弃"
+    author:
+      name: "飞鸿踏雪"
+      avatar: "/images/avatar.jpg"
+
+  # 文章设置
+  article:
+    # 版权信息设置
+    copyright:
+      enable: true
+      # 是否显示原文链接
+      showLink: true
+      # 是否显示发布时间
+      showPublishTime: true
+      # 是否显示更新时间
+      showUpdateTime: true
+      # 是否显示许可协议
+      showLicense: true
+      # 许可协议类型
+      license: "CC BY-NC-SA 4.0"
+      # 许可协议链接
+      licenseLink: "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans"
+      # 许可协议说明
+      licenseText: "署名-非商业性使用-相同方式共享 4.0 国际"
+
+    # AI 摘要设置
+    articleGPT:
+      enable: true
+      title: "文章摘要"
+      tip: "此内容根据文章生成，并经过人工审核，仅用于文章内容的解释与总结"
+      reportLink: "https://eqnxweimkr5.feishu.cn/share/base/form/shrcnCXCPmxCKKJYI3RKUfefJre"
+      showTip: false
+      showReport: false
+
+    # 打赏设置
+    reward:
+      enable: true
+      wechat: "/images/reward/wechat.jpg"
+      alipay: "/images/reward/alipay.jpg"
+      thank: "🙏 感谢您赐予我前进的力量"
+      tip: "赞赏金额将全部用于开源项目维护，以及服务器、域名及各类云服务的开销"
+
+  background:
+    image: 'https://tuapi.eees.cc/api.php?category={dongman,fengjing}&type=302'
+
+  # 主题设置
+  theme:
+    # 侧边栏设置
+    aside:
+      # 问候语设置
+      hello:
+        enable: true
+        text: "欢迎来到我的博客！"
+      
+      # 目录设置
+      toc:
+        enable: true
+      
+      # 标签设置
+      tags:
+        enable: true
+      
+      # 站点数据设置
+      siteData:
+        enable: true
+      
+      # 倒计时设置
+      countDown:
+        enable: true
+        data:
+          name: "新年"
+          date: "2025-01-01"
+
+    # 封面设置
+    cover:
+      showCover:
+        enable: true
+        defaultCover: ["/images/default-cover.jpg"]

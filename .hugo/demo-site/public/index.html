@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head>
+	<meta name="generator" content="Hugo 0.126.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    
+    <title>元视角</title>
+    <meta name="description" content="纵有疾风起，人生不言弃">
+    
+    
+    <link rel="shortcut icon" href="" type="image/x-icon">
+    
+    
+    <meta property="og:title" content="元视角">
+    <meta property="og:description" content="纵有疾风起，人生不言弃">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:1313/">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    
+    <link rel="stylesheet" href="/scss/main.min.b0f85d2b10c149f20302342a60cd60c1d05830dad6913670bed39b34624da2ed.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_3159629_2j0vwz8wd1k.css">
+    
+    
+    <script src="/js/banner.js" defer></script>
+    
+    
+    <link rel="alternate" type="application/rss+xml" href="http://localhost:1313/index.xml" title="元视角" />
+    
+    
+
+    <link crossorigin="" rel="preconnect" href="https://s1.hdslb.com">
+    <link crossorigin="" rel="preconnect" href="https://mirrors.sustech.edu.cn">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.css">
+    <link crossorigin="anonymous" rel="stylesheet" href="https://cdn2.codesign.qq.com/icons/g5ZpEgx3z4VO6j2/latest/iconfont.css">
+    <link rel="preconnect" href="https://use.sevencdn.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link crossorigin="anonymous" href="https://use.sevencdn.com/css2?family=Fira+Code:wght@300..700&amp;display=swap" rel="stylesheet">
+    <link href="https://X5EBEZB53I-dsn.algolia.net" rel="preconnect" crossorigin="">
+</head> <body>
+        
+        <div class="background">
+    
+    <div class="bg-mask"></div>
+    
+    
+    <div class="bg-image" style="background-image: url('https://tuapi.eees.cc/api.php?category=%7bdongman,fengjing%7d&amp;type=302')"></div>
+    
+    
+    
+</div> 
+
+<style>
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: -2;
+      &.patterns {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%23494849' fill-opacity='0.08' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E");
+      }
+      &.dark {
+        &.patterns {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%23fcfcfc' fill-opacity='0.08' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E");
+        }
+        .cover {
+          filter: brightness(0.6);
+        }
+      }
+      .cover {
+        width: auto;
+        height: auto;
+        min-height: 100%;
+        opacity: 0;
+        transition:
+          filter 0.3s,
+          opacity 0.3s;
+        &.loaded {
+          opacity: 1;
+        }
+      }
+    }
+    </style>
+    
+        <header class="main-header">
+            <nav class="main-nav">
+                <div class="nav-all">
+                    
+                    <div class="left-nav">
+                        <div class="more-menu nav-btn" title="更多内容">
+                            <i class="iconfont icon-menu"></i><div class="more-menu-panel">
+    <div class="menu-list">
+        
+    </div>
+</div> </div>
+                        <div class="site-name">
+                            元视角
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="nav-center">
+                        <div class="site-menu"><div class="menu-list">
+    
+    <div class="menu-item">
+        <span class="link-btn"> 文库</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 书影音</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 友链</span>
+        
+    </div>
+    
+    <div class="menu-item">
+        <span class="link-btn"> 关于</span>
+        
+    </div>
+    
+</div> </div>
+                        <span class="site-title">
+                            纵有疾风起，人生不言弃
+                        </span>
+                    </div>
+                    
+                    
+                    <div class="right-nav">
+                        
+                        <a class="menu-btn nav-btn travellings" title="开往-友链接力" href="https://www.travellings.cn/go.html" target="_blank">
+                            <i class="iconfont icon-subway"></i>
+                        </a>
+                        
+                        <div class="menu-btn nav-btn" title="随机前往一篇文章">
+                            <i class="iconfont icon-shuffle"></i>
+                        </div>
+                        
+                        <div class="menu-btn nav-btn" title="全站搜索">
+                            <i class="iconfont icon-search"></i>
+                        </div>
+                        
+                        <div id="open-control" class="menu-btn nav-btn pc" title="打开中控台">
+                            <i class="iconfont icon-dashboard"></i>
+                        </div>
+                        
+                        <div class="to-top menu-btn" title="返回顶部">
+                            <div class="to-top-btn">
+                                <span class="num">0</span>
+                                <i class="iconfont icon-up"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="menu-btn nav-btn mobile" title="打开菜单">
+                            <i class="iconfont icon-toc"></i>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="mobile-menu">
+    <div class="menu-mask"></div>
+    <div class="menu-content">
+        <div class="menu-header">
+            <div class="site-info">
+                <div class="site-name">元视角</div>
+                <div class="site-description">纵有疾风起，人生不言弃</div>
+            </div>
+        </div>
+        <div class="menu-body">
+            
+            <div class="menu-group">
+                <div class="menu-title">导航</div>
+                <div class="menu-list">
+                    
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>文库</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>书影音</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>友链</span>
+                    </a>
+                    
+                    <a class="menu-item" href="" >
+                        
+                        <span>关于</span>
+                    </a>
+                    
+                </div>
+            </div>
+            
+            <div class="menu-group">
+                <div class="menu-title">更多</div>
+                <div class="menu-list">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <div class="search-panel">
+    <div class="search-mask"></div>
+    <div class="search-content">
+        <div class="search-header">
+            <div class="search-input">
+                <i class="iconfont icon-search"></i>
+                <input type="text" placeholder="搜索文章..." id="searchInput">
+            </div>
+            <div class="search-close">
+                <i class="iconfont icon-close"></i>
+            </div>
+        </div>
+        <div class="search-body">
+            <div class="search-empty">
+                <i class="iconfont icon-empty"></i>
+                <span>暂无搜索结果</span>
+            </div>
+            <div class="search-result"></div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    window.searchData = [
+        
+        {
+            "title": "\"Hello World\"",
+            "content": "\"Hello World 这是一篇示例文章，用来展示主题的各种样式效果。\\n标题示例 三级标题 这是三级标题的内容\\n四级标题 这是四级标题的内容\\n文本样式 这是一段普通文本，包含粗体和斜体文字。\\n这是一个链接示例。\\n代码示例 行内代码 console.log('Hello World')\\n代码块：\\nfunction greeting(name) { console.log(`Hello, ${name}!`); } greeting(\\u0026#39;World\\u0026#39;); 引用示例 这是一段引用文本\\n可以包含多行\\n列表示例 无序列表：\\n项目一 项目二 子项目 2.1 子项目 2.2 项目三 有序列表：\\n第一步 第二步 第三步 表格示例 表头1 表头2 表头3 内容1 内容2 内容3 行2列1 行2列2 行2列3 图片示例 \"",
+            "url": "\"/posts/hello-world/\"",
+            "date": "\"2024-03-27\""
+        },
+        
+    ];
+</script> </header>
+
+        
+        <main class="main-layout">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="home">
+  
+    
+
+
+
+
+
+
+
+<div class="banner half" id="main-banner">
+    <h1 class="title">你好，欢迎来到元视角</h1>
+    <div class="subtitle">
+        <span class="text">
+            纵有疾风起，人生不言弃
+        </span>
+    </div>
+    
+</div>
+
+
+<style>
+.banner {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fade-up 0.6s 0.1s backwards;
+    transition: height 0.3s;
+}
+
+.banner.full {
+    opacity: 0;
+    height: calc(100vh - 70px);
+    padding-bottom: 100px;
+    animation: fade-up 0.6s 0.5s forwards;
+}
+
+.banner.full .subtitle {
+    opacity: 0;
+    animation: fade-up-opacity 0.8s 0.5s forwards;
+}
+
+.banner .title {
+    font-family: "Site Title";
+    font-weight: bold;
+    font-size: 2.75rem;
+}
+
+.banner .subtitle {
+    width: 80%;
+    font-size: 1.25rem;
+    opacity: 0.8;
+    animation: fade-up-opacity 0.6s 0.1s backwards;
+}
+
+.banner .subtitle .text {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.banner .icon-up {
+    font-size: 20px;
+    position: absolute;
+    bottom: 60px;
+    left: calc(50% - 10px);
+    transform: rotate(180deg);
+    animation: moveDown 2s ease-in-out infinite;
+    cursor: pointer;
+}
+
+.banner-page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    min-height: 380px;
+    background-size: cover;
+}
+
+.banner-page .top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.banner-page .top .title {
+    display: flex;
+    flex-direction: column;
+}
+
+.banner-page .top .title .title-small {
+    color: var(--main-font-second-color);
+    font-size: 0.875rem;
+}
+
+.banner-page .top .title .title-big {
+    font-size: 2.25rem;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-top: 12px;
+}
+
+.banner-page .footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.banner-page .footer .footer-left {
+    margin-top: auto;
+    color: var(--main-font-second-color);
+    opacity: 0.8;
+}
+
+.banner-page.image {
+    color: #fff !important;
+}
+
+.banner-page.image .top .title-small {
+    color: #fff;
+    opacity: 0.6;
+}
+
+.banner-page.image .footer .footer-left {
+    color: #fff;
+}
+
+.banner-page.image .footer .iconfont {
+    color: #fff !important;
+}
+
+@media (max-width: 1200px) {
+    .banner-page {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner {
+        align-items: flex-start;
+        height: 240px;
+    }
+    
+    .banner .title {
+        font-size: 2.25rem;
+    }
+    
+    .banner .subtitle {
+        height: 50px;
+        font-size: 1.125rem;
+        margin-left: 8px;
+    }
+    
+    .banner .subtitle .text {
+        text-align: left;
+    }
+    
+    .banner-page {
+        min-height: 260px;
+    }
+    
+    .banner-page .top-right,
+    .banner-page .footer-right {
+        display: none;
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-up-opacity {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 0.8;
+        transform: translateY(0);
+    }
+}
+
+@keyframes moveDown {
+    0%, 100% {
+        transform: translateY(0) rotate(180deg);
+    }
+    50% {
+        transform: translateY(10px) rotate(180deg);
+    }
+}
+</style> 
+  
+  
+  <div class="home-content">
+    <div class="posts-content">
+      
+      
+      
+
+
+
+<div class="type-bar s-card hover">
+  <div class="all-type">
+    
+    
+
+    
+    <a href="/" class="type-item choose">首页</a>
+
+    
+    
+      
+        
+          <a href="/pages/categories/%e7%a4%ba%e4%be%8b" class="type-item">
+            示例
+          </a>
+        
+      
+    
+  </div>
+
+  
+  <a href="/pages/categories" class="more-type">
+    <i class="iconfont icon-arrow-right"></i>
+    更多
+  </a>
+</div> 
+      
+      
+      
+      
+
+
+
+<div class="post-list ">
+    
+    <article class="post-item s-card">
+        
+        
+        
+        <div class="content">
+            
+            <h2 class="title">
+                <a href="/posts/hello-world/">Hello World</a>
+            </h2>
+            
+            
+            <div class="summary">
+                
+                    这是一篇示例文章，展示主题的各种样式
+                
+            </div>
+            
+            
+            <div class="meta">
+                
+                <div class="date">
+                    <i class="iconfont icon-calendar"></i>
+                    <span>2024-03-27</span>
+                </div>
+                
+                
+                
+                <div class="categories">
+                    <i class="iconfont icon-folder"></i>
+                    
+                    <a href="/categories/%E7%A4%BA%E4%BE%8B">示例</a>
+                    
+                </div>
+                
+                
+                
+                
+                <div class="tags">
+                    <i class="iconfont icon-tag"></i>
+                    
+                    <a href="/tags/markdown">Markdown</a>
+                    
+                    <a href="/tags/%E7%A4%BA%E4%BE%8B">示例</a>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </article>
+    
+</div> 
+      
+      
+      
+      
+
+
+
+
+
+
+
+<div class="pagination">
+  
+</div> 
+    </div>
+    
+    
+    <aside class="main-aside">
+<div class="aside-hello s-card">
+  
+  
+  
+  
+  
+  
+  
+</div> <div class="sticky"> 
+<div class="aside-countdown s-card weidgets">
+  <div class="card-title">
+    <i class="fas fa-hourglass-half"></i>
+    <span>倒计时</span>
+  </div>
+  <div class="card-content">
+    
+  </div>
+</div> 
+<div class="aside-tags s-card weidgets">
+  <div class="title">
+    <i class="iconfont icon-hashtag"></i>
+    <span class="title-name">热门标签</span>
+  </div>
+  <div class="all-tags">
+      
+        
+          <a href="/tags/markdown/" class="tags">
+            <span class="name">Markdown</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+        
+          <a href="/tags/%E7%A4%BA%E4%BE%8B/" class="tags">
+            <span class="name">示例</span>
+            <sup class="num">1</sup>
+          </a>
+        
+      
+  </div>
+</div>  </div>
+  </aside>
+  <style>
+  .main-aside {
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    animation: fade-up 0.6s 0.3s backwards;
+    .weidgets {
+      padding: 18px;
+      margin-bottom: 1rem;
+      :deep(.title) {
+        margin-bottom: 12px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        opacity: 0.75;
+        .iconfont {
+          opacity: 0.6;
+          margin-right: 6px;
+        }
+        .title-name {
+          opacity: 0.8;
+        }
+      }
+    }
+    .sticky {
+      position: sticky;
+      top: calc(60px + 1rem);
+      .weidgets {
+        animation: fade-up 0.6s 0.4s backwards;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  </style>
+  
+  </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const scrollY = localStorage.getItem('lastScrollY');
+  if (scrollY) {
+    window.scrollTo({
+      top: parseInt(scrollY),
+      behavior: 'smooth'
+    });
+    localStorage.removeItem('lastScrollY');
+  }
+});
+
+window.addEventListener('beforeunload', function() {
+  localStorage.setItem('lastScrollY', window.scrollY.toString());
+});
+</script>
+
+        </main>
+
+        <div class="control-panel">
+    <div class="control-mask"></div>
+    <div class="control-content">
+        <div class="control-header">
+            <div class="control-title">
+                <i class="iconfont icon-dashboard"></i>
+                <span>中控台</span>
+            </div>
+            <div class="control-close">
+                <i class="iconfont icon-close"></i>
+            </div>
+        </div>
+        <div class="control-body">
+            
+            <div class="control-group">
+                <div class="group-title">主题设置</div>
+                <div class="group-content">
+                    
+                    <div class="control-item">
+                        <div class="item-title">主题模式</div>
+                        <div class="item-content">
+                            <div class="theme-switch">
+                                <div class="switch-item" data-theme="light">
+                                    <i class="iconfont icon-sun"></i>
+                                </div>
+                                <div class="switch-item" data-theme="dark">
+                                    <i class="iconfont icon-moon"></i>
+                                </div>
+                                <div class="switch-item" data-theme="auto">
+                                    <i class="iconfont icon-auto"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-item">
+                        <div class="item-title">主题色</div>
+                        <div class="item-content">
+                            <div class="color-switch">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <div class="background">
+    
+    <div class="bg-mask"></div>
+    
+    
+    <div class="bg-image" style="background-image: url('https://tuapi.eees.cc/api.php?category=%7bdongman,fengjing%7d&amp;type=302')"></div>
+    
+    
+    
+</div> 
+
+<style>
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: -2;
+      &.patterns {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%23494849' fill-opacity='0.08' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E");
+      }
+      &.dark {
+        &.patterns {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cpath fill='%23fcfcfc' fill-opacity='0.08' d='M192 15v2a11 11 0 0 0-11 11c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H145v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11 13 13 0 1 1 .02 26 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43a6.1 6.1 0 0 0-3.03 4.87V143h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 181 164a11 11 0 0 0 11 11v2a13 13 0 0 1-13-13 12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84a6.1 6.1 0 0 0-4.87-3.03H145v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 124 181a11 11 0 0 0-11 11h-2a13 13 0 0 1 13-13c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43a6.1 6.1 0 0 0 3.03-4.87V145h-35.02a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 107 124a11 11 0 0 0-22 0c0 1.94 1.16 4.75 2.53 6.11l2.36 2.36a6.93 6.93 0 0 1 1.22 7.56l-.43.84a8.08 8.08 0 0 1-6.66 4.13H49v35.02a6.1 6.1 0 0 0 3.03 4.87l.84.43c1.58.79 4 .4 5.24-.85l2.36-2.36a12.04 12.04 0 0 1 7.51-3.11A13 13 0 0 1 81 192h-2a11 11 0 0 0-11-11c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V145H11.98a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 0 1 0 177v-2a11 11 0 0 0 11-11c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H47v-35.02a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 28 109a13 13 0 1 1 0-26c2.47 0 5.79 1.37 7.53 3.11l2.36 2.36a4.94 4.94 0 0 0 5.24.85l.84-.43A6.1 6.1 0 0 0 47 84.02V49H11.98a8.08 8.08 0 0 1-6.66-4.13l-.43-.84a6.91 6.91 0 0 1 1.22-7.56l2.36-2.36A10.06 10.06 0 0 0 11 28 11 11 0 0 0 0 17v-2a13 13 0 0 1 13 13c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84A6.1 6.1 0 0 0 11.98 47H47V11.98a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 68 11 11 11 0 0 0 79 0h2a13 13 0 0 1-13 13 12 12 0 0 1-7.53-3.11l-2.36-2.36a4.93 4.93 0 0 0-5.24-.85l-.84.43A6.1 6.1 0 0 0 49 11.98V47h35.02a8.08 8.08 0 0 1 6.66 4.13l.43.84a6.91 6.91 0 0 1-1.22 7.56l-2.36 2.36A10.06 10.06 0 0 0 85 68a11 11 0 0 0 22 0c0-1.94-1.16-4.75-2.53-6.11l-2.36-2.36a6.93 6.93 0 0 1-1.22-7.56l.43-.84a8.08 8.08 0 0 1 6.66-4.13H143V11.98a6.1 6.1 0 0 0-3.03-4.87l-.84-.43c-1.59-.8-4-.4-5.24.85l-2.36 2.36A12 12 0 0 1 124 13a13 13 0 0 1-13-13h2a11 11 0 0 0 11 11c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V47h35.02a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 179 28a13 13 0 0 1 13-13zM84.02 143a6.1 6.1 0 0 0 4.87-3.03l.43-.84c.8-1.59.4-4-.85-5.24l-2.36-2.36A12 12 0 0 1 83 124a13 13 0 1 1 26 0c0 2.47-1.37 5.79-3.11 7.53l-2.36 2.36a4.94 4.94 0 0 0-.85 5.24l.43.84a6.1 6.1 0 0 0 4.87 3.03H143v-35.02a8.08 8.08 0 0 1 4.13-6.66l.84-.43a6.91 6.91 0 0 1 7.56 1.22l2.36 2.36A10.06 10.06 0 0 0 164 107a11 11 0 0 0 0-22c-1.94 0-4.75 1.16-6.11 2.53l-2.36 2.36a6.93 6.93 0 0 1-7.56 1.22l-.84-.43a8.08 8.08 0 0 1-4.13-6.66V49h-35.02a6.1 6.1 0 0 0-4.87 3.03l-.43.84c-.79 1.58-.4 4 .85 5.24l2.36 2.36a12.04 12.04 0 0 1 3.11 7.51A13 13 0 1 1 83 68a12 12 0 0 1 3.11-7.53l2.36-2.36a4.93 4.93 0 0 0 .85-5.24l-.43-.84A6.1 6.1 0 0 0 84.02 49H49v35.02a8.08 8.08 0 0 1-4.13 6.66l-.84.43a6.91 6.91 0 0 1-7.56-1.22l-2.36-2.36A10.06 10.06 0 0 0 28 85a11 11 0 0 0 0 22c1.94 0 4.75-1.16 6.11-2.53l2.36-2.36a6.93 6.93 0 0 1 7.56-1.22l.84.43a8.08 8.08 0 0 1 4.13 6.66V143h35.02z'%3E%3C/path%3E%3C/svg%3E");
+        }
+        .cover {
+          filter: brightness(0.6);
+        }
+      }
+      .cover {
+        width: auto;
+        height: auto;
+        min-height: 100%;
+        opacity: 0;
+        transition:
+          filter 0.3s,
+          opacity 0.3s;
+        &.loaded {
+          opacity: 1;
+        }
+      }
+    }
+    </style>
+    <div class="loading">
+    <div class="loading-content">
+        <div class="loading-icon">
+            <i class="iconfont icon-loading"></i>
+        </div>
+        <div class="loading-text">加载中...</div>
+    </div>
+</div> <footer id="main-footer" class="main-footer">
+    <div class="footer-content">
+        <div class="footer-copyright">
+            <span class="time" data-v-6001e979="">@ 2019 - 2025 By </span>
+            <a href="https://www.imsyy.top" class="author link" target="_blank">
+                飞鸿踏雪
+            </a>
+            <a class="icp link" href="https://beian.miit.gov.cn/" target="_blank" >
+                <i class="iconfont icon-safe" data-v-6001e979=""></i>豫ICP备2022018134号-1
+            </a>
+            <a class="upyun link" href="https://www.upyun.com/?utm_source=lianmeng&amp;utm_medium=referral" target="_blank">
+                <i class="iconfont icon-upyun" data-v-6001e979=""></i> 又拍云 
+            </a>
+        </div>
+        <div class="meta">
+            <a class="power link" href="https://vitepress.dev/" target="_blank">
+                <span class="by">Powered by</span>
+                <span class="name">Hugo</span>
+            </a>
+            <a class="theme link" href="/pages/theme">
+                <span class="name">主题</span>
+            </a>
+            <a class="rss link" href="https://blog.imsyy.top/rss.xml" target="_blank">
+                <i class="iconfont icon-rss"></i>
+                <span class="name" data-v-6001e979="">订阅</span>
+            </a>
+            <a class="cc link" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+                <i class="iconfont icon-line"></i>
+                <i class="iconfont icon-by-line"></i>
+                <i class="iconfont icon-nc-line"></i><i
+                    class="iconfont icon-nd-line"></i>
+            </a>
+        </div>
+    </div>
+</footer></body>
+</html> 

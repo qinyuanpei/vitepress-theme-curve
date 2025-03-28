@@ -1,0 +1,15 @@
+<div class="menu-list">
+    {{ range .Site.Menus.main }}
+    <div class="menu-item">
+        <span class="link-btn"> {{ .Name }}</span>
+        {{ if .HasChildren }}
+            {{ range .Children }}
+            <span class="link-child-btn">
+            <i class="iconfont icon-{{ .Icon }}" />
+            {{ .Name }}
+            </span>
+            {{ end }}
+        {{ end}}
+    </div>
+    {{ end }}
+</div> 

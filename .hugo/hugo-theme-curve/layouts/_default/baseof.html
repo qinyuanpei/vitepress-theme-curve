@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+    {{- partial "head.html" . -}}
+    <body>
+        
+        {{partial "components/background.html" . -}}
+
+        <!-- 导航栏 -->
+        <header class="main-header">
+            <nav class="main-nav">
+                <div class="nav-all">
+                    <!-- 导航栏左侧 -->
+                    <div class="left-nav">
+                        <div class="more-menu nav-btn" title="更多内容">
+                            <i class="iconfont icon-menu"></i>
+                            {{- partial "components/nav/more-menu.html" . -}}
+                        </div>
+                        <div class="site-name">
+                            {{ .Site.Title }}
+                        </div>
+                    </div>
+                    
+                    <!-- 导航栏菜单 -->
+                    <div class="nav-center">
+                        <div class="site-menu">
+                            {{- partial "components/nav/menu.html" . -}}
+                        </div>
+                        <span class="site-title">
+                            {{ if .IsHome }}{{ .Site.Params.siteMeta.description }}{{ else }}{{ .Title }}{{ end }}
+                        </span>
+                    </div>
+                    
+                    <!-- 导航栏右侧 -->
+                    <div class="right-nav">
+                        <!-- 开往 -->
+                        <a class="menu-btn nav-btn travellings" title="开往-友链接力" href="https://www.travellings.cn/go.html" target="_blank">
+                            <i class="iconfont icon-subway"></i>
+                        </a>
+                        <!-- 随机文章 -->
+                        <div class="menu-btn nav-btn" title="随机前往一篇文章">
+                            <i class="iconfont icon-shuffle"></i>
+                        </div>
+                        <!-- 搜索 -->
+                        <div class="menu-btn nav-btn" title="全站搜索">
+                            <i class="iconfont icon-search"></i>
+                        </div>
+                        <!-- 中控台 -->
+                        <div id="open-control" class="menu-btn nav-btn pc" title="打开中控台">
+                            <i class="iconfont icon-dashboard"></i>
+                        </div>
+                        <!-- 返回顶部 -->
+                        <div class="to-top menu-btn" title="返回顶部">
+                            <div class="to-top-btn">
+                                <span class="num">0</span>
+                                <i class="iconfont icon-up"></i>
+                            </div>
+                        </div>
+                        <!-- 移动端菜单 -->
+                        <div class="menu-btn nav-btn mobile" title="打开菜单">
+                            <i class="iconfont icon-toc"></i>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- 移动端菜单 -->
+            {{- partial "components/nav/mobile-menu.html" . -}}
+            <!-- 全局搜索 -->
+            {{- partial "components/search.html" . -}}
+        </header>
+
+        <!-- 主要内容 -->
+        <main class="main-layout">
+            {{- block "main" . }}{{- end }}
+        </main>
+
+        <!-- 中控台 -->
+        {{- partial "components/control.html" . -}}
+
+        <!-- 背景 -->
+        {{- partial "components/background.html" . -}}
+
+        <!-- 加载中 -->
+        {{- partial "components/loading.html" . -}}
+
+        <!-- 页脚 -->
+        {{- partial "footer.html" . -}}
+
+        <!-- 脚本 -->
+        {{- partial "scripts.html" . -}}
+    </body>
+</html> 

@@ -1,0 +1,230 @@
+{{ $type := .type | default "text" }}
+{{ $height := .height | default "half" }}
+{{ $title := .title | default "这里是标题" }}
+{{ $desc := .desc | default "这里是简介" }}
+{{ $footer := .footer | default "" }}
+{{ $image := .image | default "" }}
+
+{{ if eq $type "text" }}
+<div class="banner {{ $height }}" id="main-banner">
+    <h1 class="title">你好，欢迎来到{{ .context.Site.Title }}</h1>
+    <div class="subtitle">
+        <span class="text">
+            {{ .context.Site.Params.siteMeta.description }}
+        </span>
+    </div>
+    {{ if eq $height "full" }}
+    <i class="iconfont icon-up"></i>
+    {{ end }}
+</div>
+{{ else if eq $type "page" }}
+<div class="banner-page s-card{{ if $image }} image{{ end }}"
+    {{ if $image }}style="background-image: url('{{ $image }}')"{{ end }}>
+    <div class="top">
+        <div class="title">
+            <span class="title-small">{{ $title }}</span>
+            <span class="title-big">{{ $desc }}</span>
+        </div>
+        <div class="top-right">
+            {{ with .headerSlot }}{{ . }}{{ end }}
+        </div>
+    </div>
+    {{ with .content }}{{ . }}{{ end }}
+    <div class="footer">
+        <div class="footer-left">
+            {{ $footer }}
+        </div>
+        <div class="footer-right">
+            {{ with .footerSlot }}{{ . }}{{ end }}
+        </div>
+    </div>
+</div>
+{{ end }}
+
+<style>
+.banner {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fade-up 0.6s 0.1s backwards;
+    transition: height 0.3s;
+}
+
+.banner.full {
+    opacity: 0;
+    height: calc(100vh - 70px);
+    padding-bottom: 100px;
+    animation: fade-up 0.6s 0.5s forwards;
+}
+
+.banner.full .subtitle {
+    opacity: 0;
+    animation: fade-up-opacity 0.8s 0.5s forwards;
+}
+
+.banner .title {
+    font-family: "Site Title";
+    font-weight: bold;
+    font-size: 2.75rem;
+}
+
+.banner .subtitle {
+    width: 80%;
+    font-size: 1.25rem;
+    opacity: 0.8;
+    animation: fade-up-opacity 0.6s 0.1s backwards;
+}
+
+.banner .subtitle .text {
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.banner .icon-up {
+    font-size: 20px;
+    position: absolute;
+    bottom: 60px;
+    left: calc(50% - 10px);
+    transform: rotate(180deg);
+    animation: moveDown 2s ease-in-out infinite;
+    cursor: pointer;
+}
+
+.banner-page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    min-height: 380px;
+    background-size: cover;
+}
+
+.banner-page .top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.banner-page .top .title {
+    display: flex;
+    flex-direction: column;
+}
+
+.banner-page .top .title .title-small {
+    color: var(--main-font-second-color);
+    font-size: 0.875rem;
+}
+
+.banner-page .top .title .title-big {
+    font-size: 2.25rem;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-top: 12px;
+}
+
+.banner-page .footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.banner-page .footer .footer-left {
+    margin-top: auto;
+    color: var(--main-font-second-color);
+    opacity: 0.8;
+}
+
+.banner-page.image {
+    color: #fff !important;
+}
+
+.banner-page.image .top .title-small {
+    color: #fff;
+    opacity: 0.6;
+}
+
+.banner-page.image .footer .footer-left {
+    color: #fff;
+}
+
+.banner-page.image .footer .iconfont {
+    color: #fff !important;
+}
+
+@media (max-width: 1200px) {
+    .banner-page {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner {
+        align-items: flex-start;
+        height: 240px;
+    }
+    
+    .banner .title {
+        font-size: 2.25rem;
+    }
+    
+    .banner .subtitle {
+        height: 50px;
+        font-size: 1.125rem;
+        margin-left: 8px;
+    }
+    
+    .banner .subtitle .text {
+        text-align: left;
+    }
+    
+    .banner-page {
+        min-height: 260px;
+    }
+    
+    .banner-page .top-right,
+    .banner-page .footer-right {
+        display: none;
+    }
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-up-opacity {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 0.8;
+        transform: translateY(0);
+    }
+}
+
+@keyframes moveDown {
+    0%, 100% {
+        transform: translateY(0) rotate(180deg);
+    }
+    50% {
+        transform: translateY(10px) rotate(180deg);
+    }
+}
+</style> 

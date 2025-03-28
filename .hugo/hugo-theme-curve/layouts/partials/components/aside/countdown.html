@@ -1,0 +1,20 @@
+{{ $countdown := .Site.Params.theme.aside.countdown }}
+<div class="aside-countdown s-card weidgets">
+  <div class="card-title">
+    <i class="fas fa-hourglass-half"></i>
+    <span>倒计时</span>
+  </div>
+  <div class="card-content">
+    {{ range $countdown.items }}
+      <div class="countdown-item" data-date="{{ .date }}">
+        <div class="name">{{ .name }}</div>
+        <div class="time">
+          <span class="days">--</span> 天
+          <span class="hours">--</span> 时
+          <span class="minutes">--</span> 分
+          <span class="seconds">--</span> 秒
+        </div>
+      </div>
+    {{ end }}
+  </div>
+</div> 

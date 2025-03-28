@@ -1,0 +1,41 @@
+{{ $total := .total }}
+{{ $page := .page }}
+{{ $limit := .limit }}
+{{ $useParams := .useParams }}
+{{ $routePath := .routePath }}
+
+{{ $totalPages := div (add $total $limit -1) $limit }}
+
+<div class="pagination">
+  {{ if gt $totalPages 1 }}
+    <div class="pagination-list">
+      <!-- 上一页 -->
+      {{ if gt $page 1 }}
+        {{ $prevPage := sub $page 1 }}
+        <a href="{{ if $useParams }}{{ $routePath }}?page={{ $prevPage }}{{ else }}/page/{{ $prevPage }}/{{ end }}" 
+           class="page-item prev">
+          <i class="iconfont icon-left"></i>
+        </a>
+      {{ end }}
+      
+      <!-- 页码 -->
+      {{ range $i := seq $totalPages }}
+        {{ if eq $i $page }}
+          <span class="page-item active">{{ $i }}</span>
+        {{ else }}
+          <a href="{{ if $useParams }}{{ $routePath }}?page={{ $i }}{{ else }}/page/{{ $i }}/{{ end }}" 
+             class="page-item">{{ $i }}</a>
+        {{ end }}
+      {{ end }}
+      
+      <!-- 下一页 -->
+      {{ if lt $page $totalPages }}
+        {{ $nextPage := add $page 1 }}
+        <a href="{{ if $useParams }}{{ $routePath }}?page={{ $nextPage }}{{ else }}/page/{{ $nextPage }}/{{ end }}" 
+           class="page-item next">
+          <i class="iconfont icon-right"></i>
+        </a>
+      {{ end }}
+    </div>
+  {{ end }}
+</div> 

@@ -1,0 +1,40 @@
+{{ if and .Site.Params.article.articleGPT.enable .Description }}
+<div class="article-gpt s-card">
+  <div class="title">
+    <span class="name">
+      <i class="iconfont icon-robot"></i>
+      {{ .Site.Params.article.articleGPT.title }}
+      <i class="iconfont icon-up"></i>
+    </span>
+    <span class="logo">FakeGPT</span>
+  </div>
+  <div class="content s-card">
+    <span class="text"></span>
+  </div>
+  <div class="meta">
+    {{ if .Site.Params.article.articleGPT.showTip }}
+    <span class="tip">{{ .Site.Params.article.articleGPT.tip }}</span>
+    {{ end }}
+    {{ if .Site.Params.article.articleGPT.showReport }}
+    <a
+      href="{{ .Site.Params.article.articleGPT.reportLink }}"
+      class="report"
+      target="_blank"
+    >
+      投诉
+    </a>
+    {{ end }}
+  </div>
+</div>
+<script src="https://npm.elemecdn.com/typeit@8.7.1/dist/index.umd.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    new TypeIt(".article-gpt .content .text", {
+        strings: '{{ .Description }}',
+        speed: 10,
+        lifeLike: true,
+        waitUntilVisible: true,
+    }).go();
+});
+</script>
+{{ end }}

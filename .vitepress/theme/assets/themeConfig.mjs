@@ -3,9 +3,9 @@ export const themeConfig = {
   // 站点信息
   siteMeta: {
     // 站点标题
-    title: "Curve",
+    title: "元视角",
     // 站点描述
-    description: "Hello World",
+    description: "起风了，唯有努力生存",
     // 站点logo
     logo: "/images/logo/logo.webp",
     // 站点地址
@@ -14,9 +14,9 @@ export const themeConfig = {
     lang: "zh-CN",
     // 作者
     author: {
-      name: "Admin",
+      name: "飞鸿踏雪",
       cover: "/images/logo/logo.webp",
-      email: "114514@gmail.com",
+      email: "qinyuanpei@163.com",
       link: "https://www.imsyy.top",
     },
   },
@@ -225,6 +225,7 @@ export const themeConfig = {
       enable: true,
       // 封面布局方式: left | right | both
       coverLayout: 'both',
+      coverKey: 'image',
       // 默认封面(随机展示)
       defaultCover: [
         'https://example.com/1.avif',

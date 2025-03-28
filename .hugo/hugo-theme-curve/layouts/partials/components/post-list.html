@@ -1,0 +1,63 @@
+{{ $posts := .posts }}
+{{ $layoutType := .layoutType | default false }}
+{{ $gridStyle := .gridStyle | default "" }}
+
+<div class="post-list {{ $gridStyle }}">
+    {{ range $posts }}
+    <article class="post-item s-card">
+        <!-- 文章封面 -->
+        {{ if .Params.cover }}
+        <div class="cover">
+            <a href="{{ .RelPermalink }}" class="cover-link">
+                <img src="{{ .Params.cover }}" alt="{{ .Title }}" loading="lazy">
+            </a>
+        </div>
+        {{ end }}
+        
+        <div class="content">
+            <!-- 文章标题 -->
+            <h2 class="title">
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h2>
+            
+            <!-- 文章摘要 -->
+            <div class="summary">
+                {{ with .Description }}
+                    {{ . }}
+                {{ else }}
+                    {{ .Summary }}
+                {{ end }}
+            </div>
+            
+            <!-- 文章元信息 -->
+            <div class="meta">
+                <!-- 发布日期 -->
+                <div class="date">
+                    <i class="iconfont icon-calendar"></i>
+                    <span>{{ .Date.Format "2006-01-02" }}</span>
+                </div>
+                
+                <!-- 分类 -->
+                {{ with .Params.categories }}
+                <div class="categories">
+                    <i class="iconfont icon-folder"></i>
+                    {{ range . }}
+                    <a href="/categories/{{ . | urlize }}">{{ . }}</a>
+                    {{ end }}
+                </div>
+                {{ end }}
+                
+                <!-- 标签 -->
+                {{ with .Params.tags }}
+                <div class="tags">
+                    <i class="iconfont icon-tag"></i>
+                    {{ range . }}
+                    <a href="/tags/{{ . | urlize }}">{{ . }}</a>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </article>
+    {{ end }}
+</div> 

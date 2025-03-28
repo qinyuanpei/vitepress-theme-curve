@@ -194,5 +194,8 @@ export default withPwa(
         ],
       },
     },
+    rewrites: {
+      'pages/about': 'about'
+    }
   }),
 );

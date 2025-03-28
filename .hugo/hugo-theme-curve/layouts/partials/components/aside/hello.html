@@ -1,0 +1,26 @@
+{{ $hello := .Site.Params.theme.aside.hello }}
+<div class="aside-hello s-card">
+  {{ with $hello.avatar }}
+    <div class="avatar">
+      <img src="{{ . }}" alt="avatar" />
+    </div>
+  {{ end }}
+  
+  {{ with $hello.name }}
+    <div class="name">{{ . }}</div>
+  {{ end }}
+  
+  {{ with $hello.description }}
+    <div class="description">{{ . }}</div>
+  {{ end }}
+  
+  {{ with $hello.socials }}
+    <div class="socials">
+      {{ range . }}
+        <a href="{{ .link }}" target="_blank" rel="noopener noreferrer" title="{{ .name }}">
+          <i class="{{ .icon }}"></i>
+        </a>
+      {{ end }}
+    </div>
+  {{ end }}
+</div> 

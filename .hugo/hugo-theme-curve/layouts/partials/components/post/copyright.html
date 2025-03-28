@@ -1,0 +1,39 @@
+{{ if .Site.Params.article.copyright.enable }}
+<div class="copyright s-card">
+  <div class="title">
+    <span class="post-name">{{ .Title }}</span>
+    {{ if .Site.Params.article.copyright.showLink }}
+    <a :href="{{ .Permalink }}" class="post-link" target="_blank">
+      {{ .Permalink }}
+    </a>
+    {{ end }}
+  </div>
+  <div class="post-meta">
+    <div class="meta-item">
+      <span class="tip">作者</span>
+      <span class="name">{{ .Site.Params.siteMeta.author.name }}</span>
+    </div>
+    {{ if .Site.Params.article.copyright.showPublishTime }}
+    <div class="meta-item">
+      <span class="tip">发布于</span>
+      <span class="name">{{ .Date.Format "2006-01-02" }}</span>
+    </div>
+    {{ end }}
+    {{ if .Site.Params.article.copyright.showUpdateTime }}
+    <div class="meta-item">
+      <span class="tip">更新于</span>
+      <span class="name">{{ .Lastmod.Format "2006-01-02" }}</span>
+    </div>
+    {{ end }}
+    {{ if .Site.Params.article.copyright.showLicense }}
+    <div class="meta-item cc">
+      <span class="tip">许可协议</span>
+      <a class="name" href="{{ .Site.Params.article.copyright.licenseLink }}" target="_blank">
+        {{ .Site.Params.article.copyright.license }}
+      </a>
+    </div>
+    {{ end }}
+  </div>
+  <span class="meta-tip">{{ .Site.Params.article.copyright.licenseText }}</span>
+</div>
+{{ end }}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>示例 on 元视角</title>
+    <link>http://localhost:1313/categories/%E7%A4%BA%E4%BE%8B/</link>
+    <description>Recent content in 示例 on 元视角</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 27 Mar 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/%E7%A4%BA%E4%BE%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hello World</title>
+      <link>http://localhost:1313/posts/hello-world/</link>
+      <pubDate>Wed, 27 Mar 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/hello-world/</guid>
+      <description>Hello World 这是一篇示例文章，用来展示主题的各种样式效果。&#xA;标题示例 三级标题 这是三级标题的内容&#xA;四级标题 这是四级标题的内容&#xA;文本样式 这是一段普通文本，包含粗体和斜体文字。&#xA;这是一个链接示例。&#xA;代码示例 行内代码 console.log(&#39;Hello World&#39;)&#xA;代码块：&#xA;function greeting(name) { console.log(`Hello, ${name}!`); } greeting(&amp;#39;World&amp;#39;); 引用示例 这是一段引用文本&#xA;可以包含多行&#xA;列表示例 无序列表：&#xA;项目一 项目二 子项目 2.1 子项目 2.2 项目三 有序列表：&#xA;第一步 第二步 第三步 表格示例 表头1 表头2 表头3 内容1 内容2 内容3 行2列1 行2列2 行2列3 图片示例 </description>
+    </item>
+  </channel>
+</rss>
