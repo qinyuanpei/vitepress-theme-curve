@@ -1,40 +1,157 @@
-<div class="mobile-menu">
+<div class="mobile-menu" id="mobileMenu">
+    <!-- 背景遮罩 -->
     <div class="menu-mask"></div>
-    <div class="menu-content">
-        <div class="menu-header">
-            <div class="site-info">
-                <div class="site-name">{{ .Site.Title }}</div>
-                <div class="site-description">{{ .Site.Params.siteMeta.description }}</div>
-            </div>
+    <div class="menu-content s-card">
+        <!-- 关闭按钮 -->
+        <div class="close-control">
+            <i class="iconfont icon-close"></i>
         </div>
-        <div class="menu-body">
-            <!-- 主菜单 -->
-            <div class="menu-group">
-                <div class="menu-title">导航</div>
-                <div class="menu-list">
-                    {{ $currentPage := . }}
-                    {{ range .Site.Menus.main }}
-                    <a class="menu-item{{ if $currentPage.IsMenuCurrent "main" . }} active{{ end }}" href="{{ .URL }}" {{ if .Params.blank }}target="_blank"{{ end }}>
-                        {{ if .Pre }}
-                        <i class="iconfont {{ .Pre }}"></i>
+
+        <!-- 菜单列表 -->
+        <div class="menu-list">
+            {{ range .Site.Menus.main }}
+            <div class="menu-item">
+                <span class="link-title">{{ .Name }}</span>
+                {{ if .HasChildren }}
+                <div class="link-child">
+                    {{ range .Children }}
+                    <div class="link-child-btn" onclick="window.location.href='{{ .URL }}'">
+                        {{ if .Params.Icon }}
+                        <i class="iconfont icon-{{ .Params.Icon }}"></i>
                         {{ end }}
-                        <span>{{ .Name }}</span>
-                    </a>
+                        <span class="name">{{ .Name }}</span>
+                    </div>
                     {{ end }}
                 </div>
+                {{ end }}
             </div>
-            <!-- 更多菜单 -->
-            <div class="menu-group">
-                <div class="menu-title">更多</div>
-                <div class="menu-list">
-                    {{ range .Site.Params.moreMenu }}
-                    <a class="menu-item" href="{{ .link }}" {{ if .blank }}target="_blank"{{ end }}>
-                        <i class="iconfont {{ .icon }}"></i>
-                        <span>{{ .name }}</span>
-                    </a>
-                    {{ end }}
-                </div>
-            </div>
+            {{ end }}
         </div>
     </div>
-</div> 
+</div>
+
+<style>
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3000;
+    display: none;
+}
+
+.mobile-menu .menu-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--main-mask-background);
+}
+
+.mobile-menu .menu-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 12px 0 0 12px;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mobile-menu .close-control {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    transition: background-color 0.3s, opacity 0.3s;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.mobile-menu .close-control .iconfont {
+    font-size: 18px;
+    line-height: 1;
+    color: var(--main-font-second-color);
+    transition: color 0.3s, opacity 0.3s;
+}
+
+.mobile-menu .close-control:hover {
+    background-color: var(--main-color);
+}
+
+.mobile-menu .close-control:hover .iconfont {
+    color: var(--main-card-background);
+}
+
+.mobile-menu .menu-list {
+    margin-top: 40px;
+}
+
+.mobile-menu .menu-item {
+    margin-bottom: 12px;
+}
+
+.mobile-menu .menu-item .link-title {
+    font-size: 14px;
+    margin-bottom: 12px;
+    display: inline-block;
+    color: var(--main-font-second-color);
+}
+
+.mobile-menu .menu-item .link-child {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.mobile-menu .menu-item .link-child-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 8px;
+    padding: 10px 12px;
+    background-color: var(--main-card-background);
+    border: 1px solid var(--main-card-border);
+    box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.mobile-menu .menu-item .link-child-btn:hover {
+    background-color: var(--main-color);
+    color: var(--main-card-background);
+}
+
+.mobile-menu .menu-item .link-child-btn .iconfont {
+    margin-right: 6px;
+    opacity: 0.6;
+}
+
+.mobile-menu .menu-item .link-child-btn .name {
+    max-width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>
+
+<script>
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileMenu) {
+        mobileMenu.style.display = mobileMenu.style.display === 'none' ? 'block' : 'none';
+    }
+}
+</script> 

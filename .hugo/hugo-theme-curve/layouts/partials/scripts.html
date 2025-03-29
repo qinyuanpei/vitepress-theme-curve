@@ -7,5 +7,10 @@
         Search.init();
     });
 </script>
+
 {{ $theme := resources.Get "js/theme.js" | minify | fingerprint }}
 <script src="{{ $theme.RelPermalink }}"></script>
+
+<!-- 移动端菜单脚本 -->
+{{ $mobileMenu := resources.Get "js/mobile-menu.js" | minify | fingerprint }}
+<script src="{{ $mobileMenu.RelPermalink }}"></script>

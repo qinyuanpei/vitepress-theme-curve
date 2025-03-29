@@ -89,6 +89,8 @@
         <!-- 搜索 -->
         {{- partial "components/search.html" }}
 
-        <!-- 在 scripts.html 之后添加 -->
+        <!-- 移动端菜单脚本 -->
+        {{ $mobileMenu := resources.Get "js/mobile-menu.js" | minify | fingerprint }}
+        <script src="{{ $mobileMenu.RelPermalink }}"></script>
     </body>
 </html> 
