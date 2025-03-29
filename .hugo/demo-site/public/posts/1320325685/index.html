@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="/css/style.css">
     
     
-    <link rel="stylesheet" href="/scss/main.min.b1a05553ee163b3165ac10f1ecfc75aefa2e2edd7b44e2eaf78764ff475e9523.css">
+    <link rel="stylesheet" href="/scss/main.min.8b0c9e71b5a7bdbb4c76d8b48c1c80ad95c4c10fb618c8e39795c2da134f6b87.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_3159629_2j0vwz8wd1k.css">
     
     
@@ -1034,7 +1034,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/1417719502\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/semantic-kernel-mcp-agent-context-enhanced-exploration\/'">
         随便逛逛
       </span>
       
@@ -1045,61 +1045,265 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-<div class="post-list ">
+
+
+
+
+<div class="post-lists">
     
-    <article class="post-item s-card">
+    <article class="post-item s-card simple" 
+             style="animation-delay: 0.4s"
+             onclick="window.location.href='\/posts\/1190622881\/'">
         
         
         
-        <div class="content">
-            
-            <h2 class="title">
-                <a href="/posts/1190622881/">Unity3D 游戏开发之在 uGUI 中使用不规则精灵制作按钮</a>
-            </h2>
+        
+        <div class="post-content">
             
             
-            <div class="summary">
-                
-                    在这篇博客中，作者讨论了在 Unity 引擎中制作不规则按钮的方法。通过对基于多边形碰撞器和精灵像素检测两种方案的比较和研究，解决了基于多边形碰撞器的问题，并剖析了基于精灵像素检测的内部原理。作者指出精灵像素检测方法易用性更好，但存在对图片类型的限制和像素可读写要求，可能影响执行效率。技术性上作者更推崇基于多边形碰撞器的方法，因为学到了新知识并能解决实际问题，尽管在寻找算法方面耗费精力。文章深入探讨了这两种方法的优缺点，展示了对不规则按钮制作的实际操作和测试。
-                
-            </div>
+
+            
+            <span class="post-title">Unity3D 游戏开发之在 uGUI 中使用不规则精灵制作按钮</span>
+
             
             
-            <div class="meta">
-                
-                <div class="date">
-                    <i class="iconfont icon-calendar"></i>
-                    <span>2016-07-08</span>
-                </div>
-                
-                
-                
-                <div class="categories">
-                    <i class="iconfont icon-folder"></i>
-                    
-                    <a href="/categories/unity3d">Unity3D</a>
-                    
-                </div>
-                
-                
-                
-                
-                <div class="tags">
-                    <i class="iconfont icon-tag"></i>
-                    
-                    <a href="/tags/unity3d">Unity3D</a>
-                    
-                    <a href="/tags/ugui">uGUI</a>
-                    
-                    <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91">游戏开发</a>
-                    
-                </div>
-                
-            </div>
+            <span class="post-desc">在这篇博客中，作者讨论了在 Unity 引擎中制作不规则按钮的方法。通过对基于多边形碰撞器和精灵像素检测两种方案的比较和研究，解决了基于多边形碰撞器的问题，并剖析了基于精灵像素检测的内部原理。作者指出精灵像素检测方法易用性更好，但存在对图片类型的限制和像素可读写要求，可能影响执行效率。技术性上作者更推崇基于多边形碰撞器的方法，因为学到了新知识并能解决实际问题，尽管在寻找算法方面耗费精力。文章深入探讨了这两种方法的优缺点，展示了对不规则按钮制作的实际操作和测试。</span>
+            
+
+            
+            
         </div>
     </article>
     
-</div> 
+</div>
+
+<style>
+.post-lists {
+    width: 100%;
+}
+
+.post-lists .post-item {
+    padding: 0!important;
+    display: flex;
+    margin-bottom: 1rem;
+    animation: fade-up 0.6s backwards;
+    cursor: pointer;
+    overflow: hidden;
+    height: 200px;
+}
+
+.post-lists .post-item .post-cover {
+    flex: 0 0 35%;
+    overflow: hidden;
+    transform: translateZ(0);
+}
+
+.post-lists .post-item .post-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: center center;
+    transition: transform 0.5s ease-out, filter 0.5s ease-out;
+    backface-visibility: hidden;
+}
+
+.post-lists .post-item .post-content {
+    flex: 1;
+    padding: 1.6rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.post-lists .post-item .post-category {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    color: var(--main-font-second-color);
+    font-size: 14px;
+}
+
+.post-lists .post-item .post-category .cat-name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.post-lists .post-item .post-category .cat-name .iconfont {
+    opacity: 0.8;
+    margin-right: 6px;
+    color: var(--main-font-second-color);
+}
+
+.post-lists .post-item .post-category .top {
+    margin-left: 12px;
+    color: var(--main-color);
+}
+
+.post-lists .post-item .post-category .top .iconfont {
+    opacity: 0.8;
+    color: var(--main-color);
+}
+
+.post-lists .post-item .post-title {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: bold;
+    margin: 0.6rem 0;
+    transition: color 0.3s;
+    display: -webkit-box;
+    overflow: hidden;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.post-lists .post-item .post-desc {
+    margin-top: -0.4rem;
+    margin-bottom: 0.8rem;
+    opacity: 0.8;
+    line-height: 30px;
+    display: -webkit-box;
+    overflow: hidden;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.post-lists .post-item .post-meta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--main-font-second-color);
+}
+
+.post-lists .post-item .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    opacity: 0.8;
+    margin-right: 20px;
+    overflow: hidden;
+    mask: linear-gradient(90deg, #fff 0, #fff 90%, hsla(0,0%,100%,.6) 95%, hsla(0,0%,100%,0) 100%);
+}
+
+.post-lists .post-item .post-tags .tags-name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 12px;
+    white-space: nowrap;
+    transition: color 0.3s;
+}
+
+.post-lists .post-item .post-time {
+    opacity: 0.6;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+ 
+.post-lists .post-item:hover .post-cover img {
+    filter: brightness(.8);
+    transform: scale(1.05);
+}
+
+.post-lists .post-item:hover .post-title {
+    color: var(--main-color);
+}
+
+.post-lists .post-item:active {
+    transform: scale(0.98);
+}
+
+ 
+.post-lists .post-item.cover-left {
+    flex-direction: row;
+}
+
+.post-lists .post-item.cover-right {
+    flex-direction: row-reverse;
+}
+
+.post-lists .post-item.cover-both:nth-child(odd) {
+    flex-direction: row;
+}
+
+.post-lists .post-item.cover-both:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+ 
+.post-lists.layout-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns, 2), 1fr);
+    gap: var(--grid-gap, 1rem);
+}
+
+.post-lists.layout-grid .post-item {
+    margin: 0;
+    flex-direction: column;
+    height: auto;
+}
+
+.post-lists.layout-grid .post-item .post-cover {
+    flex: none;
+    width: 100%;
+    height: 225px;
+}
+
+ 
+@media (max-width: 768px) {
+    .post-lists .post-item {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .post-lists .post-item .post-cover {
+        flex: none;
+        width: 100%;
+        height: 200px;
+    }
+
+    .post-lists .post-item.cover-left,
+    .post-lists .post-item.cover-right,
+    .post-lists .post-item.cover-both {
+        flex-direction: column !important;
+    }
+
+    .post-lists.layout-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .post-lists .post-item .post-tags {
+        flex-wrap: nowrap;
+    }
+}
+
+ 
+.post-lists .post-item.simple {
+    animation: none;
+    padding: 0.5rem 1.4rem !important;
+    background-color: var(--main-card-second-background);
+    height: auto;
+    margin-bottom: 0.5rem;
+}
+
+.post-lists .post-item.simple .post-content {
+    padding: 0.5rem 0;
+}
+
+.post-lists .post-item.simple .post-title {
+    margin: 0;
+    font-size: 16px;
+}
+
+.post-lists .post-item.simple .post-desc {
+    margin: 0.3rem 0 0 0;
+    font-size: 14px;
+    opacity: 0.6;
+}
+</style> 
   </div>
   
 

@@ -88,6 +88,14 @@ params:
   showBanner: true
   bannerType: full
   showMoreMenu: false
+  # 封面信息
+  cover:
+    enable: true
+    align: left
+    defaultCover:
+        - "/images/default-1.jpg"
+        - "/images/default-2.jpg"
+  twoColumns: false
   # 站点信息
   siteMeta:
     title: "Curve Theme"
@@ -172,12 +180,6 @@ params:
         data:
           name: "新年"
           date: "2025-01-01"
-
-    # 封面设置
-    cover:
-      showCover:
-        enable: true
-        defaultCover: ["/images/default-cover.jpg"]
 
   comments:
     enabled: true
