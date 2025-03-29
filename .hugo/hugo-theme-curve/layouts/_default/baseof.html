@@ -10,15 +10,19 @@
             <nav class="main-nav up top">
                 <div class="nav-all">
                     <!-- 导航栏左侧 -->
+                     
                     <div class="left-nav">
+                        {{ if .Site.Params.showMoreMenu }}
                         <div class="more-menu nav-btn" title="更多内容">
                             <i class="iconfont icon-menu"></i>
                             {{- partial "components/nav/more-menu.html" . -}}
                         </div>
-                        <div class="site-name">
+                        {{ end }}
+                        <div class="site-name" onclick="location.href='/'">
                             {{ .Site.Title }}
                         </div>
                     </div>
+                    
                     
                     <!-- 导航栏菜单 -->
                     <div class="nav-center">
@@ -88,9 +92,5 @@
         
         <!-- 搜索 -->
         {{- partial "components/search.html" }}
-
-        <!-- 移动端菜单脚本 -->
-        {{ $mobileMenu := resources.Get "js/mobile-menu.js" | minify | fingerprint }}
-        <script src="{{ $mobileMenu.RelPermalink }}"></script>
     </body>
 </html> 

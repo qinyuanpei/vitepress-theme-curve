@@ -72,11 +72,22 @@ menu:
       parent: 关于
       params:
         icon: contacts
+  more:
+    - name: 博客
+      weight: 1
+    - name: 备用博客
+      url: https://qinyuanpei.github.io
+      weight: 1
+      parent: 博客
+    - name: 项目
+      weight: 2
 
 params:
   mainSections:
     - posts
-  showHeader: true
+  showBanner: true
+  bannerType: full
+  showMoreMenu: false
   # 站点信息
   siteMeta:
     title: "Curve Theme"

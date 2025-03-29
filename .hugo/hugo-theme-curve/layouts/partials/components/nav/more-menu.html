@@ -1,10 +1,100 @@
-<div class="more-menu-panel">
-    <div class="menu-list">
-        {{ range .Site.Params.moreMenu }}
-        <a class="menu-item" href="{{ .link }}" {{ if .blank }}target="_blank"{{ end }}>
-            <i class="iconfont {{ .icon }}"></i>
-            <span>{{ .name }}</span>
-        </a>
+<div class="more-card s-card">
+    {{ range .Site.Menus.more }}
+    <div class="more-item">
+        <span class="more-name">{{ .Name }}</span>
+        {{ if .HasChildren }}
+        <div class="more-list">
+            {{ range .Children }}
+            <a href="{{ .URL }}" class="more-link" {{ if .Params.newTab }}target="_blank"{{ end }}>
+                {{ if .Params.icon }}
+                <i class="iconfont icon-{{ .Params.icon }}"></i>
+                {{ end }}
+                <span class="link-name">{{ .Name }}</span>
+            </a>
+            {{ end }}
+        </div>
         {{ end }}
     </div>
-</div> 
+    {{ end }}
+</div>
+
+<style>
+.more-card {
+    position: absolute;
+    left: 0;
+    top: 46px;
+    opacity: 0;
+    visibility: hidden;
+    transform-origin: left top;
+    transform: scale(0.8) translateY(-5px);
+    transition: all 0.3s;
+}
+
+.more-menu:hover .more-card {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    visibility: visible;
+}
+
+.more-item {
+    margin-top: 0.8rem;
+}
+
+.more-item:first-child {
+    margin-top: 0;
+}
+
+.more-name {
+    font-size: 14px;
+    display: inline-block;
+    color: var(--main-font-second-color);
+    margin-bottom: 0.6rem;
+}
+
+.more-list {
+    display: grid;
+    gap: 0.8rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+.more-link {
+    display: flex;
+    align-items: center;
+    width: 150px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.more-link .link-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.more-link:hover {
+    color: var(--main-card-background);
+    background-color: var(--main-color);
+}
+
+.more-card::after {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    z-index: 1;
+}
+
+.more-card:hover {
+    border-color: var(--main-color);
+}
+
+@media (max-width: 512px) {
+    .more-menu {
+        display: none;
+    }
+}
+</style> 

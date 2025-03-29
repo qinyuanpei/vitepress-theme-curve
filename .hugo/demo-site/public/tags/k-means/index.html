@@ -10,6 +10,12 @@
     
     
     <link rel="shortcut icon" href="" type="image/x-icon">
+
+    
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+    
+    <link rel="icon" type="image/png" href="/images/favicon.png">
     
     
     <meta property="og:title" content="K-Means">
@@ -21,7 +27,7 @@
     <link rel="stylesheet" href="/css/style.css">
     
     
-    <link rel="stylesheet" href="/scss/main.min.e8ab63dd8b65ff54276df15e9ceca94e1d74b1c6c9a53ae610da3aa7e126e5d4.css">
+    <link rel="stylesheet" href="/scss/main.min.b1a05553ee163b3165ac10f1ecfc75aefa2e2edd7b44e2eaf78764ff475e9523.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_3159629_2j0vwz8wd1k.css">
     
     
@@ -93,17 +99,14 @@
             <nav class="main-nav up top">
                 <div class="nav-all">
                     
+                     
                     <div class="left-nav">
-                        <div class="more-menu nav-btn" title="更多内容">
-                            <i class="iconfont icon-menu"></i><div class="more-menu-panel">
-    <div class="menu-list">
-        
-    </div>
-</div> </div>
-                        <div class="site-name">
+                        
+                        <div class="site-name" onclick="location.href='/'">
                             元视角
                         </div>
                     </div>
+                    
                     
                     
                     <div class="nav-center">
@@ -250,54 +253,246 @@
                     </div>
                 </div>
             </nav>
-            <div class="mobile-menu">
+            <div class="mobile-menu" id="mobileMenu">
+    
     <div class="menu-mask"></div>
-    <div class="menu-content">
-        <div class="menu-header">
-            <div class="site-info">
-                <div class="site-name">元视角</div>
-                <div class="site-description">纵有疾风起，人生不言弃</div>
-            </div>
+    <div class="menu-content s-card">
+        
+        <div class="close-control">
+            <i class="iconfont icon-close"></i>
         </div>
-        <div class="menu-body">
+
+        
+        <div class="menu-list">
             
-            <div class="menu-group">
-                <div class="menu-title">导航</div>
-                <div class="menu-list">
+            <div class="menu-item">
+                <span class="link-title">文库</span>
+                
+                <div class="link-child">
                     
-                    
-                    <a class="menu-item" href="" >
+                    <div class="link-child-btn" onclick="window.location.href='\/'">
                         
-                        <span>文库</span>
-                    </a>
-                    
-                    <a class="menu-item" href="" >
+                        <i class="iconfont icon-home"></i>
                         
-                        <span>书影音</span>
-                    </a>
+                        <span class="name">文章列表</span>
+                    </div>
                     
-                    <a class="menu-item" href="" >
+                    <div class="link-child-btn" onclick="window.location.href='\/categories'">
                         
-                        <span>友链</span>
-                    </a>
+                        <i class="iconfont icon-folder"></i>
+                        
+                        <span class="name">全部分类</span>
+                    </div>
                     
-                    <a class="menu-item" href="" >
+                    <div class="link-child-btn" onclick="window.location.href='\/tags'">
                         
-                        <span>关于</span>
-                    </a>
+                        <i class="iconfont icon-hashtag"></i>
+                        
+                        <span class="name">全部标签</span>
+                    </div>
                     
                 </div>
+                
             </div>
             
-            <div class="menu-group">
-                <div class="menu-title">更多</div>
-                <div class="menu-list">
+            <div class="menu-item">
+                <span class="link-title">书影音</span>
+                
+                <div class="link-child">
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/reading'">
+                        
+                        <i class="iconfont icon-books"></i>
+                        
+                        <span class="name">读书</span>
+                    </div>
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/watching'">
+                        
+                        <i class="iconfont icon-tv"></i>
+                        
+                        <span class="name">观影</span>
+                    </div>
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/listening'">
+                        
+                        <i class="iconfont icon-music"></i>
+                        
+                        <span class="name">听歌</span>
+                    </div>
                     
                 </div>
+                
             </div>
+            
+            <div class="menu-item">
+                <span class="link-title">友链</span>
+                
+                <div class="link-child">
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/friends'">
+                        
+                        <i class="iconfont icon-people"></i>
+                        
+                        <span class="name">友情链接</span>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="menu-item">
+                <span class="link-title">关于</span>
+                
+                <div class="link-child">
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/guestbook'">
+                        
+                        <i class="iconfont icon-chat"></i>
+                        
+                        <span class="name">留言板</span>
+                    </div>
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/about'">
+                        
+                        <i class="iconfont icon-contacts"></i>
+                        
+                        <span class="name">关于本站</span>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
         </div>
     </div>
-</div> <div class="modal search-modal" id="searchModal">
+</div>
+
+<style>
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3000;
+    display: none;
+}
+
+.mobile-menu .menu-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--main-mask-background);
+}
+
+.mobile-menu .menu-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 12px 0 0 12px;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mobile-menu .close-control {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    transition: background-color 0.3s, opacity 0.3s;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.mobile-menu .close-control .iconfont {
+    font-size: 18px;
+    line-height: 1;
+    color: var(--main-font-second-color);
+    transition: color 0.3s, opacity 0.3s;
+}
+
+.mobile-menu .close-control:hover {
+    background-color: var(--main-color);
+}
+
+.mobile-menu .close-control:hover .iconfont {
+    color: var(--main-card-background);
+}
+
+.mobile-menu .menu-list {
+    margin-top: 40px;
+}
+
+.mobile-menu .menu-item {
+    margin-bottom: 12px;
+}
+
+.mobile-menu .menu-item .link-title {
+    font-size: 14px;
+    margin-bottom: 12px;
+    display: inline-block;
+    color: var(--main-font-second-color);
+}
+
+.mobile-menu .menu-item .link-child {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.mobile-menu .menu-item .link-child-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 8px;
+    padding: 10px 12px;
+    background-color: var(--main-card-background);
+    border: 1px solid var(--main-card-border);
+    box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.mobile-menu .menu-item .link-child-btn:hover {
+    background-color: var(--main-color);
+    color: var(--main-card-background);
+}
+
+.mobile-menu .menu-item .link-child-btn .iconfont {
+    margin-right: 6px;
+    opacity: 0.6;
+}
+
+.mobile-menu .menu-item .link-child-btn .name {
+    max-width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>
+
+<script>
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileMenu) {
+        mobileMenu.style.display = mobileMenu.style.display === 'none' ? 'block' : 'none';
+    }
+}
+</script> <div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -484,13 +679,15 @@
 
 
 
-<div class="banner half" id="main-banner">
+<div class="banner full" id="main-banner">
     <h1 class="title">你好，欢迎来到元视角</h1>
     <div class="subtitle">
         <span class="text">
             纵有疾风起，人生不言弃
         </span>
     </div>
+    
+    <i class="iconfont icon-up"></i>
     
 </div>
 
@@ -1053,692 +1250,497 @@ function jumpToPage(page, totalPages) {
   <div class="card-content">
     
   </div>
-</div> 
-<div class="tags-cloud s-card weidgets">
+</div> <div class="tags-cloud s-card weidgets">
   <div class="title">
     <i class="iconfont icon-hashtag"></i>
     <span class="title-name">热门标签</span>
   </div>
   <div class="all-tags">
     
-        
-          <a href="/tags/.net/" class="tags">
-            <span class="name">.NET</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/.net-core/" class="tags">
-            <span class="name">.NET Core</span>
-            <sup class="num">3</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/abp/" class="tags">
-            <span class="name">ABP</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/agent/" class="tags">
-            <span class="name">Agent</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/apache/" class="tags">
-            <span class="name">Apache</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/cdn/" class="tags">
-            <span class="name">CDN</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/dlib/" class="tags">
-            <span class="name">Dlib</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/envoy/" class="tags">
-            <span class="name">Envoy</span>
-            <sup class="num">4</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/function-calling/" class="tags">
-            <span class="name">Function Calling</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/github/" class="tags">
-            <span class="name">Github</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/gpts/" class="tags">
-            <span class="name">GPTs</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/grafana/" class="tags">
-            <span class="name">Grafana</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/hangfire/" class="tags">
-            <span class="name">Hangfire</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/hashset/" class="tags">
-            <span class="name">HashSet</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/hexo/" class="tags">
-            <span class="name">Hexo</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/http/" class="tags">
-            <span class="name">HTTP</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/httpclient/" class="tags">
-            <span class="name">HttpClient</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/jsdelivr/" class="tags">
-            <span class="name">JsDelivr</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/k-means/" class="tags">
-            <span class="name">K-Means</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/kindle/" class="tags">
-            <span class="name">Kindle</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/lambda/" class="tags">
-            <span class="name">Lambda</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/langchain/" class="tags">
-            <span class="name">LangChain</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/ldap/" class="tags">
-            <span class="name">LDAP</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/linq/" class="tags">
-            <span class="name">Linq</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/linux/" class="tags">
-            <span class="name">Linux</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/llama/" class="tags">
-            <span class="name">LLaMA</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/love2d/" class="tags">
-            <span class="name">Love2D</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/mcp/" class="tags">
-            <span class="name">MCP</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/mock/" class="tags">
-            <span class="name">Mock</span>
-            <sup class="num">2</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/mono/" class="tags">
-            <span class="name">Mono</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/nginx/" class="tags">
-            <span class="name">Nginx</span>
-            <sup class="num">2</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/opencv/" class="tags">
-            <span class="name">OpenCV</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/prometheus/" class="tags">
-            <span class="name">Prometheus</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/python/" class="tags">
-            <span class="name">Python</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/rag/" class="tags">
-            <span class="name">RAG</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/rpg/" class="tags">
-            <span class="name">RPG</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/scikit-learn/" class="tags">
-            <span class="name">Scikit-Learn</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/semantic-kernel/" class="tags">
-            <span class="name">Semantic Kernel</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/signalr/" class="tags">
-            <span class="name">SignalR</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/svn/" class="tags">
-            <span class="name">SVN</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/ugui/" class="tags">
-            <span class="name">UGUI</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/unity3d/" class="tags">
-            <span class="name">Unity3D</span>
-            <sup class="num">3</sup>
-          </a>
-        
-      
-        
           <a href="/tags/vue/" class="tags">
             <span class="name">Vue</span>
             <sup class="num">6</sup>
           </a>
-        
       
-        
-          <a href="/tags/websocket/" class="tags">
-            <span class="name">WebSocket</span>
-            <sup class="num">1</sup>
+          <a href="/tags/envoy/" class="tags">
+            <span class="name">Envoy</span>
+            <sup class="num">4</sup>
           </a>
-        
       
-        
-          <a href="/tags/%E4%BA%BA%E8%84%B8%E5%88%86%E7%B1%BB/" class="tags">
-            <span class="name">人脸分类</span>
-            <sup class="num">1</sup>
+          <a href="/tags/.net-core/" class="tags">
+            <span class="name">.NET Core</span>
+            <sup class="num">3</sup>
           </a>
-        
       
-        
-          <a href="/tags/%E4%BB%99%E5%89%91%E5%A5%87%E4%BE%A0%E4%BC%A0/" class="tags">
-            <span class="name">仙剑奇侠传</span>
-            <sup class="num">1</sup>
+          <a href="/tags/unity3d/" class="tags">
+            <span class="name">Unity3D</span>
+            <sup class="num">3</sup>
           </a>
-        
       
-        
-          <a href="/tags/%E4%BD%8E%E4%BB%A3%E7%A0%81/" class="tags">
-            <span class="name">低代码</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E5%85%AB%E5%8D%A6/" class="tags">
-            <span class="name">八卦</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E5%88%86%E9%A1%B5/" class="tags">
-            <span class="name">分页</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
           <a href="/tags/%E5%89%8D%E7%AB%AF/" class="tags">
             <span class="name">前端</span>
             <sup class="num">3</sup>
           </a>
-        
       
-        
-          <a href="/tags/%E5%8A%A8%E6%BC%AB/" class="tags">
-            <span class="name">动漫</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" class="tags">
-            <span class="name">反向代理</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E5%93%AA%E5%90%92/" class="tags">
-            <span class="name">哪吒</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" class="tags">
-            <span class="name">图像处理</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E5%A4%8F%E7%9B%AE%E6%BC%B1%E7%9F%B3/" class="tags">
-            <span class="name">夏目漱石</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E5%AE%B9%E5%99%A8/" class="tags">
-            <span class="name">容器</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E5%B0%81%E7%A5%9E/" class="tags">
-            <span class="name">封神</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E5%BD%B1%E8%AF%84/" class="tags">
-            <span class="name">影评</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
           <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" class="tags">
             <span class="name">微服务</span>
             <sup class="num">3</sup>
           </a>
-        
       
-        
-          <a href="/tags/%E6%80%9D%E8%80%83/" class="tags">
-            <span class="name">思考</span>
-            <sup class="num">1</sup>
+          <a href="/tags/mock/" class="tags">
+            <span class="name">Mock</span>
+            <sup class="num">2</sup>
           </a>
-        
       
-        
+          <a href="/tags/nginx/" class="tags">
+            <span class="name">Nginx</span>
+            <sup class="num">2</sup>
+          </a>
+      
           <a href="/tags/%E6%84%9F%E6%82%9F/" class="tags">
             <span class="name">感悟</span>
             <sup class="num">2</sup>
           </a>
-        
       
-        
-          <a href="/tags/%E6%88%91%E6%98%AF%E7%8C%AB/" class="tags">
-            <span class="name">我是猫</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E6%89%A9%E5%B1%95/" class="tags">
-            <span class="name">扩展</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E6%95%B0%E6%8D%AE/" class="tags">
-            <span class="name">数据</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E6%97%A5%E5%89%A7/" class="tags">
-            <span class="name">日剧</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E6%97%A5%E6%9C%AC%E6%96%87%E5%AD%A6/" class="tags">
-            <span class="name">日本文学</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="tags">
-            <span class="name">机器学习</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
           <a href="/tags/%E6%B8%B8%E6%88%8F/" class="tags">
             <span class="name">游戏</span>
             <sup class="num">2</sup>
           </a>
-        
       
-        
           <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" class="tags">
             <span class="name">游戏开发</span>
             <sup class="num">2</sup>
           </a>
-        
       
-        
-          <a href="/tags/%E6%BA%90%E7%A0%81/" class="tags">
-            <span class="name">源码</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E7%86%B5%E5%A2%9E%E5%AE%9A%E5%BE%8B/" class="tags">
-            <span class="name">熵增定律</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E7%88%B1%E6%83%85/" class="tags">
-            <span class="name">爱情</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" class="tags">
-            <span class="name">版本控制</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E7%8A%B6%E6%80%81/" class="tags">
-            <span class="name">状态</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E7%94%9F%E6%B4%BB/" class="tags">
-            <span class="name">生活</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E7%94%B5%E5%BD%B1/" class="tags">
-            <span class="name">电影</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E7%9B%91%E6%8E%A7/" class="tags">
-            <span class="name">监控</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E7%A0%94%E5%8F%91/" class="tags">
-            <span class="name">研发</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" class="tags">
-            <span class="name">程序员</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E7%A9%BF%E6%90%AD/" class="tags">
-            <span class="name">穿搭</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
-          <a href="/tags/%E7%AE%A1%E9%81%93/" class="tags">
-            <span class="name">管道</span>
-            <sup class="num">1</sup>
-          </a>
-        
-      
-        
           <a href="/tags/%E7%BC%96%E7%A8%8B/" class="tags">
             <span class="name">编程</span>
             <sup class="num">2</sup>
           </a>
-        
       
-        
+          <a href="/tags/.net/" class="tags">
+            <span class="name">.NET</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/abp/" class="tags">
+            <span class="name">ABP</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/agent/" class="tags">
+            <span class="name">Agent</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/apache/" class="tags">
+            <span class="name">Apache</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/cdn/" class="tags">
+            <span class="name">CDN</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/dlib/" class="tags">
+            <span class="name">Dlib</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/function-calling/" class="tags">
+            <span class="name">Function Calling</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/github/" class="tags">
+            <span class="name">Github</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/gpts/" class="tags">
+            <span class="name">GPTs</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/grafana/" class="tags">
+            <span class="name">Grafana</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/hangfire/" class="tags">
+            <span class="name">Hangfire</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/hashset/" class="tags">
+            <span class="name">HashSet</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/hexo/" class="tags">
+            <span class="name">Hexo</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/http/" class="tags">
+            <span class="name">HTTP</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/httpclient/" class="tags">
+            <span class="name">HttpClient</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/jsdelivr/" class="tags">
+            <span class="name">JsDelivr</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/k-means/" class="tags">
+            <span class="name">K-Means</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/kindle/" class="tags">
+            <span class="name">Kindle</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/lambda/" class="tags">
+            <span class="name">Lambda</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/langchain/" class="tags">
+            <span class="name">LangChain</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/ldap/" class="tags">
+            <span class="name">LDAP</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/linq/" class="tags">
+            <span class="name">Linq</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/linux/" class="tags">
+            <span class="name">Linux</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/llama/" class="tags">
+            <span class="name">LLaMA</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/love2d/" class="tags">
+            <span class="name">Love2D</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/mcp/" class="tags">
+            <span class="name">MCP</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/mono/" class="tags">
+            <span class="name">Mono</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/opencv/" class="tags">
+            <span class="name">OpenCV</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/prometheus/" class="tags">
+            <span class="name">Prometheus</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/python/" class="tags">
+            <span class="name">Python</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/rag/" class="tags">
+            <span class="name">RAG</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/rpg/" class="tags">
+            <span class="name">RPG</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/scikit-learn/" class="tags">
+            <span class="name">Scikit-Learn</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/semantic-kernel/" class="tags">
+            <span class="name">Semantic Kernel</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/signalr/" class="tags">
+            <span class="name">SignalR</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/svn/" class="tags">
+            <span class="name">SVN</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/ugui/" class="tags">
+            <span class="name">UGUI</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/websocket/" class="tags">
+            <span class="name">WebSocket</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E4%BA%BA%E8%84%B8%E5%88%86%E7%B1%BB/" class="tags">
+            <span class="name">人脸分类</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E4%BB%99%E5%89%91%E5%A5%87%E4%BE%A0%E4%BC%A0/" class="tags">
+            <span class="name">仙剑奇侠传</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E4%BD%8E%E4%BB%A3%E7%A0%81/" class="tags">
+            <span class="name">低代码</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E5%85%AB%E5%8D%A6/" class="tags">
+            <span class="name">八卦</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E5%88%86%E9%A1%B5/" class="tags">
+            <span class="name">分页</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E5%8A%A8%E6%BC%AB/" class="tags">
+            <span class="name">动漫</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" class="tags">
+            <span class="name">反向代理</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E5%93%AA%E5%90%92/" class="tags">
+            <span class="name">哪吒</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" class="tags">
+            <span class="name">图像处理</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E5%A4%8F%E7%9B%AE%E6%BC%B1%E7%9F%B3/" class="tags">
+            <span class="name">夏目漱石</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E5%AE%B9%E5%99%A8/" class="tags">
+            <span class="name">容器</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E5%B0%81%E7%A5%9E/" class="tags">
+            <span class="name">封神</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E5%BD%B1%E8%AF%84/" class="tags">
+            <span class="name">影评</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E6%80%9D%E8%80%83/" class="tags">
+            <span class="name">思考</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E6%88%91%E6%98%AF%E7%8C%AB/" class="tags">
+            <span class="name">我是猫</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E6%89%A9%E5%B1%95/" class="tags">
+            <span class="name">扩展</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E6%95%B0%E6%8D%AE/" class="tags">
+            <span class="name">数据</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E6%97%A5%E5%89%A7/" class="tags">
+            <span class="name">日剧</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E6%97%A5%E6%9C%AC%E6%96%87%E5%AD%A6/" class="tags">
+            <span class="name">日本文学</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="tags">
+            <span class="name">机器学习</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E6%BA%90%E7%A0%81/" class="tags">
+            <span class="name">源码</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E7%86%B5%E5%A2%9E%E5%AE%9A%E5%BE%8B/" class="tags">
+            <span class="name">熵增定律</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E7%88%B1%E6%83%85/" class="tags">
+            <span class="name">爱情</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" class="tags">
+            <span class="name">版本控制</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E7%8A%B6%E6%80%81/" class="tags">
+            <span class="name">状态</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E7%94%9F%E6%B4%BB/" class="tags">
+            <span class="name">生活</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E7%94%B5%E5%BD%B1/" class="tags">
+            <span class="name">电影</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E7%9B%91%E6%8E%A7/" class="tags">
+            <span class="name">监控</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E7%A0%94%E5%8F%91/" class="tags">
+            <span class="name">研发</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" class="tags">
+            <span class="name">程序员</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E7%A9%BF%E6%90%AD/" class="tags">
+            <span class="name">穿搭</span>
+            <sup class="num">1</sup>
+          </a>
+      
+          <a href="/tags/%E7%AE%A1%E9%81%93/" class="tags">
+            <span class="name">管道</span>
+            <sup class="num">1</sup>
+          </a>
+      
           <a href="/tags/%E7%BD%91%E5%85%B3/" class="tags">
             <span class="name">网关</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E8%81%9A%E7%B1%BB/" class="tags">
             <span class="name">聚类</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E8%A1%8C%E4%B8%9A/" class="tags">
             <span class="name">行业</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E8%A1%A8%E5%8D%95/" class="tags">
             <span class="name">表单</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%91/" class="tags">
             <span class="name">表达式树</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E8%AE%A4%E8%AF%81/" class="tags">
             <span class="name">认证</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E8%AF%BB%E4%B9%A6/" class="tags">
             <span class="name">读书</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="tags">
             <span class="name">负载均衡</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E8%B4%AA%E5%90%83%E8%9B%87/" class="tags">
             <span class="name">贪吃蛇</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E8%B7%A8%E5%B9%B3%E5%8F%B0/" class="tags">
             <span class="name">跨平台</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E8%B7%AF%E7%94%B1/" class="tags">
             <span class="name">路由</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E8%BF%81%E7%A7%BB/" class="tags">
             <span class="name">迁移</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E9%9A%8F%E7%AC%94/" class="tags">
             <span class="name">随笔</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E9%9D%A2%E8%AF%95/" class="tags">
             <span class="name">面试</span>
             <sup class="num">1</sup>
           </a>
-        
       
-        
           <a href="/tags/%E9%AA%8C%E8%AF%81/" class="tags">
             <span class="name">验证</span>
             <sup class="num">1</sup>
           </a>
-        
       
   </div>
   <a href="/pages/tags" class="more-tags">查看全部</a>
@@ -2032,7 +2034,12 @@ window.addEventListener('beforeunload', function() {
     });
 </script>
 
-<script src="/js/theme.min.df71ca7373c5884a4022a354b524ddee31ff8069b6ff5151b5950296b2d3a7a8.js"></script><div class="modal search-modal" id="searchModal">
+
+<script src="/js/theme.min.df71ca7373c5884a4022a354b524ddee31ff8069b6ff5151b5950296b2d3a7a8.js"></script>
+
+
+
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -2191,7 +2198,5 @@ window.addEventListener('beforeunload', function() {
   background: transparent;
 }
 </style> 
-
-        
     </body>
 </html> 

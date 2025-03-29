@@ -10,6 +10,12 @@
     
     
     <link rel="shortcut icon" href="" type="image/x-icon">
+
+    
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+    
+    <link rel="icon" type="image/png" href="/images/favicon.png">
     
     
     <meta property="og:title" content="Semantic Kernel × MCP：智能体的上下文增强探索">
@@ -21,7 +27,7 @@
     <link rel="stylesheet" href="/css/style.css">
     
     
-    <link rel="stylesheet" href="/scss/main.min.e8ab63dd8b65ff54276df15e9ceca94e1d74b1c6c9a53ae610da3aa7e126e5d4.css">
+    <link rel="stylesheet" href="/scss/main.min.0b6d3df7b07e2e68fa4f2b14b52e5812dfef9a23a157361cd8144306db143f50.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_3159629_2j0vwz8wd1k.css">
     
     
@@ -92,17 +98,14 @@
             <nav class="main-nav up top">
                 <div class="nav-all">
                     
+                     
                     <div class="left-nav">
-                        <div class="more-menu nav-btn" title="更多内容">
-                            <i class="iconfont icon-menu"></i><div class="more-menu-panel">
-    <div class="menu-list">
-        
-    </div>
-</div> </div>
-                        <div class="site-name">
+                        
+                        <div class="site-name" onclick="location.href='/'">
                             元视角
                         </div>
                     </div>
+                    
                     
                     
                     <div class="nav-center">
@@ -249,54 +252,246 @@
                     </div>
                 </div>
             </nav>
-            <div class="mobile-menu">
+            <div class="mobile-menu" id="mobileMenu">
+    
     <div class="menu-mask"></div>
-    <div class="menu-content">
-        <div class="menu-header">
-            <div class="site-info">
-                <div class="site-name">元视角</div>
-                <div class="site-description">纵有疾风起，人生不言弃</div>
-            </div>
+    <div class="menu-content s-card">
+        
+        <div class="close-control">
+            <i class="iconfont icon-close"></i>
         </div>
-        <div class="menu-body">
+
+        
+        <div class="menu-list">
             
-            <div class="menu-group">
-                <div class="menu-title">导航</div>
-                <div class="menu-list">
+            <div class="menu-item">
+                <span class="link-title">文库</span>
+                
+                <div class="link-child">
                     
-                    
-                    <a class="menu-item" href="" >
+                    <div class="link-child-btn" onclick="window.location.href='\/'">
                         
-                        <span>文库</span>
-                    </a>
-                    
-                    <a class="menu-item" href="" >
+                        <i class="iconfont icon-home"></i>
                         
-                        <span>书影音</span>
-                    </a>
+                        <span class="name">文章列表</span>
+                    </div>
                     
-                    <a class="menu-item" href="" >
+                    <div class="link-child-btn" onclick="window.location.href='\/categories'">
                         
-                        <span>友链</span>
-                    </a>
+                        <i class="iconfont icon-folder"></i>
+                        
+                        <span class="name">全部分类</span>
+                    </div>
                     
-                    <a class="menu-item" href="" >
+                    <div class="link-child-btn" onclick="window.location.href='\/tags'">
                         
-                        <span>关于</span>
-                    </a>
+                        <i class="iconfont icon-hashtag"></i>
+                        
+                        <span class="name">全部标签</span>
+                    </div>
                     
                 </div>
+                
             </div>
             
-            <div class="menu-group">
-                <div class="menu-title">更多</div>
-                <div class="menu-list">
+            <div class="menu-item">
+                <span class="link-title">书影音</span>
+                
+                <div class="link-child">
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/reading'">
+                        
+                        <i class="iconfont icon-books"></i>
+                        
+                        <span class="name">读书</span>
+                    </div>
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/watching'">
+                        
+                        <i class="iconfont icon-tv"></i>
+                        
+                        <span class="name">观影</span>
+                    </div>
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/listening'">
+                        
+                        <i class="iconfont icon-music"></i>
+                        
+                        <span class="name">听歌</span>
+                    </div>
                     
                 </div>
+                
             </div>
+            
+            <div class="menu-item">
+                <span class="link-title">友链</span>
+                
+                <div class="link-child">
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/friends'">
+                        
+                        <i class="iconfont icon-people"></i>
+                        
+                        <span class="name">友情链接</span>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="menu-item">
+                <span class="link-title">关于</span>
+                
+                <div class="link-child">
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/guestbook'">
+                        
+                        <i class="iconfont icon-chat"></i>
+                        
+                        <span class="name">留言板</span>
+                    </div>
+                    
+                    <div class="link-child-btn" onclick="window.location.href='\/about'">
+                        
+                        <i class="iconfont icon-contacts"></i>
+                        
+                        <span class="name">关于本站</span>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
         </div>
     </div>
-</div> <div class="modal search-modal" id="searchModal">
+</div>
+
+<style>
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3000;
+    display: none;
+}
+
+.mobile-menu .menu-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--main-mask-background);
+}
+
+.mobile-menu .menu-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 12px 0 0 12px;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mobile-menu .close-control {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    transition: background-color 0.3s, opacity 0.3s;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.mobile-menu .close-control .iconfont {
+    font-size: 18px;
+    line-height: 1;
+    color: var(--main-font-second-color);
+    transition: color 0.3s, opacity 0.3s;
+}
+
+.mobile-menu .close-control:hover {
+    background-color: var(--main-color);
+}
+
+.mobile-menu .close-control:hover .iconfont {
+    color: var(--main-card-background);
+}
+
+.mobile-menu .menu-list {
+    margin-top: 40px;
+}
+
+.mobile-menu .menu-item {
+    margin-bottom: 12px;
+}
+
+.mobile-menu .menu-item .link-title {
+    font-size: 14px;
+    margin-bottom: 12px;
+    display: inline-block;
+    color: var(--main-font-second-color);
+}
+
+.mobile-menu .menu-item .link-child {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.mobile-menu .menu-item .link-child-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 8px;
+    padding: 10px 12px;
+    background-color: var(--main-card-background);
+    border: 1px solid var(--main-card-border);
+    box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.mobile-menu .menu-item .link-child-btn:hover {
+    background-color: var(--main-color);
+    color: var(--main-card-background);
+}
+
+.mobile-menu .menu-item .link-child-btn .iconfont {
+    margin-right: 6px;
+    opacity: 0.6;
+}
+
+.mobile-menu .menu-item .link-child-btn .name {
+    max-width: 80px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>
+
+<script>
+function toggleMobileMenu() {
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileMenu) {
+        mobileMenu.style.display = mobileMenu.style.display === 'none' ? 'block' : 'none';
+    }
+}
+</script> <div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -1146,7 +1341,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/integrate-ldap-authentication-for-your-server\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/2070070822\/'">
         随便逛逛
       </span>
       
@@ -1373,8 +1568,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="card-content">
     
   </div>
-</div> 
-<div class="tags-cloud s-card weidgets">
+</div> <div class="tags-cloud s-card weidgets">
   <div class="title">
     <i class="iconfont icon-hashtag"></i>
     <span class="title-name">热门标签</span>
@@ -1655,7 +1849,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 </script>
 
-<script src="/js/theme.min.df71ca7373c5884a4022a354b524ddee31ff8069b6ff5151b5950296b2d3a7a8.js"></script><div class="modal search-modal" id="searchModal">
+
+<script src="/js/theme.min.df71ca7373c5884a4022a354b524ddee31ff8069b6ff5151b5950296b2d3a7a8.js"></script>
+
+
+
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -1814,7 +2013,5 @@ document.addEventListener("DOMContentLoaded", function () {
   background: transparent;
 }
 </style> 
-
-        
     </body>
 </html> 

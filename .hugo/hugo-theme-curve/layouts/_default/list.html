@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ $showHeader := .Params.showHeader | default true }}
+{{ $showBanner := .Params.showBanner | default true }}
 {{ $showCategories := .Params.showCategories | default false }}
 {{ $showTags := .Params.showTags | default false }}
 {{ $postSize := default 10 .Site.Params.theme.postSize }}
@@ -21,9 +21,9 @@
 {{ end }}
 
 <div class="home">
-  {{ if $showHeader }}
+  {{ if $showBanner }}
     {{ partial "components/banner.html" (dict 
-      "height" .Site.Params.theme.bannerType
+      "height" .Site.Params.bannerType
       "type" "text"
       "context" .
     ) }}
