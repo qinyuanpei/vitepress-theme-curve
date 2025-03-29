@@ -1,1 +1,182 @@
- 
+{{ define "main" }}
+{{ $posts := where .Site.RegularPages "Section" "posts" }}
+{{ $postsByYear := $posts.GroupByDate "2006" }}
+
+<div class="archives s-card">
+    <div class="title">
+        <h1 class="name">文章</h1>
+        {{ with $posts }}
+        <sup class="num">{{ len . }}</sup>
+        {{ end }}
+    </div>
+    <div class="archives-list">
+        {{ range $postsByYear.Reverse }}
+        <div class="year-list">
+            <span class="year">{{ .Key }}</span>
+            <div class="posts">
+                {{ range .Pages }}
+                <div class="posts-item s-card hover" onclick="window.location.href='{{ .RelPermalink }}'">
+                    <span class="title">{{ .Title }}</span>
+                    <div class="meta">
+                        <div class="date">
+                            <i class="iconfont icon-calendar"></i>
+                            <span>{{ .Date.Format "2006-01-02" }}</span>
+                        </div>
+                        {{ with .Params.categories }}
+                        <div class="categories">
+                            <i class="iconfont icon-folder"></i>
+                            {{ range . }}
+                            <a href="{{ "/categories/" | relLangURL }}{{ . | urlize }}" 
+                               onclick="event.stopPropagation()">
+                                {{ . }}
+                            </a>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                        {{ with .Params.tags }}
+                        <div class="tags">
+                            <i class="iconfont icon-hashtag"></i>
+                            {{ range . }}
+                            <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" 
+                               onclick="event.stopPropagation()">
+                                {{ . }}
+                            </a>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</div>
+
+<style>
+.archives {
+    padding: 2rem;
+}
+
+.archives .title {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.archives .title .name {
+    margin: 0;
+    border-bottom: none;
+}
+
+.archives .title .num {
+    margin-left: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    opacity: 0.6;
+}
+
+.archives .archives-list .year-list {
+    margin-bottom: 2rem;
+}
+
+.archives .archives-list .year-list .year {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 6px;
+    padding-left: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.archives .archives-list .year-list .year::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 4px;
+    height: 70%;
+    background-color: var(--main-color);
+    border-radius: 8px;
+}
+
+.archives .archives-list .year-list .posts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.archives .archives-list .year-list .posts .posts-item {
+    padding: 20px;
+    cursor: pointer;
+}
+
+.archives .archives-list .year-list .posts .posts-item .title {
+    display: block;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.archives .archives-list .year-list .posts .posts-item .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--main-font-second-color);
+}
+
+.archives .archives-list .year-list .posts .posts-item .meta > div {
+    display: flex;
+    align-items: center;
+}
+
+.archives .archives-list .year-list .posts .posts-item .meta .iconfont {
+    margin-right: 4px;
+    opacity: 0.6;
+}
+
+.archives .archives-list .year-list .posts .posts-item .meta a {
+    color: var(--main-font-second-color);
+    transition: color 0.3s;
+    margin-right: 8px;
+}
+
+.archives .archives-list .year-list .posts .posts-item .meta a:hover {
+    color: var(--main-color);
+}
+
+.archives .archives-list .year-list .posts .posts-item:hover .title {
+    color: var(--main-color);
+}
+
+.archives .archives-list .year-list:last-child {
+    margin-bottom: 0;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .archives .archives-list .year-list .posts {
+        grid-template-columns: 1fr;
+    }
+
+    .archives .archives-list .year-list .posts .posts-item .meta {
+        /* 在移动端只显示日期 */
+        .categories, .tags {
+            display: none;
+        }
+    }
+
+    .archives .archives-list .year-list .posts .posts-item {
+        padding: 15px;
+    }
+
+    .archives .archives-list .year-list .posts .posts-item .title {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+}
+</style>
+{{ end }} 

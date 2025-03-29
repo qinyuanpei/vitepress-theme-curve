@@ -149,6 +149,12 @@
     <loc>http://localhost:1313/tags/%E7%A0%94%E5%8F%91/</loc>
     <lastmod>2022-04-15T22:49:47+00:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/page/</loc>
+    <lastmod>2020-10-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/about/</loc>
+    <lastmod>2020-10-09T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/posts/1519021197/</loc>
     <lastmod>2021-07-10T14:41:24+00:00</lastmod>
   </url><url>
@@ -424,5 +430,7 @@
   </url><url>
     <loc>http://localhost:1313/tags/%E8%B4%AA%E5%90%83%E8%9B%87/</loc>
     <lastmod>2015-03-10T10:51:19+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/page/archives/</loc>
   </url>
 </urlset>
