@@ -393,3 +393,7 @@ related:
 permalinks:
     post: /posts/:slug/
     page: /:slug/
+
+taxonomies:
+  category: categories
+  tag: tags

@@ -1,0 +1,99 @@
+{{ $type := .type | default "categories" }}
+{{ $taxonomies := index .Site.Taxonomies $type }}
+
+<div class="cat-or-tag">
+    <div class="title">
+        <h1 class="title-name">{{ if eq $type "categories" }}全部分类{{ else }}全部标签{{ end }}</h1>
+        <span class="title-num">
+            共有 {{ len $taxonomies }} 个{{ if eq $type "categories" }}分类{{ else }}标签{{ end }}
+        </span>
+    </div>
+
+    <div class="type-lists">
+        {{ range $name, $taxonomy := $taxonomies }}
+        <a href="/{{ $type }}/{{ $name | urlize }}" class="type-item s-card">
+            <i class="iconfont {{ if eq $type "categories" }}icon-folder{{ else }}icon-hashtag{{ end }}"></i>
+            <span class="name">{{ $name }}</span>
+            <span class="num">{{ len $taxonomy }}</span>
+        </a>
+        {{ end }}
+    </div>
+</div>
+
+<style>
+.cat-or-tag {
+    min-height: 400px;
+}
+
+.cat-or-tag .title {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cat-or-tag .title .title-name {
+    font-size: 1.875rem;
+    margin-bottom: 0;
+}
+
+.cat-or-tag .title .title-num {
+    margin-top: 20px;
+    font-size: 1.125rem;
+    opacity: 0.6;
+}
+
+.cat-or-tag .type-lists {
+    padding: 2rem 0 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cat-or-tag .type-lists .type-item {
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0.5em;
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.cat-or-tag .type-lists .type-item .name {
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.cat-or-tag .type-lists .type-item .iconfont {
+    margin-right: 8px;
+    font-size: 1.25rem;
+    opacity: 0.6;
+    transition: color 0.3s;
+}
+
+.cat-or-tag .type-lists .type-item .num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    padding: 6px 4px;
+    margin-left: 8px;
+    min-width: 35px;
+    border-radius: 8px;
+    background-color: var(--main-card-border);
+}
+
+.cat-or-tag .type-lists .type-item:hover {
+    transform: scale(1.05);
+    background-color: var(--main-color);
+}
+
+.cat-or-tag .type-lists .type-item:hover .name,
+.cat-or-tag .type-lists .type-item:hover .iconfont {
+    color: var(--main-card-background);
+}
+</style> 

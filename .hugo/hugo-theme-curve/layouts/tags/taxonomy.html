@@ -1,0 +1,12 @@
+{{ define "main" }}
+<div class="taxonomy-term">
+    <div class="title">
+        <h1 class="title-name">标签：{{ .Title }}</h1>
+        <span class="title-num">共有 {{ len .Pages }} 篇文章</span>
+    </div>
+    {{ partial "components/post-list.html" (dict 
+        "posts" .Pages
+        "context" .
+    ) }}
+</div>
+{{ end }} 
