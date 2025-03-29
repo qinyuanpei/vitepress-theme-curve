@@ -42,9 +42,7 @@
       <!-- 文章列表 -->
       {{ $postListData := dict 
         "posts" .Paginator.Pages
-        "layoutType" $layoutType
-        "gridStyle" $gridStyle
-        "context" .
+        "simple" false
       }}
       {{ partial "components/post-list.html" $postListData }}
       

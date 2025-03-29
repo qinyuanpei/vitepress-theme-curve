@@ -6,7 +6,7 @@
   <div class="all-type">
     <!-- 当前选中的分类/标签 -->
     {{ if $currentTypeName }}
-      <a href="{{ if eq $type "tags" }}/pages/tags/{{ else }}/pages/categories/{{ end }}{{ $currentTypeName }}" 
+      <a href="{{ if eq $type "tags" }}/tags/{{ else }}/categories/{{ end }}{{ $currentTypeName }}" 
          class="type-item choose">
         {{ $currentTypeName }}
         {{ if eq $type "tags" }}
@@ -24,7 +24,7 @@
     {{ if eq $type "tags" }}
       {{ range $name, $taxonomy := $context.Site.Taxonomies.tags }}
         {{ if ne $name $currentTypeName }}
-          <a href="/pages/tags/{{ $name }}" class="type-item">
+          <a href="/tags/{{ $name }}" class="type-item">
             {{ $name }}
             <span class="num">{{ len $taxonomy }}</span>
           </a>
@@ -33,7 +33,7 @@
     {{ else }}
       {{ range $name, $taxonomy := $context.Site.Taxonomies.categories }}
         {{ if ne $name $currentTypeName }}
-          <a href="/pages/categories/{{ $name }}" class="type-item">
+          <a href="/categories/{{ $name }}" class="type-item">
             {{ $name }}
           </a>
         {{ end }}
@@ -42,7 +42,7 @@
   </div>
 
   <!-- 更多链接 -->
-  <a href="{{ if eq $type "tags" }}/pages/tags{{ else }}/pages/categories{{ end }}" class="more-type">
+  <a href="{{ if eq $type "tags" }}/tags{{ else }}/categories{{ end }}" class="more-type">
     <i class="iconfont icon-arrow-right"></i>
     更多
   </a>

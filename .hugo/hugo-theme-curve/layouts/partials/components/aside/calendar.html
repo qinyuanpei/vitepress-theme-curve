@@ -1,29 +1,47 @@
+{{ $context := .context | default . }}
+{{ $isPost := eq $context.Kind "page" }}
+{{ $date := cond $isPost $context.Date now }}
+
 <div class="tags-cloud s-card weidgets">
     <div class="title">
         <i class="iconfont icon-hashtag"></i>
         <span class="title-name">日历</span>
     </div>
     <div class="all-tags">
-        <img id="calendar-cover" src="https://img.owspace.com/Public/uploads/Download/2025/0328.jpg" style="object-fit: cover; width: 100%; height: 100%; display: none;" />
+        <img id="calendar-cover" 
+             src="https://img.owspace.com/Public/uploads/Download/{{ $date.Format "2006" }}/{{ $date.Format "0102" }}.jpg" 
+             style="object-fit: cover; width: 100%; height: 100%; opacity: 0; transition: opacity 0.3s;"
+             onload="this.style.opacity = 1"
+             {{ if $isPost }}data-publish-date="{{ $context.Date.Format "2006-01-02" }}"{{ end }}
+             alt="calendar cover" />
     </div>
 </div>
+
+<style>
+.all-tags {
+    min-height: 200px; /* 添加最小高度防止加载时的布局跳动 */
+}
+</style>
+
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const eleImg = document.querySelector("#calendar-cover");
     const getImageUrl = (date) => {
         const currentYear = date.getFullYear();
-        const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
-        const currentDate = String(date.getDate()).padStart(2, '0');
-        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${currentMonth}${currentDate}.jpg`
+        const currentMonth = date.getMonth() + 1;
+        const currentDate = date.getDate();
+        // 确保月份和日期都是两位数
+        const formattedMonth = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
+        const formattedDate = currentDate < 10 ? `0${currentDate}` : currentDate;
+        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${formattedMonth}${formattedDate}.jpg`
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const eleImg = document.querySelector("#calendar-cover");
-        eleImg.onload = () => eleImg.style.display = '';
-        if (document.location.pathname.startsWith('/posts')) {
-            let publishedTime = document.querySelector('meta[property="article:published_time"]').content;
-            publishedTime = publishedTime.substring(0, 10);
-            eleImg.src = getImageUrl(new Date(publishedTime))
-        } else {
-            eleImg.src = getImageUrl(new Date())
+    // 如果是文章页面，使用文章发布日期
+    if (document.location.pathname.startsWith('/posts')) {
+        const publishDate = eleImg.dataset.publishDate;
+        if (publishDate) {
+            eleImg.src = getImageUrl(new Date(publishDate));
         }
-    });
+    }
+});
 </script>

@@ -1134,7 +1134,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/3099575458\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/94443781\/'">
         随便逛逛
       </span>
       
@@ -1531,7 +1531,9 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="card-content">
     
   </div>
-</div> <div class="tags-cloud s-card weidgets">
+</div> 
+
+<div class="tags-cloud s-card weidgets">
   <div class="title">
     <i class="iconfont icon-hashtag"></i>
     <span class="title-name">热门标签</span>
@@ -1539,8 +1541,54 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="all-tags">
     
   </div>
-  <a href="/pages/tags" class="more-tags">查看全部</a>
-</div><div class="site-data s-card weidgets">
+  <a href="/tags" class="more-tags">查看全部</a>
+</div>
+
+
+
+<div class="tags-cloud s-card weidgets">
+    <div class="title">
+        <i class="iconfont icon-hashtag"></i>
+        <span class="title-name">日历</span>
+    </div>
+    <div class="all-tags">
+        <img id="calendar-cover" 
+             src="https://img.owspace.com/Public/uploads/Download/2025/0329.jpg" 
+             style="object-fit: cover; width: 100%; height: 100%; opacity: 0; transition: opacity 0.3s;"
+             onload="this.style.opacity = 1"
+             
+             alt="calendar cover" />
+    </div>
+</div>
+
+<style>
+.all-tags {
+    min-height: 200px;  
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const eleImg = document.querySelector("#calendar-cover");
+    const getImageUrl = (date) => {
+        const currentYear = date.getFullYear();
+        const currentMonth = date.getMonth() + 1;
+        const currentDate = date.getDate();
+        
+        const formattedMonth = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
+        const formattedDate = currentDate < 10 ? `0${currentDate}` : currentDate;
+        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${formattedMonth}${formattedDate}.jpg`
+    }
+
+    
+    if (document.location.pathname.startsWith('/posts')) {
+        const publishDate = eleImg.dataset.publishDate;
+        if (publishDate) {
+            eleImg.src = getImageUrl(new Date(publishDate));
+        }
+    }
+});
+</script><div class="site-data s-card weidgets">
     <div class="title">
       <i class="iconfont icon-chart"></i>
       <span class="title-name">站点数据</span>

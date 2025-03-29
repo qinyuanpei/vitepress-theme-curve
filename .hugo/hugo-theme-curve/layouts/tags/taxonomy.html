@@ -1,12 +1,59 @@
 {{ define "main" }}
-<div class="taxonomy-term">
-    <div class="title">
-        <h1 class="title-name">标签：{{ .Title }}</h1>
-        <span class="title-num">共有 {{ len .Pages }} 篇文章</span>
+<div class="home">
+  <div class="home-content">
+    <div class="posts-content">
+      <div class="taxonomy-term">
+        <div class="title">
+          <h1 class="title-name">标签：{{ .Title }}</h1>
+          <span class="title-num">共有 {{ len .Pages }} 篇文章</span>
+        </div>
+        {{ partial "components/post-list.html" (dict 
+            "posts" .Paginator.Pages
+            "context" .
+        ) }}
+      </div>
+      
+      <!-- 分页 -->
+      {{ partial "components/pagination.html" . }}
     </div>
-    {{ partial "components/post-list.html" (dict 
-        "posts" .Pages
-        "context" .
-    ) }}
+
+    <!-- 侧边栏 -->
+    {{ partial "components/aside.html" . }}
+  </div>
 </div>
+
+<style>
+.home-content {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 1rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+  max-width: 1400px;
+}
+
+.taxonomy-term {
+  margin-bottom: 1rem;
+}
+
+.taxonomy-term .title {
+  margin-bottom: 1rem;
+}
+
+.taxonomy-term .title .title-name {
+  margin: 0;
+}
+
+.taxonomy-term .title .title-num {
+  color: var(--main-font-second-color);
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .home-content {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 {{ end }} 
