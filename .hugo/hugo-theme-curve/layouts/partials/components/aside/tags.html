@@ -1,15 +1,17 @@
+{{ $context := .context | default . }}
+
 <div class="tags-cloud s-card weidgets">
   <div class="title">
     <i class="iconfont icon-hashtag"></i>
     <span class="title-name">热门标签</span>
   </div>
   <div class="all-tags">
-    {{ range .Site.Taxonomies.tags.ByCount }}
-          <a href="{{ .Page.RelPermalink }}" class="tags">
-            <span class="name">{{ .Page.Title }}</span>
-            <sup class="num">{{ .Count }}</sup>
-          </a>
-      {{ end }}
+    {{ range $context.Site.Taxonomies.tags.ByCount }}
+      <a href="{{ .Page.RelPermalink }}" class="tags">
+        <span class="name">{{ .Page.Title }}</span>
+        <sup class="num">{{ .Count }}</sup>
+      </a>
+    {{ end }}
   </div>
-  <a href="/pages/tags" class="more-tags">查看全部</a>
+  <a href="/tags" class="more-tags">查看全部</a>
 </div>
