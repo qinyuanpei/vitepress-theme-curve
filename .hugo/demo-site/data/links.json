@@ -1,0 +1,188 @@
+[{
+	"typeName": "小伙伴们",
+	"typeDesc": "按照添加时间先后顺序排序",
+	"type": "normal",
+	"typeList": [{
+			"title": "阮一峰的网络日志",
+			"description": "阮一峰的网络日志",
+			"website": "http://www.ruanyifeng.com/blog/",
+			"avatar": "http://www.ruanyifeng.com/blog/avatars/person2_s.jpg",
+			"rss": "http://www.ruanyifeng.com/blog/atom.xml"
+		},
+		{
+			"title": "Steve Sanderson",
+			"description": "Steve Sanderson",
+			"website": "https://blog.stevensanderson.com/",
+			"avatar": "https://github.githubassets.com/avatars/modules/logos_page/GitHub-Mark.png",
+			"rss": "https://blog.stevensanderson.com/feed/"
+		},
+		{
+			"title": "Catcher Wong",
+			"description": "Catcher Wong",
+			"website": "http://www.c-sharpcorner.com/members/catcher-wong",
+			"avatar": "https://avatars.githubusercontent.com/u/8394988?v=4",
+			"rss": "https://www.c-sharpcorner.com/members/catcher-wong/rss"
+		},
+		{
+			"title": "咕咚",
+			"description": "咕咚",
+			"website": "https://gudong.site",
+			"avatar": "https://gudong.site/static/img/logo.jpg",
+			"rss": "https://gudong.site/static/xml/rss.xml"
+		},
+		{
+			"title": "小球飞鱼",
+			"description": "小球飞鱼",
+			"website": "https://mantyke.icu/",
+			"avatar": "https://mantyke.icu/avatars/logo.png",
+			"rss": "https://mantyke.icu/index.xml"
+		},
+		{
+			"title": "靖待的技术博客",
+			"description": "小清新IT旅程 | 为中华之崛起而读书",
+			"website": "https://hubojing.github.io/",
+			"avatar": "https://hubojing.github.io/avatars/icons/avatar.jpg",
+			"rss": "https://hubojing.github.io/atom.xml"
+		},
+		{
+			"title": "Hayami's Blog",
+			"description": "日常人间观察",
+			"website": "https://hayami.typlog.io/",
+			"avatar": "https://i.typlog.com/hayami/8374611717_430303.png?x-oss-process=style/ss",
+			"rss": "https://hayami.typlog.io/feed.xml"
+		},
+		{
+			"title": "句幽",
+			"description": "句幽",
+			"website": "https://www.cnblogs.com/uoyo/",
+			"avatar": "https://pic.cnblogs.com/avatar/1298413/20171212175641.png",
+			"rss": "https://feed.cnblogs.com/blog/u/401017/rss/"
+		},
+		{
+			"title": "酷壳",
+			"description": "酷壳",
+			"website": "https://coolshell.cn/",
+			"avatar": "https://coolshell.cn/wp-content/uploads/2011/03/me.jpg",
+			"rss": "https://coolshell.cn/feed"
+		},
+		{
+			"title": "程序员的喵",
+			"description": "程序员的喵",
+			"website": "https://catcoding.me/",
+			"avatar": "https://catcoding.me/avatars/wechat-qr-code.jpg",
+			"rss": "https://catcoding.me/atom.xml"
+		},
+		{
+			"title": "Simon's Blog",
+			"description": "Simon的自留地",
+			"website": "https://song.al/",
+			"avatar": "https://i.typlog.com/japan/8347850273_382761.jpg?x-oss-process=style/ss",
+			"rss": "https://song.al/feed.xml"
+		},
+		{
+			"title": "Klimafreundlicher Kochen",
+			"description": "气候友好型烹饪",
+			"website": "https://www.klimafreundlicher-kochen.de",
+			"avatar": "https://www.klimafreundlicher-kochen.de/ueber-uns/markus-spiske-no-planet-b_hu0d7b684028548f61c012dcf05cfd3a29_269383_1320x0_resize_q75_box.jpg",
+			"rss": ""
+		},
+		{
+			"title": "Randy's Blog",
+			"description": "Randy's Blog",
+			"website": "https://lutaonan.com/",
+			"avatar": "https://lutaonan.com/_astro/avatar.3832092f.jpg",
+			"rss": "https://lutaonan.com/rss.xml"
+		},
+		{
+			"title": "Song's Blog",
+			"description": "个人技术博客",
+			"website": "https://songxwn.com/",
+			"avatar": "https://songxwn.com/avatars/favicon.png",
+			"rss": "https://songxwn.com/atom.xml"
+		},
+		{
+			"title": "Leon Fong",
+			"description": "Leon Fong",
+			"website": "https://leonfong.me",
+			"avatar": "https://leonfong.me/_next/avatar?url=https%3A%2F%2Fleonfong.me%2Favatar.jpg&w=256&q=75",
+			"rss": "https://leonfong.me/feed.xml"
+		},
+		{
+			"title": "印记",
+			"description": "君子可内敛不可懦弱，面不公可起而论之",
+			"website": "https://yinji.org/archives.html",
+			"avatar": "https://huhexian.s3.bitiful.net/2023/12/23/3b83cc067b2c3f1e45807dfdeb66e0c0.webp",
+			"rss": "https://yinji.org/feed"
+		},
+		{
+			"title": "九十九封信",
+			"description": "为你而写，为你而行",
+			"website": "https://blog.99xin.me/",
+			"avatar": "https://github.githubassets.com/avatars/modules/logos_page/GitHub-Mark.png",
+			"rss": "https://blog.99xin.me/rss/"
+		},
+		{
+			"title": "查令十字街 84 号",
+			"description": "查令十字街 84 号",
+			"website": "https://javis.me/blog/",
+			"avatar": "https://github.githubassets.com/avatars/modules/logos_page/GitHub-Mark.png",
+			"rss": "https://javis.me/feed/"
+		},
+		{
+			"title": "非礼勿言",
+			"description": "非礼勿言",
+			"website": "https://feiliwuyan.com/",
+			"avatar": "https://github.githubassets.com/avatars/modules/logos_page/GitHub-Mark.png",
+			"rss": "https://feiliwuyan.com/?feed=rss2"
+		},
+		{
+			"title": "特立独行的异类",
+			"description": "引入变量，跳出死循环，从不确定性中获益",
+			"website": "https://demochen.com/",
+			"avatar": "https://demochen.com/avatars/avatar.png",
+			"rss": "https://demochen.com/atom.xml"
+		},
+		{
+			"title": "猫和柴的野游",
+			"description": "记录猫和柴在外漂泊的野游经历",
+			"website": "https://meowshiba.com/",
+			"avatar": "https://meowshiba.com/wp-content/uploads/2020/09/meowshiba-logo@4x-2.png",
+			"rss": "https://meowshiba.com/rss"
+		},
+		{
+			"title": "胡涂说",
+			"description": "任抛星汉归园圃，留取乾坤盛酒囊",
+			"website": "https://hutusi.com/",
+			"avatar": "https://cdn.hutusi.com/avatars/site/qrcode_for_hututalk_8cm.jpg?w=1280",
+			"rss": "https://hutusi.com/feed.xml"
+		},
+		{
+			"title": "Kaffa.im",
+			"description": "kunnect, adventures & fun",
+			"website": "https://kaffa.im/",
+			"avatar": "https://kaffa.im/static/img/kaffa-avatar.png",
+			"rss": "https://kaffa.im/feeds/all.atom.xml"
+		},
+		{
+			"title": "❖星港◎Star☆",
+			"description": "以博客记录生活与热爱！",
+			"website": "https://blog.starsharbor.com",
+			"avatar": "https://bu.dusays.com/2023/09/27/6513053bebdb2.webp",
+			"rss": "https://blog.starsharbor.com/atom.xml"
+		},
+		{
+			"title": "Keyle's Blog",
+			"description": "在这里记录一些偶尔冒出来转眼就会忘的灵感。",
+			"website": "https://vrast.cn/",
+			"avatar": "https://vrast.cn/favicon.ico",
+			"rss": "https://vrast.cn/atom.xml"
+		},
+		{
+			"title": "Wiley Blog",
+			"website": "https://www.wileyzhang.com/",
+			"avatar": "https://cdn.img2ipfs.com/ipfs/QmbqmpFFQJHD9ADCptnFLE5esm3RWQbq7ZurmGQrkBvRVh?filename=avtar.jpg",
+			"description": "Wiley Blog",
+			"rss": ""
+		}
+	]
+}]

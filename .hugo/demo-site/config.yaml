@@ -10,7 +10,7 @@ menu:
     - name: 文库
       weight: 1
     - name: 文章列表
-      url: /
+      url: /archives
       weight: 1
       parent: 文库
       params:
@@ -52,7 +52,7 @@ menu:
     - name: 友链
       weight: 3
     - name: 友情链接
-      url: /friends
+      url: /links
       weight: 1
       parent: 友链
       params:
@@ -294,7 +294,7 @@ params:
       - text: "博客"
         items:
           - text: "近期文章"
-            link: "/posts"
+            link: "/"
             newTab: false
           - text: "全部分类"
             link: "/categories"

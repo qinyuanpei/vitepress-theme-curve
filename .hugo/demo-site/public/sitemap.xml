@@ -431,6 +431,8 @@
     <loc>http://localhost:1313/tags/%E8%B4%AA%E5%90%83%E8%9B%87/</loc>
     <lastmod>2015-03-10T10:51:19+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/page/archives/</loc>
+    <loc>http://localhost:1313/links/</loc>
+  </url><url>
+    <loc>http://localhost:1313/archives/</loc>
   </url>
 </urlset>
