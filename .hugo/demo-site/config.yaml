@@ -1,63 +1,77 @@
-baseURL: 'http://example.org/'
-languageCode: 'zh-cn'
-title: '元视角'
-theme: 'hugo-theme-curve'
+baseURL: http://example.org/
+languageCode: zh-cn
+title: 元视角
+theme: hugo-theme-curve
 paginate: 15
 
 # 菜单信息
 menu:
   main:
-    - name: "文库"
+    - name: 文库
       weight: 1
-      children:
-        - name: "文章列表"
-          url: "/"
-          weight: 1
-          icon: "home"
-        - name: "全部分类"
-          url: "/categories"
-          weight: 2
-          icon: "category"
-        - name: "全部标签"
-          url: "/tags"
-          weight: 3
-          icon: "tag"
-    
-    - name: "书影音"
+    - name: 文章列表
+      url: /
+      weight: 1
+      parent: 文库
+      params:
+        icon: home
+    - name: 全部分类
+      url: /categories
       weight: 2
-      children:
-        - name: "在读"
-          url: "/reading"
-          weight: 1
-          icon: "book"
-        - name: "在看"
-          url: "/watching"
-          weight: 2
-          icon: "tv"
-        - name: "在听"
-          url: "/listening"
-          weight: 3
-          icon: "music"
-    
-    - name: "友链"
+      parent: 文库
+      params:
+        icon: folder
+    - name: 全部标签
+      url: /tags
       weight: 3
-      children:
-        - name: "友情链接"
-          url: "/friends"
-          weight: 1
-          icon: "users"
+      parent: 文库
+      params:
+        icon: hashtag
     
-    - name: "关于"
+    - name: 书影音
+      weight: 2
+    - name: 读书
+      url: /reading
+      weight: 1
+      parent: 书影音
+      params:
+        icon: books
+    - name: 观影
+      url: /watching
+      weight: 2
+      parent: 书影音
+      params:
+        icon: tv
+    - name: 听歌
+      url: /listening
+      weight: 3
+      parent: 书影音
+      params:
+        icon: music
+    
+    - name: 友链
+      weight: 3
+    - name: 友情链接
+      url: /friends
+      weight: 1
+      parent: 友链
+      params:
+        icon: people
+    
+    - name: 关于
       weight: 4
-      children:
-        - name: "留言板"
-          url: "/guestbook"
-          weight: 1
-          icon: "message"
-        - name: "关于本站"
-          url: "/about"
-          weight: 2
-          icon: "info"
+    - name: 留言板
+      url: /guestbook
+      weight: 1
+      parent: 关于
+      params:
+        icon: chat
+    - name: 关于本站
+      url: /about
+      weight: 2
+      parent: 关于
+      params:
+        icon: contacts
 
 params:
   mainSections:
@@ -338,6 +352,7 @@ params:
           - text: "更多"
             link: "https://blog.zhheo.com/"
             newTab: false
+
 markup:
     goldmark:
         renderer:

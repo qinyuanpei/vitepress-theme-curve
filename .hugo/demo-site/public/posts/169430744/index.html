@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/css/style.css">
     
     
-    <link rel="stylesheet" href="/scss/main.min.656e2428f69fccc25611e271078ec105c55633d35f5266cb6afedebefd6ba2da.css">
+    <link rel="stylesheet" href="/scss/main.min.e8ab63dd8b65ff54276df15e9ceca94e1d74b1c6c9a53ae610da3aa7e126e5d4.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_3159629_2j0vwz8wd1k.css">
     
     
@@ -89,7 +89,7 @@
     </style>
     
         <header class="main-header">
-            <nav class="main-nav">
+            <nav class="main-nav up top">
                 <div class="nav-all">
                     
                     <div class="left-nav">
@@ -106,29 +106,108 @@
                     
                     
                     <div class="nav-center">
-                        <div class="site-menu"><div class="menu-list">
+                        <div class="site-menu"><div class="site-menu">
     
     <div class="menu-item">
-        <span class="link-btn"> 文库</span>
+        <span class="link-btn">文库</span>
+        
+        <div class="link-child">
+            
+            <span class="link-child-btn" onclick="window.location.href='\/'">
+                
+                <i class="iconfont icon-home"></i>
+                
+                文章列表
+            </span>
+            
+            <span class="link-child-btn" onclick="window.location.href='\/categories'">
+                
+                <i class="iconfont icon-folder"></i>
+                
+                全部分类
+            </span>
+            
+            <span class="link-child-btn" onclick="window.location.href='\/tags'">
+                
+                <i class="iconfont icon-hashtag"></i>
+                
+                全部标签
+            </span>
+            
+        </div>
         
     </div>
     
     <div class="menu-item">
-        <span class="link-btn"> 书影音</span>
+        <span class="link-btn">书影音</span>
+        
+        <div class="link-child">
+            
+            <span class="link-child-btn" onclick="window.location.href='\/reading'">
+                
+                <i class="iconfont icon-books"></i>
+                
+                读书
+            </span>
+            
+            <span class="link-child-btn" onclick="window.location.href='\/watching'">
+                
+                <i class="iconfont icon-tv"></i>
+                
+                观影
+            </span>
+            
+            <span class="link-child-btn" onclick="window.location.href='\/listening'">
+                
+                <i class="iconfont icon-music"></i>
+                
+                听歌
+            </span>
+            
+        </div>
         
     </div>
     
     <div class="menu-item">
-        <span class="link-btn"> 友链</span>
+        <span class="link-btn">友链</span>
+        
+        <div class="link-child">
+            
+            <span class="link-child-btn" onclick="window.location.href='\/friends'">
+                
+                <i class="iconfont icon-people"></i>
+                
+                友情链接
+            </span>
+            
+        </div>
         
     </div>
     
     <div class="menu-item">
-        <span class="link-btn"> 关于</span>
+        <span class="link-btn">关于</span>
+        
+        <div class="link-child">
+            
+            <span class="link-child-btn" onclick="window.location.href='\/guestbook'">
+                
+                <i class="iconfont icon-chat"></i>
+                
+                留言板
+            </span>
+            
+            <span class="link-child-btn" onclick="window.location.href='\/about'">
+                
+                <i class="iconfont icon-contacts"></i>
+                
+                关于本站
+            </span>
+            
+        </div>
         
     </div>
     
-</div> </div>
+</div></div>
                         <span class="site-title">
                             Vue 快速实现通用表单验证
                         </span>
@@ -147,6 +226,10 @@
                         
                         <div class="menu-btn nav-btn" title="全站搜索">
                             <i class="iconfont icon-search"></i>
+                        </div>
+                        
+                        <div class="menu-btn nav-btn" id="themeToggle" title="切换主题模式">
+                            <i class="iconfont icon-sun" id="themeIcon"></i>
                         </div>
                         
                         <div id="open-control" class="menu-btn nav-btn pc" title="打开中控台">
@@ -446,7 +529,7 @@
             
             
             <div class="expired s-card">
-                本文发表于 <strong>2029</strong> 天前，其中的信息可能已经事过境迁
+                本文发表于 <strong>2030</strong> 天前，其中的信息可能已经事过境迁
             </div>
             
 
@@ -914,7 +997,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/interface-mock-implemention-using-mock.js-in-vue.js\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/3411909634\/'">
         随便逛逛
       </span>
       
@@ -1147,35 +1230,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
   </div>
   <a href="/pages/tags" class="more-tags">查看全部</a>
-</div><div class="tags-cloud s-card weidgets">
-    <div class="title">
-        <i class="iconfont icon-hashtag"></i>
-        <span class="title-name">日历</span>
-    </div>
-    <div class="all-tags">
-        <img id="calendar-cover" src="" style="object-fit: cover; width: 100%; height: 100%; display: none;" />
-    </div>
-</div>
-<script>
-    const getImageUrl = (date) => {
-        const currentYear = date.getFullYear();
-        const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
-        const currentDate = String(date.getDate()).padStart(2, '0');
-        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${currentMonth}${currentDate}.jpg`
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const eleImg = document.querySelector("#calendar-cover");
-        eleImg.onload = () => eleImg.style.display = '';
-        if (document.location.pathname.startsWith('/posts')) {
-            let publishedTime = document.querySelector('meta[property="article:published_time"]').content;
-            publishedTime = publishedTime.substring(0, 10);
-            eleImg.src = getImageUrl(new Date(publishedTime))
-        } else {
-            eleImg.src = getImageUrl(new Date())
-        }
-    });
-</script><div class="site-data s-card weidgets">
+</div><div class="site-data s-card weidgets">
     <div class="title">
       <i class="iconfont icon-chart"></i>
       <span class="title-name">站点数据</span>
@@ -1254,61 +1309,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         </main>
 
-        <div class="control-panel">
-    <div class="control-mask"></div>
-    <div class="control-content">
-        <div class="control-header">
-            <div class="control-title">
-                <i class="iconfont icon-dashboard"></i>
-                <span>中控台</span>
-            </div>
-            <div class="control-close">
-                <i class="iconfont icon-close"></i>
-            </div>
-        </div>
-        <div class="control-body">
-            
-            <div class="control-group">
-                <div class="group-title">主题设置</div>
-                <div class="group-content">
-                    
-                    <div class="control-item">
-                        <div class="item-title">主题模式</div>
-                        <div class="item-content">
-                            <div class="theme-switch">
-                                <div class="switch-item" data-theme="light">
-                                    <i class="iconfont icon-sun"></i>
-                                </div>
-                                <div class="switch-item" data-theme="dark">
-                                    <i class="iconfont icon-moon"></i>
-                                </div>
-                                <div class="switch-item" data-theme="auto">
-                                    <i class="iconfont icon-auto"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="control-item">
-                        <div class="item-title">主题色</div>
-                        <div class="item-content">
-                            <div class="color-switch">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> <div class="loading">
-    <div class="loading-content">
-        <div class="loading-icon">
-            <i class="iconfont icon-loading"></i>
-        </div>
-        <div class="loading-text">加载中...</div>
-    </div>
-</div> <div class="footer-link">
+        <div class="footer-link">
     
     <div class="footer-bar">
       <span class="site-title">元视角</span>
@@ -1499,7 +1500,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener('DOMContentLoaded', () => {
         Search.init();
     });
-</script><div class="modal search-modal" id="searchModal">
+</script>
+
+<script src="/js/theme.min.df71ca7373c5884a4022a354b524ddee31ff8069b6ff5151b5950296b2d3a7a8.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
@@ -1658,5 +1661,7 @@ document.addEventListener("DOMContentLoaded", function () {
   background: transparent;
 }
 </style> 
+
+        
     </body>
 </html> 

@@ -1,15 +1,19 @@
-<div class="menu-list">
+<div class="site-menu">
     {{ range .Site.Menus.main }}
     <div class="menu-item">
-        <span class="link-btn"> {{ .Name }}</span>
+        <span class="link-btn">{{ .Name }}</span>
         {{ if .HasChildren }}
+        <div class="link-child">
             {{ range .Children }}
-            <span class="link-child-btn">
-            <i class="iconfont icon-{{ .Icon }}" />
-            {{ .Name }}
+            <span class="link-child-btn" onclick="window.location.href='{{ .URL }}'">
+                {{ if .Params.Icon }}
+                <i class="iconfont icon-{{ .Params.Icon }}"></i>
+                {{ end }}
+                {{ .Name }}
             </span>
             {{ end }}
-        {{ end}}
+        </div>
+        {{ end }}
     </div>
     {{ end }}
-</div> 
+</div>
