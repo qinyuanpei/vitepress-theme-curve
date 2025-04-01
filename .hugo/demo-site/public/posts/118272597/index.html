@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="/css/style.css">
     
     
-    <link rel="stylesheet" href="/scss/main.min.8b0c9e71b5a7bdbb4c76d8b48c1c80ad95c4c10fb618c8e39795c2da134f6b87.css">
+    <link rel="stylesheet" href="/scss/main.min.c449e5d261bc767af57e92a0d674c4bc083dfd9e46355f92e505475ee926aae0.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_3159629_2j0vwz8wd1k.css">
     
     
@@ -46,6 +46,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link crossorigin="anonymous" href="https://use.sevencdn.com/css2?family=Fira+Code:wght@300..700&amp;display=swap" rel="stylesheet">
     <link href="https://X5EBEZB53I-dsn.algolia.net" rel="preconnect" crossorigin="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -724,7 +729,7 @@ function toggleMobileMenu() {
             
             
             <div class="expired s-card">
-                本文发表于 <strong>1785</strong> 天前，其中的信息可能已经事过境迁
+                本文发表于 <strong>1788</strong> 天前，其中的信息可能已经事过境迁
             </div>
             
 
@@ -1254,7 +1259,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/1519021197\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/2070070822\/'">
         随便逛逛
       </span>
       
@@ -1673,7 +1678,7 @@ document.addEventListener("DOMContentLoaded", function () {
     </div>
     <div class="all-tags">
         <img id="calendar-cover" 
-             src="https://img.owspace.com/Public/uploads/Download/2025/0329.jpg" 
+             src="https://img.owspace.com/Public/uploads/Download/2025/0401.jpg" 
              style="object-fit: cover; width: 100%; height: 100%; opacity: 0; transition: opacity 0.3s;"
              onload="this.style.opacity = 1"
              
@@ -1784,6 +1789,235 @@ document.addEventListener("DOMContentLoaded", function () {
   
     </div>
 </div>
+
+<style>
+ 
+:root {
+  --code-bg: #fff;
+  --code-border: #e1e4e8;
+  --code-line-number-color: #8b949e;
+  --code-line-number-border: #e1e4e8;
+  --code-header-bg: #f6f8fa;
+  --code-header-color: #424242;
+  --code-button-hover: #f3f4f6;
+}
+
+ 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --code-bg: #0d1117;
+    --code-border: #30363d;
+    --code-line-number-color: #8b949e;
+    --code-line-number-border: #30363d;
+    --code-header-bg: #161b22;
+    --code-header-color: #c9d1d9;
+    --code-button-hover: #21262d;
+  }
+}
+
+.highlight {
+  position: relative;
+  margin: 1rem 0;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 6px;
+  display: flex;
+}
+
+ 
+.highlight-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--code-header-bg);
+  border-bottom: 1px solid var(--code-border);
+  border-radius: 6px 6px 0 0;
+  padding: 0 0.5rem;
+}
+
+ 
+.highlight-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 0.5rem;
+  color: var(--code-header-color);
+  font-size: 0.75rem;
+}
+
+ 
+.highlight-lang {
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  background: var(--code-bg);
+  color: var(--code-header-color);
+}
+
+ 
+.copy-button {
+  padding: 0.2rem 0.8rem;
+  font-size: 0.75rem;
+  color: var(--code-header-color);
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-button:hover {
+  background: var(--code-button-hover);
+}
+
+.copy-button.copied {
+  color: #1a7f37;
+  border-color: #1a7f37;
+}
+
+@media (prefers-color-scheme: dark) {
+  .copy-button.copied {
+    color: #7ee787;
+    border-color: #7ee787;
+  }
+}
+
+ 
+.highlight-content {
+  display: flex;
+  width: 100%;
+  margin-top: 2.2rem;  
+}
+
+ 
+.line-numbers {
+  padding: 1rem 0;
+  min-width: 3.5em;
+  text-align: right;
+  color: var(--code-line-number-color);
+  border-right: 1px solid var(--code-line-number-border);
+  user-select: none;
+  background: var(--code-header-bg);
+}
+
+.line-numbers span {
+  display: block;
+  padding-right: 1rem;
+  line-height: 1.5;
+  font-size: 0.875rem;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+}
+
+ 
+.highlight pre {
+  flex: 1;
+  margin: 0;
+  padding: 1rem 0;
+  overflow-x: auto;
+}
+
+.highlight pre code {
+  padding: 0 1rem;
+  display: block;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+}
+
+ 
+.highlight pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.highlight pre::-webkit-scrollbar-thumb {
+  background: var(--code-border);
+  border-radius: 4px;
+}
+
+.highlight pre::-webkit-scrollbar-track {
+  background: var(--code-header-bg);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  hljs.highlightAll();
+
+  document.querySelectorAll('pre > code').forEach((codeBlock) => {
+    const pre = codeBlock.parentElement;
+    const container = document.createElement('div');
+    container.className = 'highlight';
+    pre.parentNode.insertBefore(container, pre);
+
+    
+    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+
+    
+    const header = document.createElement('div');
+    header.className = 'highlight-header';
+    
+    
+    const info = document.createElement('div');
+    info.className = 'highlight-info';
+    
+    
+    const lang = document.createElement('span');
+    lang.className = 'highlight-lang';
+    lang.textContent = language;
+    info.appendChild(lang);
+    
+    
+    const lines = codeBlock.innerHTML.trim().split('\n');
+    const lineCount = document.createElement('span');
+    lineCount.textContent = `${lines.length} 行`;
+    info.appendChild(lineCount);
+    
+    header.appendChild(info);
+
+    
+    const copyButton = document.createElement('button');
+    copyButton.className = 'copy-button';
+    copyButton.textContent = '复制';
+    header.appendChild(copyButton);
+
+    
+    const content = document.createElement('div');
+    content.className = 'highlight-content';
+
+    
+    const lineNumbers = document.createElement('div');
+    lineNumbers.className = 'line-numbers';
+    lineNumbers.innerHTML = lines.map((_, i) => `<span>${i + 1}</span>`).join('');
+
+    content.appendChild(lineNumbers);
+    content.appendChild(pre);
+
+    container.appendChild(header);
+    container.appendChild(content);
+
+    
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(codeBlock.textContent);
+        copyButton.textContent = '已复制';
+        copyButton.classList.add('copied');
+        setTimeout(() => {
+          copyButton.textContent = '复制';
+          copyButton.classList.remove('copied');
+        }, 2000);
+      } catch (err) {
+        console.error('复制失败:', err);
+        copyButton.textContent = '复制失败';
+      }
+    });
+  });
+});
+</script>
 
         </main>
 
