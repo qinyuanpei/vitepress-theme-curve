@@ -1,6 +1,6 @@
-function initFancybox() {
+export function initFancybox() {
     if (typeof Fancybox === 'undefined') {
-        console.error('Fancybox 未加载');
+        console.error('Fancybox 初始化异常');
         return;
     }
 
@@ -60,11 +60,4 @@ function initFancybox() {
             DOWNLOAD: '下载'
         }
     });
-}
-
-// 当 DOM 加载完成后初始化 FancyBox
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFancybox);
-} else {
-    initFancybox();
 } 

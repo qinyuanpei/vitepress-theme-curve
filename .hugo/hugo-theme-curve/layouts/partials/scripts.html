@@ -1,20 +1,2 @@
-<!-- 在 scripts.html 之后添加 -->
-{{ $search := resources.Get "js/search.js" | minify | fingerprint }}
-<script src="{{ $search.RelPermalink }}"></script>
-<script>
-    // 初始化搜索功能
-    document.addEventListener('DOMContentLoaded', () => {
-        Search.init();
-    });
-</script>
-
-{{ $theme := resources.Get "js/theme.js" | minify | fingerprint }}
-<script src="{{ $theme.RelPermalink }}"></script>
-
-<!-- 移动端菜单脚本 -->
-{{ $mobileMenu := resources.Get "js/mobile-menu.js" | minify | fingerprint }}
-<script src="{{ $mobileMenu.RelPermalink }}"></script>
-
-
-{{ $fancybox := resources.Get "js/fancybox.js" | minify | fingerprint }}
-<script src="{{ $fancybox.RelPermalink }}"></script>
+{{ $mainJs := resources.Get "js/main.js" | js.Build (dict "targetPath" "js/main.js" "minify" true "format" "esm") }}
+<script type="module" src="{{ $mainJs.RelPermalink }}"></script>
