@@ -105,6 +105,8 @@ params:
       name: "飞鸿踏雪"
       link: "https://blog.yuanpei.me"
       avatar: "/images/avatar.jpg"
+      email: qinyuapei@163.com
+      github: https://github.com/qinyuanpei
 
   # 文章设置
   article:
@@ -287,7 +289,9 @@ params:
       - icon: "email"
         link: "mailto:qinyuanpei@163.com"
       - icon: "douban"
-        link: "https://space.bilibili.com/yourid"
+        link: "https://www.douban.com/people/60029335/"
+      - icon: "zhihu"
+        link: "https://www.zhihu.com/people/qinyuanpei"
     
     # 底部链接
     links:

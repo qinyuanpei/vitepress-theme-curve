@@ -37,3 +37,4 @@ posts/*
 *.sw?
 
 .vercel
+.hugo/demo-site/public/*

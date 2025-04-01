@@ -1,22 +1,22 @@
-{{ if .Site.Params.weidgets.hello.enable }}
+{{ if site.Params.weidgets.hello.enable }}
 <div class="hello s-card weidgets">
   <span class="tip" >中午好，吃饱了精神好！</span>
   <div class="content">
     <div class="site-logo">
-      {{ partial "components/aside/avatar.html" . }}
+      {{ partial "components/aside/avatar.html" }}
     </div>
-    <span class="site-desc">{{ .Site.Params.weidgets.hello.text }}</span>
+    <span class="site-desc">{{ site.Params.weidgets.hello.text }}</span>
   </div>
   <div class="info">
     <div class="name">
-      <span class="author">{{ .Site.Params.siteMeta.author.name }}</span>
-      <span class="desc">{{ .Site.Params.siteMeta.description }}</span>
+      <span class="author">{{ site.Params.siteMeta.author.name }}</span>
+      <span class="desc">{{ site.Params.siteMeta.description }}</span>
     </div>
     <div class="link">
-      <a href="https://github.com/imsyy/" target="_blank" class="social-link">
+      <a href="{{ site.Params.siteMeta.author.github }}" target="_blank" class="social-link">
         <i class="iconfont icon-github"></i>
       </a>
-      <a href="mailto:one@imsyy.top" target="_blank" class="social-link">
+      <a href="mailto:{{ site.Params.siteMeta.author.email }}" target="_blank" class="social-link">
         <i class="iconfont icon-email"></i>
       </a>
     </div>
