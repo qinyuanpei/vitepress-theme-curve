@@ -2,10 +2,9 @@
     font-family: "iconfont";
     src: url('/fonts/iconfont.eot?t=5b2497eb5c56391e4dd19edbb0f101d3'); 
     src: url('/fonts/iconfont.eot?t=5b2497eb5c56391e4dd19edbb0f101d3#iefix') format('embedded-opentype'),
-    url('/fonts/iconfont.woff?t=5b2497eb5c56391e4dd19edbb0f101d3') format('woff2'),
+    url('/fonts/iconfont.woff2?t=5b2497eb5c56391e4dd19edbb0f101d3') format('woff2'),
     url('/fonts/iconfont.woff?t=5b2497eb5c56391e4dd19edbb0f101d3') format('woff'),
     url('/fonts/iconfont.ttf?t=5b2497eb5c56391e4dd19edbb0f101d3') format('truetype'),
-    url('/fonts/iconfont.svg?t=5b2497eb5c56391e4dd19edbb0f101d3#iconfont') format('svg');
   }
   
   .iconfont {

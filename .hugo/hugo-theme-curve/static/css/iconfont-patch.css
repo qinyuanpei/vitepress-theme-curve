@@ -1,0 +1,48 @@
+@font-face {
+    font-family: "iconfont";
+    src: url('/fonts/patch/iconfont.woff2?t=1743500844110') format('woff2'),
+         url('/fonts/patch/iconfont.woff?t=1743500844110') format('woff'),
+         url('/fonts/patch/iconfont.ttf?t=1743500844110') format('truetype');
+  }
+  
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-douban:before {
+    content: "\e707";
+  }
+  
+  .icon-zhihu:before {
+    content: "\e765";
+  }
+  
+  .icon-rocket:before {
+    content: "\e8b7";
+  }
+  
+  .icon-moon:before {
+    content: "\e65c";
+  }
+  
+  .icon-github:before {
+    content: "\e728";
+  }
+  
+  .icon-douban0:before {
+    content: "\e70a";
+  }
+  
+  .icon-weibo:before {
+    content: "\e882";
+  }
+  
+  .icon-sun:before {
+    content: "\e886";
+  }
+  
+  
