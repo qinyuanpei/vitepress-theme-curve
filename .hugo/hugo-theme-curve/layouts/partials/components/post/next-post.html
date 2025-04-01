@@ -1,0 +1,24 @@
+{{ $next := .NextInSection }}
+{{ $prev := .PrevInSection }}
+{{ $post := . }}
+
+{{ if or $next $prev }}
+<div class="next-post s-card" id="next-post" data-is-next="{{ if $next }}true{{ else }}false{{ end }}">
+    <a href="{{ if $next }}{{ $next.RelPermalink }}{{ else }}{{ $prev.RelPermalink }}{{ end }}" class="next-post-link">
+        <span class="post-tip">
+            {{ if $next }}
+                下一篇阅读
+            {{ else }}
+                阅读上一篇
+            {{ end }}
+        </span>
+        <span class="post-title">
+            {{ if $next }}
+                {{ $next.Title }}
+            {{ else }}
+                {{ $prev.Title }}
+            {{ end }}
+        </span>
+    </a>
+</div>
+{{ end }}

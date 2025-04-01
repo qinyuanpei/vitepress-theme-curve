@@ -3,6 +3,7 @@ import { initMobileMenu } from './modules/mobile-menu.js';
 import { initFancybox } from './modules/fancybox.js';
 import { initSearch } from './modules/search.js';
 import { initScroll } from './modules/scroll.js';
+import { initNextPost } from './modules/next-post.js';
 
 function domReady(fn) {
     if (document.readyState === 'loading') {
@@ -18,6 +19,7 @@ function initializeAll() {
     initFancybox();
     initSearch();
     initScroll();
+    initNextPost();
 }
 
 domReady(initializeAll); 
