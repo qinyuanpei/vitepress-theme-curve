@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -783,14 +787,20 @@ document.addEventListener("DOMContentLoaded", function () {
 <p>Envoy 是专为大型现代服务导向架构设计的 L7 代理和通讯总线。</p>
 </blockquote>
 <p>这两个定义依然让你感到云里雾里？没关系，请看下面这张图：</p>
-<p><img src="https://i.loli.net/2021/07/02/k2DhXMudnibrzgt.png" alt="Envoy架构图"></p>
+<p><a href="https://i.loli.net/2021/07/02/k2DhXMudnibrzgt.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/02/k2DhXMudnibrzgt.png" data-caption="Envoy架构图">
+    <img src="https://i.loli.net/2021/07/02/k2DhXMudnibrzgt.png" alt="Envoy架构图"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Envoy架构图</span>
+</a> </p>
 <p>注：<a href="https://fuckcloudnative.io/envoy-handbook/docs/gettingstarted/architecture/">图片来源</a></p>
 <p>相信从这张图中，大家多少能看到反向代理的身影，即下游客户端发起请求，<code>Envoy</code>对请求进行侦听(<strong>Listeners</strong>)，并按照路由转发请求到指定的集群(<strong>Clusters</strong>)。接下来，每一个集群可以配置多个终结点，<code>Envoy</code>按照指定的负载均衡算法来筛选终结点，而这些终结点则指向了具体的上游服务。例如，我们熟悉的 <a href="https://www.nginx.com/">Nginx</a> ，使用<code>listen</code>关键字来指定侦听的端口，使用<code>location</code>关键字来指定路由，使用<code>proxy_pass</code>关键字来指定上游服务的地址。同样地，<a href="https://github.com/ThreeMammals/Ocelot">Ocelot</a> 使用了类似的上下游(<strong>Upstream</strong>/<strong>Downstream</strong>)的概念，唯一的不同是，它的上下游的概念与这里是完全相反的。</p>
 <p>你可能会说，这个<code>Envoy</code>看起来“平平无奇”嘛，简直就像是“平平无奇”的古天乐一般。事实上，<code>Envoy</code>强大的地方在于：</p>
 <ul>
 <li>非侵入式的架构： 独立进程、对应用透明的<code>Sidecar</code>模式</li>
 </ul>
-<p><img src="https://i.loli.net/2021/07/02/lMnPhZzBd38tpVF.png" alt="Envoy 的 Sidecar 模式"></p>
+<p><a href="https://i.loli.net/2021/07/02/lMnPhZzBd38tpVF.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/02/lMnPhZzBd38tpVF.png" data-caption="Envoy 的 Sidecar 模式">
+    <img src="https://i.loli.net/2021/07/02/lMnPhZzBd38tpVF.png" alt="Envoy 的 Sidecar 模式"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Envoy 的 Sidecar 模式</span>
+</a> </p>
 <ul>
 <li>L3/L4/L7 架构：<code>Envoy</code>同时支持 OSI 七层模型中的第三层(网络层, IP 协议)、第四层(传输层，TCP / UDP 协议)、第七层(应用层，HTTP 协议)</li>
 <li>顶级 HTTP/2 支持： 视 <code>HTTP/2</code> 为一等公民，且可以在 <code>HTTP/2</code> 和 <code>HTTP/1.1</code>间相互转换</li>
@@ -834,7 +844,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span></span></code></pre></div><p>在这里，它表示的是侦听<code>9090</code>这个端口，这里的<code>listeners</code>是一个数组，所以，你可以同时侦听多个端口。</p>
 <h3 id="过滤器filters">过滤器(Filters)</h3>
 <p>我们知道，单单侦听一个或者多个端口，是无法完成一个<code>HTTP</code>请求的，因为它还不具备处理<code>HTTP</code>请求的能力。</p>
-<p><img src="https://i.loli.net/2021/07/02/CQftjTErndyNh7q.png" alt="Envoy Filters 架构图"></p>
+<p><a href="https://i.loli.net/2021/07/02/CQftjTErndyNh7q.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/02/CQftjTErndyNh7q.png" data-caption="Envoy Filters 架构图">
+    <img src="https://i.loli.net/2021/07/02/CQftjTErndyNh7q.png" alt="Envoy Filters 架构图"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Envoy Filters 架构图</span>
+</a> </p>
 <p>在 <code>Envoy</code> 中，这一工作由一个或者多个过滤器组成的过滤器链(<strong>Filter Chains</strong>) 来完成：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">static_resources</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">listeners</span><span class="p">:</span><span class="w">
@@ -955,7 +968,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> chmod go+r /etc/envoy.yaml<span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">CMD</span> <span class="p">[</span><span class="s2">&#34;/usr/local/bin/envoy&#34;</span><span class="p">,</span> <span class="s2">&#34;-c&#34;</span><span class="p">,</span> <span class="s2">&#34;/etc/envoy.yaml&#34;</span><span class="p">,</span> <span class="s2">&#34;--service-cluster&#34;</span><span class="p">,</span> <span class="s2">&#34;reverse-proxy&#34;</span><span class="p">]</span><span class="err">
 </span></span></span></code></pre></div><p>除此之外，Envoy通过<code>9091</code>端口提供管理功能，我们可以通过这个端口来获得集群、请求、统计等信息，这一特性我们将会在接下来的文章里用到：</p>
-<p><img src="https://i.loli.net/2021/07/02/1OlNJ7um6BnLFeb.png" alt="Envoy 管理界面功能一览"></p>
+<p><a href="https://i.loli.net/2021/07/02/1OlNJ7um6BnLFeb.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/02/1OlNJ7um6BnLFeb.png" data-caption="Envoy 管理界面功能一览">
+    <img src="https://i.loli.net/2021/07/02/1OlNJ7um6BnLFeb.png" alt="Envoy 管理界面功能一览"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Envoy 管理界面功能一览</span>
+</a> </p>
 <p>这里，想分享一个关于<code>Envoy</code>的小技巧，当我们在指定集群的地址时，可以使用<code>docker-compose.yaml</code>中定义的服务的名称，这会比填入一个固定的<code>IP</code>地址要更优雅一点，理由非常简单，我们不希望每次都来维护这个地址。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w"> </span><span class="c"># Weather Service</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">weatherservice</span><span class="w">
@@ -973,14 +989,20 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">address</span><span class="p">:</span><span class="w"> </span><span class="l">weatherservice</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="nt">port_value</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
 </span></span></span></code></pre></div><p>接下来，如果每一个服务的<code>Dockerfile</code>都编写正确的话，我们就可以通过<code>docker compose up</code>命令启动这一组服务，通过命令行下打印出来的信息，我们可以确认，基于<code>Envoy</code>的网关服务、两个基于<code>ASP.NET Core</code>的后端服务都已经成功运行起来：</p>
-<p><img src="https://i.loli.net/2021/07/02/KMo4dn17m9p8NSg.png" alt="在 Docker-Compose 中成功启动服务"></p>
+<p><a href="https://i.loli.net/2021/07/02/KMo4dn17m9p8NSg.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/02/KMo4dn17m9p8NSg.png" data-caption="在 Docker-Compose 中成功启动服务">
+    <img src="https://i.loli.net/2021/07/02/KMo4dn17m9p8NSg.png" alt="在 Docker-Compose 中成功启动服务"  class="post-img" loading="lazy">
+    <span class="post-img-tip">在 Docker-Compose 中成功启动服务</span>
+</a> </p>
 <p>还记得我们的路由规则是是如何定义的吗？</p>
 <ul>
 <li>当外部调用者访问<code>/api/w</code>时，请求会被转发到<code>WeatherService</code>。</li>
 <li>当外部调用者访问<code>/api/c</code>时，请求会被转发到<code>CityService</code>。</li>
 </ul>
 <p>实际的情况如何呢？我们不妨来验证一下：</p>
-<p><img src="https://i.loli.net/2021/07/02/YX4VywtkOCJ2rSI.png" alt="通过 Envoy 调用 WeatcherService "></p>
+<p><a href="https://i.loli.net/2021/07/02/YX4VywtkOCJ2rSI.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/02/YX4VywtkOCJ2rSI.png" data-caption="通过 Envoy 调用 WeatcherService ">
+    <img src="https://i.loli.net/2021/07/02/YX4VywtkOCJ2rSI.png" alt="通过 Envoy 调用 WeatcherService "  class="post-img" loading="lazy">
+    <span class="post-img-tip">通过 Envoy 调用 WeatcherService </span>
+</a> </p>
 <p>可以注意到，不管是浏览器返回的结果，还是容器内部输出的日志，都表明请求确实被转发到对应的服务上面去了，这说明我们设计的网关已经生效。至此，我们实现了基于<code>Envoy</code>的反向代理功能，有没有觉得比<code>Nginx</code>要简单一点？重要的是，基于<code>Docker-Compose</code>的服务编排使用起来真的舒适度爆棚，这意味着你会有更多的属于程序员的贤者时间。前段时间热映的电视剧《觉醒时代》，鲁迅先生写完《狂人日记》后那一滴眼泪令人动容。也许，这种如匠人一般反复雕琢、臻于完美的心境是互通的，即使人类的悲欢并不相通，对美和极致的追求竟然出奇的相似。</p>
 <h1 id="本文小结">本文小结</h1>
 <p>本文主要介绍了 ASP.NET Core 搭载 <a href="https://www.envoyproxy.io/">Envoy</a> 实现反向代理这一过程。对于 <code>Envoy</code>，有两个重要的定义：<strong>第一、Envoy 是一个开源边缘和服务代理，专为原生云应用设计。第二、Envoy 是专为大型现代服务导向架构设计的 L7 代理和通讯总线</strong>。相比 <a href="https://www.nginx.com/">Nginx</a>  和 <a href="https://github.com/ThreeMammals/Ocelot">Ocelot</a> ，Envoy 提供了 <code>L7</code> 级别的代理服务，支持 <code>HTTP/2</code> 和 <code>gRPC</code>，无侵入式的<code>Sidecar</code>模式可以提供与应用进程完全隔离的代理服务。接下来，博主对 <code>Envoy</code> 配置文件的结构及主要的配置项进行了说明，对于常见的 API 网关，我们应该重点关注侦听器(<strong>Listeners</strong>) 和 集群(<strong>Clusters</strong>)。最终，我们结合<code>Docker-Compose</code>对服务进行了编排，并由此构建出了一个基本的反向代理的方案。本文的源代码已托管至 <a href="https://hub.fastgit.org/Regularly-Archive/2021/tree/master/src/EnvoyGateway">Github</a> ，大家可以在此基础上做进一步的探索。好了，以上就是这篇博客的的全部内容啦，欢迎大家就本文中提出的方案、代码等进行讨论，如果大家有任何意见或者建议，欢迎在评论区进行留言，谢谢大家！</p>
@@ -1217,7 +1239,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/1071063696\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue\/'">
         随便逛逛
       </span>
       
@@ -1775,11 +1797,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1876,6 +1896,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1913,7 +1934,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1933,6 +1954,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2177,7 +2199,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

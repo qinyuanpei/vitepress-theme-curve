@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -816,7 +820,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>2、这样将生成 Main.exe 这样一个 IL 文件，现在我们需要一个运行时来解析它，在.NET 下我们使用 CLR 来完成这个步骤，在 Mono 下我们使用 mono.exe 这个文件来完成这个步骤。我们在命令行下输入下列命令：</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mono D:<span class="se">\项</span>目管理<span class="se">\C</span>Sharp<span class="se">\M</span>onoApplication<span class="se">\M</span>onoApplication<span class="se">\M</span>ain.exe
-</span></span></code></pre></div><p><img src="https://ww1.sinaimg.cn/large/4c36074fly1fzix8b6eq5j20ir0c7t8p.jpg" alt="在Mono中运行.NET程序"></p>
+</span></span></code></pre></div><p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fzix8b6eq5j20ir0c7t8p.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fzix8b6eq5j20ir0c7t8p.jpg" data-caption="在Mono中运行.NET程序">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fzix8b6eq5j20ir0c7t8p.jpg" alt="在Mono中运行.NET程序"  class="post-img" loading="lazy">
+    <span class="post-img-tip">在Mono中运行.NET程序</span>
+</a> </p>
 <p>我们可以看到命令行下输出了我们期望的 Hello World，这意味着我们编写的程序现在运行在 Mono 中了，实际上在 Windows 下由 Mono 提供的 C#编译器 mcs.exe 编译的 IL 文件双击是可以直接运行的，因为我们的计算机上安装了 CLR，它作为.NET 的一部分内置在我们的计算机中。由此我们会发现一个问题，我们这里的跨平台实际上是编译器、运行时和基础类库这三部分的跨平台，这意味着我们在 Linux 下运行.NET 程序是需要 Mono 提供支持的。因为在这里我无法在 Linux 离线安装 Mono，所以 Linux 下运行.NET 程序的验证需要等博主以后有时间再来更新啦！可是我们可以想象到，通过 C#编译器编译得到的可执行文件在 Linux 下是无法正常运行的，因为通常情况下 Windows 程序在 Linux 下运行是需要虚拟机环境或者 Wine 这样的软件来支持的，显然让这样一个 Windows 程序运行在 Linux 环境下是因为我们在 Linux 下安装了 Mono。</p>
 <h1 id="谈谈-mono-跨平台以后">谈谈 Mono 跨平台以后</h1>
 <p>好了，到现在为止我们基本理清了 Mono 跨平台的原理。我们知道微软的技术体系在发展过程中因为某些历史遗留问题，.NET 程序在不同的 Windows 版本中的兼容性有时候会出现问题，虽然微软宣布 Windows XP 停止维护，我们编写 Windows 应用程序的时候可以忽略对 Windows XP 版本的支持，可是因为国内用户不喜欢在线更新补丁的这种普遍现状，所以假如让用户在安装程序的时候先去安装.NET 框架一定会降低用户体验，其次.NET 框架会增加应用程序安装包的大小，所以我们需要一种能够让我们开发的.NET 应用程序在脱离微软的这套技术体系时，同时能够安全、稳定的运行，所以我们这里考虑借助 Mono 让.NET 程序脱离.NET 框架运行。</p>
@@ -1049,7 +1056,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/3099575458\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/2070070822\/'">
         随便逛逛
       </span>
       
@@ -1607,11 +1614,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1708,6 +1713,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1745,7 +1751,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1765,6 +1771,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2009,7 +2016,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

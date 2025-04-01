@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -831,7 +835,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </span></span></code></pre></div><p>为了排除无关内容对大家的影响，写这个例子的时候，博主排除了一切复杂的 HTML 结构和 CSS 样式，经过简单润色以后，这个例子的效果展示如下，果然 GUI 满足了人们颜控的一面，可让这个世界高速运行的是 CLI，Bootstrap 是博主这种“全栈工程师”的最爱之一。这种验证方式简直是人类本能的反应，可这恰好是最糟糕的一个例子，因为这个代码完全没法复用，可以想象得到，如果再继续增加针对密码强度，譬如大小写、数字等等的验证，这个代码会混乱成什么样子，所以，这是最简单的表单验证，同样是最糟糕的表单验证。</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1g6q1v1x70cj20n50aa3yq.jpg" alt="第一个表单验证的例子"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1g6q1v1x70cj20n50aa3yq.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1g6q1v1x70cj20n50aa3yq.jpg" data-caption="第一个表单验证的例子">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1g6q1v1x70cj20n50aa3yq.jpg" alt="第一个表单验证的例子"  class="post-img" loading="lazy">
+    <span class="post-img-tip">第一个表单验证的例子</span>
+</a> </p>
 <h1 id="基于-jquery-的表单验证">基于 jQuery 的表单验证</h1>
 <p>其实，如果不是因为老项目依赖 jQuery，而新项目在某些地方又需要和老项目保持一致，有谁会喜欢在 Vue 的世界里使用 jQuery 呢？因为数据驱动和事件驱动，真的是两种不同的思想，我就见过因为监听不到某个事件而花费一整天时间的人……所以，这里使用 jQuery 的表单验证插件<a href="https://jqueryvalidation.org/documentation/">jQuery Validation</a>，目的只有一个，即实现博主对自己的承诺，做一个和老项目一模一样的表单验证。官方这个示例最大的问题是，它的检验逻辑扩展性比较差，后端同学对这个应该有所体会啦，譬如实际业务中常常有邮箱、手机号、非空、数字、正则等等的验证规则，而后端常常采用基于 Attribute 的验证或者是 FluentValidation 这样的库，所以，核心问题是，能不能定义相应的验证规则。接下来，我们通过 jQuery 的表单验证插件来实现验证。</p>
 <p>通常情况下，jQuery Validation 支持面向控件和面向代码两种验证方式。所谓面向控件，就是指在控件里添加类似<code>required</code>、<code>email</code>、<code>range</code>等等的扩展属性，jQuery Validation 内置了十余种标准的验证规则，基本可以满足我们的日常使用。而面向代码，就是通过 JavaScript 来定义验证规则，这就非常符合 Vue 数据驱动的风格了，因为在 JavaScript 里一切皆是对象，而这些对象可以作为 Vue 中的数据来使用。自然而然地，在第一个示例的基础上，我们可以非常容易地扩展出基于 jQuery 的表单验证：</p>
@@ -868,7 +875,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span></code></pre></div><p>对于当前表单 loginFrom，其验证规则为 validators，它完全参照<code>jQuery Validation</code>的 API 文档而来，具体大家可以从<code>jQuery Validation</code>的文档来做进一步了解。这里唯一看起来不爽的就是<code>#loginFrom</code>，因为它和整个 Vue 看起来格格不入。不过，像博主目前项目的处境，如果老项目里使用<code>jQuery</code>来对表单进行验证，而使用 Vue 开发的新项目要兼容老项目的设计风格，使用 jQuery 有什么不可以呢？不得不说，Vue 作为一个渐进式的开发框架，真正照顾了各个&quot;年龄&quot;段的前端工程师。使用<code>jQuery Validation</code>以后的表单验证效果如下：</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1g6q3nex2jhj20nk0anq36.jpg" alt="基于jQuery的表单验证"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1g6q3nex2jhj20nk0anq36.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1g6q3nex2jhj20nk0anq36.jpg" data-caption="基于jQuery的表单验证">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1g6q3nex2jhj20nk0anq36.jpg" alt="基于jQuery的表单验证"  class="post-img" loading="lazy">
+    <span class="post-img-tip">基于jQuery的表单验证</span>
+</a> </p>
 <p>通过<code>jQuery Validation</code>，我们或许能感觉到一点不一样的地方，那就是表单验证其实还是蛮有意思的哈。也许是因为我原本是一个无聊的人，所以看到一点新的东西就觉得有趣。就像我虽然在提交数据时在后端做了校验，可牺牲的其实是整个前端的使用体验。而如果在前端对数据进行校验，是在输入过程中校验还是在输入完成校验，是通过表单自带的提交功能还是自己发起一个 AJAX 请求，这里面的确是有非常多的细节支撑的。第一种方案不支持远程校验，这更加能说明校验本身要考虑的不单单只有前端了，同理，有了前端的校验，不代表后端可以不做校验。前端时间有人在知乎上提问，大意是说前端该不该完全信任后端返回的数据，严格来说，我们不应该信任任何人提供的数据，而这就是校验这件事情本身的意义。</p>
 <h1 id="基于-vue-的表单验证">基于 Vue 的表单验证</h1>
 <p>OK，如果说前面的两种校验是因为我们有一点历史包袱，那么，接下来，我们将尝试采用更“现代化”的表单验证方式。通过 Vue 文档中关于<a href="https://cn.vuejs.org/v2/cookbook/form-validation.html">数据校验</a>这一节的内容，我们了解到官方推荐的两个表单验证插件是<a href="https://github.com/monterail/vuelidate">vuelidate</a>和<a href="http://vee-validate.logaretm.com/">VeeValidate</a>，而实际上这篇博客中的第一个例子，就是由文档中的例子演化而来。我个人比较喜欢后者，所以，下面我们将使用这个插件来完成第三个例子。首先 ，我们通过<code>Vue-Cli</code>创建一个 Vue 项目，然后安装下面<code>vee-validate</code>和<code>vue-i18n</code>两个插件：</p>
@@ -962,7 +972,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-HTML" data-lang="HTML"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;form-control&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;email&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;email&#34;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;Email&#34;</span> <span class="na">v-model</span><span class="o">=</span><span class="s">&#34;email&#34;</span> <span class="na">v-validate</span><span class="o">=</span><span class="s">&#34;&#39;required|email&#39;&#34;</span> <span class="na">data-vv-as</span><span class="o">=</span><span class="s">&#34;邮箱&#34;</span><span class="p">/&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;alert alert-danger&#34;</span> <span class="na">role</span><span class="o">=</span><span class="s">&#34;alert&#34;</span> <span class="na">v-show</span><span class="o">=</span><span class="s">&#34;errors.has(&#39;email&#39;)&#34;</span><span class="p">&gt;</span>{{ errors.first(&#39;email&#39;) }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
 </span></span></code></pre></div><p>这些语法在 Vue 中被称为指令，而<code>data-vv-as</code>则是 HTML5 中的一个特性，用来给提示信息中的字段起一个别名。实际上，这个插件里同样内置了一批常见的校验规则。当控件中的值不满足校验条件时，就会在<code>errors</code>中产生错误信息，所以，我们根据错误信息中是否包含指定字段来决定要不要展示错误信息，这就是这个插件的作用。运行这个例子，我们会得到下面的结果。</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1g6rebtg81jj20n70hj74u.jpg" alt="基于Vue的表单校验"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1g6rebtg81jj20n70hj74u.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1g6rebtg81jj20n70hj74u.jpg" data-caption="基于Vue的表单校验">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1g6rebtg81jj20n70hj74u.jpg" alt="基于Vue的表单校验"  class="post-img" loading="lazy">
+    <span class="post-img-tip">基于Vue的表单校验</span>
+</a> </p>
 <p>既然提到这类表单验证最难的地方在于扩展性，那么下面我们再来看看如何扩展一个新的校验规则，这里以最常见的手机号校验为例,  个人以为这是这个插件最为强大的地方：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="line"><span class="cl"><span class="nx">Validator</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="s1">&#39;isMobile&#39;</span><span class="p">,</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">messages</span><span class="o">:</span> <span class="p">{</span>
@@ -1197,7 +1210,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/implementation-of-vue-router-extension-that-supports-external-link\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/118272597\/'">
         随便逛逛
       </span>
       
@@ -1755,11 +1768,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1856,6 +1867,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1893,7 +1905,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1913,6 +1925,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2157,7 +2170,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

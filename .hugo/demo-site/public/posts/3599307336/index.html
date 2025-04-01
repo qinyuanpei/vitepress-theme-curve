@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -778,15 +782,27 @@ document.addEventListener("DOMContentLoaded", function () {
 <p>负载均衡，即<code>Load Banlancing</code>，是一种计算机技术，用来在多个计算机(计算机集群)、网络连接、CPU、磁盘驱动器或其它资源中分配负载，以达到<strong>最优化资源使用、最大化吞吐率、最小化响应时间、避免过载的目的</strong>。</p>
 </blockquote>
 <p>我们可以注意到，在这个定义中，使用负载均衡技术的直接原因是<strong>避免过载</strong>，而根本原因则是为了<strong>优化资源使用</strong>，确保<strong>最大吞吐量</strong>、<strong>最小响应时间</strong>。所以，这本质上是一个局部最优解的问题，而具体的手段就是&quot;多个&quot;。有人说，技术世界不过是真实世界的一个镜像，联系生活中实际的案例，我们发现负载均衡比比皆是。譬如车站在面对春运高峰时增加售票窗口，银行通过多个业务窗口来为客户办理业务……等等。这样做的好处显而易见，可以大幅度地减少排队时间，增加&quot;窗口&quot;这个行为，在技术领域我们将其称为：<strong>水平扩展</strong>，因为有多个&quot;窗口&quot;，发生单点故障的概率就会大大降低，而这正是现在软件追求的三&quot;高&quot;：高性能、高可用、高并发。</p>
-<p><img src="https://i.loli.net/2021/07/05/jymw8KCeEgROcZN.png" alt="银行柜员窗口示意图"></p>
+<p><a href="https://i.loli.net/2021/07/05/jymw8KCeEgROcZN.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/05/jymw8KCeEgROcZN.png" data-caption="银行柜员窗口示意图">
+    <img src="https://i.loli.net/2021/07/05/jymw8KCeEgROcZN.png" alt="银行柜员窗口示意图"  class="post-img" loading="lazy">
+    <span class="post-img-tip">银行柜员窗口示意图</span>
+</a> </p>
 <p>每次坐地铁经过小寨，时常听到地铁工作人员举着喇叭引导人们往不同的出口方向走动。此时，工作人员就是一个负载均衡器，它要做的就是避免某一个出口人流量过载。**从熵的角度来看，人流量过载，意味着无序/混乱状态加剧，现代社会通过道德和法律来对抗熵增，人类个体通过自律来对抗熵增。**有时候，我会忍不住去想，大人与小孩儿愈发内卷的恶性竞争，除了给这个世界带来更多的熵以外，还能带来什么？<strong>如果参考社会达尔文主义的理论，在这个弱肉强食的世界里，增加熵是人为的选择，而同样的，你亦可以选择&quot;躺平&quot;。</strong></p>
-<p><img src="https://i.loli.net/2021/07/05/hIAUw8JHkjWnxm6.png" alt="负载均衡器示意图"></p>
+<p><a href="https://i.loli.net/2021/07/05/hIAUw8JHkjWnxm6.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/05/hIAUw8JHkjWnxm6.png" data-caption="负载均衡器示意图">
+    <img src="https://i.loli.net/2021/07/05/hIAUw8JHkjWnxm6.png" alt="负载均衡器示意图"  class="post-img" loading="lazy">
+    <span class="post-img-tip">负载均衡器示意图</span>
+</a> </p>
 <p>OK，将思绪拉回到负载均衡，它所做的事情，本质上就是控制信息或者说流量流动的方向。一个网站，以集群的方式对外提供服务，你只需要输入一个域名，它就可以把请求分发到不同的机器上面去，而这就是所谓的负载均衡。目前，负载均衡器从种类上可以分为：基于<code>DNS</code>、基于<code>MAC</code>地址(二层)、基于<code>IP</code>(三层)、基于<code>IP</code>和<code>Port</code>(四层)、基于<code>HTTP</code>(七层)。</p>
-<p><img src="https://i.loli.net/2021/07/04/giY1R8PVZB9JdWQ.jpg" alt="OSI七层模型与TCP/IP五层模型"></p>
+<p><a href="https://i.loli.net/2021/07/04/giY1R8PVZB9JdWQ.jpg" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/04/giY1R8PVZB9JdWQ.jpg" data-caption="OSI七层模型与TCP/IP五层模型">
+    <img src="https://i.loli.net/2021/07/04/giY1R8PVZB9JdWQ.jpg" alt="OSI七层模型与TCP/IP五层模型"  class="post-img" loading="lazy">
+    <span class="post-img-tip">OSI七层模型与TCP/IP五层模型</span>
+</a> </p>
 <p>譬如，博主曾经参与过伊利的项目，它们使用的就是一个四层的负载均衡器：F5。而像更常见<code>Nginx</code>、<code>HAProxy</code>，基本都是四层和七层的负载均衡器，而<code>Envoy</code>就厉害了，它可以同时支持三/四/七层。负载均衡器需要配合负载均衡算法来使用，典型的算法有：<strong>轮询法</strong>、<strong>随机法</strong>、<strong>哈希法</strong>、<strong>最小连接数法</strong>等等，而这些算法都可以结合加权算法引出新的变式，这里就不再一一列举啦。</p>
 <h1 id="envoy中的负载均衡">Envoy中的负载均衡</h1>
 <p>通过上一篇博客，我们已经了解到，<code>Envoy</code>中一个<code>HTTP</code>请求的走向，大致会经历：客户端、侦听器(<strong>Listeners</strong>)、集群(<strong>Clusters</strong>)、终结点(<strong>Endpoints</strong>)、服务(<strong>ervices</strong>)这样几个阶段。其中，一个集群可以有多个终结点(<strong>Endpoints</strong>)。所以，这里天然地就存在着负载均衡的设计。因为，负载均衡本质上就是告诉集群，它应该选择哪一个终结点(<strong>Endpoints</strong>)来提供服务。而之所以我们需要负载均衡，一个核心的原因，其实是因为我们选择了分布式。</p>
-<p><img src="https://i.loli.net/2021/07/02/k2DhXMudnibrzgt.png" alt="Envoy架构图：负载均衡器连接集群和服务"></p>
+<p><a href="https://i.loli.net/2021/07/02/k2DhXMudnibrzgt.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/02/k2DhXMudnibrzgt.png" data-caption="Envoy架构图：负载均衡器连接集群和服务">
+    <img src="https://i.loli.net/2021/07/02/k2DhXMudnibrzgt.png" alt="Envoy架构图：负载均衡器连接集群和服务"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Envoy架构图：负载均衡器连接集群和服务</span>
+</a> </p>
 <p>如果类比<code>RabbitMQ</code>、<code>Kafka</code>和<code>Redis</code>，你就会发现，这些产品中或多或少地都会涉及到主(<strong>Leader</strong>)、从(<strong>Follower</strong>)以及推举Leader的实现，我个人更愿意将其看作是更广义的负载均衡。最直观的，它可以分担流量，简称<strong>分流</strong>，不至于让某一台服务器满负荷做运行。其次，它可以作为故障转移的一种方案，<strong>人生在世，多一个B计划，就多一种选择。同样地，多一台服务器，就多一分底气</strong>。最后，它可以指导某一个产品或者功能的推广，通过给服务器设置不同的权重，在必要的时候，将流量局部地导入某一个环境，腾讯和阿里这样的大厂，经常利用这种方式来做<strong>灰度测试</strong>。</p>
 <p><code>Envoy</code>中支持常用的负载均衡算法，譬如：ROUND_ROBIN(轮询)、LEAST_REQUEST(最少请求)、RING_HASH(哈希环)、RANDOM(随机)、MAGLEV(磁悬浮)、CLUSTER_PROVIDED等等。因为一个集群下可以有多个终结点，所以，在<code>Envoy</code>中配置负载均衡，本质上就是在集群下面增加终结点，而每个终结点则会对应一个服务，特殊的点在于，这些服务可能是通过同一个<code>Dockerfile</code>或者<code>Docker</code>镜像来构建的。所以，一旦理解了这一点，<code>Envoy</code>的负载均衡就再没有什么神秘的地方。例如，下面的代码片段展示了，如何为<code>WeatherService</code>这个集群应用负载均衡：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">  </span><span class="nt">clusters</span><span class="p">:</span><span class="w">
@@ -897,9 +913,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">address</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">socket_address</span><span class="p">:</span><span class="w"> </span>{<span class="w"> </span><span class="nt">address: 0.0.0.0, port_value</span><span class="p">:</span><span class="w"> </span><span class="m">9091</span><span class="w"> </span>}<span class="w">
 </span></span></span></code></pre></div><p>使用<code>docker compose up</code>启动容器，我们可以注意到熟悉的<code>ASP.NET Core</code>的身影，这意味着，我们需要的服务都成功地跑起来了。简单调用下API看看，果然，可以正确地返回结果呢(逃……果然，我是一个喜新厌旧的人，自打用了<code>Encoy</code>以后，再不想用<code>Nginx</code>来做类似的事情(逃……</p>
-<p><img src="https://i.loli.net/2021/07/04/lBIAyPZnSxiD3M8.png" alt="通过管理接口查看集群的请求情况"></p>
+<p><a href="https://i.loli.net/2021/07/04/lBIAyPZnSxiD3M8.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/04/lBIAyPZnSxiD3M8.png" data-caption="通过管理接口查看集群的请求情况">
+    <img src="https://i.loli.net/2021/07/04/lBIAyPZnSxiD3M8.png" alt="通过管理接口查看集群的请求情况"  class="post-img" loading="lazy">
+    <span class="post-img-tip">通过管理接口查看集群的请求情况</span>
+</a> </p>
 <p>好了，如何验证我们选择的负载均衡策略呢？这是一个问题。不知道大家还记不记得<code>Envoy</code>的管理接口，它里面可以统计请求的次数，所以，我们只要看看两个服务各自请求了多少次里有好啦！这里以<code>RANDON</code>这个策略为例：</p>
-<p><img src="https://i.loli.net/2021/07/04/1U8RgZxaVcOFiXK.png" alt="两个实例拥有不同的请求次数"></p>
+<p><a href="https://i.loli.net/2021/07/04/1U8RgZxaVcOFiXK.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/04/1U8RgZxaVcOFiXK.png" data-caption="两个实例拥有不同的请求次数">
+    <img src="https://i.loli.net/2021/07/04/1U8RgZxaVcOFiXK.png" alt="两个实例拥有不同的请求次数"  class="post-img" loading="lazy">
+    <span class="post-img-tip">两个实例拥有不同的请求次数</span>
+</a> </p>
 <p>可以注意到，两个的请求次数果然是随机的呢？而如果我们换成是<code>ROUND_ROBIN</code>，你就会发现这两个数值一前一后相互追赶。选择哪一种负载均衡策略，这个按大家实际的场景去决定就好。我倒觉得，按最少请求数的策略会好一点。虽然计算机永远不知疲倦地接收人们的指令，可考虑能者多劳这种人类世界里的策略，本身充满道德绑架的意味，使用负载均衡，站在计算机的角度来看，这是避免计算机内卷的一种方案。所以啊，老板们，请不要逮着一个老实人就拼了命的剥削，多学学负载均衡算法，<strong>卓别林心目中的摩登时代，我一点都不期待，技术世界总告诉我们要严谨、冷静，可充满人情味的世界，同样值得你去热爱啊。</strong></p>
 <h1 id="本文小结">本文小结</h1>
 <p>本文结合物理学中的熵增定律引出了负载均衡这个话题，而**负载均衡的本质，就是在多个计算机(计算机集群)、网络连接、CPU、磁盘驱动器或其它资源中分配负载，以达到最优化资源使用、最大化吞吐率、最小化响应时间、避免过载的目的。**对于这一点，我们可以结合现实生活中的&quot;窗口&quot;排队来理解。<strong>负载均衡可以和水平扩展完美结合，通过降低单点的故障率，来达到提升整个系统可用性的目的</strong>。接下来，我们介绍了常见的负载均衡器分类及其算法，<code>Envoy</code>中的负载均衡配置，并结合<code>ASP.NET Core</code>编写了一个实际的案例。好了，以上就是这篇博客的全部内容啦，如果大家对于熵增定律或者负载均衡器有任何的看法，欢迎大家在评论区留言，谢谢大家！</p>
@@ -1688,11 +1710,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1789,6 +1809,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1826,7 +1847,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1846,6 +1867,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2090,7 +2112,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

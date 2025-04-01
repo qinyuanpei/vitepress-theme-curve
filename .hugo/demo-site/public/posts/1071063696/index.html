@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -796,7 +800,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="p">.</span><span class="n">ApplicationServices</span><span class="p">.</span><span class="n">GetService</span><span class="p">&lt;</span><span class="n">ILoggerFactory</span><span class="p">&gt;</span> <span class="p">().</span><span class="n">AddSerilog</span> <span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>注意到在配置持久化的部分，我们使用了一个数据库连接字符串 Hangfire，它需要我们在 appsettings.json 中配置 ConnectionStrings 部分。这里我们为 Hangfire 设置了默认队列 default、默认服务器 default、并发数目为 5。与此同时，我们开启了 Hangfire 中自带的 Dashboard，可以通过这个界面来监控后台任务的执行情况。此时运行项目，输入以下地址：http://locahost:<!-- raw HTML omitted -->/hangfire，就会看到下面的画面，这说明 Hangfire 配置成功：</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1g4vsktdif4j21hb0rz406.jpg" alt="Hangfire Dashboard"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1g4vsktdif4j21hb0rz406.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1g4vsktdif4j21hb0rz406.jpg" data-caption="Hangfire Dashboard">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1g4vsktdif4j21hb0rz406.jpg" alt="Hangfire Dashboard"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Hangfire Dashboard</span>
+</a> </p>
 <p>Hangfire 中默认支持四种类型的后台任务，他们分别是<strong>Fire-and-forget jobs</strong>、<strong>Delayed jobs</strong>、<strong>Recurring jobs</strong>和<strong>Continuations</strong>。严格来说，<strong>Fire-and-forget jobs</strong>和<strong>Delayed jobs</strong>并不能算后台任务，因为它们在执行一次后就会从队列中移除，属于一次性“消费”的任务，这两者的不同在于<strong>Delayed jobs</strong>可以在设定的时间上延迟执行。而<strong>Recurring jobs</strong>和<strong>Continuations</strong>则是周期性任务，任务在入队后可以按照固定的时间间隔去执行，周期性任务都是支持 CRON 表达式的，<strong>Continuations</strong>类似于 Task 中的 ContinueWith()方法，可以对多个任务进行组合，我们现在的项目中开发了大量基于 Quartz 的 Job，可当你试图把这些 Job 相互组合起来的时候，你就会觉得相当尴尬，因为后台任务做所的事情往往都是大同小异的。从官方文档中 ，我们会发现 Hangfire 的关键代码只有下面这四行代码，可以说是相当简洁啦！</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-CSharp" data-lang="CSharp"><span class="line"><span class="cl"><span class="c1">//Fire-and-forget jobs</span>
 </span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">jobId</span> <span class="p">=</span> <span class="n">BackgroundJob</span><span class="p">.</span><span class="n">Enqueue</span><span class="p">(</span>
@@ -941,9 +948,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">        <span class="k">throw</span> <span class="k">new</span> <span class="n">Exception</span> <span class="p">(</span><span class="s">$&#34;调用接口{jobDestriptor.HttpUrl}失败，接口返回：{response.Content}&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>在这里，我们以 HealthCheck 这个接口为例，来展示 HttpJob 是如何工作的。顾名思义，这是一个负责健康检查的接口。我们现在通过 Postman 来触发健康检查这个后台任务。在这里，该接口是一个 GET 请求：</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1g4v4si2z4tj20t10cvaam.jpg" alt="通过Postman创建后台任务"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1g4v4si2z4tj20t10cvaam.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1g4v4si2z4tj20t10cvaam.jpg" data-caption="通过Postman创建后台任务">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1g4v4si2z4tj20t10cvaam.jpg" alt="通过Postman创建后台任务"  class="post-img" loading="lazy">
+    <span class="post-img-tip">通过Postman创建后台任务</span>
+</a> </p>
 <p>接下来，我们我们就会在 Hangfire 的 Dashborad 中找到对应的记录，因为这是一个<strong>Fire &amp; Forget</strong>类型的任务，因此我们几乎看不到中间的过程，它就已经执行结束啦。我们可以在 Dashboard 中找到对应的任务，然后了解它的具体执行情况。值得一提的是，Hangfire 自带了重试机制，对于执行失败的任务，我们可以重试栏目下看到，这里是其中一条任务的执行记录。可以注意到，Hangfire 会把每个 Job 的参数序列化为 JSON 并持久化起来，仔细对照的话，你会发现，它和我们在 Postman 中传入的参数是完全一样的！</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1g4v55j6cgfj21160j8wfq.jpg" alt="Hangfire中Job执行详情查看"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1g4v55j6cgfj21160j8wfq.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1g4v55j6cgfj21160j8wfq.jpg" data-caption="Hangfire中Job执行详情查看">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1g4v55j6cgfj21160j8wfq.jpg" alt="Hangfire中Job执行详情查看"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Hangfire中Job执行详情查看</span>
+</a> </p>
 <p>在执行 Job 的过程中，我们可能会希望记录 Job 执行过程中的日志。这个时候，Hangfire 强大的扩展性再次我们提供了这种可能性。注意到在 HttpJobExecutor 类上有一个 [HttpJobFilter]的标记，显然这是由 Hangfire 提供的一个过滤器，博主在这个过滤器中对 Job 的 ID、状态等做了记录，因为在整个项目中博主已经配置了 Serilog 作为 Hangfire 的 LogProvider，所以，我们可以在过滤器中使用 Serilog 来记录日志，不过博主个人感觉这个 Filtre 稍显鸡肋，这里还是给出代码片段吧！</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-CSharp" data-lang="CSharp"><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">class</span> <span class="nc">HttpJobFilter</span> <span class="p">:</span> <span class="n">JobFilterAttribute</span><span class="p">,</span> <span class="n">IApplyStateFilter</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">static</span> <span class="k">readonly</span> <span class="n">ILog</span> <span class="n">Logger</span> <span class="p">=</span> <span class="n">LogProvider</span><span class="p">.</span><span class="n">GetCurrentClassLogger</span> <span class="p">();</span>
@@ -970,7 +983,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>为什么我说这个 Filter 有点鸡肋呢？因为你看下面的图就会明白了啊！</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1g4vs8s6f2zj21f2074mxq.jpg" alt="使用Serilog记录日志"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1g4vs8s6f2zj21f2074mxq.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1g4vs8s6f2zj21f2074mxq.jpg" data-caption="使用Serilog记录日志">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1g4vs8s6f2zj21f2074mxq.jpg" alt="使用Serilog记录日志"  class="post-img" loading="lazy">
+    <span class="post-img-tip">使用Serilog记录日志</span>
+</a> </p>
 <h1 id="本文小结">本文小结</h1>
 <p>果然，我还是不得不承认，这又是一篇彻彻底底的&quot;水文&quot;啊,因为写着写着就发现自己变成了标题党。这篇文章总结下来其实只有两句话，一个不喜欢写 XML 报文的博主，如何与 ERP、SAP、ESB 里的 XML 报文斗智斗勇的故事，在这样一个背景下，为了满足对方的&quot;异步&quot;场景, 不得不引入一个后台任务系统来处理这些事情，其实，这个事情用消息队列、用 Redis、甚至普通的中间表都能解决，可惜我写这篇文章的时候，是有一点个人化的情绪在里面的，这种情绪化导致的后果就是，可能我越来越难以控制一篇文章的写作走向啦，大概是写东西越来越困难，而又没有时间取吸收新的知识进来，这让我觉得自己的进步越来越少，Hangfire 的有点说起来就是挺好用的，以上！</p>
 
@@ -1195,7 +1211,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/118272597\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/ne-zha-2\/'">
         随便逛逛
       </span>
       
@@ -1753,11 +1769,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1854,6 +1868,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1891,7 +1906,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1911,6 +1926,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2155,7 +2171,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -776,7 +780,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">https</span><span class="o">:</span><span class="c1">//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.js
 </span></span></span></code></pre></div><p>这意味着我们只需要发布一个 npm 的包，就可以使用它提供的加速服务。CDN 加速的好处我这里就不再多说了，只要我们的项目中用到了第三方的静态资源，譬如 JavaScript/CSS 等等都应该考虑接入到 CDN 中。有人常常担心 CDN 挂掉或者是私有化部署无法接入外网环境。我想说，我们目光应该长远一点，现在早已不是早年那种单打独斗式的开发模式了，我们不可能把所有资源都放到本地来。随着云计算的概念越发地深入人心，越来越多的基础服务都运行在一台又一台虚拟化的“云服务器”上，这种情况下，搞这种集中化配置的做法，是完全违背分布式的发展趋势的。</p>
 <p>如果说，针对 npm 包的 CDN 加速服务离我们还有点遥远，因为我们大多数情况下都是在使用别人写好的库。那么，接下来，针对 Github 的 CDN 加速服务应该会让我们无比兴奋吧，毕竟 Github Pages 的“慢”大家是可以感受得到的。不然，为什么大家要用 Coding Pages 做国内/国外的双线部署呢？首先，我们在浏览器里输入下面这个地址：<a href="https://cdn.jsdelivr.net/gh/qinyuanpei/qinyuanpei.github.io@latest/">https://cdn.jsdelivr.net/gh/qinyuanpei/qinyuanpei.github.io@latest/</a></p>
-<p><img src="https://i.loli.net/2020/02/05/HtmhUdsSRLW4Q9A.png" alt="jsDelivr提供的CDN加速资源"></p>
+<p><a href="https://i.loli.net/2020/02/05/HtmhUdsSRLW4Q9A.png" data-fancybox="gallery" data-src="https://i.loli.net/2020/02/05/HtmhUdsSRLW4Q9A.png" data-caption="jsDelivr提供的CDN加速资源">
+    <img src="https://i.loli.net/2020/02/05/HtmhUdsSRLW4Q9A.png" alt="jsDelivr提供的CDN加速资源"  class="post-img" loading="lazy">
+    <span class="post-img-tip">jsDelivr提供的CDN加速资源</span>
+</a> </p>
 <p>此时，可以注意到，<a href="http://www.jsdelivr.com/">jsDelivr</a>可以把我们 Github 上的资源呈现出来，只要我们在 Github 上发布过相应的版本即可。这里的版本，可以理解为一次 Release，对应 Git 中 tag 的概念，虽然 Github 现在引入了包管理器的概念，试图统一像 npm、nuget、pip 等等这样的包管理器。它提供的 CDN 服务有一个基本的格式：</p>
 <blockquote>
 <p><a href="https://cdn.jsdelivr.net/gh/user/repo@version/file">https://cdn.jsdelivr.net/gh/user/repo@version/file</a></p>
@@ -809,8 +816,14 @@ document.addEventListener("DOMContentLoaded", function () {
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl"> git tag latest
 </span></span><span class="line"><span class="cl"> git push --force --quiet <span class="s2">&#34;https://</span><span class="si">${</span><span class="nv">CI_TOKEN</span><span class="si">}</span><span class="s2">@</span><span class="si">${</span><span class="nv">GH_REF</span><span class="si">}</span><span class="s2">&#34;</span> master:master --tags
 </span></span></code></pre></div><p>好了，现在重新生成、部署，来看看效果吧：
-<img src="https://i.loli.net/2020/02/05/FZJi9esXWQzxLYf.png" alt="Coding Pages速度"></p>
-<p><img src="https://i.loli.net/2020/02/05/E3WYBRQk4DJCZr5.png" alt="Github Pages速度">
+<a href="https://i.loli.net/2020/02/05/FZJi9esXWQzxLYf.png" data-fancybox="gallery" data-src="https://i.loli.net/2020/02/05/FZJi9esXWQzxLYf.png" data-caption="Coding Pages速度">
+    <img src="https://i.loli.net/2020/02/05/FZJi9esXWQzxLYf.png" alt="Coding Pages速度"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Coding Pages速度</span>
+</a> </p>
+<p><a href="https://i.loli.net/2020/02/05/E3WYBRQk4DJCZr5.png" data-fancybox="gallery" data-src="https://i.loli.net/2020/02/05/E3WYBRQk4DJCZr5.png" data-caption="Github Pages速度">
+    <img src="https://i.loli.net/2020/02/05/E3WYBRQk4DJCZr5.png" alt="Github Pages速度"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Github Pages速度</span>
+</a> 
 感觉效果还不错，Github Pages 比平时要快很多，博主顺便就给 Coding Pages 启用了 CDN 加速。话说，看到这张图的时候总是感慨，如果肺炎疫情地图能像这两张图一样就好啦！面对这场无声的战役，有很多人一直在一线抗击病魔，还有很多人默默无闻地在支援武汉。或许，宅在家里的你我，什么都做不了，可即便如此，还是让我们一起来祈祷疫情快点结束吧，因为春天都要来了呢……好了，这就是这篇博客的全部内容啦，谢谢大家！</p>
 <h1 id="20200213-更新">2020/02/13 更新</h1>
 <p>在此之前，博主提到版本号的问题，即每一次在 CDN 上生成的版本，怎样体现到 Hexo 中引用的资源上面。当时采用了一个取巧的方法，Hexo 中固定版本号为 latest，然后每次都推送这个 tag。这样引发一个问题，每次都先去远程删除这个 tag，显然这不是我期望的解决方案。最终，我采用的方案是，通过 Travis CI 编译部署的时候，首先导出变量 <code>$TRAVIS_BUILD_NUMBER</code> 到一个文本文件中，然后Hexo在生成静态页面的时侯，从这个文本文件中读取该变量的值作为版本号，这样每次编译部署的时候，我们总能获得一个新的 tag，而这个 tag 和 Hexo 中引用的资源版本一致，这样就彻底解决了这个遗留问题。修改后的 <code>plugins.js</code> 文件内容如下：</p>
@@ -1313,11 +1326,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1414,6 +1425,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1451,7 +1463,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1471,6 +1483,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -1715,7 +1728,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

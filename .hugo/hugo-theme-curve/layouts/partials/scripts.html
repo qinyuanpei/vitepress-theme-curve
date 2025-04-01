@@ -14,3 +14,7 @@
 <!-- 移动端菜单脚本 -->
 {{ $mobileMenu := resources.Get "js/mobile-menu.js" | minify | fingerprint }}
 <script src="{{ $mobileMenu.RelPermalink }}"></script>
+
+
+{{ $fancybox := resources.Get "js/fancybox.js" | minify | fingerprint }}
+<script src="{{ $fancybox.RelPermalink }}"></script>

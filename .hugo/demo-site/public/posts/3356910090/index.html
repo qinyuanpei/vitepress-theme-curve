@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -773,7 +777,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <h1 id="从应用场景来看游戏数据的配置与管理">从应用场景来看游戏数据的配置与管理</h1>
 <p>首先我们来从游戏当中的两个常见的应用场景:&ldquo;复活&quot;和&quot;暂停/恢复&quot;来看看游戏数据配置和管理的重要性。
 这里以博主的一款<a href="https://github.com/qinyuanpei/ProfileGameShow/tree/master/Unity3D_RunningGirl">跑酷游戏</a>为例：</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05dfu1kyj20ih0ihaef.jpg" alt="游戏截图"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05dfu1kyj20ih0ihaef.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05dfu1kyj20ih0ihaef.jpg" data-caption="游戏截图">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05dfu1kyj20ih0ihaef.jpg" alt="游戏截图"  class="post-img" loading="lazy">
+    <span class="post-img-tip">游戏截图</span>
+</a> </p>
 <h2 id="应用场景复活">应用场景——&ldquo;复活&rdquo;</h2>
 <p>&ldquo;复活&quot;是一个在游戏中特别常见的功能，复活这一设定的好处在于无需重新开始游戏就能再次回到游戏当中，当然这只是我们最为直观的一个感受，更为深刻的原因是，游戏者巧妙地利用了玩家在游戏任务失败那一刻的心理。现在生活中每一个人都喜欢胜利，这种心理到了游戏世界中同样是适用的，因为游戏的目的无非就是让玩家有种成就感以获得快乐。可是当游戏任务失败的时候，玩家会竭尽全力不断尝试去打败 Boss 以获得游戏的胜利，因此在游戏中有这样一个设定，可以引导玩家在游戏中形成消费的习惯，这样游戏就能从玩家身上盈利。好了，我们来看看一个基本的&quot;复活&quot;的逻辑吧！</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="kd">private</span> <span class="k">void</span> <span class="n">Update</span><span class="p">()</span>
@@ -801,7 +808,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>将玩家的状态从死亡调整到正常</li>
 </ul>
 <p>调整游戏的状态特别容易，因为 GameManager 是一个典型的单例模式，因此我们可以直接将 GameState 从 Over 变成 Noral。可是对于玩家状态的调整，我们却遇到了困难。问题出在什么地方呢？问题出在我们将玩家的生命值等一系列属性都写在了 PlayerController 这个类中，如果我们将玩家的属性全部都设为 Private，那么我们将无法从外部来调整这些属性。比如我们想让玩家满血复活，可是因为这些属性都是私有的，我们无法从外部访问，所以我们在给玩家恢复生命值的时候，无法获得玩家当前的生命值以及最大生命值。可是如果我们将玩家的属性全部都设为 Public，我们可能不得不去面对在编辑器窗口中为每一个属性去赋值，因为一旦我们试图调整游戏双方力量的平衡时，这将是我们不得不去面对的问题，更为致命的玩家的属性并不是永远不变的，比如在 RPG 游戏中玩家的生命值等属性会随着角色等级的提升而不断增加。因此不管我们将这些属性设为 Public 还是 Private，我们都无法保证每次访问到的这些数据都是最新的数据。换句话说，我们不能想当然地在脚本中将玩家的属性写成一个不变的值，因为这些数据随时都在发生着变化，当然如果像敌人和 Boss 这种数值相对稳定的情况，我们可以直接在脚本中将其写成一个固定值，不过我并不推荐大家这样做。由此可见，游戏中数据配置和管理的一个重要作用是维持各个状态间的正常切换。如图是雨血前传.蜃楼中的复活界面，每次复活需要消耗一个复活玉：</p>
-<p><img src="https://i.loli.net/2021/10/19/P1gzUhJMeSiQ9Lj.jpg" alt="雨血"></p>
+<p><a href="https://i.loli.net/2021/10/19/P1gzUhJMeSiQ9Lj.jpg" data-fancybox="gallery" data-src="https://i.loli.net/2021/10/19/P1gzUhJMeSiQ9Lj.jpg" data-caption="雨血">
+    <img src="https://i.loli.net/2021/10/19/P1gzUhJMeSiQ9Lj.jpg" alt="雨血"  class="post-img" loading="lazy">
+    <span class="post-img-tip">雨血</span>
+</a> </p>
 <p>那么博主在这款跑酷游戏里面是怎样做这个复活的呢？因为博主当时在设计这个游戏的时候考虑不周，直接将玩家的生命值写成了 100，所以在复活玩家时候，同样是先将游戏的状态调整过来，然后再将相关的 GUI 窗口隐藏，然后将玩家的生命值重新设置为 100，重新生成玩家就好了。正是因为感觉这段时间做游戏缺乏一种良好的游戏架构，所以每次游戏做到最后都是自己把逼到了绝路上，留给了自己一个自己都不想再去维护的烂摊子，这样显然是不好的，所以以后需要在正式动手写代码前做好规划，相信这样就能够保证游戏的质量了吧！任何东西学习到一定阶段都会遭遇瓶颈，尽管打破这种瓶颈的过程是痛苦的，可是如果不去打破它，那么你永远都只能停留在这个位置。</p>
 <h2 id="应用场景暂停恢复">应用场景——&ldquo;暂停/恢复&rdquo;</h2>
 <p>和&quot;复活&quot;一样，&ldquo;暂停/恢复&quot;同样是一个在游戏中常见的功能，该功能是给了玩家暂时离开游戏的一种选择，可以保证玩家在做其它事情的时候不会影响到游戏的进程。比如在仙剑奇侠传、古剑奇谭等游戏中，玩家可以按下 ESC 键调出游戏设置界面，在玩家进入游戏设置界面的这段时间，游戏世界里的时间似乎是静止的，场景中的敌人不会因为玩家在查看系统设置界面就去主动偷袭玩家，因为这种情况下游戏是暂停的。而当玩家退出系统设置界面后，游戏恢复为正常状态。到了移动互联网时代，游戏中出现&quot;暂停/恢复&quot;的情况更为普遍，这是由移动互联网时代人们玩游戏更注重休闲和娱乐这样的性质来决定的。记得天天酷跑刚刚在微信上线的那段时间，我身边好多同学都在上课的时候玩，可是因为这游戏一跑起来就根本停不下来，所以经常是一次游戏玩下来一节课就结束了。博主不提倡这样啊，玩游戏归玩游戏，可是什么事情都要有个度啊，不然就会变成玩物丧志。好了，我们分析这个案例的目的无非就是想告诉大家在游戏里增加这样一个&quot;暂停/恢复&quot;的功能还是十分必要的。好了，现在我们来分析下在这个应用场景中发生状态转换的时候都会牵扯到那些数据吧！</p>
@@ -821,7 +831,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>通过这段代码我们就能够实现一个基本的游戏&quot;暂停/恢复&quot;的功能。在游戏管理类 GameManager 中我们定义了一个玩家的得分。正常情况下，当玩家没有死亡的时候会在 GUI 中更新玩家的得分，而玩家的得分是直接采用在 Update()中累加的方式实现的，因此玩家的得分会在游戏暂停后继续更新，这当然是不符合实际情况的，因此可以在这个增量前乘上一个 Time.deltaTime 就可以解决这个问题了。博主举这个例子无非就是想告诉大家使用这种方法来暂停游戏会存在这样的问题，希望大家以后注意啊！</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1fz01z0gczpj20m70dd11a.jpg" alt="跑酷游戏复活界面"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fz01z0gczpj20m70dd11a.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz01z0gczpj20m70dd11a.jpg" data-caption="跑酷游戏复活界面">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz01z0gczpj20m70dd11a.jpg" alt="跑酷游戏复活界面"  class="post-img" loading="lazy">
+    <span class="post-img-tip">跑酷游戏复活界面</span>
+</a> </p>
 <h1 id="游戏数据配置和管理的思路和方法">游戏数据配置和管理的思路和方法</h1>
 <p>既然我们在今天的的文章中主要阐述的就是游戏数据配置和管理，那么下面我们就来说说游戏数据配置和管理的常见的思路和方法。根据游戏中数据变动的相对大小，我们将游戏中的数据分为静态数据和动态数据两类。</p>
 <h2 id="静态数据">静态数据</h2>
@@ -1056,7 +1069,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/make-memes-with-opencv-and-dlib\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/2637069146\/'">
         随便逛逛
       </span>
       
@@ -1590,11 +1603,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1691,6 +1702,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1728,7 +1740,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1748,6 +1760,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -1992,7 +2005,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

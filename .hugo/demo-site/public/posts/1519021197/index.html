@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -786,7 +790,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <li><strong>Timer</strong>/<strong>Hitogram</strong>：即<strong>计时器</strong>/<strong>直方图</strong>，一种无符号整数，最终将产生汇总百分位值。Envoy 不区分计时器（通常以毫秒为单位）和 原始直方图（可以是任何单位）。 例如，上游请求时间（以毫秒为单位）。</li>
 </ul>
 <p>在今天的这篇文章中，除了 Envoy 以外，我们还需要两位新朋友的帮助，它们分别是<a href="https://prometheus.io/">Prometheus</a> 和 <a href="https://grafana.com/">Grafana</a>。其中，Prometheus 是一个开源的完整监控解决方案，其对传统监控系统如 Nagios、Zabbix 等的测试和告警模型进行了彻底的颠覆，形成了基于中央化的规则计算、统一分析和告警的新模型。可以说，Prometheus 是完整监控解决方案中当之无愧的后起之秀，它最为人所称道的是它强大的数据模型，在 Prometheus 中所有采集到的监控数据吗，都以指标(<strong>Metrics</strong>)的形式存储在时序数据库中。和传统的关系型数据库中使用的 SQL 不同，Prometheus 定义一种叫做 PromQL 的查询语言，来实现对监控数据的查询、聚合、可视化、告警等功能。</p>
-<p><img src="https://i.loli.net/2021/07/12/N4tRgsYJWPLaBlS.png" alt="Prometheus &amp; Grafana 的奇妙组合"></p>
+<p><a href="https://i.loli.net/2021/07/12/N4tRgsYJWPLaBlS.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/12/N4tRgsYJWPLaBlS.png" data-caption="Prometheus &amp;amp; Grafana 的奇妙组合">
+    <img src="https://i.loli.net/2021/07/12/N4tRgsYJWPLaBlS.png" alt="Prometheus &amp;amp; Grafana 的奇妙组合"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Prometheus &amp;amp; Grafana 的奇妙组合</span>
+</a> </p>
 <p>目前，社区中提供了大量的<a href="https://prometheus.io/docs/instrumenting/exporters/">第三方系统</a>的采集功能的实现，这使得我们可以轻易地对MySQL、PostgresSQL、Consul、HAProxy、RabbitMQ， Redis等进行监控。而 Grafana 则是目前主流的时序数据展示工具，正是因为这个原因， Grafana 总是和 Prometheus 同时出现， Prometheus 中采集到监控数据以后，就可以由 Grafana 赖进行可视化。相对应地，Grafana 中有数据源的概念，除了 Prometheus 以外，它还可以使用来自 Elasticsearch 、InfluxDB 、MySQL 、OpenTSDB 等等的数据。基于这样一种思路，我们需要 Envoy 提供指标信息给 Prometheus ，然后再由 Grafana 来展示这些信息。所以，我们面临的主要问题，其实是怎么拿到 Envoy 中的指标信息，以及怎么把这些指标信息给到 Prometheus 。</p>
 <h1 id="原理说明">原理说明</h1>
 <p>首先，我们来简单阐述一下原理。在 Envoy 的早期版本中，通常是通过 <a href="https://github.com/statsd/statsd">statsd</a> 来采集 Envoy 中的信息，这些信息会被存储在 Prometheus 中，然后由 Grafana 从 Prometheus 中读取数据并展示为图表。而在 Envoy 最新的版本中，Envoy 本身就可以输出 Prometheus 需要的数据格式，故而就不再需要 <a href="https://github.com/statsd/statsd">statsd</a> 这样一个监控工具。关于第一种方案，大家可以参考这篇文章：<a href="https://www.servicemesher.com/blog/microservices-monitoring-with-envoy-service-mesh-prometheus-grafana/">Envoy Service Mesh、Prometheus和Grafana下的微服务监控</a>。这里，为了简单起见，我们采用第二种方案来进行集成。在接下来的例子中，我们会部署下面四个服务，我们希望在调用 gRPC 服务的时候，可以在 Grafana 看到相关的监控指标：</p>
@@ -845,17 +852,35 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">static_configs</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;localhost:9091&#39;</span><span class="p">]</span><span class="w">  
 </span></span></span></code></pre></div><p>大家还记得 Envoy 中提供的管理接口吗？我们说 Envoy 提供了 Prometheus 格式的指标数据，其实就是指 Envoy 管理接口中的 <code>stats/prometheus</code> 接口，它对应的地址为：<code>http://localhost:9091/stats/prometheus</code>，直接访问这个地址，我们就可以得到下面的结果，这就是 Prometheus 需要的指标数据格式：</p>
-<p><img src="https://i.loli.net/2021/07/10/PIQHEutC8SZasOF.png" alt=" Prometheus 需要的指标数据格式"></p>
+<p><a href="https://i.loli.net/2021/07/10/PIQHEutC8SZasOF.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/10/PIQHEutC8SZasOF.png" data-caption=" Prometheus 需要的指标数据格式">
+    <img src="https://i.loli.net/2021/07/10/PIQHEutC8SZasOF.png" alt=" Prometheus 需要的指标数据格式"  class="post-img" loading="lazy">
+    <span class="post-img-tip"> Prometheus 需要的指标数据格式</span>
+</a> </p>
 <h1 id="数据源与可视化">数据源与可视化</h1>
 <p>现在，万事俱备，我们通过<code>docker-compose</code>启动服务即可，默认情况下，Prometheus 使用<code>9090</code>端口，Grafana 使用<code>3000</code>端口，其中，Grafana 默认的账号为<code>admin</code>/<code>admin</code>，建议大家第一次登录后，及时修改默认的账号密码。</p>
-<p><img src="https://i.loli.net/2021/07/12/WD1bSxfy6w7cU8X.png" alt="Prometheus 运行效果展示"></p>
-<p><img src="https://i.loli.net/2021/07/10/sQyt21AKm4qr9CY.png" alt="Grafana 运行效果展示"></p>
+<p><a href="https://i.loli.net/2021/07/12/WD1bSxfy6w7cU8X.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/12/WD1bSxfy6w7cU8X.png" data-caption="Prometheus 运行效果展示">
+    <img src="https://i.loli.net/2021/07/12/WD1bSxfy6w7cU8X.png" alt="Prometheus 运行效果展示"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Prometheus 运行效果展示</span>
+</a> </p>
+<p><a href="https://i.loli.net/2021/07/10/sQyt21AKm4qr9CY.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/10/sQyt21AKm4qr9CY.png" data-caption="Grafana 运行效果展示">
+    <img src="https://i.loli.net/2021/07/10/sQyt21AKm4qr9CY.png" alt="Grafana 运行效果展示"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Grafana 运行效果展示</span>
+</a> </p>
 <p>接下来，我们可以注意到，Prometheus 中两个 target 都已正常启动，这表示它们开始采集数据，我们还可以通过 Graph 菜单来查看当前采集到的数据。</p>
-<p><img src="https://i.loli.net/2021/07/12/sbZTMlukpd9SrKc.png" alt="Prometheus 采集数据"></p>
+<p><a href="https://i.loli.net/2021/07/12/sbZTMlukpd9SrKc.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/12/sbZTMlukpd9SrKc.png" data-caption="Prometheus 采集数据">
+    <img src="https://i.loli.net/2021/07/12/sbZTMlukpd9SrKc.png" alt="Prometheus 采集数据"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Prometheus 采集数据</span>
+</a> </p>
 <p>那么，数据采集到 Prometheus 以后，如何在 Grafana 中进行图表的可视化展示呢？首先，我们需要在 Grafana 中添加一个数据源，点击左侧第6个图标就可以找到入口。显然，这里的数据源就是 Prometheus ：</p>
-<p><img src="https://i.loli.net/2021/07/12/3dsXEfRqFzHNvMb.png" alt="Grafana 添加数据源"></p>
+<p><a href="https://i.loli.net/2021/07/12/3dsXEfRqFzHNvMb.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/12/3dsXEfRqFzHNvMb.png" data-caption="Grafana 添加数据源">
+    <img src="https://i.loli.net/2021/07/12/3dsXEfRqFzHNvMb.png" alt="Grafana 添加数据源"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Grafana 添加数据源</span>
+</a> </p>
 <p>接下来，我们可以到官方的 <a href="https://grafana.com/grafana/dashboards">社区</a> 里找一个 Envoy 的模板，这是一个别人做好的 Dashboard，我们暂时用这个模板来看看效果。随着学习的深入，我们会先从自定义图表开始做起，最终，我们会拥有一个属于自己的 Dashboard 。这里，我们选择一个 Dashboard 模板后，复制其ID，并在 Grafana 中进行导入，导入的时候需要选择数据源，我们选择 Prometheus 即可。接下来，就是见证奇迹的时刻：</p>
-<p><img src="https://i.loli.net/2021/07/10/GSNo7xaWLPzeIXT.png" alt="Envoy 监控面板效果展示"></p>
+<p><a href="https://i.loli.net/2021/07/10/GSNo7xaWLPzeIXT.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/10/GSNo7xaWLPzeIXT.png" data-caption="Envoy 监控面板效果展示">
+    <img src="https://i.loli.net/2021/07/10/GSNo7xaWLPzeIXT.png" alt="Envoy 监控面板效果展示"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Envoy 监控面板效果展示</span>
+</a> </p>
 <h1 id="自定义图表">自定义图表</h1>
 <p>好了，如果大家阅读过官方文档，就会知道，除了 Prometheus ，像常见的 MySQL、Nginx 等，都可以作为 Grafana 的数据源，如果你需要监控 Nginx 的某个指标，这会是个非常不错的思路。那么。如何按照个人/领导的要求，对 Dashboard 进行进一步的定制呢？这就要说到 Grafana 的自定义图表，这里，我们通过下面的例子来进行说明：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-promql" data-lang="promql"><span class="line"><span class="cl"><span class="kr">rate</span><span class="o">(</span><span class="nv">envoy_http_rq_total</span><span class="p">{</span><span class="nl">envoy_http_conn_manager_prefix</span><span class="o">=</span><span class="p">&#34;</span><span class="s">grpc_json</span><span class="p">&#34;,</span><span class="w"> </span><span class="nl">instance</span><span class="o">=</span><span class="p">&#34;</span><span class="s">192.168.6.120:9902</span><span class="p">&#34;}[</span><span class="s">5m</span><span class="p">]</span><span class="o">)</span><span class="w">
@@ -867,9 +892,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kr">ceil</span><span class="o">(</span><span class="k">avg</span><span class="o">(</span><span class="nv">http_requests_total</span><span class="p">{</span><span class="nl">code</span><span class="o">=</span><span class="p">&#34;</span><span class="s">200</span><span class="p">&#34;}</span><span class="o">))</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kr">rate</span><span class="o">(</span><span class="nv">http_requests_total</span><span class="p">[</span><span class="s">5m</span><span class="p">]</span><span class="o">)</span><span class="w">
 </span></span></span></code></pre></div><p>在这里，我们给出的示例，它表示的是5分钟内 HTTP 请求的平均数目。我们可以在 Prometheus 中的 Graph 菜单对其结果进行查看：</p>
-<p><img src="https://i.loli.net/2021/07/12/h5vwA1CjJIqs84T.png" alt="在 Prometheus 中查询 Envoy 指标数据"></p>
+<p><a href="https://i.loli.net/2021/07/12/h5vwA1CjJIqs84T.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/12/h5vwA1CjJIqs84T.png" data-caption="在 Prometheus 中查询 Envoy 指标数据">
+    <img src="https://i.loli.net/2021/07/12/h5vwA1CjJIqs84T.png" alt="在 Prometheus 中查询 Envoy 指标数据"  class="post-img" loading="lazy">
+    <span class="post-img-tip">在 Prometheus 中查询 Envoy 指标数据</span>
+</a> </p>
 <p>通常，我们可以在这里对查询语句做简单的调试，而如果需要将其集成到 Grafana 中，我们就需要在 Grafana 新建一个图表，可以注意到，两者的语法是完全相同的，这里唯一的不同点在于，时间间隔从固定的5分钟变成了一个变量：</p>
-<p><img src="https://i.loli.net/2021/07/12/5YzSxcUnIPE43Xm.png" alt="在 Grafana 中查询 Envoy 指标数据"></p>
+<p><a href="https://i.loli.net/2021/07/12/5YzSxcUnIPE43Xm.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/07/12/5YzSxcUnIPE43Xm.png" data-caption="在 Grafana 中查询 Envoy 指标数据">
+    <img src="https://i.loli.net/2021/07/12/5YzSxcUnIPE43Xm.png" alt="在 Grafana 中查询 Envoy 指标数据"  class="post-img" loading="lazy">
+    <span class="post-img-tip">在 Grafana 中查询 Envoy 指标数据</span>
+</a> </p>
 <p>此时，我们就完成了一个自定义图表的制作，其中的关键有两点，<strong>其一是了解每一个指标的含义，其二是了解每一个内置函数的用法</strong>。革命尚未成功，同志仍须努力。这些内容无法在一篇博客里全部讲到，如果需要做进一步的探索，还是建议大家去看<a href="https://prometheus.io/docs/prometheus/latest/querying/basics/">官方文档</a>，这里博主可以给大家推荐一个不错的<a href="https://www.bookstack.cn/read/prometheus_practice/promql-summary.md">中文文档</a>。</p>
 <h1 id="文本小结">文本小结</h1>
 <p>本文介绍了利用 <a href="https://prometheus.io/">Prometheus</a> 和 <a href="https://grafana.com/">Grafana</a> 对 <a href="https://www.envoyproxy.io">Envoy</a> 进行监控预警的方案。在 Envoy 的早期版本中，主流的方案都是通过  <a href="https://github.com/statsd/statsd">statsd</a> 来采集 Envoy 的指标信息，而在 Envoy 最新版本中，它本身就可以输出 Prometheus 需要的数据格式，我们只需要在 Prometheus 的配置文件中指定<code>stats/prometheus</code>这个地址即可。Prometheus 采用了和 <a href="http://opentsdb.net/">OpenTSDB</a> 类似的时序格式，每一个指标均含有多个键值形式的标签。Prometheus 在此基础上提供了 PromQL 查询语言，我们可以利用这个查询语言在 Grafana 中制作自定义图表，这些自定义图表可以是一个瞬时数据、可以是一个区间数据，或者是一个纯量数字，因此，我们可以按照自己的喜好去定制整个仪表盘，结合实际的业务场景来决定要关注哪些指标。除此以外，我们还可以在 Prometheus 定义<a href="https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/">告警规则</a>，当业务系统出现问题时，可以第一时间通知运维或者研发团队。在后端研发越来越服务化、集群化的今天，我们不能永远都盯着 CRUD 这一亩三分地，更普遍的，可能是针对 Docker、K8S、Redis、MySQL 等等基础设施的监控，扁鹊见蔡桓公的故事大家耳熟能详，防微杜渐，无论过去还是现在甚至将来都是一样的。好了，以上就是这篇博客的全部内容啦，谢谢大家！</p>
@@ -1105,7 +1136,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/94443781\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/352037321\/'">
         随便逛逛
       </span>
       
@@ -1663,11 +1694,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1764,6 +1793,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1801,7 +1831,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1821,6 +1851,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2065,7 +2096,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

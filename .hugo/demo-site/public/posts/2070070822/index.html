@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -776,7 +780,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <h1 id="什么是-httpmessagehandler">什么是 HttpMessageHandler？</h1>
 <p>相信大家读过我提到的文章以后，都能找到这里面最核心的一个点：<code>HttpMessageHandler</code>。于是，我们今天要面对的第一个问题就是，什么是 <code>HttpMessageHandler</code>？此时，我们需要一张历久弥新的示意图，来自 <a href="https://www.asp.net/media/4071077/aspnet-web-api-poster.pdf">微软官方</a>。这里，我们重点关注的是 <code>DelegatingHandler</code>，它继承自 <code>HttpMessageHandler</code>。通过这张图，我们能够获得哪些信息呢？</p>
 <p>我认为，主要有以下几点：<strong>第一，HttpMessageHandler 处于整个 Http 请求管道的第一梯队，每一个路由匹配的请求都会从这里“进入”和“离开”；第二，HttpMessageHandler 可以是全局配置或者针对某个特定的路由，只要这个路由被匹配到就会执行；第三，HttpMessageHandler 可以直接构造 Http 响应并且返回，跳过剩余的管道流程</strong>。不知道大家看到这里会想到什么？坦白讲，我联想到了.NET Core 中的中间件，而唯一不同的地方或许是，中间件是 ASP.NET Core 里的概念，这里则是 ASP.NET Web API 里的概念。尤其是第三点，它对于我们的意义非常重大，因为它，我们才可以做到对一个 Http 请求进行模拟。</p>
-<p><img src="https://i.loli.net/2021/04/28/AwLZDdqXc5KERky.png" alt="HttpMessageHandler 与 ASP.NET Web API"></p>
+<p><a href="https://i.loli.net/2021/04/28/AwLZDdqXc5KERky.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/04/28/AwLZDdqXc5KERky.png" data-caption="HttpMessageHandler 与 ASP.NET Web API">
+    <img src="https://i.loli.net/2021/04/28/AwLZDdqXc5KERky.png" alt="HttpMessageHandler 与 ASP.NET Web API"  class="post-img" loading="lazy">
+    <span class="post-img-tip">HttpMessageHandler 与 ASP.NET Web API</span>
+</a> </p>
 <p>而事实上，在 ASP.NET Web API 的设计中，它是由一组 <code>HttpMessageHandler</code> 经过“首尾相连”而成，这种管道式的设计使得框架本身具有很高的扩展性。虽然，作为一个服务端框架，ASP.NET Web API 最主要的作用是就是“<strong>处理请求、响应回复</strong>”，可具体采用的处理策略会因具体场景的不同而不同。所以，管道式设计的本质，就是让某一个 <code>Handler</code> 只负责某个单一的消息处理功能，在根据具体场景的不同，选择需要的 <code>Handler</code> 并将其串联成一个完整的消息处理通道。而在这里，这个负责单一的消息处理功能的 <code>Handler</code> 其实就是 <code>HttpMessageHandler</code>，因为它不单单可以对请求消息(<strong>HttpRequestMessage</strong>)进行处理，同时还可以对响应消息(<strong>HttpResponseMessage</strong>)进行处理。此时，我们就不难理解 <code>HttpMessageHandler</code> 的定义：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">abstract</span> <span class="k">class</span> <span class="nc">HttpMessageHandler</span> <span class="p">:</span> <span class="n">IDisposable</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -856,7 +863,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">handler</span> <span class="p">=</span> <span class="k">new</span> <span class="n">HandlerA</span><span class="p">()</span> <span class="p">{</span> <span class="n">InnerHandler</span> <span class="p">=</span> <span class="k">new</span> <span class="n">HandlerB</span><span class="p">()</span> <span class="p">};</span>
 </span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="n">HttpClient</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
 </span></span></code></pre></div><p>此时，我们就可以得到下面的结果，可以注意到的是，两个<code>Handler</code>的执行顺序与注册顺序一致：</p>
-<p><img src="https://i.loli.net/2021/04/29/URNWavrVgyzMAxe.png" alt="Handler执行顺序与注册顺序"></p>
+<p><a href="https://i.loli.net/2021/04/29/URNWavrVgyzMAxe.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/04/29/URNWavrVgyzMAxe.png" data-caption="Handler执行顺序与注册顺序">
+    <img src="https://i.loli.net/2021/04/29/URNWavrVgyzMAxe.png" alt="Handler执行顺序与注册顺序"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Handler执行顺序与注册顺序</span>
+</a> </p>
 <p>好了，热身环节到此结束！下面，我们来开始实战，这里展示的是 <code>HttpMessageHandler</code> 在日志记录、请求重试 和 接口模拟等方面的应用。</p>
 <h2 id="日志记录">日志记录</h2>
 <p>对于 Http 请求的日志，我们希望记录请求的Url、Http动词、请求时长等信息，而这一点，在一个大量接入第三方接口的系统或者是以 Http 驱动的微服务架构中，常常是不可或缺的一环，对于我们排查故障、监控服务非常有用。</p>
@@ -886,7 +896,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">correlationId</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>此时，我们可以得到下面的结果：</p>
-<p><img src="https://i.loli.net/2021/04/29/aORFS3ZQEw8pNbT.png" alt="HttpMessageHandler 实现日志记录"></p>
+<p><a href="https://i.loli.net/2021/04/29/aORFS3ZQEw8pNbT.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/04/29/aORFS3ZQEw8pNbT.png" data-caption="HttpMessageHandler 实现日志记录">
+    <img src="https://i.loli.net/2021/04/29/aORFS3ZQEw8pNbT.png" alt="HttpMessageHandler 实现日志记录"  class="post-img" loading="lazy">
+    <span class="post-img-tip">HttpMessageHandler 实现日志记录</span>
+</a> </p>
 <h2 id="请求重试">请求重试</h2>
 <p>我们知道，一个系统中接入的外部因素越多，则整个系统的稳定性越低。而国内的产品通常都喜欢&quot;大而全&quot;的&quot;万物互联&quot;，所以，最实际的问题，其实就是调用一个第三方的接口，如何保证其可靠性。所以，考虑请求的故障恢复就显得非常有意义，为此，我们可以引入<code>Polly</code>，在实现<code>SendAsync()</code>方法的时候，通过<code>Polly</code>中的超时、重试等机制对其做一层包装：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">class</span> <span class="nc">RetryableHttpMessageHandler</span> <span class="p">:</span> <span class="n">DelegatingHandler</span>
@@ -920,7 +933,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">client</span> <span class="p">=</span> <span class="n">_clientFactory</span><span class="p">.</span><span class="n">CreateClient</span><span class="p">(</span><span class="s">&#34;ApiMock&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">response</span> <span class="p">=</span> <span class="k">await</span> <span class="n">client</span><span class="p">.</span><span class="n">GetAsync</span><span class="p">(</span><span class="s">&#34;/api/fail&#34;</span><span class="p">);</span>
 </span></span></code></pre></div><p>此时，我们可以得到下面的结果：</p>
-<p><img src="https://i.loli.net/2021/04/30/OaUyhNF7XYsA8mI.png" alt="HttpMessageHandler 实现请求重试"></p>
+<p><a href="https://i.loli.net/2021/04/30/OaUyhNF7XYsA8mI.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/04/30/OaUyhNF7XYsA8mI.png" data-caption="HttpMessageHandler 实现请求重试">
+    <img src="https://i.loli.net/2021/04/30/OaUyhNF7XYsA8mI.png" alt="HttpMessageHandler 实现请求重试"  class="post-img" loading="lazy">
+    <span class="post-img-tip">HttpMessageHandler 实现请求重试</span>
+</a> </p>
 <p>可以发现，不多不少刚好是 3 次。除了重试以外，<code>Polly</code>还支持类似超时、断路器等等不同的策略，甚至可以将它们组合起来使用，这些都属于<a href="https://github.com/App-vNext/Polly">Polly</a>的内容，不作为本文的重点内容来讲解，感兴趣的朋友可以查阅这篇文章：<a href="https://www.cnblogs.com/willick/p/polly.html">.NET 开源项目 Polly 介绍</a>。需要说明的是，微软官方提供的 <code>Microsoft.Extensions.Http.Polly</code>，它在<code>IHttpClientBuilder</code>上添加了一个名为<code>AddPolicyHandler()</code>的扩展方法，这里的例子可以被简化为下面这样，它和我们这里举的例子是完全一致的：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="c1">// 定义重试策略</span>
 </span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">retryPolicy</span> <span class="p">=</span> <span class="n">Policy</span><span class="p">&lt;</span><span class="n">HttpResponseMessage</span><span class="p">&gt;</span>
@@ -1059,7 +1075,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl"><span class="c1">// 调用/api/order接口</span>
 </span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">response</span> <span class="p">=</span> <span class="k">await</span> <span class="n">httpClient</span><span class="p">.</span><span class="n">GetAsync</span><span class="p">(</span><span class="s">&#34;/api/order&#34;</span><span class="p">);</span>
 </span></span></code></pre></div><p>下图是模拟接口返回的结果，与我们期望的完全一致：</p>
-<p><img src="https://i.loli.net/2021/04/30/k9lX12aSpcr8ReV.png" alt="HttpMessageHandler 实现接口模拟"></p>
+<p><a href="https://i.loli.net/2021/04/30/k9lX12aSpcr8ReV.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/04/30/k9lX12aSpcr8ReV.png" data-caption="HttpMessageHandler 实现接口模拟">
+    <img src="https://i.loli.net/2021/04/30/k9lX12aSpcr8ReV.png" alt="HttpMessageHandler 实现接口模拟"  class="post-img" loading="lazy">
+    <span class="post-img-tip">HttpMessageHandler 实现接口模拟</span>
+</a> </p>
 <h1 id="本文小结">本文小结</h1>
 <p>古人云：<strong>他山之石，可以攻玉</strong>。原本被接口模拟(<strong>Mock</strong>)所吸引的博主，意外地收获了 <code>HttpMessageHandler</code> 这个令人兴奋的知识点。博主认为，它是一种可以对 请求消息(<strong>HttpRequestMessage</strong>) 和 响应消息(<strong>HttpResponseMessage</strong>) 进行处理，同时多个 <code>HttpMessageHandler</code> 可以组成一个完整的消息处理通道的中间件。在此基础上，我们实现了诸如<strong>日志记录</strong>、<strong>请求重试</strong>、<strong>接口模拟</strong>等等的扩展性功能。除此以外，它还可以应用到 <strong>Http认证头处理</strong> 、<strong>客户端负载均衡</strong>等方面。</p>
 <p>其实，从 ASP.NET、OWIN、Nancy、ASP.NET Core 这样一路走过来，你会发现，管道的概念一直都存在，无非是以不同的形式存在着，譬如 ASP.NET Core 里的中间件，其实是替代了曾经的 <code>HttpHandler</code> 和 <code>HttpModule</code>，就像时间一直都在那里，不快不慢，觉得物是人非、喜新厌旧的多半还是我们。对我而言，写到这里，最大的感慨或许是，曾经试图实现的类似 <code>Servlet</code> 的 Http Server ，现在想起来还是太年轻、太朴实了，可年轻或者朴实，难道不好吗？好了，以上就是这篇博客的全部内容了，如果你觉得这篇博客对你有所帮助或者启发，希望你可以毫不吝啬地给个一键三连。如果你对这篇博客里的内容有意见或者建议，欢迎你评论区留下你的足迹和声音，谢谢大家！</p>
@@ -1290,7 +1309,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/1519021197\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/1836680899\/'">
         随便逛逛
       </span>
       
@@ -1848,11 +1867,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1949,6 +1966,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1986,7 +2004,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -2006,6 +2024,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2250,7 +2269,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

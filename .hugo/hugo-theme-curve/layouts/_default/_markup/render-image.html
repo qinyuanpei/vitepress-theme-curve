@@ -1,0 +1,4 @@
+<a  class="img-fancybox" href="{{ .Destination | safeURL }}" data-fancybox="gallery" data-src="{{ .Destination | safeURL }}" data-caption="{{ .Text }}">
+    <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{ with .Title }} title="{{ . }}"{{ end }} class="post-img" loading="lazy">
+    <span class="post-img-tip">{{ .Text }}</span>
+</a> 

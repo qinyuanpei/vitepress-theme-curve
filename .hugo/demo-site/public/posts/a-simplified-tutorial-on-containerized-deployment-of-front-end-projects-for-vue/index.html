@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -771,7 +775,10 @@ document.addEventListener("DOMContentLoaded", function () {
             
             <div id="page-content" class="markdown-main-style">
                 <p>大概一周前，在某个「微雨燕双飞」的下午，我正穿梭于熙熙攘攘的车流人海当中，而被雨水濯洗过的天空略显灰白，傍晚亮起的路灯恍惚中有种朝阳初升的错觉，内心更是涌现出一种「一蓑烟雨任平生」的豁达，我还没来得及给这场内心戏添油加醋，兴哥的电话突然打断了我的思绪。一番攀谈交心，我了解到，他想问的是前端容器化部署的相关问题。虽然，靠着兴哥的睿智、果敢，他第二天就想明白了整个事情的来龙去脉；但是，这完全不影响我水一篇博客出来。所以，今天这篇文章，我们来聊聊前端项目的容器化部署，并提供一个极简的实践教程，这里以 <code>Vue.js</code> 为例，希望对大家有所启发。</p>
-<p><img src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/light-like-a-sun.jpg" alt="你说，这像太阳吗？"></p>
+<p><a href="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/light-like-a-sun.jpg" data-fancybox="gallery" data-src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/light-like-a-sun.jpg" data-caption="你说，这像太阳吗？">
+    <img src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/light-like-a-sun.jpg" alt="你说，这像太阳吗？"  class="post-img" loading="lazy">
+    <span class="post-img-tip">你说，这像太阳吗？</span>
+</a> </p>
 <p>首先，我们来编写 <code>Dockerfile</code>，这里采用的是多阶段构建的做法，第一个阶段，即 <code>build</code>，主要是利用 <a href="https://nodejs.org/en/">node.js</a> 基础镜像来实现前端项目的发布，所以，你可以看到 <code>package.json</code>、<code>npm install</code> 以及考虑到国情的 <code>cnpm install</code> 这些前端项目中喜闻乐见的东西，安装完依赖以后我们通过 <code>npm run build</code> 来完成打包，这取决于你项目中实际使用的脚本或者命令，如果你不喜欢 <code>npm</code>，你同样可以用 <code>yarn</code> 来编写这些指令，只要你喜欢就好。做人嘛，最重要的是开心！</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="line"><span class="cl"><span class="c"># build</span><span class="err">
 </span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">FROM</span><span class="s"> node:lts-alpine as build</span><span class="err">
@@ -825,7 +832,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">networks</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">envoymesh</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
 </span></span></span></code></pre></div><p>好了，现在万事具备，我们再来写一个 <code>docker-compose.yaml</code> 来对服务进行编排，可以注意到，我们把 <code>50001</code> 端口绑定到了 <code>80</code> 端口，这就和前面呼应上了，对不对？剩下的就没什么好说的啦，不再一一赘述，如果你看不懂，可以先去了解一下 <a href="https://docs.docker.com/compose/">docker-compose</a>。此时，我们运行 <code>docker-compose up</code> 命令，就可以看到下面的结果：</p>
-<p><img src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/Vue.js-With-Docker.png" alt="通过 Docker 部署前端项目"></p>
+<p><a href="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/Vue.js-With-Docker.png" data-fancybox="gallery" data-src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/Vue.js-With-Docker.png" data-caption="通过 Docker 部署前端项目">
+    <img src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/Vue.js-With-Docker.png" alt="通过 Docker 部署前端项目"  class="post-img" loading="lazy">
+    <span class="post-img-tip">通过 Docker 部署前端项目</span>
+</a> </p>
 <p>没错，我为了节省写作时间，直接使用了 <a href="/posts/interface-mock-implemention-using-mock.js-in-vue.js/">在 Vue.js 中使用 Mock.js 实现接口模拟</a> 这篇文章里的项目，果然，我再次完美发扬了 “懒惰” 这种优秀的美德，总而言之，到这里我们已经成功地通过容器技术部署了一个前端项目，在这个基础上，你还可以接入 <code>Envoy</code> 这个代理层 或者 是为 <code>Nginx</code> 添加 <code>SSL</code> 证书等等&hellip;当然，这些都是后话啦，各位比我聪明千倍、万倍的读者朋友们可以进一步去完善它，这篇短浅易懂的文章就当作诸位的入门教程好啦，愿「他山之石，可以攻玉」，谢谢大家，本文完！</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 创建 CA 密钥</span>
 </span></span><span class="line"><span class="cl">openssl genrsa -out ca.key <span class="m">1024</span>
@@ -874,9 +884,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>需要注意的是，在创建证书时，对应的 <code>Common Name</code> 应该和网站的域名保持一致，这里的示例域名为：<code>https://www.snowfly.com</code>，在本地调试的时候，我们可以通过修改 <code>hosts</code> 文件来进行测试：</p>
-<p><img src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/OpenSSL_Certificates.png" alt="通过 OpenSSL 创建证书"></p>
+<p><a href="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/OpenSSL_Certificates.png" data-fancybox="gallery" data-src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/OpenSSL_Certificates.png" data-caption="通过 OpenSSL 创建证书">
+    <img src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/OpenSSL_Certificates.png" alt="通过 OpenSSL 创建证书"  class="post-img" loading="lazy">
+    <span class="post-img-tip">通过 OpenSSL 创建证书</span>
+</a> </p>
 <p>通常，你需要把自己创建的证书导入到 <code>受信任的根证书颁发机构</code> 这个分类下面，这样，就可以通过 <code>HTTPS</code> 协议访问你的站点啦！</p>
-<p><img src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/OpenSSL_Certificates_2.png" alt="在浏览器中查看 HTTPS 证书"></p>
+<p><a href="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/OpenSSL_Certificates_2.png" data-fancybox="gallery" data-src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/OpenSSL_Certificates_2.png" data-caption="在浏览器中查看 HTTPS 证书">
+    <img src="/posts/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue/OpenSSL_Certificates_2.png" alt="在浏览器中查看 HTTPS 证书"  class="post-img" loading="lazy">
+    <span class="post-img-tip">在浏览器中查看 HTTPS 证书</span>
+</a> </p>
 <blockquote>
 <p>番外预告！！！接下来会写一篇关于 ASP.NET Core 单元/集成测试的文章，敬请期待！</p>
 </blockquote>
@@ -1107,7 +1123,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/3356910090\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/3099575458\/'">
         随便逛逛
       </span>
       
@@ -1665,11 +1681,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1766,6 +1780,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1803,7 +1818,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1823,6 +1838,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2067,7 +2083,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

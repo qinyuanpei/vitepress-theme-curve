@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -788,8 +792,14 @@ document.addEventListener("DOMContentLoaded", function () {
 <p>通过 Edit-&gt;Prefences-&gt;External Tools 找到 Revision Control Diff/Merge 选项，在安装了版本控制软件后可以在这里找到相关的选项，以博主为例，博主使用的是 TortoiseSVN，这里的选项是 TortoiseMegre。目前 Unity3D 支持的版本控制软件有 SourceGear DiffMerge、TKDiff、P4Megre、TortoiseMegre、WinMegre、PlasticSCM Megre。</p>
 </li>
 </ul>
-<p><img src="/posts/1320325685/20150702094529611.jpg" alt="编辑器设置"></p>
-<p><img src="/posts/1320325685/20150702094714776.jpg" alt="编辑器设置"></p>
+<p><a href="/posts/1320325685/20150702094529611.jpg" data-fancybox="gallery" data-src="/posts/1320325685/20150702094529611.jpg" data-caption="编辑器设置">
+    <img src="/posts/1320325685/20150702094529611.jpg" alt="编辑器设置"  class="post-img" loading="lazy">
+    <span class="post-img-tip">编辑器设置</span>
+</a> </p>
+<p><a href="/posts/1320325685/20150702094714776.jpg" data-fancybox="gallery" data-src="/posts/1320325685/20150702094714776.jpg" data-caption="编辑器设置">
+    <img src="/posts/1320325685/20150702094714776.jpg" alt="编辑器设置"  class="post-img" loading="lazy">
+    <span class="post-img-tip">编辑器设置</span>
+</a> </p>
 <p>好了，在完成以上准备工作后，我们就可以开始进行 Unity3D 项目的版本控制了，目前在 Unity3D 中我们主要有以下三种方式来对 Unity3D 项目进行版本控制：</p>
 <h2 id="使用-asset-server-进行版本控制">使用 Asset Server 进行版本控制</h2>
 <p>Unity3D 的<a href="http://unity3d.com/unity/team/assetserver/">Asset Server</a>是一个 Unity3D 内部集成的版本控制软件，它和我们熟知的 SVN 类似，适合在小团队内进行版本控制，这是一个收费软件，尽管在某些方面它甚至比 SVN 还要方便，不过在实际的项目中使用这个的还是比较少的，所以如果大家对这个感兴趣，可以从这里了解它的具体情况，这里我们不打算介绍这个软件的使用。</p>
@@ -1039,7 +1049,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/169430744\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/2070070822\/'">
         随便逛逛
       </span>
       
@@ -1573,11 +1583,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1674,6 +1682,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1711,7 +1720,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1731,6 +1740,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -1975,7 +1985,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

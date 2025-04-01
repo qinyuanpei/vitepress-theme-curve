@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -770,10 +774,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p>今天来介绍博主最近捣腾的一个小游戏“贪吃蛇”。“贪吃蛇”这个游戏相信大家都不会感到陌生吧。今天博主将通过<a href="http://love2d.org/">Love2D</a>这款游戏引擎来为大家实现一个简单的贪吃蛇游戏,在本篇文章当中我们将会涉及到“贪吃蛇”的基本算法、Lua 语言编程等基本的内容，希望能够对大家开发类似的游戏提供借鉴和思考，文章中如有不足之处，还希望大家能够谅解，因为博主的游戏开发基本就是这样慢慢摸索着学习，所以难免会有不足的地方。</p>
 <h2 id="游戏算法">游戏算法</h2>
 <p>我们首先来看看贪吃蛇是怎么移动的？
-<img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nhb62pj205m05lq33.jpg" alt="贪吃蛇游戏算法演示1">
-<img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05k1yzipj205m05lq33.jpg" alt="贪吃蛇游戏算法演示2">
-<img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05dugbchj205m05lq33.jpg" alt="贪吃蛇游戏算法演示3">
-<img src="https://ww1.sinaimg.cn/large/4c36074fly1fz01zh5qn2j205m05lq33.jpg" alt="贪吃蛇游戏算法演示4">
+<a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05nhb62pj205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nhb62pj205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示1">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nhb62pj205m05lq33.jpg" alt="贪吃蛇游戏算法演示1"  class="post-img" loading="lazy">
+    <span class="post-img-tip">贪吃蛇游戏算法演示1</span>
+</a> 
+<a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05k1yzipj205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05k1yzipj205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示2">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05k1yzipj205m05lq33.jpg" alt="贪吃蛇游戏算法演示2"  class="post-img" loading="lazy">
+    <span class="post-img-tip">贪吃蛇游戏算法演示2</span>
+</a> 
+<a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05dugbchj205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05dugbchj205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示3">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05dugbchj205m05lq33.jpg" alt="贪吃蛇游戏算法演示3"  class="post-img" loading="lazy">
+    <span class="post-img-tip">贪吃蛇游戏算法演示3</span>
+</a> 
+<a href="https://ww1.sinaimg.cn/large/4c36074fly1fz01zh5qn2j205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz01zh5qn2j205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示4">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz01zh5qn2j205m05lq33.jpg" alt="贪吃蛇游戏算法演示4"  class="post-img" loading="lazy">
+    <span class="post-img-tip">贪吃蛇游戏算法演示4</span>
+</a> 
 通过这四张图的演示，我们可以发现这样一个规律：</p>
 <blockquote>
 <p>蛇的移动其实是将蛇身体的最后一个元素移动到第一个元素的位置</p>
@@ -1015,8 +1031,14 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">  <span class="kr">return</span> <span class="n">snake</span>
 </span></span><span class="line"><span class="cl"><span class="kr">end</span>
 </span></span></code></pre></div><p>将代码压缩成.love 文件后就可以运行了，我们来看看最终的效果：</p>
-<p><img src="https://i.loli.net/2021/10/25/BC4KqmDbRtdj8he.png" alt="Love2D 贪吃蛇游戏示例1"></p>
-<p><img src="https://i.loli.net/2021/10/25/xmTubKXEdM8lZoP.png" alt="Love2D 贪吃蛇游戏示例2"></p>
+<p><a href="https://i.loli.net/2021/10/25/BC4KqmDbRtdj8he.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/10/25/BC4KqmDbRtdj8he.png" data-caption="Love2D 贪吃蛇游戏示例1">
+    <img src="https://i.loli.net/2021/10/25/BC4KqmDbRtdj8he.png" alt="Love2D 贪吃蛇游戏示例1"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Love2D 贪吃蛇游戏示例1</span>
+</a> </p>
+<p><a href="https://i.loli.net/2021/10/25/xmTubKXEdM8lZoP.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/10/25/xmTubKXEdM8lZoP.png" data-caption="Love2D 贪吃蛇游戏示例2">
+    <img src="https://i.loli.net/2021/10/25/xmTubKXEdM8lZoP.png" alt="Love2D 贪吃蛇游戏示例2"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Love2D 贪吃蛇游戏示例2</span>
+</a> </p>
 <p>本文的项目作为开源项目托管在 Github 上，可以通过<a href="https://github.com/qinyuanpei/Love2D_Snake">Github</a>来获取项目源代码。谢谢大家，今天的内容就是这样了。</p>
             </div>
 
@@ -1239,7 +1261,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/1836680899\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/1417719502\/'">
         随便逛逛
       </span>
       
@@ -1773,11 +1795,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1874,6 +1894,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1911,7 +1932,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1931,6 +1952,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2175,7 +2197,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

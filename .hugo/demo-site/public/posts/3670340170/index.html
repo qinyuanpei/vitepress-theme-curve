@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -1000,7 +1004,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="p">})</span>
 </span></span><span class="line"><span class="cl">  <span class="p">},</span>
 </span></span></code></pre></div><p>此时，我们可以注意到，ABP vNext 与 Ant Design Vue 完美地集成在一起，并且参数的转换完全符合我们的预期。这样做的好处显而易见，我们只需要遵循 ABP vNext 的规范进行开发即可，考虑到 ABP vNext 可以直接将<code>ApplicationService</code>暴露为 API 接口，这意味着我们写完了接口，就可以立即开始前后端的联调工作，这无疑可以加快我们的研发效率！</p>
-<p><img src="https://i.loli.net/2021/04/09/Uq1M4ZEOJ5VhTdl.png" alt="ABP vNext 与 Ant Design Vue 完成整合"></p>
+<p><a href="https://i.loli.net/2021/04/09/Uq1M4ZEOJ5VhTdl.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/04/09/Uq1M4ZEOJ5VhTdl.png" data-caption="ABP vNext 与 Ant Design Vue 完成整合">
+    <img src="https://i.loli.net/2021/04/09/Uq1M4ZEOJ5VhTdl.png" alt="ABP vNext 与 Ant Design Vue 完成整合"  class="post-img" loading="lazy">
+    <span class="post-img-tip">ABP vNext 与 Ant Design Vue 完成整合</span>
+</a> </p>
 <p>好了，以上就是这篇博客的全部内容啦！这篇博客要实现的功能其实并不复杂，唯一的难点是，需要在前端和后端两个技术栈上频繁地切换上下文，这可能就是全栈开发者面临的最大挑战，因为技术世界浩如烟海，而一个人的精力终究有限，古人云：<strong>朝闻道，夕死可矣</strong>，人生百年，吾道不孤，还是请你继续努力哦！</p>
 
             </div>
@@ -1229,7 +1236,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/2070070822\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/3411909634\/'">
         随便逛逛
       </span>
       
@@ -1787,11 +1794,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1888,6 +1893,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1925,7 +1931,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1945,6 +1951,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2189,7 +2196,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

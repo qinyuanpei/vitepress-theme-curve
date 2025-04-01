@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -775,7 +779,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p>一直想写篇文章，聊一聊“<strong>低代码</strong>”这个话题。一方面，“<strong>低代码</strong>”这个概念确实非常火，其热度丝毫不亚于曾经的“<strong>中台</strong>”。有人说，2021 年是属于“<strong>云原生</strong>”的时代，看起来我们每一年都在被技术的“<strong>娱乐圈</strong>”抛弃，明明连 <code>Kubernetes</code> 都还没有入门呢？人们已然在欢呼雀跃般地声称要抛弃 <code>Docker</code> 。这个世界有时就是如此地魔幻，明明我们生活在一个拥有大量基础设施的时代，我们不必再像前辈们“刀耕火种”一般地去开发软件，可我们的生存空间为什么就越来越狭窄了呢？拼多多事件过去没有多久，腾讯的阳光普照奖再次让“<strong>打工魂</strong>”觉醒，也许果真像大鱼海棠里设定的一样，人的记忆只有 7 秒。而另一方面，我想结合我最近开发“<strong>工作流</strong>”的感受，来吐槽下这个看起来美好的“<strong>低代码</strong>”。也许，对企业而言，引入“<strong>低代码</strong>”的确能减少研发成本，可博主并不认为，它会降低业务本身的复杂性，如果所有声称“<strong>低代码</strong>”或者“<strong>无代码</strong>”的项目，最终依然需要研发人员来作为收场。对此，我想说，对不起，这不是我想要的“<strong>低代码</strong>”。</p>
 <h1 id="低代码发展现状">低代码发展现状</h1>
 <p>或许，一个人成熟的标志就是，在面对一个未知的事物的时候，决不会不由分说地一通吐槽，就像一个人在职场上，你不能永远都只是学会抱怨，相对于抱怨，人们更希望听到的是解决方案。所以，一个人的成长，本质上就是不断学会为自己、为别人找解决方案的过程，前者是为了认识自我，而后者是为了交换资源。所以，在听我吐槽“<strong>低代码</strong>”前，不妨先一起来看看低代码的发展现状。</p>
-<p><img src="https://i.loli.net/2021/02/15/j6dAcDPEopHSLCa.png" alt="低代码产品发展现状"></p>
+<p><a href="https://i.loli.net/2021/02/15/j6dAcDPEopHSLCa.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/02/15/j6dAcDPEopHSLCa.png" data-caption="低代码产品发展现状">
+    <img src="https://i.loli.net/2021/02/15/j6dAcDPEopHSLCa.png" alt="低代码产品发展现状"  class="post-img" loading="lazy">
+    <span class="post-img-tip">低代码产品发展现状</span>
+</a> </p>
 <h2 id="国外趋势">国外趋势</h2>
 <p>有人认为，“<strong>低代码</strong>”的兴起源于钉钉的低代码应用 <a href="https://www.aliwork.com/">易搭</a> 的落地。诚然，巨头企业的每一个动向都引领着整个行业的风潮，可低代码这个概念最早要追溯到 1980 年。彼时，<strong>IBM</strong> 的快速应用程序开发工具(<strong>RAD</strong>)被冠以新的名字——低代码，这是低代码这个概念首次面向大众，此后的 40 年里，国外诞生了诸如 <a href="https://www.outsystems.com/">Outsystem</a> 、<a href="https://www.mendix.com/">Mendix</a> 、 <a href="https://www.zoho.com/creator/developers/">Zoho Creator</a> 等等的产品，整体发展相对缓慢。直到 2015 年以后，AWS、Google、Microsoft 和 Oracle 等巨头开始入局低代码领域。2018 年，西门子更是宣布以 6 亿欧元收购低代码应用开发领域的领导者 <a href="https://www.mendix.com/">Mendix</a> 、快速应用开发的低代码平台 <a href="https://www.outsystems.com/">Outsystem</a> 获得 3.6 亿美金的投资，低代码平台市场开始火爆起来，我们所熟悉的 <a href="https://docs.microsoft.com/zh-cn/power-platform/">Power Platform</a>，其实就是微软的低代码开发平台，低代码领域通常都需要大量的积累和研发，需要有 10 到 20 年左右的技术沉淀。</p>
 <h2 id="国内风云">国内风云</h2>
@@ -790,12 +797,24 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>服务聚合类：以 <a href="https://www.apicloud.com/">APICloud</a> 为代表，基于 API 聚合的组件市场工具，通过流程管理工具，可以管理整个应用的开发周期，从产品、设计开始，到研发测试和运营。</li>
 </ul>
 <p>所以，整体而言，低代码产品的核心是<strong>表单引擎</strong> 和 <strong>流程引擎(BPM)</strong>，外围支撑是<strong>BI 引擎</strong>、*<strong>协同工作</strong>、<strong>服务聚合</strong>等等，目前，市面上主流的低代码产品，表单引擎和流程引擎(BPM)基本是标配，所以，严格地说起来，上面的分类并不严谨，因为基本上都是混合式的产品形态。下面是部分低代码产品的截图：</p>
-<p><img src="https://i.loli.net/2021/02/15/sY4r1ZHevJlKIE6.png" alt="某“低代码”二维码应用"></p>
-<p><img src="https://i.loli.net/2021/02/15/u6AIRJGCeV4hPSg.png" alt="某“低代码”人力资源管理系统"></p>
-<p><img src="https://i.loli.net/2021/02/15/4DyZAzi53wVEn6p.png" alt="某“低代码”可视化搭建系统"></p>
+<p><a href="https://i.loli.net/2021/02/15/sY4r1ZHevJlKIE6.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/02/15/sY4r1ZHevJlKIE6.png" data-caption="某“低代码”二维码应用">
+    <img src="https://i.loli.net/2021/02/15/sY4r1ZHevJlKIE6.png" alt="某“低代码”二维码应用"  class="post-img" loading="lazy">
+    <span class="post-img-tip">某“低代码”二维码应用</span>
+</a> </p>
+<p><a href="https://i.loli.net/2021/02/15/u6AIRJGCeV4hPSg.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/02/15/u6AIRJGCeV4hPSg.png" data-caption="某“低代码”人力资源管理系统">
+    <img src="https://i.loli.net/2021/02/15/u6AIRJGCeV4hPSg.png" alt="某“低代码”人力资源管理系统"  class="post-img" loading="lazy">
+    <span class="post-img-tip">某“低代码”人力资源管理系统</span>
+</a> </p>
+<p><a href="https://i.loli.net/2021/02/15/4DyZAzi53wVEn6p.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/02/15/4DyZAzi53wVEn6p.png" data-caption="某“低代码”可视化搭建系统">
+    <img src="https://i.loli.net/2021/02/15/4DyZAzi53wVEn6p.png" alt="某“低代码”可视化搭建系统"  class="post-img" loading="lazy">
+    <span class="post-img-tip">某“低代码”可视化搭建系统</span>
+</a> </p>
 <h1 id="低代码研发痛点">低代码研发痛点</h1>
 <p>相信大家都知道了，接下来的内容是本文真正的重点。为什么要这样说呢？这主要和博主自身的工作有关系，简单来说，公司需要一个想象中的可视化设计器，业务人员只需要通过拖拽就可以完成业务逻辑的编排，而开发人员则需要负责对外输出组件供业务人员使用。这听起来特别像我们刚刚讨论的第二种产品形态对不对？听起来非常美好对不对？我承认这个想法真的符合潮流、非常的“低代码”。所以，我们前期采用了微软的 <a href="https://docs.microsoft.com/zh-cn/dotnet/framework/windows-workflow-foundation/">Windows Workflow Foundation</a> 框架，使用以后的效果大概是下面这个样子：</p>
-<p><img src="https://i.loli.net/2021/02/15/hYpq4nCk5BsFdHi.jpg" alt="Windows Workflow Foundation 设计器"></p>
+<p><a href="https://i.loli.net/2021/02/15/hYpq4nCk5BsFdHi.jpg" data-fancybox="gallery" data-src="https://i.loli.net/2021/02/15/hYpq4nCk5BsFdHi.jpg" data-caption="Windows Workflow Foundation 设计器">
+    <img src="https://i.loli.net/2021/02/15/hYpq4nCk5BsFdHi.jpg" alt="Windows Workflow Foundation 设计器"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Windows Workflow Foundation 设计器</span>
+</a> </p>
 <h2 id="多人协作不便">多人协作不便</h2>
 <p>那么，我们在这个过程中到底遇到了哪些问题呢？首先，这种可视化编辑的场景，遇到的第一个问题就是<strong>多人协作</strong>，如果你使用过腾讯文档、钉钉文档这类在线文档类产品，你应该能领悟到我说的这个点。微软的这个框架是采用<code>XMAL</code>这种格式来储存数据的，虽然理论上可以通过 <code>Git</code> 实现多人协作，实际维护起来表示非常地麻烦，所以，我们最终由单人去维护这些工作流。那么，更广义上的低代码又该如何解决这个问题呢？流程图这种东西，就是一种看起来非常清晰，改起来非常麻烦的东西，就像一条锁链一样，你要不停地断开和接上。</p>
 <h2 id="孱弱的表达能力">孱弱的表达能力</h2>
@@ -1033,7 +1052,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/426338252\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/3670340170\/'">
         随便逛逛
       </span>
       
@@ -1591,11 +1610,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1692,6 +1709,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1729,7 +1747,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1749,6 +1767,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -1993,7 +2012,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -771,7 +775,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <h1 id="websocket概述">WebSocket概述</h1>
 <p>  WebSocket是HTML5标准中的一部分，从Socket这个字眼我们就可以知道，这是一种网络通信协议。WebSocket是为了弥补HTTP协议的不足而产生的，我们知道，HTTP协议有一个重要的缺陷，即：请求只能由客户端发起。这是因为HTTP协议采用了经典的请求-响应模型，这就限制了服务端主动向客户端推送消息的可能。与此同时，HTTP协议是无状态的，这意味着连接在请求得到响应以后就关闭了，所以，每次请求都是独立的、上下文无关的请求。这种单向请求的特点，注定了客户端无法实时地获取服务端的状态变化，如果服务端的状态发生连续地变化，客户端就不得不通过“轮询”的方式来获知这种变化。毫无疑问，轮询的方式不仅效率低下，而且浪费网络资源，在这种背景下，WebSocket应运而生。</p>
 <p>  WebSocket协议最早于2008年被提出，并于2011年成为国际标准。目前，主流的浏览器都已经提供了对WebSocket的支持。在WebSocket协议中，客户端和服务器之间只需要做一次握手操作，就可以在客户端和服务器之间实现双向通信，所以，WebSocket可以作为**<a href="https://en.wikipedia.org/wiki/Push_technology">服务器推送</a>**的实现技术之一。因为它本身以HTTP协议为基础，所以对HTTP协议有着更好的兼容性，无论是通信效率还是传输的安全性都能得到保证。WebSocket没有同源限制，客户端可以和任意服务器端进行通信，因此具备通过一个单一连接来支持上下游通信的能力。从本质上来讲，WebSocket是一个在握手阶段使用HTTP协议的TCP/IP协议，换句话说，一旦握手成功，WebSocket就和HTTP协议再无瓜葛，下图展示了它与HTTP协议的区别：</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1fziy4vzaqgj20hg0e7q3d.jpg" alt="HTTP与WebSocket的区别"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fziy4vzaqgj20hg0e7q3d.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fziy4vzaqgj20hg0e7q3d.jpg" data-caption="HTTP与WebSocket的区别">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fziy4vzaqgj20hg0e7q3d.jpg" alt="HTTP与WebSocket的区别"  class="post-img" loading="lazy">
+    <span class="post-img-tip">HTTP与WebSocket的区别</span>
+</a> </p>
 <h1 id="构建一个聊天室">构建一个聊天室</h1>
 <p>  OK，在对WebSocket有了一个基本的认识以后，接下来，我们以一个最简单的场景来体验下WebSocket。这个场景是什么呢？你已经知道了，答案就是网络聊天室。这是一个非常典型的实时场景。这里我们分为服务端实现和客户端实现，其中：服务端实现自豪地采用.NET Core，而客户端实现采用Vue的双向绑定特性。现在是公元2018年了，当jQuery已成往事，操作DOM这种事情交给框架去做就好，而且我本人很喜欢MVVM这种模式，Vue的渐进式框架，非常适合我这种不会写ES6的伪前端。</p>
 <h2 id="net-core与中间件">.NET Core与中间件</h2>
@@ -822,7 +829,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span></code></pre></div><p>  虽然不大清楚，为什么这里反序列化后的内容中会有大量的**\0**，以及这个全新的类型ArraySegment到底是个什么鬼，不过程序员的一生无非都在纠结这样两个问题，“it works” 和 “it doesn&rsquo;t works&quot;，就像人生里会让你纠结的无非是”她喜欢你“和”她不喜欢我“这样的问题。有时候，这样的问题简直就是玄学，五柳先生好读书而不求甚解，我想这个道理在这里同样适用，截止到我写这篇博客前，这个代码一直工作得很好，所以，这两个问题我们可以暂时先放在一边，因为眼下还有比这更为重要的事情。</p>
 <p>  通过这篇<a href="https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/websockets?view=aspnetcore-2.1">文档</a>，我们可以非常容易地构建出一个”实时应用“，可是它离我们这篇文章中的目标依然有点距离，如果各位足够细心的话，就会发现这样一个问题，即示例中的代码都是写在<strong>app.Use()<strong>方法中的，这样会使我们的Startup类显得臃肿，而熟悉OWIN或者ASP.NET Core的朋友，就会知道Startup类是一个非常重要的东西，我们通常会在这里配置相关的组件。在ASP.NET Core中，我们可以通过</strong>Configure()<strong>方法来为</strong>IApplicationBuilder</strong>增加相关组件，这种组件通常被称为中间件。那么，什么是中间件呢？</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1fzixy9ja6ij20go0ao3z9.jpg" alt="中间件示意图"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fzixy9ja6ij20go0ao3z9.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fzixy9ja6ij20go0ao3z9.jpg" data-caption="中间件示意图">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fzixy9ja6ij20go0ao3z9.jpg" alt="中间件示意图"  class="post-img" loading="lazy">
+    <span class="post-img-tip">中间件示意图</span>
+</a> </p>
 <p>  从这张图中可以看出，中间件实际上是指在HTTP请求管道中处理请求和响应的组件，每个组件都可以决定是否要将请求传递给下一个组件，比如身份认证、日志记录就是最为常见的中间件。在ASP.NET Core中，我们通过app.Use()方法来定义一个Func&lt;RequestDelegate,RequestDelegate&gt;类型的参数，所以，我们可以简单地认为，在ASP.NET Core中，Func&lt;RequestDelegate,RequestDelegate&gt;就是一个中间件，而通过app.Use()方法，这些中间件会根据注册的先后顺序组成一个链表，每一个中间件的输入是上一个中间件的输出，每一个中间件的输出则会成为下一个中间件的输入。简而言之，每一个RequestDelegate对象不仅包含了自身对请求的处理，而且包含了后续中间件对请求的处理，我们来看一个简单的例子：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-CSharp" data-lang="CSharp"><span class="line"><span class="cl"><span class="n">app</span><span class="p">.</span><span class="n">Use</span><span class="p">(</span><span class="kd">async</span> <span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="n">next</span><span class="p">)=&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -842,7 +852,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">next</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span></code></pre></div><p>  通过Postman或者任意客户端发起请求，我们就可以得到下面的结果，现在想象一下，如果我们在第一种中间件中不调用next()会怎么样呢？答案是中间件之间的链路会被打断，这意味着后续的第二个、第三个中间件都不会被执行。什么时候我们会遇到这种场景呢？当我们的认证中间件认为一个请求非法的时候，此时我们不应该让用户访问后续的资源，所以直接返回403对该请求进行拦截。在大多数情况下，我们需要让请求随着中间件的链路传播下去，所以，对于每一个中间件来说，除了完成自身的处理逻辑以外，还至少需要调用一次next()，以保证下一个中间件会被调用，这其实和职责链模式非常相近，可以让数据在不同的处理管道中进行传播。</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nfs2htj213t078mxj.jpg" alt="ASP.NET Core中间件示例"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05nfs2htj213t078mxj.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nfs2htj213t078mxj.jpg" data-caption="ASP.NET Core中间件示例">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nfs2htj213t078mxj.jpg" alt="ASP.NET Core中间件示例"  class="post-img" loading="lazy">
+    <span class="post-img-tip">ASP.NET Core中间件示例</span>
+</a> </p>
 <p>  OK，这里我们继续遵从这个约定，将整个聊天室相关的逻辑写到一个中间件里，这样做的好处是，我们可以将不同的WebSocket互相隔离开，同时可以为我们的Startup类”减负“。事实证明，这是一个正确的决定，在开发基于WebSocket的弹幕功能时，我们就是用这种方式开发了新的中间件。这里，我们给出的是WebSocketChat中间件中最为关键的部分，详细的代码我已经放在<a href="https://github.com/qinyuanpei/dotnetcore-pritices">Github</a>上啦，大家可以参考<a href="https://github.com/qinyuanpei/dotnetcore-pritices/blob/master/hello-webapi-1/Middlewares/WebSocketChat.cs">WebSocketChat</a>类，其基本原理是：使用一个字典来存储每一个聊天室中的会话(Socket)，当用户打开或者关闭一个WebSocket连接时，会向服务器端发送一个事件(Event)，这样客户端中持有的用户列表将被更新，而根据发送的消息，可以决定这条消息是被发给指定联系人还是群发：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-CSharp" data-lang="CSharp"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">async</span> <span class="n">Task</span> <span class="n">Invoke</span><span class="p">(</span><span class="n">HttpContext</span> <span class="n">context</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -912,12 +925,21 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></span></code></pre></div><p>  下面是实际的运行效果，果然是非常简洁呢，哈哈:laughing:</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05jy4qvpj20wa0flq50.jpg" alt="WebSocket聊天室展示"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05jy4qvpj20wa0flq50.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05jy4qvpj20wa0flq50.jpg" data-caption="WebSocket聊天室展示">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05jy4qvpj20wa0flq50.jpg" alt="WebSocket聊天室展示"  class="post-img" loading="lazy">
+    <span class="post-img-tip">WebSocket聊天室展示</span>
+</a> </p>
 <h2 id="再看websocket">再看Websocket</h2>
 <p>  好了，我们花了如此大的篇幅来讲WebSocket，那么你对WebSocket了解了多少呢？或许通过这个聊天室的实例，我们对WebSocket有了一个相对直观的认识，可你是否想过换一个角度来认识它呢？我们说过，WebSocket是以HTTP协议为基础的，那么至少可以在握手阶段捕获到相关请求吧！果断在Chrome中打开”开发者工具“，在面板上选择监听”WebSocket&quot;，然后我们就会得到下面的内容。</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05docrh3j219i0cydgl.jpg" alt="WebSocket的秘密-请求"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05docrh3j219i0cydgl.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05docrh3j219i0cydgl.jpg" data-caption="WebSocket的秘密-请求">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05docrh3j219i0cydgl.jpg" alt="WebSocket的秘密-请求"  class="post-img" loading="lazy">
+    <span class="post-img-tip">WebSocket的秘密-请求</span>
+</a> </p>
 <p>  相比HTTP协议，WebSocket在握手阶段的请求有所变化，主要体现在Upgrade、Connection这两个字段，以及Sec-WebSocket系列的这些字段。下面来分别解释下这些字段的含义，Upgrade和Connection这两个字段，是最为关键的两个字段，它的目的是告诉Apache、Nginx这些服务器，这是一个WebSocket请求。接下来，是Sec-WebSocket-Key、Sec-WebSocket-Protocol和Sec-WebSocket-Version这三个字段，其中Sec-WebSocket-Key是一个由浏览器采用Base64算法随机生成的字符串，目的是验证服务器是否真的支持WebSocket；Sec-WebSocket-Protocol则是一个由用户指定的字符串，目的是区分同一URL下，不同服务所需要的协议；Sec-WebSocket-Version是告诉服务器浏览器支持的WebSocket版本，标准规定9-12的版本号是保留字段，所以在这里我们看到的版本号是13.</p>
-<p><img src="https://ww1.sinaimg.cn/large/4c36074fly1fz01z8ty8kj211l05xmx6.jpg" alt="WebSocket的秘密-响应"></p>
+<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fz01z8ty8kj211l05xmx6.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz01z8ty8kj211l05xmx6.jpg" data-caption="WebSocket的秘密-响应">
+    <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz01z8ty8kj211l05xmx6.jpg" alt="WebSocket的秘密-响应"  class="post-img" loading="lazy">
+    <span class="post-img-tip">WebSocket的秘密-响应</span>
+</a> </p>
 <p>  那么，对于这个浏览器发起的这个请求，服务端是如何做出响应的呢？这就要来看看服务端返回的内容。 和客户端发起的请求类似，服务端返回的内容中依然会有Upgrade和Connection这两个字段，它们和请求中的含义是完全一致的。这里需要说明的是Sec-WebSocket-Accept这个字段，我们前面提到，浏览器会通过WebSocket-Key检验服务器是否真的支持WebSocket，具体怎么检验呢？是通过下面的算法。除此之外，一个特殊的地方是这个Response的状态码是101，这表示服务端说：下面我们就按照WebSocket协议来通信吧！当然，一个更为残酷的现实是，从这里开始，就不再是HTTP协议的势力范围了啊：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Shell" data-lang="Shell"><span class="line"><span class="cl">sec-websocket-accept <span class="o">=</span> base64<span class="o">(</span>hsa1<span class="o">(</span>sec-websocket-key + 258EAFA5-E914-47DA-95CA-C5AB0DC85B11<span class="o">))</span>
 </span></span></code></pre></div><h1 id="本文小结">本文小结</h1>
@@ -1144,7 +1166,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/1085014581\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/352037321\/'">
         随便逛逛
       </span>
       
@@ -1702,11 +1724,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1803,6 +1823,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1840,7 +1861,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1860,6 +1881,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2104,7 +2126,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

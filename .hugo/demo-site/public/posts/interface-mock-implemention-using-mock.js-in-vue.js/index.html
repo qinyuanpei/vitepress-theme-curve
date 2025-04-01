@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -775,7 +779,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p>最近这段时间，我一直在参与一个前端项目。每当我从庸碌的生活中赢得片刻喘息的时候，我不由得感慨，在程序员朴实无华且枯燥的职业生涯里，写自己喜欢的代码的机会少之又少，写别人喜欢的代码的机会俯拾皆是，更多的时候像是“<strong>为他人作嫁衣裳</strong>”。古人云，“<strong>遍身罗绮者，不是养蚕人</strong>”，当每天面对着被改得面目全非的代码的时候，内心固然早已波澜不惊、宠辱偕忘，可还是会期待美好的事情发生，因为从工程化的角度而言，每天都在思考的事情，其实就是怎么样做会更好一点。过去这些年里，微服务、前后端分离的呐喊声不绝于耳，实际应用过程中则是会遇到各种各样的问题。在今天这篇文章里，我想和大家聊聊 Vue.js 结合 Mock.js 实现接口模拟这个话题，为什么选择这个话题呢？我个人认为，它实际上触及了前后端分离的“<strong>灵魂</strong>”，并且由此可以引出像文档管理、流程控制等等一系列研发协同的问题。你或许会忍不住问道，前后端分离的“<strong>灵魂</strong>”是什么呢？各位看官们稍坐，且听我一一道来！</p>
 <h1 id="问题现状">问题现状</h1>
 <p>在谈到前后端分离这个话题的时候，在公司层面上对应地往往是组织架构的分离，典型的做法就是让前端和后端成为两个不同的团队，其中，前端团队负责表示层的实现，不限于页面布局、样式风格、交互逻辑等等；后端团队负责数据接口的实现，不限于数据库设计、接口设计、编写 API 等等。对应到 Vue.js 里，前端团队负责写各种各样的页面/组件、数据绑定，后端团队负责提供各种各样的数据接口，这听起来非常地合理，对不对？的确，主流的前后端分离实践都是这样讲的，所以，我们只要套用这个模型，就可以达到预期的效果，对不对？可惜，人类习惯于为这个世界寻找某种颠扑不破的真理，可恰恰人类本身才是这个世界里最不稳定的存在？疫情常态化的当下，每次都被病毒一通嘲讽，抄作业都不会抄啊！</p>
-<p><img src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB.png" alt="前后端分离模式下的协同开发"></p>
+<p><a href="/posts/interface-mock-implemention-using-mock.js-in-vue.js/%e5%89%8d%e5%90%8e%e7%ab%af%e5%88%86%e7%a6%bb.png" data-fancybox="gallery" data-src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/%e5%89%8d%e5%90%8e%e7%ab%af%e5%88%86%e7%a6%bb.png" data-caption="前后端分离模式下的协同开发">
+    <img src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/%e5%89%8d%e5%90%8e%e7%ab%af%e5%88%86%e7%a6%bb.png" alt="前后端分离模式下的协同开发"  class="post-img" loading="lazy">
+    <span class="post-img-tip">前后端分离模式下的协同开发</span>
+</a> </p>
 <p>首先，第一个问题，前、后端团队没有形成“契约”，前端团队拿到原型以后就开始设计页面，ViewModel 中的字段命名、定义完全是由前端团队凭“感觉”写出来的，人类离谱就离谱在，可以靠“感觉”这种玄之又玄的东西决定很多事情。这样做的后果就是，后面真正对接后端接口的时候，发现大量的字段没法对应上，不得不再折腾一遍数据绑定，如果是中途由别人来接手，那么面对的可能就是不同的数据结构间的映射转换。试想，后端程序员尚有 <a href="https://automapper.org/">AutoMapper</a> 和 <a href="https://github.com/MapsterMapper/Mapster">Mapster</a> 可以用，前端程序员可就没有那么幸运啦！更不必说，前端天生比后端面临更频繁的改动，只要涉及到页面布局、交互逻辑的变化，ViewModel 的修改基本无可避免，这样就导致同一个页面多次返工，我相信这个结果大家都不想看到。</p>
 <p>其次，当前、后端团队约定好接口文档以后，双方都按照这份接口文档去完成各自的开发工作，这样听起来简直不能更合理对不对？实际上，在后端团队完成接口开发以前，前端团队会有一段时间的“真空期”或者“黑写期”，因为前端并不知道这段代码能否在真实的环境下工作。此时，前端团队可能会造一点假数据来进行接口模拟，得益于 JavaScript 这门语言的高度灵活、自由，前端团队可能会直接调用一个本地函数来返回假数据，这意味着它并不会触发真实地 HTTP 请求。那么，当有一天后端团队完成了接口开发，你将会把这些本地函数替换为 <a href="https://axios-http.com/">Axios</a> 的方法，甚至在更极端的情况下，前端团队不能访问后端团队的接口，此时，双方会就本地函数还是  <a href="https://axios-http.com/">Axios</a> 方法产生一场拉锯战，你告诉我，还有什么比这更折磨一个人的吗？</p>
 <p>所以，综合下来，其实是两个非常普遍的问题：</p>
@@ -862,7 +869,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span></code></pre></div><p>其中，<code>$http</code> 是挂载到 <code>Vue</code> 原型上的 Axios 对象，显而易见，只要前、后端都严格按照文档来定义这个路由，那么，这个代码是不需要再调整的。等后端接口开发完成以后，我们只需要切换到正式地址联调即可。当然，前端和后端可能会部署在不同的服务器上，而这个对我们的影响，无外乎是修改一下 Axios 的 <code>baseURL</code>。那么，Vue 怎么知道什么时候调用 Mock，什么时候调用真实接口呢？答案就藏在入口文件 <code>main.js</code> 中，只要我们导入了  <code>/mock/index.js</code> 这个文件，Mock 就会生效：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="s1">&#39;./mock/index&#39;</span>
 </span></span></code></pre></div><p>如下图所示，这里的的消息列表完全由 Mock.js 驱动，其中的消息内容、时间等都是随机生成的：</p>
-<p><img src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/Vue.js-With-Mock.js.png" alt="Vue.js 搭配 Mock.js 使用效果"></p>
+<p><a href="/posts/interface-mock-implemention-using-mock.js-in-vue.js/Vue.js-With-Mock.js.png" data-fancybox="gallery" data-src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/Vue.js-With-Mock.js.png" data-caption="Vue.js 搭配 Mock.js 使用效果">
+    <img src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/Vue.js-With-Mock.js.png" alt="Vue.js 搭配 Mock.js 使用效果"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Vue.js 搭配 Mock.js 使用效果</span>
+</a> </p>
 <p>在平时的工作中，我常常听到一个词叫做“造数据”，本质上这依然属于 Mock 的范畴。现实生活中使用到的数据，毫无疑问会比这篇文章中的例子更加复杂和多样化，典型的有地址、邮箱、身份证号、IP 等等。对于这些，Mock.js 同样可以模拟，下面列举了常见的 API，更详细的可以参考官方文档中的 <a href="https://mockjs.com/examples.html">示例</a>：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// 随机生成省份、直辖市或者自治区
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">Random</span><span class="p">.</span><span class="nx">province</span><span class="p">()</span>
@@ -886,9 +896,15 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span></code></pre></div><p>如果用使用过 .NET 里的 <a href="https://github.com/bchavez/Bogus">Bogus</a> 这个库，相信我，你会对这一切感到相当亲切。</p>
 <h1 id="登高望远">登高望远</h1>
 <p>OK，写到这里一切，从点题的角度来看，这篇文章已经可以画上完美的句号，因为 Mock.js 在 Vue 中的基本用法，其实已经完全讲完啦！当然，我们在这个基础上尝试更多的东西。比如，<a href="http://yapi.smart-xwork.cn/">YAPI</a>，这同样是一个功能强大的 API 管理平台，它可以导入 Swagger 格式的接口文档，并为每一个 API 接口创建对应的 Mock 接口，在这种情况下，前端可以使用对应的 Mock 接口完成前期开发。当然，我认为，一个逻辑上自洽的流程应该是，定义接口、生成文档、生成 Mock 接口、使用 Mock 接口、使用真实接口，大家觉得呢？</p>
-<p><img src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/YAPI-With-Swagger.png" alt="通过 YAPI 管理 API 接口"></p>
+<p><a href="/posts/interface-mock-implemention-using-mock.js-in-vue.js/YAPI-With-Swagger.png" data-fancybox="gallery" data-src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/YAPI-With-Swagger.png" data-caption="通过 YAPI 管理 API 接口">
+    <img src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/YAPI-With-Swagger.png" alt="通过 YAPI 管理 API 接口"  class="post-img" loading="lazy">
+    <span class="post-img-tip">通过 YAPI 管理 API 接口</span>
+</a> </p>
 <p>个人心目中，只有国产软件 <a href="https://www.apifox.cn/">Apifox</a> 能勉强达到这一点，如图所示，每当我们填入一个 API 接口定义的时候，它会为我们创建对应的用例，每个用例对应一个 Mock 的地址，某种程度上讲，它的确做到它对外宣称的集 API 文档、API 调试、API Mock、API 自动化测试 等多种特性于一身，同样地，它可以导出各种格式的 API 文档，我个人觉得这个软件挺好用的，YAPI 每次都需要打开网页去增加新接口，这个从流程上讲更潜移默化一点。</p>
-<p><img src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/Apifox_Screenshot.png" alt="通过 Apifox 管理 API 接口"></p>
+<p><a href="/posts/interface-mock-implemention-using-mock.js-in-vue.js/Apifox_Screenshot.png" data-fancybox="gallery" data-src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/Apifox_Screenshot.png" data-caption="通过 Apifox 管理 API 接口">
+    <img src="/posts/interface-mock-implemention-using-mock.js-in-vue.js/Apifox_Screenshot.png" alt="通过 Apifox 管理 API 接口"  class="post-img" loading="lazy">
+    <span class="post-img-tip">通过 Apifox 管理 API 接口</span>
+</a> </p>
 <p>虽然但是，有那么多的工具帮助你管理文档、Mock 接口，可你还是做不好一个项目，你说，这是为什么呢？我猛然间想起去年写过的一篇博客，<a href="/posts/2070070822">《使用 HttpMessageHandler 实现 HttpClient 请求管道自定义》</a>，里面就在写，如何借助 HttpMessageHandler 做 API 接口的 Mock，人啊，兜兜转转，大抵又回到了原点罢！</p>
 
             </div>
@@ -1117,7 +1133,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/2275646954\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/1118169753\/'">
         随便逛逛
       </span>
       
@@ -1675,11 +1691,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1776,6 +1790,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1813,7 +1828,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1833,6 +1848,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2077,7 +2093,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

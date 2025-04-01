@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -777,7 +781,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <p>我们的项目存在着大量的超链接以及导航菜单，在 UI 设计阶段，通常不会有人关心，一个链接到底是内部链接还是外部链接。与此同时，由于 <code>HTML</code> 这门标记语言的极大灵活性，实现一个导航链接的方式有 N 多种，可以是一个 <code>a</code> 标签，可以是一个 <code>div</code> 标签，甚至可以是一个 <code>span</code> 标签。虽然 <a href="https://v3.router.vuejs.org/zh/installation.html">Vue Router</a> 里提供了 <code>router-link</code> 组件，可在实际的项目中，需要综合考虑团队风格和第三方 UI 库的因素，甚至有时候，再没有设计规范的情况下，可能大家连 <code>router-link</code> 组件都不愿意用或者说压根就没机会用。</p>
 <p>这样就造成一个非常尴尬的局面，当你需要为页面编写业务代码的时候，你不得不在各种各样的超链接上浪费时间，只要不是通过 <code>a</code> 标签实现的，你都必须处理它点击的事件，更不必说，你还要区分这个链接是一个内部链接还是一个外部链接，原因是 <a href="https://v3.router.vuejs.org/zh/installation.html">Vue Router</a> 不支持外部链接，你不得不通过 <code>window.location</code> 或者 <code>window.open()</code> 的这样的方式来实现“曲线救国”，试想，如果每一个都这么折腾一遍，你还会觉得有趣吗？</p>
 <p>而在我们的项目里，实际上它还需要从网页端唤起应用，这样便又涉及到了 <a href="https://sspai.com/post/31500">URL Schemes</a> 这个话题。除了 <code>Android</code> 和 <code>iOS</code> 这个平台上的差异，单单就 <code>Windows</code> 而言，其基于注册表的方案对协议提供者的约束并不强，如果团队内对此没有任何规范的话，你将面对各种千奇百怪的参数传递方式。听到这里，你是不是感觉头都大了一圈？如果因为某种原因，它还需要你每次都传递一个令牌过去，你告诉我，你准备如何让这一切的混乱与不堪重新归于宁静呢？</p>
-<p><img src="/posts/implementation-of-vue-router-extension-that-supports-external-link/standup-paddleboarding-g737c60ff8_1280.jpg" alt="学如逆水行舟，不进则退"></p>
+<p><a href="/posts/implementation-of-vue-router-extension-that-supports-external-link/standup-paddleboarding-g737c60ff8_1280.jpg" data-fancybox="gallery" data-src="/posts/implementation-of-vue-router-extension-that-supports-external-link/standup-paddleboarding-g737c60ff8_1280.jpg" data-caption="学如逆水行舟，不进则退">
+    <img src="/posts/implementation-of-vue-router-extension-that-supports-external-link/standup-paddleboarding-g737c60ff8_1280.jpg" alt="学如逆水行舟，不进则退"  class="post-img" loading="lazy">
+    <span class="post-img-tip">学如逆水行舟，不进则退</span>
+</a> </p>
 <h1 id="改进思路">改进思路</h1>
 <p>OK，现在假设，我们制止这场混乱的方式，是强迫大家都去使用 <code>router-link</code> 这个组件，虽然它最终渲染出来就是一个 <code>a</code> 标签。相信参加工作以后，大家都会有这样一种感觉，那就是工作中 99.9% 的事情，都是在最好和最坏中间选一个过渡状态，然后不断地为之投入精力或者叫做填坑，甚至有很多东西，从来都不是为了让一件事情变得更好而存在。作为这个地球上脆弱而渺小的个体，时间、生命、爱，每一样东西都像缓缓从指尖滑落的沙子，我们实在是太喜欢这种可以掌控点什么的感觉了。所以，如果一件事情没法从道理或者科学上讲通的话，那就用制度或者规范来作为武器，在一个连国家都可以宣布破产的年代，大概，话语权比是非对错更重要。因此，在博主的博客里，在这小小的一方天地里，不妨假设我有这种话语权，可以强迫大家都使用 <code>router-link</code> 这个组件。我们讲，<code>Vue Router</code> 不支持外部链接，一个非常直观的理由是，当我们写出下面的代码时，它会完全辜负我们的期望：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">router-link</span> <span class="na">to</span><span class="o">=</span><span class="s">&#34;https://blog.yuanpei.me&#34;</span><span class="p">&gt;</span><span class="nx">Go</span><span class="o">&lt;</span><span class="err">/router-link&gt;</span>
@@ -882,7 +889,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="err">/my-router-link&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
 </span></span></code></pre></div><p>我们可以注意到，现在它可以同时支持内部链接和外部链接，并且我们可以传递一个对象来更好地控制 <code>URL</code> 的细节，当然，它还可以从桌面唤起 <code>QQ</code> 应用，只要协议提供方采用类似的传参方式，那么，这个方案其实可以做到一劳永逸的。完整的代码我已上传到 <a href="https://github.com/Regularly-Archive/2022/tree/main/src/front-mock">Github</a>，方便大家可以做进一步的探索。</p>
-<p><img src="/posts/implementation-of-vue-router-extension-that-supports-external-link/%E4%BB%8E%E7%BD%91%E9%A1%B5%E7%AB%AF%E5%94%A4%E8%B5%B7%E5%BA%94%E7%94%A8.png" alt="从网页端唤起应用"></p>
+<p><a href="/posts/implementation-of-vue-router-extension-that-supports-external-link/%e4%bb%8e%e7%bd%91%e9%a1%b5%e7%ab%af%e5%94%a4%e8%b5%b7%e5%ba%94%e7%94%a8.png" data-fancybox="gallery" data-src="/posts/implementation-of-vue-router-extension-that-supports-external-link/%e4%bb%8e%e7%bd%91%e9%a1%b5%e7%ab%af%e5%94%a4%e8%b5%b7%e5%ba%94%e7%94%a8.png" data-caption="从网页端唤起应用">
+    <img src="/posts/implementation-of-vue-router-extension-that-supports-external-link/%e4%bb%8e%e7%bd%91%e9%a1%b5%e7%ab%af%e5%94%a4%e8%b5%b7%e5%ba%94%e7%94%a8.png" alt="从网页端唤起应用"  class="post-img" loading="lazy">
+    <span class="post-img-tip">从网页端唤起应用</span>
+</a> </p>
 <h1 id="话题延伸">话题延伸</h1>
 <p>坦白讲，在我写这篇文章的时候，我一直在思考一个问题，即：如何给所有出站的超链接携带令牌信息？这个想法其实是在解决别人产生的问题，譬如，从子系统 <code>A</code> 跳转到子系统 <code>B</code> 的过程中，为了实现所谓的“免登录”，大佬们提议直接把令牌信息附加到 <code>URL</code>上传递过去，先不说令牌信息刷新和过期的问题，就单单是令牌信息附加到 <code>URL</code>上这一项，看起来都是非常愚蠢的做法，众所周知，浏览器对针对 <code>GET</code> 请求时的 <code>URL</code> 长度存在限制，你这不是直愣愣地往人家枪口上撞吗？放着 <a href="https://www.apereo.org/projects/cas">CAS</a>、<a href="https://www.keycloak.org/">Keycloak</a> 这种成熟的方案不用，非要用这种掩耳盗铃式的半桶水方案？也许，人类还真就喜欢做这样的事情，毕竟这样可以制造出问题和麻烦，让别人有事可做。听我说，谢谢你，因为有你&hellip;吐槽归吐槽，一开始我是写了一个自定义指令来做这个事情：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">Vue</span><span class="p">.</span><span class="nx">directive</span><span class="p">(</span><span class="s1">&#39;attach-query-string&#39;</span><span class="p">,</span><span class="kd">function</span> <span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">binding</span><span class="p">)</span> <span class="p">{</span>
@@ -1176,7 +1186,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/1071063696\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/1417719502\/'">
         随便逛逛
       </span>
       
@@ -1734,11 +1744,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1835,6 +1843,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1872,7 +1881,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1892,6 +1901,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2136,7 +2146,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

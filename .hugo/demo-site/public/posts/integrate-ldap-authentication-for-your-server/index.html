@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -773,19 +777,31 @@ document.addEventListener("DOMContentLoaded", function () {
             
             <div id="page-content" class="markdown-main-style">
                 <p>回顾我这些年的工作经历，面向企业(2B)和面向用户(2C)的项目都曾接触过。我个人觉得，面向企业的项目更注重业务，参与决策的人数多、周期长，目的是为企业提供生产经营价值，如缩减成本、提升效率等等，而面向用户的项目更注重体验，参与决策的人数少、周期短，目的是为消费者提供更多的使用价值，本质上是为了圈揽用户和抢夺流量。我在参与这些项目的过程中发现，企业级应用的研发更注重与第三方软件如 SAP、金蝶、用友、ERP 等等的整合，因此，类似单点登录、数据同步这样的需求非常普遍。每当这个时候，我就不由地想起一位前辈。</p>
-<p><img src="/posts/integrate-ldap-authentication-for-your-server/time-ge417ba6ed_1280.jpg" alt="时间就像沙漏里的沙一样流逝"></p>
+<p><a href="/posts/integrate-ldap-authentication-for-your-server/time-ge417ba6ed_1280.jpg" data-fancybox="gallery" data-src="/posts/integrate-ldap-authentication-for-your-server/time-ge417ba6ed_1280.jpg" data-caption="时间就像沙漏里的沙一样流逝">
+    <img src="/posts/integrate-ldap-authentication-for-your-server/time-ge417ba6ed_1280.jpg" alt="时间就像沙漏里的沙一样流逝"  class="post-img" loading="lazy">
+    <span class="post-img-tip">时间就像沙漏里的沙一样流逝</span>
+</a> </p>
 <p>当我还在 Automation 打杂的时候，前辈总是一脸得意地问我：“听说过 AD Domain 吗？”。那时，初出茅庐的我年少轻狂，不好意思说我不会，立马敷衍道：“当然听说过，只是一直没用过”。前辈目光如炬，大抵是看出我心虚，立马不屑一顾地回应道：“那就是不会”。过了几秒钟，前辈不紧不慢地接着说道：“只有学会了 AD Domain，你才算是一只脚踏进了企业级应用开发这个领域，知道吗？”，我点了点头，心道：“这不就和茴香豆的茴字有五种写法一样无聊吗？”。多年后，当 LDAP 这个字眼再次映入眼帘的时候，我内心终于清楚地知道：我错了。</p>
 <h1 id="为什么需要-ldap-认证">为什么需要 LDAP 认证</h1>
 <p>我错在哪里了呢？我想，要回答这个问题，还是需要从企业管理的角度来着手。一个面向用户(2C)的产品，其用户基本上是不受地域因素限制的，而对于一个面向企业(2B)的产品，其用户基本上是在一个层次分明、有着明显边界的范围内。运营一个企业，除了业务系统以外，可能还需要 OA、财务、ERP 等等外围软件的支持，如果是一家互联网公司，可能还需要 DevOps、监控、协作等等方面的支撑。此时，从企业的角度自然是希望可以统一账号体系，这样就衍生出了各种各样的单点登陆和认证方案，单单是博主接触过的就有：<a href="https://oauth.net/2/">OAuth2</a>、<a href="https://www.apereo.org/projects/cas">CAS</a>、<a href="https://www.keycloak.org/">Keycloak</a>、<a href="docs.identityserver.io/en/latest/">IdentityServer4</a>，这些方案可以说是各有千秋，此中曲折我们按下不表。</p>
-<p><img src="/posts/integrate-ldap-authentication-for-your-server/AD_On_Windows_Server.png" alt="运行在 Windows Server 上的 AD"></p>
+<p><a href="/posts/integrate-ldap-authentication-for-your-server/AD_On_Windows_Server.png" data-fancybox="gallery" data-src="/posts/integrate-ldap-authentication-for-your-server/AD_On_Windows_Server.png" data-caption="运行在 Windows Server 上的 AD">
+    <img src="/posts/integrate-ldap-authentication-for-your-server/AD_On_Windows_Server.png" alt="运行在 Windows Server 上的 AD"  class="post-img" loading="lazy">
+    <span class="post-img-tip">运行在 Windows Server 上的 AD</span>
+</a> </p>
 <p>这里博主想说的是，一旦企业通过 AD Domain 或者说 <a href="https://learn.microsoft.com/zh-cn/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview">Active Directory</a> 来管理用户，就自然而然地牵扯出域登录或者域账号登录的问题。这类围绕 AD Domain 或者说域的问题，我们都可以考虑使用 LDAP 认证或者 <a href="https://web.mit.edu/Kerberos/">Kerberos</a> 认证，特别是后者，主流的软件如 Kafka、Zookeeper、MySQL 等等均支持这一协议，它可以实现在登录本地账户后，免登录打开一个网站的效果。可想而知，这是一个对企业而言极具诱惑力的特性，一个账号打通所有基础设施。当然，我承认 Kerberos 这个协议是非常复杂的，绝非三言两语可以厘清其中的千丝万缕，所以，我们今天只是聊聊 LDAP 认证这个话题。</p>
-<p><img src="/posts/integrate-ldap-authentication-for-your-server/LDAP_Browser.png" alt="通过 LDAP Browser 访问 AD"></p>
+<p><a href="/posts/integrate-ldap-authentication-for-your-server/LDAP_Browser.png" data-fancybox="gallery" data-src="/posts/integrate-ldap-authentication-for-your-server/LDAP_Browser.png" data-caption="通过 LDAP Browser 访问 AD">
+    <img src="/posts/integrate-ldap-authentication-for-your-server/LDAP_Browser.png" alt="通过 LDAP Browser 访问 AD"  class="post-img" loading="lazy">
+    <span class="post-img-tip">通过 LDAP Browser 访问 AD</span>
+</a> </p>
 <p>可能大家会纠结，LDAP 和 Active Directory 这两者间的关系，事实上， LDAP 是指轻量目录访问协议(Lightweight Directory Access Protocol)，而 Active Directory 则是微软针对该协议的一种实现。当然，微软为了解决域控的问题，利用 LDAP 存储了一部分私有的数据。所以，两者的关系就像是接口和实现类，我们这里只需要 Active Directory 当成一台 LDAP 服务器即可。关于 Active Directory 的基础知识，这里不再做更多的科普。总而言之，通过 LDAP 我们可以对某个网站实现认证，从而达到保护资源的目的。譬如博主目前参与的前端项目，它是没有常规的登录、注册页面的，它采用的就是域账号登录的形式。下面，我们来看看如何集成 LDAP 认证。</p>
 <h1 id="如何集成-ldap-认证">如何集成 LDAP 认证</h1>
 <p>结合博主在上文中描述的场景，假设我们有一个前端项目通过 Nginx 或者 Apache 进行托管。通常情况下，我们可以直接访问这些前端页面，这意味这些资源是不受任何保护的。对企业来说，它更希望将这些资源保护起来，以确保只有它的员工或者说加入域的用户才可以访问，此时，我们该如何解决这个问题呢？</p>
 <h2 id="nginx-篇">Nginx 篇</h2>
 <p>以 Nginx 为例，我们可以通过 <a href="https://github.com/kvspb/nginx-auth-ldap">nginx-auth-ldap</a> 这个模块来解决这个问题。下面是一个简单的示意图，其基本思路是：在输入用户名和密码后，该模块会连接 LDAP 服务器对用户身份进行校验，如果校验通过，则会以 Basic 认证的的方式生成 <code>Authorization</code> 请求头；反之，将会返回 401 状态码，表示认证失败。</p>
-<p><img src="/posts/integrate-ldap-authentication-for-your-server/LDAP-Auth-With-Nginx.drawio.png" alt="Nginx 集成 LDAP 示意图"></p>
+<p><a href="/posts/integrate-ldap-authentication-for-your-server/LDAP-Auth-With-Nginx.drawio.png" data-fancybox="gallery" data-src="/posts/integrate-ldap-authentication-for-your-server/LDAP-Auth-With-Nginx.drawio.png" data-caption="Nginx 集成 LDAP 示意图">
+    <img src="/posts/integrate-ldap-authentication-for-your-server/LDAP-Auth-With-Nginx.drawio.png" alt="Nginx 集成 LDAP 示意图"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Nginx 集成 LDAP 示意图</span>
+</a> </p>
 <p>注意到，这是一个第三方的模块，不管你是通过 Docker 或者主机来部署 Nginx，它都不会包含这个模块，此时，我们就需要为 Nginx 安装这个模块。因为 Nginx 采用的是静态编译的策略，所以，安装模块本质上就是同时拉取 Nginx 和模块的源码，然后重新编译生成二进制文件的过程。首先，我们来下载该模块的源码：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/kvspb/nginx-auth-ldap.git /usr/src/nginx-auth-ldap/<span class="p">;</span> 
 </span></span></code></pre></div><p>接下来，我们需要下载 Nginx 源码，无论你是在全新安装的 Nginx 上安装模块，还是在一个安装好的 Nginx 上安装模块，这一步都是必须的，千言万语汇成一句话：Nginx 采用的是静态编译的策略。博主这里是在 <code>nginx:stable-alpine</code> 这个镜像的基础上安装模块：</p>
@@ -802,7 +818,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">make <span class="o">&amp;&amp;</span> make install 
 </span></span></code></pre></div><p>如果是安装好的 Nginx，那么，这个参数就必须从当前的 Nginx 上继承过来，否则，已经安装好的模块将不会参与编译。原本博主非常喜欢 Nginx ，可这一条博主实在不能容忍，这完全是在用户面前摆烂，难道使用了哪些了模块你心里没点数吗？非要逼着用户去帮你维护这些配置信息？这些又臭又长的参数真的不考虑做持久化吗？吐槽完 Nginx，我们继续来填坑，为了获取 Nginx 当前的配置参数，你可以使用 <code>nginx -V</code> 这个命令(注意：这个 <code>V</code> 必须要大写)，此时，我们就可以得到下面的答案：</p>
-<p><img src="/posts/integrate-ldap-authentication-for-your-server/Nginx-Configure-Parameters.png" alt="获取 Nginx 配置参数"></p>
+<p><a href="/posts/integrate-ldap-authentication-for-your-server/Nginx-Configure-Parameters.png" data-fancybox="gallery" data-src="/posts/integrate-ldap-authentication-for-your-server/Nginx-Configure-Parameters.png" data-caption="获取 Nginx 配置参数">
+    <img src="/posts/integrate-ldap-authentication-for-your-server/Nginx-Configure-Parameters.png" alt="获取 Nginx 配置参数"  class="post-img" loading="lazy">
+    <span class="post-img-tip">获取 Nginx 配置参数</span>
+</a> </p>
 <p>这意味着什么呢？这意味着你需要把红框里的这一堆参数放到 <code>./configure</code> 后面，然后再像上面一样添加 <code>--add-module</code> 参数，这简直是造孽啊！为了简化这个过程，我改进了一下脚本：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 匹配 configure arguments ，然后再从第 21 个字符开始截取，即冒号后面的所有内容</span>
 </span></span><span class="line"><span class="cl"><span class="nv">NGINX_CONFIG</span><span class="o">=</span><span class="k">$(</span>nginx -V 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> grep <span class="s1">&#39;configure arguments&#39;</span> <span class="p">|</span> cut -c21-<span class="k">)</span>
@@ -837,12 +856,24 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>可以注意到，我们只需要按实际域控来配置 <code>ldap_server</code> 节点，然后为受保护的资源启用 LDAP 认证即可。此时，如果访问前端页面，浏览器将会提示输入用户名和密码：</p>
-<p><img src="/posts/integrate-ldap-authentication-for-your-server/%E9%9B%86%E6%88%90-LDAP-%E8%AE%A4%E8%AF%81-01.png" alt="Nginx 集成 LDAP 效果演示-1"></p>
+<p><a href="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-01.png" data-fancybox="gallery" data-src="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-01.png" data-caption="Nginx 集成 LDAP 效果演示-1">
+    <img src="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-01.png" alt="Nginx 集成 LDAP 效果演示-1"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Nginx 集成 LDAP 效果演示-1</span>
+</a> </p>
 <p>如果我们输入的用户名或者密码不正确会怎么样呢？浏览器将会孜孜不倦地提示你输入用户名和密码。如果我们点击取消会怎么样呢？此时，如下图所示，它将会返回 <code>401</code> 状态码，表示认证失败：</p>
-<p><img src="/posts/integrate-ldap-authentication-for-your-server/%E9%9B%86%E6%88%90-LDAP-%E8%AE%A4%E8%AF%81-06.png" alt="Nginx 集成 LDAP 效果演示-2"></p>
+<p><a href="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-06.png" data-fancybox="gallery" data-src="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-06.png" data-caption="Nginx 集成 LDAP 效果演示-2">
+    <img src="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-06.png" alt="Nginx 集成 LDAP 效果演示-2"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Nginx 集成 LDAP 效果演示-2</span>
+</a> </p>
 <p>此外，我们可以注意到，一旦认证通过，我们就可以正常访问前端页面。与此同时，所有的请求都会自动带上 <code>Authorization</code> 请求头，显然，这是一个 Basic 认证：</p>
-<p><img src="/posts/integrate-ldap-authentication-for-your-server/%E9%9B%86%E6%88%90-LDAP-%E8%AE%A4%E8%AF%81-03.png" alt="Nginx 集成 LDAP 效果演示-3"></p>
-<p><img src="/posts/integrate-ldap-authentication-for-your-server/%E9%9B%86%E6%88%90-LDAP-%E8%AE%A4%E8%AF%81-05.png" alt="Nginx 集成 LDAP 效果演示-5"></p>
+<p><a href="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-03.png" data-fancybox="gallery" data-src="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-03.png" data-caption="Nginx 集成 LDAP 效果演示-3">
+    <img src="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-03.png" alt="Nginx 集成 LDAP 效果演示-3"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Nginx 集成 LDAP 效果演示-3</span>
+</a> </p>
+<p><a href="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-05.png" data-fancybox="gallery" data-src="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-05.png" data-caption="Nginx 集成 LDAP 效果演示-5">
+    <img src="/posts/integrate-ldap-authentication-for-your-server/%e9%9b%86%e6%88%90-LDAP-%e8%ae%a4%e8%af%81-05.png" alt="Nginx 集成 LDAP 效果演示-5"  class="post-img" loading="lazy">
+    <span class="post-img-tip">Nginx 集成 LDAP 效果演示-5</span>
+</a> </p>
 <p>至此，我们就实现了 Nginx 下的 LDAP 认证集成。</p>
 <h2 id="apache-篇">Apache 篇</h2>
 <p>虽然 Nginx 比 Apache 更轻量、社区更活跃，可是在模块管理这方面，Apache 是完全吊打 Nginx 的，类似地，Apache 通过 <code>mod-authnz-ldap</code> 这个模块来实现 LDAP 认证的集成，并且这个模块有二进制包，可以直接通过包管理器来安装，从这方面来看，Nginx 完全不如 Apache ：</p>
@@ -1137,7 +1168,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/2275646954\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/a-simplified-tutorial-on-containerized-deployment-of-front-end-projects-for-vue\/'">
         随便逛逛
       </span>
       
@@ -1695,11 +1726,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1796,6 +1825,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1833,7 +1863,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1853,6 +1883,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2097,7 +2128,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

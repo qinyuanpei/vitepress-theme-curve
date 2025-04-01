@@ -51,6 +51,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 </head> <body><div class="background patterns">
     
     <div class="bg-mask"></div>
@@ -779,7 +783,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <p>在 “<strong>视频是不能 P 的</strong>” 系列文章中，博主曾先后分享过人脸检测、人脸识别等相关主题的内容。今天，博主想和大家讨论的是人脸分类问题。你是否曾在人群中认错人，或是盯着熟人的照片却一时想不出对方的名字？这种  “<strong>脸盲症</strong>” 的困扰，不仅在生活中令人感到尴尬，在整理照片时更是让人头疼不已。想象一下，某次聚会结束后，你的手机里存了上百张照片——有你的笑脸、朋友的自拍，甚至还有一部分陌生面孔混杂其中。手动将这些照片按人物分类，不仅费时费力，还可能会因为 “<strong>脸盲</strong>” 而频繁出错。此时，你是否期待有一种技术，可以像魔法一样，自动将这些照片按人物分类？事实上，这种 “<strong>魔法</strong>” 已经存在，它的名字叫做 K-Means 聚类分析。作为一种经典的无监督学习算法，K-Means 能够通过分析人脸特征，自动将相似的面孔归类到一起，完全无需人工干预。接下来，为了彻底根治 “<strong>脸盲症</strong>”，我们将详细介绍如何使用 K-Means 聚类分析来实现这一目标，哈利·波特拥有魔法，而我们则拥有科技。</p>
 <h1 id="实现过程">实现过程</h1>
 <p>如图所示，我们将按照下面的流程来达成 “<strong>自动分类人脸</strong>” 这一目标。其中，Dlib 负责提取人脸特征向量、Scikit-Learn 中的 K-Means 负责聚类分析、Matplotlib 负责结果的可视化：</p>
-<p><img src="/posts/face-photo-fast-classification-using-k-means-clustering/Process.png" alt="基于 K-Means 聚类分析实现人脸照片的快速分类示意图"></p>
+<p><a href="/posts/face-photo-fast-classification-using-k-means-clustering/Process.png" data-fancybox="gallery" data-src="/posts/face-photo-fast-classification-using-k-means-clustering/Process.png" data-caption="基于 K-Means 聚类分析实现人脸照片的快速分类示意图">
+    <img src="/posts/face-photo-fast-classification-using-k-means-clustering/Process.png" alt="基于 K-Means 聚类分析实现人脸照片的快速分类示意图"  class="post-img" loading="lazy">
+    <span class="post-img-tip">基于 K-Means 聚类分析实现人脸照片的快速分类示意图</span>
+</a> </p>
 <h2 id="k-means-简介">K-Means 简介</h2>
 <p>K-Means 是一种广泛应用的聚类算法，其基本原理是将数据集分成 K 个簇，目标是让每个簇内的数据点尽可能相似，而不同簇之间的数据点尽可能差异明显。K-Means 的执行过程如下：</p>
 <ol>
@@ -803,7 +810,10 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>图三：各个簇之间的方差不同，绿色簇分布更紧密，而黄色簇分布更稀疏</li>
 <li>图四：簇的大小不均匀，黄色簇数据点较少，而紫色簇数据点较多</li>
 </ul>
-<p><img src="/posts/face-photo-fast-classification-using-k-means-clustering/4d8344fef1d9094044a328f8c6966f29.png" alt="四种不同的聚类数据分布情况"></p>
+<p><a href="/posts/face-photo-fast-classification-using-k-means-clustering/4d8344fef1d9094044a328f8c6966f29.png" data-fancybox="gallery" data-src="/posts/face-photo-fast-classification-using-k-means-clustering/4d8344fef1d9094044a328f8c6966f29.png" data-caption="四种不同的聚类数据分布情况">
+    <img src="/posts/face-photo-fast-classification-using-k-means-clustering/4d8344fef1d9094044a328f8c6966f29.png" alt="四种不同的聚类数据分布情况"  class="post-img" loading="lazy">
+    <span class="post-img-tip">四种不同的聚类数据分布情况</span>
+</a> </p>
 <p>因此，适用于 K-Means 的数据通常满足：</p>
 <ul>
 <li>簇是球状且分布均匀</li>
@@ -821,9 +831,18 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>戴维斯-博尔丁评分（Davies-Bouldin Index）：通过计算每个簇的簇内距离（样本到簇中心的平均距离）与簇间距离（不同簇中心之间的距离）的比值，评估聚类效果，选择评分最低的 K 值。</li>
 </ul>
 <p>如图所示，分别展示了不同方法下的最佳 K 值，综合考虑三种评估方案，此处取 K=6：</p>
-<p><img src="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_01.png" alt="肘部法则/手肘图法"></p>
-<p><img src="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_02.png" alt="轮廓系数法"></p>
-<p><img src="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_03.png" alt="戴维斯-博尔丁评分"></p>
+<p><a href="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_01.png" data-fancybox="gallery" data-src="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_01.png" data-caption="肘部法则/手肘图法">
+    <img src="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_01.png" alt="肘部法则/手肘图法"  class="post-img" loading="lazy">
+    <span class="post-img-tip">肘部法则/手肘图法</span>
+</a> </p>
+<p><a href="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_02.png" data-fancybox="gallery" data-src="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_02.png" data-caption="轮廓系数法">
+    <img src="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_02.png" alt="轮廓系数法"  class="post-img" loading="lazy">
+    <span class="post-img-tip">轮廓系数法</span>
+</a> </p>
+<p><a href="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_03.png" data-fancybox="gallery" data-src="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_03.png" data-caption="戴维斯-博尔丁评分">
+    <img src="/posts/face-photo-fast-classification-using-k-means-clustering/Best_K_03.png" alt="戴维斯-博尔丁评分"  class="post-img" loading="lazy">
+    <span class="post-img-tip">戴维斯-博尔丁评分</span>
+</a> </p>
 <h2 id="提取人脸特征">提取人脸特征</h2>
 <p>为了对人脸照片进行聚类，我们首先需要提取人脸特征。为此，我们使用 Dlib 库，它提供了一个基于深度学习的预训练模型，该模型能够高效地将人脸图像转换为 128 维的特征向量。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">dlib</span>
@@ -954,7 +973,10 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </span></span></code></pre></div><p>这段代码看起来非常复杂，它具体做了什么事情呢？实际上，在通过 K-Means 聚类获得分类标签以后，我们开始尝试在每个簇的中心绘制一张人脸图片，这张图片是如何找到的呢？这里我们选取的的是离簇中心最近的那张图片。考虑到，通过 Dlib 提取的人脸特征值都是 128 维的，如果希望将其绘制到二维平面上，就需要通过 PCA 来完成降维。如图所示，通过 PCA 降维后，我们可以将聚类结果可视化。不同颜色代表不同的簇，同一簇内的点表示相似的人脸照片。通过这张图片，相信你会更加直观地理解核心点、边界点、聚类中心、重叠点等概念：</p>
-<p><img src="/posts/face-photo-fast-classification-using-k-means-clustering/K-means-Clusters.png" alt="K-Means 聚类结果可视化"></p>
+<p><a href="/posts/face-photo-fast-classification-using-k-means-clustering/K-means-Clusters.png" data-fancybox="gallery" data-src="/posts/face-photo-fast-classification-using-k-means-clustering/K-means-Clusters.png" data-caption="K-Means 聚类结果可视化">
+    <img src="/posts/face-photo-fast-classification-using-k-means-clustering/K-means-Clusters.png" alt="K-Means 聚类结果可视化"  class="post-img" loading="lazy">
+    <span class="post-img-tip">K-Means 聚类结果可视化</span>
+</a> </p>
 <h1 id="本文小结">本文小结</h1>
 <p>本文尝试探索运用 K-Means 聚类技术对人脸照片进行快速分类的方案。首先，我们介绍了 K-Means 的基本原理及其适用范围，并探讨了如何合理确定簇数 K。随后，博主详细阐述了人脸特征的提取方法、K-Means 聚类的具体实施步骤，以及借助 PCA 降维技术实现数据可视化的流程。这一系列步骤帮助我们高效地对大量人脸照片进行分类。然而，K-Means 并非完美无瑕。它需要预先设定簇数 K，对初始中心点的选择较为敏感，且默认簇为球形或凸形。这导致其在处理非凸形簇或含噪声数据时表现不佳。针对这些局限性，实际应用中可以考虑使用 DBSCAN 等聚类算法，这类方法通常能够自动确定簇的数量，并对噪声数据具有更强的适应性。作为一种经典的聚类算法，K-Means 具有计算高效、实现简单的优点。然而，在普适性、精确度以及对深度特征的利用上，相较于基于深度学习的聚类方法，K-Means 存在一定不足。本文旨在为读者提供一种基础思路，激发其对于聚类分析这一领域的兴趣。本文代码已上传至 Github，更多细节请参考：<a href="https://github.com/Regularly-Archive/2024/blob/main/face-classify/kmeans_cluster_classify.py">https://github.com/Regularly-Archive/2024/blob/main/face-classify/kmeans_cluster_classify.py</a>。</p>
 
@@ -1189,7 +1211,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/3599307335\/'">
+      <span class="shuffle" onclick="window.location.href='\/about\/'">
         随便逛逛
       </span>
       
@@ -1747,11 +1769,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 .highlight {
   position: relative;
-  margin: 1rem 0;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
   border-radius: 6px;
-  display: flex;
 }
 
  
@@ -1848,6 +1868,7 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   padding: 1rem 0;
   overflow-x: auto;
+  background-color: var(--code-bg);;
 }
 
 .highlight pre code {
@@ -1885,7 +1906,7 @@ document.addEventListener('DOMContentLoaded', function() {
     pre.parentNode.insertBefore(container, pre);
 
     
-    const language = codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
+    const language = codeBlock.getAttribute('data-lang') || codeBlock.className.match(/language-(\w+)/)?.[1] || 'plaintext';
 
     
     const header = document.createElement('div');
@@ -1905,6 +1926,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const lines = codeBlock.innerHTML.trim().split('\n');
     const lineCount = document.createElement('span');
     lineCount.textContent = `${lines.length} 行`;
+    lineCount.style.display = 'none';
     info.appendChild(lineCount);
     
     header.appendChild(info);
@@ -2149,7 +2171,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script><div class="modal search-modal" id="searchModal">
+<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
+
+
+
+<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">
