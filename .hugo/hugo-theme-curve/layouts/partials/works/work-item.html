@@ -1,0 +1,26 @@
+{{- $loadingImage := print ("/imgs/loading.gif" | relURL) -}}
+<div class="works-item">
+    <div class="title">
+        <a href="{{ .link }}" target="_blank">
+            <h3>{{ .title }}</h3>
+        </a>
+        <span class="title-date">
+            {{  .date }}
+        </span>
+    </div>
+    <div class="works-item-img">
+        <a href="{{ .link }}" target="_blank">
+            <img src="{{ .cover }}" loading="lazy" data-src="{{ .cover }}"/>
+        </a>
+    </div>
+    <div class="works-content">
+        <div class="use text-warning">
+            {{ range .tags }}
+            <span>{{ . }}</span>
+            {{ end }}
+        </div>
+        <p class="subtitle">{{ .subTitle }}</p>
+
+        <p class="text-muted">{{ .description }}</p>
+    </div>
+</div>

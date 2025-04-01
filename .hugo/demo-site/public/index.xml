@@ -239,5 +239,12 @@
       <guid>http://localhost:1313/posts/426338252/</guid>
       <description>&lt;p&gt;今天来介绍博主最近捣腾的一个小游戏“贪吃蛇”。“贪吃蛇”这个游戏相信大家都不会感到陌生吧。今天博主将通过&lt;a href=&#34;http://love2d.org/&#34;&gt;Love2D&lt;/a&gt;这款游戏引擎来为大家实现一个简单的贪吃蛇游戏,在本篇文章当中我们将会涉及到“贪吃蛇”的基本算法、Lua 语言编程等基本的内容，希望能够对大家开发类似的游戏提供借鉴和思考，文章中如有不足之处，还希望大家能够谅解，因为博主的游戏开发基本就是这样慢慢摸索着学习，所以难免会有不足的地方。&lt;/p&gt;</description>
     </item>
+    <item>
+      <title>搜索</title>
+      <link>http://localhost:1313/search/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/search/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

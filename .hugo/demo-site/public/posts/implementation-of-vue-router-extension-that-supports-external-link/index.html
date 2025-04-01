@@ -781,7 +781,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <p>我们的项目存在着大量的超链接以及导航菜单，在 UI 设计阶段，通常不会有人关心，一个链接到底是内部链接还是外部链接。与此同时，由于 <code>HTML</code> 这门标记语言的极大灵活性，实现一个导航链接的方式有 N 多种，可以是一个 <code>a</code> 标签，可以是一个 <code>div</code> 标签，甚至可以是一个 <code>span</code> 标签。虽然 <a href="https://v3.router.vuejs.org/zh/installation.html">Vue Router</a> 里提供了 <code>router-link</code> 组件，可在实际的项目中，需要综合考虑团队风格和第三方 UI 库的因素，甚至有时候，再没有设计规范的情况下，可能大家连 <code>router-link</code> 组件都不愿意用或者说压根就没机会用。</p>
 <p>这样就造成一个非常尴尬的局面，当你需要为页面编写业务代码的时候，你不得不在各种各样的超链接上浪费时间，只要不是通过 <code>a</code> 标签实现的，你都必须处理它点击的事件，更不必说，你还要区分这个链接是一个内部链接还是一个外部链接，原因是 <a href="https://v3.router.vuejs.org/zh/installation.html">Vue Router</a> 不支持外部链接，你不得不通过 <code>window.location</code> 或者 <code>window.open()</code> 的这样的方式来实现“曲线救国”，试想，如果每一个都这么折腾一遍，你还会觉得有趣吗？</p>
 <p>而在我们的项目里，实际上它还需要从网页端唤起应用，这样便又涉及到了 <a href="https://sspai.com/post/31500">URL Schemes</a> 这个话题。除了 <code>Android</code> 和 <code>iOS</code> 这个平台上的差异，单单就 <code>Windows</code> 而言，其基于注册表的方案对协议提供者的约束并不强，如果团队内对此没有任何规范的话，你将面对各种千奇百怪的参数传递方式。听到这里，你是不是感觉头都大了一圈？如果因为某种原因，它还需要你每次都传递一个令牌过去，你告诉我，你准备如何让这一切的混乱与不堪重新归于宁静呢？</p>
-<p><a href="/posts/implementation-of-vue-router-extension-that-supports-external-link/standup-paddleboarding-g737c60ff8_1280.jpg" data-fancybox="gallery" data-src="/posts/implementation-of-vue-router-extension-that-supports-external-link/standup-paddleboarding-g737c60ff8_1280.jpg" data-caption="学如逆水行舟，不进则退">
+<p><a  class="img-fancybox" href="/posts/implementation-of-vue-router-extension-that-supports-external-link/standup-paddleboarding-g737c60ff8_1280.jpg" data-fancybox="gallery" data-src="/posts/implementation-of-vue-router-extension-that-supports-external-link/standup-paddleboarding-g737c60ff8_1280.jpg" data-caption="学如逆水行舟，不进则退">
     <img src="/posts/implementation-of-vue-router-extension-that-supports-external-link/standup-paddleboarding-g737c60ff8_1280.jpg" alt="学如逆水行舟，不进则退"  class="post-img" loading="lazy">
     <span class="post-img-tip">学如逆水行舟，不进则退</span>
 </a> </p>
@@ -889,7 +889,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="o">&lt;</span><span class="err">/my-router-link&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
 </span></span></code></pre></div><p>我们可以注意到，现在它可以同时支持内部链接和外部链接，并且我们可以传递一个对象来更好地控制 <code>URL</code> 的细节，当然，它还可以从桌面唤起 <code>QQ</code> 应用，只要协议提供方采用类似的传参方式，那么，这个方案其实可以做到一劳永逸的。完整的代码我已上传到 <a href="https://github.com/Regularly-Archive/2022/tree/main/src/front-mock">Github</a>，方便大家可以做进一步的探索。</p>
-<p><a href="/posts/implementation-of-vue-router-extension-that-supports-external-link/%e4%bb%8e%e7%bd%91%e9%a1%b5%e7%ab%af%e5%94%a4%e8%b5%b7%e5%ba%94%e7%94%a8.png" data-fancybox="gallery" data-src="/posts/implementation-of-vue-router-extension-that-supports-external-link/%e4%bb%8e%e7%bd%91%e9%a1%b5%e7%ab%af%e5%94%a4%e8%b5%b7%e5%ba%94%e7%94%a8.png" data-caption="从网页端唤起应用">
+<p><a  class="img-fancybox" href="/posts/implementation-of-vue-router-extension-that-supports-external-link/%e4%bb%8e%e7%bd%91%e9%a1%b5%e7%ab%af%e5%94%a4%e8%b5%b7%e5%ba%94%e7%94%a8.png" data-fancybox="gallery" data-src="/posts/implementation-of-vue-router-extension-that-supports-external-link/%e4%bb%8e%e7%bd%91%e9%a1%b5%e7%ab%af%e5%94%a4%e8%b5%b7%e5%ba%94%e7%94%a8.png" data-caption="从网页端唤起应用">
     <img src="/posts/implementation-of-vue-router-extension-that-supports-external-link/%e4%bb%8e%e7%bd%91%e9%a1%b5%e7%ab%af%e5%94%a4%e8%b5%b7%e5%ba%94%e7%94%a8.png" alt="从网页端唤起应用"  class="post-img" loading="lazy">
     <span class="post-img-tip">从网页端唤起应用</span>
 </a> </p>
@@ -1186,7 +1186,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/1417719502\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/semantic-kernel-mcp-agent-context-enhanced-exploration\/'">
         随便逛逛
       </span>
       
@@ -1583,64 +1583,501 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="card-content">
     
   </div>
-</div> 
-
-<div class="tags-cloud s-card weidgets">
+</div> <div class="tags-cloud s-card weidgets">
   <div class="title">
     <i class="iconfont icon-hashtag"></i>
     <span class="title-name">热门标签</span>
   </div>
   <div class="all-tags">
     
+      <a href="/tags/vue/" class="tags">
+        <span class="name">Vue</span>
+        <sup class="num">6</sup>
+      </a>
+    
+      <a href="/tags/envoy/" class="tags">
+        <span class="name">Envoy</span>
+        <sup class="num">4</sup>
+      </a>
+    
+      <a href="/tags/.net-core/" class="tags">
+        <span class="name">.NET Core</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/unity3d/" class="tags">
+        <span class="name">Unity3D</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/%E5%89%8D%E7%AB%AF/" class="tags">
+        <span class="name">前端</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" class="tags">
+        <span class="name">微服务</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/mock/" class="tags">
+        <span class="name">Mock</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/nginx/" class="tags">
+        <span class="name">Nginx</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%84%9F%E6%82%9F/" class="tags">
+        <span class="name">感悟</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%B8%B8%E6%88%8F/" class="tags">
+        <span class="name">游戏</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" class="tags">
+        <span class="name">游戏开发</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E7%BC%96%E7%A8%8B/" class="tags">
+        <span class="name">编程</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/.net/" class="tags">
+        <span class="name">.NET</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/abp/" class="tags">
+        <span class="name">ABP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/agent/" class="tags">
+        <span class="name">Agent</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/apache/" class="tags">
+        <span class="name">Apache</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/cdn/" class="tags">
+        <span class="name">CDN</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/dlib/" class="tags">
+        <span class="name">Dlib</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/function-calling/" class="tags">
+        <span class="name">Function Calling</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/github/" class="tags">
+        <span class="name">Github</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/gpts/" class="tags">
+        <span class="name">GPTs</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/grafana/" class="tags">
+        <span class="name">Grafana</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hangfire/" class="tags">
+        <span class="name">Hangfire</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hashset/" class="tags">
+        <span class="name">HashSet</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hexo/" class="tags">
+        <span class="name">Hexo</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/http/" class="tags">
+        <span class="name">HTTP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/httpclient/" class="tags">
+        <span class="name">HttpClient</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/jsdelivr/" class="tags">
+        <span class="name">JsDelivr</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/k-means/" class="tags">
+        <span class="name">K-Means</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/kindle/" class="tags">
+        <span class="name">Kindle</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/lambda/" class="tags">
+        <span class="name">Lambda</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/langchain/" class="tags">
+        <span class="name">LangChain</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/ldap/" class="tags">
+        <span class="name">LDAP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/linq/" class="tags">
+        <span class="name">Linq</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/linux/" class="tags">
+        <span class="name">Linux</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/llama/" class="tags">
+        <span class="name">LLaMA</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/love2d/" class="tags">
+        <span class="name">Love2D</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/mcp/" class="tags">
+        <span class="name">MCP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/mono/" class="tags">
+        <span class="name">Mono</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/opencv/" class="tags">
+        <span class="name">OpenCV</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/prometheus/" class="tags">
+        <span class="name">Prometheus</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/python/" class="tags">
+        <span class="name">Python</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/rag/" class="tags">
+        <span class="name">RAG</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/rpg/" class="tags">
+        <span class="name">RPG</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/scikit-learn/" class="tags">
+        <span class="name">Scikit-Learn</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/semantic-kernel/" class="tags">
+        <span class="name">Semantic Kernel</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/signalr/" class="tags">
+        <span class="name">SignalR</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/svn/" class="tags">
+        <span class="name">SVN</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/ugui/" class="tags">
+        <span class="name">UGUI</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/websocket/" class="tags">
+        <span class="name">WebSocket</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BA%BA%E8%84%B8%E5%88%86%E7%B1%BB/" class="tags">
+        <span class="name">人脸分类</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BB%99%E5%89%91%E5%A5%87%E4%BE%A0%E4%BC%A0/" class="tags">
+        <span class="name">仙剑奇侠传</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BD%8E%E4%BB%A3%E7%A0%81/" class="tags">
+        <span class="name">低代码</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%85%AB%E5%8D%A6/" class="tags">
+        <span class="name">八卦</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%88%86%E9%A1%B5/" class="tags">
+        <span class="name">分页</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%8A%A8%E6%BC%AB/" class="tags">
+        <span class="name">动漫</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" class="tags">
+        <span class="name">反向代理</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%93%AA%E5%90%92/" class="tags">
+        <span class="name">哪吒</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" class="tags">
+        <span class="name">图像处理</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%A4%8F%E7%9B%AE%E6%BC%B1%E7%9F%B3/" class="tags">
+        <span class="name">夏目漱石</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%AE%B9%E5%99%A8/" class="tags">
+        <span class="name">容器</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%B0%81%E7%A5%9E/" class="tags">
+        <span class="name">封神</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%BD%B1%E8%AF%84/" class="tags">
+        <span class="name">影评</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%80%9D%E8%80%83/" class="tags">
+        <span class="name">思考</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%88%91%E6%98%AF%E7%8C%AB/" class="tags">
+        <span class="name">我是猫</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%89%A9%E5%B1%95/" class="tags">
+        <span class="name">扩展</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%95%B0%E6%8D%AE/" class="tags">
+        <span class="name">数据</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%97%A5%E5%89%A7/" class="tags">
+        <span class="name">日剧</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%97%A5%E6%9C%AC%E6%96%87%E5%AD%A6/" class="tags">
+        <span class="name">日本文学</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="tags">
+        <span class="name">机器学习</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%BA%90%E7%A0%81/" class="tags">
+        <span class="name">源码</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%86%B5%E5%A2%9E%E5%AE%9A%E5%BE%8B/" class="tags">
+        <span class="name">熵增定律</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%88%B1%E6%83%85/" class="tags">
+        <span class="name">爱情</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" class="tags">
+        <span class="name">版本控制</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%8A%B6%E6%80%81/" class="tags">
+        <span class="name">状态</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%94%9F%E6%B4%BB/" class="tags">
+        <span class="name">生活</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%94%B5%E5%BD%B1/" class="tags">
+        <span class="name">电影</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%9B%91%E6%8E%A7/" class="tags">
+        <span class="name">监控</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A0%94%E5%8F%91/" class="tags">
+        <span class="name">研发</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" class="tags">
+        <span class="name">程序员</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A9%BF%E6%90%AD/" class="tags">
+        <span class="name">穿搭</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%AE%A1%E9%81%93/" class="tags">
+        <span class="name">管道</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%BD%91%E5%85%B3/" class="tags">
+        <span class="name">网关</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%81%9A%E7%B1%BB/" class="tags">
+        <span class="name">聚类</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%8C%E4%B8%9A/" class="tags">
+        <span class="name">行业</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%A8%E5%8D%95/" class="tags">
+        <span class="name">表单</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%91/" class="tags">
+        <span class="name">表达式树</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%AE%A4%E8%AF%81/" class="tags">
+        <span class="name">认证</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%AF%BB%E4%B9%A6/" class="tags">
+        <span class="name">读书</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="tags">
+        <span class="name">负载均衡</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B4%AA%E5%90%83%E8%9B%87/" class="tags">
+        <span class="name">贪吃蛇</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B7%A8%E5%B9%B3%E5%8F%B0/" class="tags">
+        <span class="name">跨平台</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B7%AF%E7%94%B1/" class="tags">
+        <span class="name">路由</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%BF%81%E7%A7%BB/" class="tags">
+        <span class="name">迁移</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%9A%8F%E7%AC%94/" class="tags">
+        <span class="name">随笔</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%9D%A2%E8%AF%95/" class="tags">
+        <span class="name">面试</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%AA%8C%E8%AF%81/" class="tags">
+        <span class="name">验证</span>
+        <sup class="num">1</sup>
+      </a>
+    
   </div>
   <a href="/tags" class="more-tags">查看全部</a>
-</div>
-
-
-
-<div class="tags-cloud s-card weidgets">
-    <div class="title">
-        <i class="iconfont icon-hashtag"></i>
-        <span class="title-name">日历</span>
-    </div>
-    <div class="all-tags">
-        <img id="calendar-cover" 
-             src="https://img.owspace.com/Public/uploads/Download/2025/0401.jpg" 
-             style="object-fit: cover; width: 100%; height: 100%; opacity: 0; transition: opacity 0.3s;"
-             onload="this.style.opacity = 1"
-             
-             alt="calendar cover" />
-    </div>
-</div>
-
-<style>
-.all-tags {
-    min-height: 200px;  
-}
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const eleImg = document.querySelector("#calendar-cover");
-    const getImageUrl = (date) => {
-        const currentYear = date.getFullYear();
-        const currentMonth = date.getMonth() + 1;
-        const currentDate = date.getDate();
-        
-        const formattedMonth = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
-        const formattedDate = currentDate < 10 ? `0${currentDate}` : currentDate;
-        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${formattedMonth}${formattedDate}.jpg`
-    }
-
-    
-    if (document.location.pathname.startsWith('/posts')) {
-        const publishDate = eleImg.dataset.publishDate;
-        if (publishDate) {
-            eleImg.src = getImageUrl(new Date(publishDate));
-        }
-    }
-});
-</script><div class="site-data s-card weidgets">
+</div><div class="site-data s-card weidgets">
     <div class="title">
       <i class="iconfont icon-chart"></i>
       <span class="title-name">站点数据</span>
@@ -2132,25 +2569,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </footer>
-
-<script src="/js/search.min.f2af2dfa3be20e8e7e8c8989bab508289b71bf3730bc6e352738f2084973a1ab.js"></script>
-<script>
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        Search.init();
-    });
-</script>
-
-
-<script src="/js/theme.min.df71ca7373c5884a4022a354b524ddee31ff8069b6ff5151b5950296b2d3a7a8.js"></script>
-
-
-
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
-
-
-
-<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
+<script type="module" src="/js/main.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

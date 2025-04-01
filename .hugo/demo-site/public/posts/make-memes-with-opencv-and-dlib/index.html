@@ -789,7 +789,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span></code></pre></div><p>除此以外，我们还需要下载 <code>dlib</code> 所需的模型文件，下载地址为：<a href="http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2">http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2</a>。下载该文件并解压后，可以得到一个 <code>.dat</code> 格式的文件，这就是我们用来做人脸识别的模型文件，即人脸的 68 个特征点检测，这个我们会在下面做更进一步的说明。</p>
 <h1 id="初探-dlib">初探 Dlib</h1>
 <p>其实，如果是简单的人脸检测，<a href="https://docs.opencv.org/4.x/index.html">OpenCV</a> 完全足矣。如果你读过我这个系列的第一篇文章，就会知道 OpenCV 人脸检测的实际效果如何。事实上，它会使用一个矩形来表示检测到的人脸范围，这里，我还是用堺雅人主演的电视剧《半泽直树》来作为说明，可以注意到每一个矩形对应着一张人脸：</p>
-<p><a href="https://i.loli.net/2020/12/25/DcQRW32aUTBx5lY.png" data-fancybox="gallery" data-src="https://i.loli.net/2020/12/25/DcQRW32aUTBx5lY.png" data-caption="OpenCV人脸检测效果展示">
+<p><a  class="img-fancybox" href="https://i.loli.net/2020/12/25/DcQRW32aUTBx5lY.png" data-fancybox="gallery" data-src="https://i.loli.net/2020/12/25/DcQRW32aUTBx5lY.png" data-caption="OpenCV人脸检测效果展示">
     <img src="https://i.loli.net/2020/12/25/DcQRW32aUTBx5lY.png" alt="OpenCV人脸检测效果展示"  class="post-img" loading="lazy">
     <span class="post-img-tip">OpenCV人脸检测效果展示</span>
 </a> </p>
@@ -812,14 +812,14 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&#34;image&#34;</span><span class="p">,</span><span class="n">image</span><span class="p">)</span>
 </span></span></code></pre></div><p>此时，我们可以得到下面的结果：</p>
-<p><a href="/posts/make-memes-with-opencv-and-dlib/dlib-face-detect-01.jpg" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/dlib-face-detect-01.jpg" data-caption="使用 dlib 进行人脸检测">
+<p><a  class="img-fancybox" href="/posts/make-memes-with-opencv-and-dlib/dlib-face-detect-01.jpg" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/dlib-face-detect-01.jpg" data-caption="使用 dlib 进行人脸检测">
     <img src="/posts/make-memes-with-opencv-and-dlib/dlib-face-detect-01.jpg" alt="使用 dlib 进行人脸检测"  class="post-img" loading="lazy">
     <span class="post-img-tip">使用 dlib 进行人脸检测</span>
 </a> </p>
 <p>可以注意到， <code>dlib</code> 可以进一步识别出人脸中的特征点，譬如眼睛、眉毛、鼻子、嘴巴等等，这让我们有了更多可以探索的乐趣。举个例子，司机在道路上疲劳驾驶，有可能会引发交通事故，如果我们能实时分析司机的面目表情，就可以为这个世界做出一点小小的努力。一个常见的思路是计算“眼睛”部分的宽高比，因为当人眼睛闭合的时候，相当于“眼睛”部分纵向的特征点间距变小。再比如，我们可以通过嘴角和眉毛的弧度来“揣测”一个人的喜怒哀乐，让计算机不再是冷冰冰地一台机器。也许，你听说过“三庭五眼”这套理论，所以，从某种意义上来讲，这个思路还可以扩展到“看相”这个方向。果然，你可以永远相信神仙姐姐的颜值呢&hellip;</p>
 <h1 id="移花接木">移花接木</h1>
 <p>OK，在对 <code>dlib</code> 有一个初步印象以后，我们来说说，在今天这篇博客里，博主到底想做一件什么样的事情。如下图所示，我们希望借助 <code>dlib</code> 逐步地“抠取”出人物表情，最终再和这个经典的“熊猫人”融合在一起，从而达到从某任意图片生成表情包的目的。当然啦，这个想法并不容易实现，因为你从这个图片中就可以看到它的最终效果。图中使用的素材出自半泽直树第二季，当半泽直树遇上对手黑崎骏一，瞬间碰撞出一种惺惺相惜的 CP 感，作为雅人叔的忠实粉丝，还有什么比做成表情包更直抒胸臆的表达方式呢？</p>
-<p><a href="/posts/make-memes-with-opencv-and-dlib/%e6%b5%81%e7%a8%8b%e8%af%b4%e6%98%8e.drawio.png" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/%e6%b5%81%e7%a8%8b%e8%af%b4%e6%98%8e.drawio.png" data-caption="制作表情包的过程说明">
+<p><a  class="img-fancybox" href="/posts/make-memes-with-opencv-and-dlib/%e6%b5%81%e7%a8%8b%e8%af%b4%e6%98%8e.drawio.png" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/%e6%b5%81%e7%a8%8b%e8%af%b4%e6%98%8e.drawio.png" data-caption="制作表情包的过程说明">
     <img src="/posts/make-memes-with-opencv-and-dlib/%e6%b5%81%e7%a8%8b%e8%af%b4%e6%98%8e.drawio.png" alt="制作表情包的过程说明"  class="post-img" loading="lazy">
     <span class="post-img-tip">制作表情包的过程说明</span>
 </a> </p>
@@ -844,7 +844,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">(</span><span class="n">minX</span><span class="p">,</span> <span class="n">minY</span><span class="p">,</span> <span class="n">maxX</span> <span class="o">-</span> <span class="n">minX</span><span class="p">,</span> <span class="n">maxY</span> <span class="o">-</span> <span class="n">minY</span><span class="p">)</span>
 </span></span></code></pre></div><p>可以注意到，代码非常地朴实无华，只需要分别找到 <code>x</code> 和 <code>y</code> 的最小值/最大值，就可以确定人脸的矩形范围。如下图所示，红色线条呈现出的即为人脸的矩形范围。作为对比，我们同时绘制了 <code>dlib</code> 本身自带的一个矩形范围，这个矩形范围大致等同于 <code>OpenCV</code> 人脸检测的效果：</p>
-<p><a href="/posts/make-memes-with-opencv-and-dlib/rectangle-of-facemark.png" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/rectangle-of-facemark.png" data-caption="获得人脸的矩形范围">
+<p><a  class="img-fancybox" href="/posts/make-memes-with-opencv-and-dlib/rectangle-of-facemark.png" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/rectangle-of-facemark.png" data-caption="获得人脸的矩形范围">
     <img src="/posts/make-memes-with-opencv-and-dlib/rectangle-of-facemark.png" alt="获得人脸的矩形范围"  class="post-img" loading="lazy">
     <span class="post-img-tip">获得人脸的矩形范围</span>
 </a> </p>
@@ -865,14 +865,14 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="n">cv2</span><span class="o">.</span><span class="n">fillPoly</span><span class="p">(</span><span class="n">img</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">pts</span><span class="o">=</span><span class="p">[</span><span class="n">points</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,)</span> <span class="o">*</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">mask</span>
 </span></span></code></pre></div><p>这里，我们首先创建了一个和原图片同样大小的图片 <code>mask</code> , 然后调用 <code>fillPoly()</code> 对多边形进行填充。这样，我们就得到了一个和人脸轮廓完全一致的掩膜：</p>
-<p><a href="/posts/make-memes-with-opencv-and-dlib/mask-of-facemark.png" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/mask-of-facemark.png" data-caption="利用人脸轮廓创建掩膜">
+<p><a  class="img-fancybox" href="/posts/make-memes-with-opencv-and-dlib/mask-of-facemark.png" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/mask-of-facemark.png" data-caption="利用人脸轮廓创建掩膜">
     <img src="/posts/make-memes-with-opencv-and-dlib/mask-of-facemark.png" alt="利用人脸轮廓创建掩膜"  class="post-img" loading="lazy">
     <span class="post-img-tip">利用人脸轮廓创建掩膜</span>
 </a> </p>
 <p>在 <code>OpenCV</code> 中，可以通过 <code>bitwise_and()</code> 函数来对两张图片进行“叠加”, 而在这个示例中，原图片为 <code>image</code>，掩膜图片为 <code>mask</code>，因此，对应的代码片段如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
 </span></span></code></pre></div><p>此时，我们可以得到下面的结果，可以注意到，雅人叔的脸已经被我“抠取”出来了，哈哈！</p>
-<p><a href="/posts/make-memes-with-opencv-and-dlib/mask-of-facemark2.png" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/mask-of-facemark2.png" data-caption="成功抠取出雅人叔的脸">
+<p><a  class="img-fancybox" href="/posts/make-memes-with-opencv-and-dlib/mask-of-facemark2.png" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/mask-of-facemark2.png" data-caption="成功抠取出雅人叔的脸">
     <img src="/posts/make-memes-with-opencv-and-dlib/mask-of-facemark2.png" alt="成功抠取出雅人叔的脸"  class="post-img" loading="lazy">
     <span class="post-img-tip">成功抠取出雅人叔的脸</span>
 </a> </p>
@@ -895,7 +895,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">((</span><span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()):</span>
 </span></span><span class="line"><span class="cl">            <span class="n">white</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
 </span></span></code></pre></div><p>接下来，为了让雅人叔的脸更贴近“熊猫人”的气质，我们对图片运用一次 <code>threshold()</code> 函数。事实上，到这一步为止，博主一直没有找到特别好的方法，因为人脸上可能会有阴影造成的深浅变化，这样就没有办法 100% 的转化为黑白图片。除了这种固定阈值的方案，博主同样尝试自适应阈值的方案，即 <code>adaptiveThreshold()</code> 函数。不过，从最终效果来看，自适应阈值的方案表现并不好，下面是这两种方案的效果对比：</p>
-<p><a href="/posts/make-memes-with-opencv-and-dlib/binary-of-facemark.png" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/binary-of-facemark.png" data-caption="固定阈值和自适应阈值效果对比">
+<p><a  class="img-fancybox" href="/posts/make-memes-with-opencv-and-dlib/binary-of-facemark.png" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/binary-of-facemark.png" data-caption="固定阈值和自适应阈值效果对比">
     <img src="/posts/make-memes-with-opencv-and-dlib/binary-of-facemark.png" alt="固定阈值和自适应阈值效果对比"  class="post-img" loading="lazy">
     <span class="post-img-tip">固定阈值和自适应阈值效果对比</span>
 </a> </p>
@@ -934,7 +934,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl"><span class="n">panda</span><span class="o">.</span><span class="n">paste</span><span class="p">(</span><span class="n">resized</span><span class="p">,</span> <span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">left</span> <span class="o">+</span> <span class="n">w_new</span><span class="p">,</span> <span class="n">top</span> <span class="o">+</span> <span class="n">h_new</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="n">panda</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;output.jpg&#39;</span><span class="p">)</span>
 </span></span></code></pre></div><p>那么，对不起了，雅人叔，我实在是太喜欢你在不同的剧里呈现出来的形象，半泽直树、古美门、德川家定、山南敬助、真田信繁&hellip;，每一个角色都能让人惊呼这居然是同一个人，更不用说，有那种根植于文学和话剧的清澈感，能在演绎角色的同时加入个人的理解。雅人叔，请变成我的表情包吧，哈哈！</p>
-<p><a href="/posts/make-memes-with-opencv-and-dlib/output-of-emoji.jpg" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/output-of-emoji.jpg" data-caption="最终合成的表情包效果">
+<p><a  class="img-fancybox" href="/posts/make-memes-with-opencv-and-dlib/output-of-emoji.jpg" data-fancybox="gallery" data-src="/posts/make-memes-with-opencv-and-dlib/output-of-emoji.jpg" data-caption="最终合成的表情包效果">
     <img src="/posts/make-memes-with-opencv-and-dlib/output-of-emoji.jpg" alt="最终合成的表情包效果"  class="post-img" loading="lazy">
     <span class="post-img-tip">最终合成的表情包效果</span>
 </a> </p>
@@ -1167,7 +1167,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/1320325685\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/1190622881\/'">
         随便逛逛
       </span>
       
@@ -1564,64 +1564,501 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="card-content">
     
   </div>
-</div> 
-
-<div class="tags-cloud s-card weidgets">
+</div> <div class="tags-cloud s-card weidgets">
   <div class="title">
     <i class="iconfont icon-hashtag"></i>
     <span class="title-name">热门标签</span>
   </div>
   <div class="all-tags">
     
+      <a href="/tags/vue/" class="tags">
+        <span class="name">Vue</span>
+        <sup class="num">6</sup>
+      </a>
+    
+      <a href="/tags/envoy/" class="tags">
+        <span class="name">Envoy</span>
+        <sup class="num">4</sup>
+      </a>
+    
+      <a href="/tags/.net-core/" class="tags">
+        <span class="name">.NET Core</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/unity3d/" class="tags">
+        <span class="name">Unity3D</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/%E5%89%8D%E7%AB%AF/" class="tags">
+        <span class="name">前端</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" class="tags">
+        <span class="name">微服务</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/mock/" class="tags">
+        <span class="name">Mock</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/nginx/" class="tags">
+        <span class="name">Nginx</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%84%9F%E6%82%9F/" class="tags">
+        <span class="name">感悟</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%B8%B8%E6%88%8F/" class="tags">
+        <span class="name">游戏</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" class="tags">
+        <span class="name">游戏开发</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E7%BC%96%E7%A8%8B/" class="tags">
+        <span class="name">编程</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/.net/" class="tags">
+        <span class="name">.NET</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/abp/" class="tags">
+        <span class="name">ABP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/agent/" class="tags">
+        <span class="name">Agent</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/apache/" class="tags">
+        <span class="name">Apache</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/cdn/" class="tags">
+        <span class="name">CDN</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/dlib/" class="tags">
+        <span class="name">Dlib</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/function-calling/" class="tags">
+        <span class="name">Function Calling</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/github/" class="tags">
+        <span class="name">Github</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/gpts/" class="tags">
+        <span class="name">GPTs</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/grafana/" class="tags">
+        <span class="name">Grafana</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hangfire/" class="tags">
+        <span class="name">Hangfire</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hashset/" class="tags">
+        <span class="name">HashSet</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hexo/" class="tags">
+        <span class="name">Hexo</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/http/" class="tags">
+        <span class="name">HTTP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/httpclient/" class="tags">
+        <span class="name">HttpClient</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/jsdelivr/" class="tags">
+        <span class="name">JsDelivr</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/k-means/" class="tags">
+        <span class="name">K-Means</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/kindle/" class="tags">
+        <span class="name">Kindle</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/lambda/" class="tags">
+        <span class="name">Lambda</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/langchain/" class="tags">
+        <span class="name">LangChain</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/ldap/" class="tags">
+        <span class="name">LDAP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/linq/" class="tags">
+        <span class="name">Linq</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/linux/" class="tags">
+        <span class="name">Linux</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/llama/" class="tags">
+        <span class="name">LLaMA</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/love2d/" class="tags">
+        <span class="name">Love2D</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/mcp/" class="tags">
+        <span class="name">MCP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/mono/" class="tags">
+        <span class="name">Mono</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/opencv/" class="tags">
+        <span class="name">OpenCV</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/prometheus/" class="tags">
+        <span class="name">Prometheus</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/python/" class="tags">
+        <span class="name">Python</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/rag/" class="tags">
+        <span class="name">RAG</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/rpg/" class="tags">
+        <span class="name">RPG</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/scikit-learn/" class="tags">
+        <span class="name">Scikit-Learn</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/semantic-kernel/" class="tags">
+        <span class="name">Semantic Kernel</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/signalr/" class="tags">
+        <span class="name">SignalR</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/svn/" class="tags">
+        <span class="name">SVN</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/ugui/" class="tags">
+        <span class="name">UGUI</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/websocket/" class="tags">
+        <span class="name">WebSocket</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BA%BA%E8%84%B8%E5%88%86%E7%B1%BB/" class="tags">
+        <span class="name">人脸分类</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BB%99%E5%89%91%E5%A5%87%E4%BE%A0%E4%BC%A0/" class="tags">
+        <span class="name">仙剑奇侠传</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BD%8E%E4%BB%A3%E7%A0%81/" class="tags">
+        <span class="name">低代码</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%85%AB%E5%8D%A6/" class="tags">
+        <span class="name">八卦</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%88%86%E9%A1%B5/" class="tags">
+        <span class="name">分页</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%8A%A8%E6%BC%AB/" class="tags">
+        <span class="name">动漫</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" class="tags">
+        <span class="name">反向代理</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%93%AA%E5%90%92/" class="tags">
+        <span class="name">哪吒</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" class="tags">
+        <span class="name">图像处理</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%A4%8F%E7%9B%AE%E6%BC%B1%E7%9F%B3/" class="tags">
+        <span class="name">夏目漱石</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%AE%B9%E5%99%A8/" class="tags">
+        <span class="name">容器</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%B0%81%E7%A5%9E/" class="tags">
+        <span class="name">封神</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%BD%B1%E8%AF%84/" class="tags">
+        <span class="name">影评</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%80%9D%E8%80%83/" class="tags">
+        <span class="name">思考</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%88%91%E6%98%AF%E7%8C%AB/" class="tags">
+        <span class="name">我是猫</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%89%A9%E5%B1%95/" class="tags">
+        <span class="name">扩展</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%95%B0%E6%8D%AE/" class="tags">
+        <span class="name">数据</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%97%A5%E5%89%A7/" class="tags">
+        <span class="name">日剧</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%97%A5%E6%9C%AC%E6%96%87%E5%AD%A6/" class="tags">
+        <span class="name">日本文学</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="tags">
+        <span class="name">机器学习</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%BA%90%E7%A0%81/" class="tags">
+        <span class="name">源码</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%86%B5%E5%A2%9E%E5%AE%9A%E5%BE%8B/" class="tags">
+        <span class="name">熵增定律</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%88%B1%E6%83%85/" class="tags">
+        <span class="name">爱情</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" class="tags">
+        <span class="name">版本控制</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%8A%B6%E6%80%81/" class="tags">
+        <span class="name">状态</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%94%9F%E6%B4%BB/" class="tags">
+        <span class="name">生活</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%94%B5%E5%BD%B1/" class="tags">
+        <span class="name">电影</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%9B%91%E6%8E%A7/" class="tags">
+        <span class="name">监控</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A0%94%E5%8F%91/" class="tags">
+        <span class="name">研发</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" class="tags">
+        <span class="name">程序员</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A9%BF%E6%90%AD/" class="tags">
+        <span class="name">穿搭</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%AE%A1%E9%81%93/" class="tags">
+        <span class="name">管道</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%BD%91%E5%85%B3/" class="tags">
+        <span class="name">网关</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%81%9A%E7%B1%BB/" class="tags">
+        <span class="name">聚类</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%8C%E4%B8%9A/" class="tags">
+        <span class="name">行业</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%A8%E5%8D%95/" class="tags">
+        <span class="name">表单</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%91/" class="tags">
+        <span class="name">表达式树</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%AE%A4%E8%AF%81/" class="tags">
+        <span class="name">认证</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%AF%BB%E4%B9%A6/" class="tags">
+        <span class="name">读书</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="tags">
+        <span class="name">负载均衡</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B4%AA%E5%90%83%E8%9B%87/" class="tags">
+        <span class="name">贪吃蛇</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B7%A8%E5%B9%B3%E5%8F%B0/" class="tags">
+        <span class="name">跨平台</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B7%AF%E7%94%B1/" class="tags">
+        <span class="name">路由</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%BF%81%E7%A7%BB/" class="tags">
+        <span class="name">迁移</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%9A%8F%E7%AC%94/" class="tags">
+        <span class="name">随笔</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%9D%A2%E8%AF%95/" class="tags">
+        <span class="name">面试</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%AA%8C%E8%AF%81/" class="tags">
+        <span class="name">验证</span>
+        <sup class="num">1</sup>
+      </a>
+    
   </div>
   <a href="/tags" class="more-tags">查看全部</a>
-</div>
-
-
-
-<div class="tags-cloud s-card weidgets">
-    <div class="title">
-        <i class="iconfont icon-hashtag"></i>
-        <span class="title-name">日历</span>
-    </div>
-    <div class="all-tags">
-        <img id="calendar-cover" 
-             src="https://img.owspace.com/Public/uploads/Download/2025/0401.jpg" 
-             style="object-fit: cover; width: 100%; height: 100%; opacity: 0; transition: opacity 0.3s;"
-             onload="this.style.opacity = 1"
-             
-             alt="calendar cover" />
-    </div>
-</div>
-
-<style>
-.all-tags {
-    min-height: 200px;  
-}
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const eleImg = document.querySelector("#calendar-cover");
-    const getImageUrl = (date) => {
-        const currentYear = date.getFullYear();
-        const currentMonth = date.getMonth() + 1;
-        const currentDate = date.getDate();
-        
-        const formattedMonth = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
-        const formattedDate = currentDate < 10 ? `0${currentDate}` : currentDate;
-        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${formattedMonth}${formattedDate}.jpg`
-    }
-
-    
-    if (document.location.pathname.startsWith('/posts')) {
-        const publishDate = eleImg.dataset.publishDate;
-        if (publishDate) {
-            eleImg.src = getImageUrl(new Date(publishDate));
-        }
-    }
-});
-</script><div class="site-data s-card weidgets">
+</div><div class="site-data s-card weidgets">
     <div class="title">
       <i class="iconfont icon-chart"></i>
       <span class="title-name">站点数据</span>
@@ -2113,25 +2550,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </footer>
-
-<script src="/js/search.min.f2af2dfa3be20e8e7e8c8989bab508289b71bf3730bc6e352738f2084973a1ab.js"></script>
-<script>
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        Search.init();
-    });
-</script>
-
-
-<script src="/js/theme.min.df71ca7373c5884a4022a354b524ddee31ff8069b6ff5151b5950296b2d3a7a8.js"></script>
-
-
-
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
-
-
-
-<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
+<script type="module" src="/js/main.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

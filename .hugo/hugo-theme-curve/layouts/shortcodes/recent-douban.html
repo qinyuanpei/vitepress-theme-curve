@@ -1,0 +1,161 @@
+﻿{{ $type := (.Get "type") }}
+{{ $title := (.Get "title") }}
+{{ $more := (.Get "more" ) }}
+{{ $limit := int (.Get "limit") }}
+{{ $isOdd := ne (mod (int $limit) 2) 0 }}
+
+{{ if eq $type "movie" }}
+<h1><a class="more" href="{{ $more }}">{{ $title }}</a></h1>
+<div class="recent-items">
+    {{ range $index, $element := first $limit $.Site.Data.doubanSync.movie }}
+    {{ $subject := $element.subject }}
+    {{ $value := mul $subject.rating.value 10 }}
+    {{ $isLast := eq $index (sub $limit 1) }}
+    <div class="recent-item {{ if and $isOdd $isLast }}hide-on-mobile{{ end }}">
+        <a href="{{ $subject.url }}" title="{{ $subject.title }}">
+            <img src="{{ $subject.pic.normal }}" alt="{{ $subject.title }}">
+        </a>
+        <div class="recent-douban-rating">
+            <span class="all-star-dark">
+                <span class="all-star-light" style="width: {{ $value }}%;"></span>
+            </span>
+            <span class="rating_nums">{{ $subject.rating.value }}</span>
+        </div>
+        <div class="title" title="{{ $subject.title }}">
+            <a href="{{ $subject.url }}">{{ $subject.title }}</a>
+        </div>
+    </div>
+    {{ end }}
+</div>
+{{ else }}
+<h1><a class="more" href="{{ $more }}">{{ $title }}</a></h1>
+<div class="recent-items">
+    {{ range $index, $element := first $limit $.Site.Data.doubanSync.book  }}
+    {{ $subject := $element.subject }}
+    {{ $value := mul $subject.rating.value 10 }}
+    {{ $isLast := eq $index (sub $limit 1) }}
+    <div class="recent-item {{ if and $isOdd $isLast }}hide-on-mobile{{ end }}">
+        <a href="{{ $subject.url }}" title="{{ $subject.title }}">
+            <img src="{{ $subject.pic.normal }}" alt="{{ $subject.title }}">
+        </a>
+        <div class="recent-douban-rating">
+            <span class="all-star-dark">
+                <span class="all-star-light" style="width: {{ $value }}%;"></span>
+            </span>
+            <span class="rating_nums">{{ $subject.rating.value }}</span>
+        </div>
+        <div class="title" title="{{ $subject.title }}">
+            <a href="{{ $subject.url }}">{{ $subject.title }}</a>
+        </div>
+    </div>
+    {{ end }}
+</div>
+{{ end }}
+
+<style>
+:root {
+    --primary-color: #f99b01;
+    --secondary-color: #000;
+    --item-margin: 7.5px;
+    --image-size: 200px;
+    --title-height: 18px;
+    --rating-height: 16px;
+    --rating-width: 80px;
+    --items-per-row: 5; 
+}
+
+.more {
+    padding: 0 2.5rem 0 .5rem;
+    background: url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSdibGFjaycgdmlld0JveD0nMCAwIDEwMjQgMTAyNCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB3aWR0aD0nMjAnIGhlaWdodD0nMjAnPjxwYXRoIGQ9J001NTcuMjI3IDM0Ni4wMjdMNjE3LjYgNDA2LjRhMjk4LjY2NyAyOTguNjY3IDAgMCAxIDAgNDIyLjRsLTE1LjEwNCAxNS4wNjFhMjk4LjY2NyAyOTguNjY3IDAgMCAxLTQyMi40LTQyMi40bDYwLjM3MyA2MC4zNzRBMjEzLjMzMyAyMTMuMzMzIDAgMSAwIDU0Mi4xNjUgNzgzLjUzbDE1LjEwNC0xNS4xMDRhMjEzLjMzMyAyMTMuMzMzIDAgMCAwIDAtMzAxLjY1NEw0OTYuODk2IDQwNi40bDYwLjM3My02MC4zM3pNODQzLjg2IDYwMi40OTZsLTYwLjMzLTYwLjMzYTIxMy4zMzMgMjEzLjMzMyAwIDEgMC0zMDEuNjk2LTMwMS42OTdsLTE1LjEwNCAxNS4xMDRhMjEzLjMzMyAyMTMuMzMzIDAgMCAwIDAgMzAxLjY1NGw2MC4zNzMgNjAuMzczLTYwLjM3MyA2MC4zM0w0MDYuNCA2MTcuNmEyOTguNjY3IDI5OC42NjcgMCAwIDEgMC00MjIuNGwxNS4xMDQtMTUuMDYxYTI5OC42NjcgMjk4LjY2NyAwIDAgMSA0MjIuNCA0MjIuNHonLz48L3N2Zz4=) no-repeat right center;
+}
+
+.recent-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--item-margin); 
+}
+
+.recent-item {
+    flex: 1 1 calc((100% / var(--items-per-row)) - var(--item-margin)); 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recent-item img {
+    max-height: var(--image-size);
+    min-height: var(--image-size);
+    max-width: 120px;
+    min-width: 120px;
+    object-fit: cover;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+.recent-item img:hover {
+    transform: scale(1.05);
+}
+
+.recent-item .title {
+    height: var(--title-height);
+    margin-top: 5px;
+    line-height: var(--title-height);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 150px;
+    width: 100%; 
+    text-align: center;
+}
+
+.recent-item .title:hover {
+    text-decoration: underline;
+}
+
+.recent-douban-rating {
+    margin: 2.5px 0;
+    font-size: 12px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    position: relative; 
+}
+
+.recent-douban-rating .all-star-dark {
+    position: relative;
+    color: var(--primary-color);
+    height: var(--rating-height);
+    width: var(--rating-width);
+    background-size: auto 100%;
+    background-repeat: repeat;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MDguMSAzNTMuMWwtMjUzLjktMzYuOUw1NDcuNyA4Ni4xYy0zLjEtNi4zLTguMi0xMS40LTE0LjUtMTQuNS0xNS44LTcuOC0zNS0xLjMtNDIuOSAxNC41TDM2OS44IDMxNi4ybC0yNTMuOSAzNi45Yy03IDEtMTMuNCA0LjMtMTguMyA5LjMtMTIuMyAxMi43LTEyLjEgMzIuOS42IDQ1LjNsMTgzLjcgMTc5LjEtNDMuNCAyNTIuOWMtMS4yIDYuOS0uMSAxNC4xIDMuMiAyMC4zIDguMiAxNS42IDI3LjYgMjEuNyA0My4yIDEzLjRMNTEyIDc1NGwyMjcuMSAxMTkuNGM2LjIgMy4zIDEzLjQgNC40IDIwLjMgMy4yIDE3LjQtMyAyOS4xLTE5LjUgMjYuMS0zNi45bC00My40LTI1Mi45IDE4My43LTE3OS4xYzUtNC45IDguMy0xMS4zIDkuMy0xOC4zIDIuNy0xNy41LTkuNS0zMy43LTI3LTM2LjN6TTY2NC44IDU2MS42bDM2LjEgMjEwLjNMNTEyIDY3Mi43IDMyMy4xIDc3MmwzNi4xLTIxMC4zLTE1Mi44LTE0OUw0MTcuNiAzODIgNTEyIDE5MC43IDYwNi40IDM4MmwyMTEuMiAzMC43LTE1Mi44IDE0OC45eiIgZmlsbD0iI2Y5OWIwMSIvPjwvc3ZnPg==);
+}
+
+.recent-douban-rating .all-star-light {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var(--rating-height);
+    width: var(--rating-width);
+    background-size: auto 100%;
+    background-repeat: repeat;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MDguMSAzNTMuMWwtMjUzLjktMzYuOUw1NDcuNyA4Ni4xYy0zLjEtNi4zLTguMi0xMS40LTE0LjUtMTQuNS0xNS44LTcuOC0zNS0xLjMtNDIuOSAxNC41TDM2OS44IDMxNi4ybC0yNTMuOSAzNi45Yy03IDEtMTMuNCA0LjMtMTguMyA5LjMtMTIuMyAxMi43LTEyLjEgMzIuOS42IDQ1LjNsMTgzLjcgMTc5LjEtNDMuNCAyNTIuOWMtMS4yIDYuOS0uMSAxNC4xIDMuMiAyMC4zIDguMiAxNS42IDI3LjYgMjEuNyA0My4yIDEzLjRMNTEyIDc1NGwyMjcuMSAxMTkuNGM2LjIgMy4yIDEzLjQgNC40IDIwLjMgMy4yIDE3LjQtMyAyOS4xLTE5LjUgMjYuMS0zNi45bC00My40LTI1Mi45IDE4My43LTE3OS4xYzUtNC45IDguMy0xMS4zIDkuMy0xOC4zIDIuNy0xNy41LTkuNS0zMy43LTI3LTM2LjN6IiBmaWxsPSIjZjk5YjAxIi8+PC9zdmc+);
+    clip-path: inset(0 0 0 0); 
+}
+
+.recent-douban-rating .rating_nums {
+    margin-left: 8px; 
+}
+
+@media (max-width: 768px) {
+    .hide-on-mobile {
+        display: none;
+    }
+
+    .recent-item {
+        flex: 1 1 calc((100% / 2) - var(--item-margin)); 
+    }
+}
+</style>

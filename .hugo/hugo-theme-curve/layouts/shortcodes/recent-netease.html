@@ -1,0 +1,99 @@
+﻿{{ $id := (.Get "id") }}
+{{ $more := (.Get "more" ) }}
+{{ $limit := (.Get "limit") }}
+{{ $title := (.Get "title")}}
+
+{{ $weekData := $.Site.Data.netease.weekData }}
+{{ if eq $more "" }}
+<h1>{{ $title }}</h1>
+{{ else }}
+<h1><a class="more" href="{{ $more }}">{{ $title }}</a></h1>
+{{ end }}
+<div class="song-list">
+    {{ range (first $limit $weekData.recentPlayed) }}
+    <div class="song">
+        <a title="{{ .name }}" href="{{ .url }}">
+            <div class="song-image-container">
+                <img src="{{  .cover_url }}" alt="{{ .name }}">
+            </div>
+        </a>
+        <div class="song-info">
+            <div class="song-title" title="{{ .name }}">
+                <a href="{{ .url }}">{{ .name }}</a>
+            </div>
+        </div>
+    </div>
+    {{ end }}
+</div>
+<style>
+    .song-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: flex-start;
+    }
+
+    .song {
+        flex-basis: calc(20% - 1rem);
+        max-width: calc(20% - 1rem);
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .song-image-container {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        border-radius: 10px;
+        position: relative;
+        background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .song img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+        transition: transform 0.3s ease;
+    }
+
+    .song img:hover {
+        transform: scale(1.05);
+    }
+
+    .song-info {
+        margin-top: 0.5rem;
+        padding: 0 0.5rem;
+    }
+
+    .song-title {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        font-size: var(--article-font-size);
+    }
+
+    .song-title a {
+        color: var(--accent-color-darker);
+        text-decoration: none;
+    }
+
+    [data-scheme="dark"] .song-title a {
+        color: var(--accent-color);
+    }
+
+    .song-title a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .song {
+            flex-basis: calc(50% - 1rem);
+            max-width: calc(50% - 1rem);
+        }
+    }
+</style>

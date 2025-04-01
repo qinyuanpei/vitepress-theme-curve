@@ -1,0 +1,12 @@
+<div class="works-container">
+    <div class="container">
+        <section class="row">
+            <div class="works-area">
+                {{ $items := . }}
+                {{ range (sort $items "date" "desc") }}
+                {{ template "partials/works/work-item.html" . }}
+                {{ end}}
+            </div>
+        </section>
+    </div>
+</div>

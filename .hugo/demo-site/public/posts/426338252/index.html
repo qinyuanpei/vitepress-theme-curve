@@ -774,19 +774,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p>今天来介绍博主最近捣腾的一个小游戏“贪吃蛇”。“贪吃蛇”这个游戏相信大家都不会感到陌生吧。今天博主将通过<a href="http://love2d.org/">Love2D</a>这款游戏引擎来为大家实现一个简单的贪吃蛇游戏,在本篇文章当中我们将会涉及到“贪吃蛇”的基本算法、Lua 语言编程等基本的内容，希望能够对大家开发类似的游戏提供借鉴和思考，文章中如有不足之处，还希望大家能够谅解，因为博主的游戏开发基本就是这样慢慢摸索着学习，所以难免会有不足的地方。</p>
 <h2 id="游戏算法">游戏算法</h2>
 <p>我们首先来看看贪吃蛇是怎么移动的？
-<a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05nhb62pj205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nhb62pj205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示1">
+<a  class="img-fancybox" href="https://ww1.sinaimg.cn/large/4c36074fly1fz05nhb62pj205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nhb62pj205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示1">
     <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nhb62pj205m05lq33.jpg" alt="贪吃蛇游戏算法演示1"  class="post-img" loading="lazy">
     <span class="post-img-tip">贪吃蛇游戏算法演示1</span>
 </a> 
-<a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05k1yzipj205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05k1yzipj205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示2">
+<a  class="img-fancybox" href="https://ww1.sinaimg.cn/large/4c36074fly1fz05k1yzipj205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05k1yzipj205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示2">
     <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05k1yzipj205m05lq33.jpg" alt="贪吃蛇游戏算法演示2"  class="post-img" loading="lazy">
     <span class="post-img-tip">贪吃蛇游戏算法演示2</span>
 </a> 
-<a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05dugbchj205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05dugbchj205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示3">
+<a  class="img-fancybox" href="https://ww1.sinaimg.cn/large/4c36074fly1fz05dugbchj205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05dugbchj205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示3">
     <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05dugbchj205m05lq33.jpg" alt="贪吃蛇游戏算法演示3"  class="post-img" loading="lazy">
     <span class="post-img-tip">贪吃蛇游戏算法演示3</span>
 </a> 
-<a href="https://ww1.sinaimg.cn/large/4c36074fly1fz01zh5qn2j205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz01zh5qn2j205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示4">
+<a  class="img-fancybox" href="https://ww1.sinaimg.cn/large/4c36074fly1fz01zh5qn2j205m05lq33.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz01zh5qn2j205m05lq33.jpg" data-caption="贪吃蛇游戏算法演示4">
     <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz01zh5qn2j205m05lq33.jpg" alt="贪吃蛇游戏算法演示4"  class="post-img" loading="lazy">
     <span class="post-img-tip">贪吃蛇游戏算法演示4</span>
 </a> 
@@ -1031,11 +1031,11 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">  <span class="kr">return</span> <span class="n">snake</span>
 </span></span><span class="line"><span class="cl"><span class="kr">end</span>
 </span></span></code></pre></div><p>将代码压缩成.love 文件后就可以运行了，我们来看看最终的效果：</p>
-<p><a href="https://i.loli.net/2021/10/25/BC4KqmDbRtdj8he.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/10/25/BC4KqmDbRtdj8he.png" data-caption="Love2D 贪吃蛇游戏示例1">
+<p><a  class="img-fancybox" href="https://i.loli.net/2021/10/25/BC4KqmDbRtdj8he.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/10/25/BC4KqmDbRtdj8he.png" data-caption="Love2D 贪吃蛇游戏示例1">
     <img src="https://i.loli.net/2021/10/25/BC4KqmDbRtdj8he.png" alt="Love2D 贪吃蛇游戏示例1"  class="post-img" loading="lazy">
     <span class="post-img-tip">Love2D 贪吃蛇游戏示例1</span>
 </a> </p>
-<p><a href="https://i.loli.net/2021/10/25/xmTubKXEdM8lZoP.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/10/25/xmTubKXEdM8lZoP.png" data-caption="Love2D 贪吃蛇游戏示例2">
+<p><a  class="img-fancybox" href="https://i.loli.net/2021/10/25/xmTubKXEdM8lZoP.png" data-fancybox="gallery" data-src="https://i.loli.net/2021/10/25/xmTubKXEdM8lZoP.png" data-caption="Love2D 贪吃蛇游戏示例2">
     <img src="https://i.loli.net/2021/10/25/xmTubKXEdM8lZoP.png" alt="Love2D 贪吃蛇游戏示例2"  class="post-img" loading="lazy">
     <span class="post-img-tip">Love2D 贪吃蛇游戏示例2</span>
 </a> </p>
@@ -1261,7 +1261,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/1417719502\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/94443781\/'">
         随便逛逛
       </span>
       
@@ -1634,64 +1634,501 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="card-content">
     
   </div>
-</div> 
-
-<div class="tags-cloud s-card weidgets">
+</div> <div class="tags-cloud s-card weidgets">
   <div class="title">
     <i class="iconfont icon-hashtag"></i>
     <span class="title-name">热门标签</span>
   </div>
   <div class="all-tags">
     
+      <a href="/tags/vue/" class="tags">
+        <span class="name">Vue</span>
+        <sup class="num">6</sup>
+      </a>
+    
+      <a href="/tags/envoy/" class="tags">
+        <span class="name">Envoy</span>
+        <sup class="num">4</sup>
+      </a>
+    
+      <a href="/tags/.net-core/" class="tags">
+        <span class="name">.NET Core</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/unity3d/" class="tags">
+        <span class="name">Unity3D</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/%E5%89%8D%E7%AB%AF/" class="tags">
+        <span class="name">前端</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" class="tags">
+        <span class="name">微服务</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/mock/" class="tags">
+        <span class="name">Mock</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/nginx/" class="tags">
+        <span class="name">Nginx</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%84%9F%E6%82%9F/" class="tags">
+        <span class="name">感悟</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%B8%B8%E6%88%8F/" class="tags">
+        <span class="name">游戏</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" class="tags">
+        <span class="name">游戏开发</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E7%BC%96%E7%A8%8B/" class="tags">
+        <span class="name">编程</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/.net/" class="tags">
+        <span class="name">.NET</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/abp/" class="tags">
+        <span class="name">ABP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/agent/" class="tags">
+        <span class="name">Agent</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/apache/" class="tags">
+        <span class="name">Apache</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/cdn/" class="tags">
+        <span class="name">CDN</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/dlib/" class="tags">
+        <span class="name">Dlib</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/function-calling/" class="tags">
+        <span class="name">Function Calling</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/github/" class="tags">
+        <span class="name">Github</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/gpts/" class="tags">
+        <span class="name">GPTs</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/grafana/" class="tags">
+        <span class="name">Grafana</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hangfire/" class="tags">
+        <span class="name">Hangfire</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hashset/" class="tags">
+        <span class="name">HashSet</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hexo/" class="tags">
+        <span class="name">Hexo</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/http/" class="tags">
+        <span class="name">HTTP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/httpclient/" class="tags">
+        <span class="name">HttpClient</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/jsdelivr/" class="tags">
+        <span class="name">JsDelivr</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/k-means/" class="tags">
+        <span class="name">K-Means</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/kindle/" class="tags">
+        <span class="name">Kindle</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/lambda/" class="tags">
+        <span class="name">Lambda</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/langchain/" class="tags">
+        <span class="name">LangChain</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/ldap/" class="tags">
+        <span class="name">LDAP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/linq/" class="tags">
+        <span class="name">Linq</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/linux/" class="tags">
+        <span class="name">Linux</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/llama/" class="tags">
+        <span class="name">LLaMA</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/love2d/" class="tags">
+        <span class="name">Love2D</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/mcp/" class="tags">
+        <span class="name">MCP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/mono/" class="tags">
+        <span class="name">Mono</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/opencv/" class="tags">
+        <span class="name">OpenCV</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/prometheus/" class="tags">
+        <span class="name">Prometheus</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/python/" class="tags">
+        <span class="name">Python</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/rag/" class="tags">
+        <span class="name">RAG</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/rpg/" class="tags">
+        <span class="name">RPG</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/scikit-learn/" class="tags">
+        <span class="name">Scikit-Learn</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/semantic-kernel/" class="tags">
+        <span class="name">Semantic Kernel</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/signalr/" class="tags">
+        <span class="name">SignalR</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/svn/" class="tags">
+        <span class="name">SVN</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/ugui/" class="tags">
+        <span class="name">UGUI</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/websocket/" class="tags">
+        <span class="name">WebSocket</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BA%BA%E8%84%B8%E5%88%86%E7%B1%BB/" class="tags">
+        <span class="name">人脸分类</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BB%99%E5%89%91%E5%A5%87%E4%BE%A0%E4%BC%A0/" class="tags">
+        <span class="name">仙剑奇侠传</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BD%8E%E4%BB%A3%E7%A0%81/" class="tags">
+        <span class="name">低代码</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%85%AB%E5%8D%A6/" class="tags">
+        <span class="name">八卦</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%88%86%E9%A1%B5/" class="tags">
+        <span class="name">分页</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%8A%A8%E6%BC%AB/" class="tags">
+        <span class="name">动漫</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" class="tags">
+        <span class="name">反向代理</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%93%AA%E5%90%92/" class="tags">
+        <span class="name">哪吒</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" class="tags">
+        <span class="name">图像处理</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%A4%8F%E7%9B%AE%E6%BC%B1%E7%9F%B3/" class="tags">
+        <span class="name">夏目漱石</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%AE%B9%E5%99%A8/" class="tags">
+        <span class="name">容器</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%B0%81%E7%A5%9E/" class="tags">
+        <span class="name">封神</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%BD%B1%E8%AF%84/" class="tags">
+        <span class="name">影评</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%80%9D%E8%80%83/" class="tags">
+        <span class="name">思考</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%88%91%E6%98%AF%E7%8C%AB/" class="tags">
+        <span class="name">我是猫</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%89%A9%E5%B1%95/" class="tags">
+        <span class="name">扩展</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%95%B0%E6%8D%AE/" class="tags">
+        <span class="name">数据</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%97%A5%E5%89%A7/" class="tags">
+        <span class="name">日剧</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%97%A5%E6%9C%AC%E6%96%87%E5%AD%A6/" class="tags">
+        <span class="name">日本文学</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="tags">
+        <span class="name">机器学习</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%BA%90%E7%A0%81/" class="tags">
+        <span class="name">源码</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%86%B5%E5%A2%9E%E5%AE%9A%E5%BE%8B/" class="tags">
+        <span class="name">熵增定律</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%88%B1%E6%83%85/" class="tags">
+        <span class="name">爱情</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" class="tags">
+        <span class="name">版本控制</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%8A%B6%E6%80%81/" class="tags">
+        <span class="name">状态</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%94%9F%E6%B4%BB/" class="tags">
+        <span class="name">生活</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%94%B5%E5%BD%B1/" class="tags">
+        <span class="name">电影</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%9B%91%E6%8E%A7/" class="tags">
+        <span class="name">监控</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A0%94%E5%8F%91/" class="tags">
+        <span class="name">研发</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" class="tags">
+        <span class="name">程序员</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A9%BF%E6%90%AD/" class="tags">
+        <span class="name">穿搭</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%AE%A1%E9%81%93/" class="tags">
+        <span class="name">管道</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%BD%91%E5%85%B3/" class="tags">
+        <span class="name">网关</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%81%9A%E7%B1%BB/" class="tags">
+        <span class="name">聚类</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%8C%E4%B8%9A/" class="tags">
+        <span class="name">行业</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%A8%E5%8D%95/" class="tags">
+        <span class="name">表单</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%91/" class="tags">
+        <span class="name">表达式树</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%AE%A4%E8%AF%81/" class="tags">
+        <span class="name">认证</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%AF%BB%E4%B9%A6/" class="tags">
+        <span class="name">读书</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="tags">
+        <span class="name">负载均衡</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B4%AA%E5%90%83%E8%9B%87/" class="tags">
+        <span class="name">贪吃蛇</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B7%A8%E5%B9%B3%E5%8F%B0/" class="tags">
+        <span class="name">跨平台</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B7%AF%E7%94%B1/" class="tags">
+        <span class="name">路由</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%BF%81%E7%A7%BB/" class="tags">
+        <span class="name">迁移</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%9A%8F%E7%AC%94/" class="tags">
+        <span class="name">随笔</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%9D%A2%E8%AF%95/" class="tags">
+        <span class="name">面试</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%AA%8C%E8%AF%81/" class="tags">
+        <span class="name">验证</span>
+        <sup class="num">1</sup>
+      </a>
+    
   </div>
   <a href="/tags" class="more-tags">查看全部</a>
-</div>
-
-
-
-<div class="tags-cloud s-card weidgets">
-    <div class="title">
-        <i class="iconfont icon-hashtag"></i>
-        <span class="title-name">日历</span>
-    </div>
-    <div class="all-tags">
-        <img id="calendar-cover" 
-             src="https://img.owspace.com/Public/uploads/Download/2025/0401.jpg" 
-             style="object-fit: cover; width: 100%; height: 100%; opacity: 0; transition: opacity 0.3s;"
-             onload="this.style.opacity = 1"
-             
-             alt="calendar cover" />
-    </div>
-</div>
-
-<style>
-.all-tags {
-    min-height: 200px;  
-}
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const eleImg = document.querySelector("#calendar-cover");
-    const getImageUrl = (date) => {
-        const currentYear = date.getFullYear();
-        const currentMonth = date.getMonth() + 1;
-        const currentDate = date.getDate();
-        
-        const formattedMonth = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
-        const formattedDate = currentDate < 10 ? `0${currentDate}` : currentDate;
-        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${formattedMonth}${formattedDate}.jpg`
-    }
-
-    
-    if (document.location.pathname.startsWith('/posts')) {
-        const publishDate = eleImg.dataset.publishDate;
-        if (publishDate) {
-            eleImg.src = getImageUrl(new Date(publishDate));
-        }
-    }
-});
-</script><div class="site-data s-card weidgets">
+</div><div class="site-data s-card weidgets">
     <div class="title">
       <i class="iconfont icon-chart"></i>
       <span class="title-name">站点数据</span>
@@ -2183,25 +2620,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </footer>
-
-<script src="/js/search.min.f2af2dfa3be20e8e7e8c8989bab508289b71bf3730bc6e352738f2084973a1ab.js"></script>
-<script>
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        Search.init();
-    });
-</script>
-
-
-<script src="/js/theme.min.df71ca7373c5884a4022a354b524ddee31ff8069b6ff5151b5950296b2d3a7a8.js"></script>
-
-
-
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
-
-
-
-<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
+<script type="module" src="/js/main.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

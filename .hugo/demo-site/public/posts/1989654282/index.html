@@ -775,7 +775,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <h1 id="websocket概述">WebSocket概述</h1>
 <p>  WebSocket是HTML5标准中的一部分，从Socket这个字眼我们就可以知道，这是一种网络通信协议。WebSocket是为了弥补HTTP协议的不足而产生的，我们知道，HTTP协议有一个重要的缺陷，即：请求只能由客户端发起。这是因为HTTP协议采用了经典的请求-响应模型，这就限制了服务端主动向客户端推送消息的可能。与此同时，HTTP协议是无状态的，这意味着连接在请求得到响应以后就关闭了，所以，每次请求都是独立的、上下文无关的请求。这种单向请求的特点，注定了客户端无法实时地获取服务端的状态变化，如果服务端的状态发生连续地变化，客户端就不得不通过“轮询”的方式来获知这种变化。毫无疑问，轮询的方式不仅效率低下，而且浪费网络资源，在这种背景下，WebSocket应运而生。</p>
 <p>  WebSocket协议最早于2008年被提出，并于2011年成为国际标准。目前，主流的浏览器都已经提供了对WebSocket的支持。在WebSocket协议中，客户端和服务器之间只需要做一次握手操作，就可以在客户端和服务器之间实现双向通信，所以，WebSocket可以作为**<a href="https://en.wikipedia.org/wiki/Push_technology">服务器推送</a>**的实现技术之一。因为它本身以HTTP协议为基础，所以对HTTP协议有着更好的兼容性，无论是通信效率还是传输的安全性都能得到保证。WebSocket没有同源限制，客户端可以和任意服务器端进行通信，因此具备通过一个单一连接来支持上下游通信的能力。从本质上来讲，WebSocket是一个在握手阶段使用HTTP协议的TCP/IP协议，换句话说，一旦握手成功，WebSocket就和HTTP协议再无瓜葛，下图展示了它与HTTP协议的区别：</p>
-<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fziy4vzaqgj20hg0e7q3d.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fziy4vzaqgj20hg0e7q3d.jpg" data-caption="HTTP与WebSocket的区别">
+<p><a  class="img-fancybox" href="https://ww1.sinaimg.cn/large/4c36074fly1fziy4vzaqgj20hg0e7q3d.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fziy4vzaqgj20hg0e7q3d.jpg" data-caption="HTTP与WebSocket的区别">
     <img src="https://ww1.sinaimg.cn/large/4c36074fly1fziy4vzaqgj20hg0e7q3d.jpg" alt="HTTP与WebSocket的区别"  class="post-img" loading="lazy">
     <span class="post-img-tip">HTTP与WebSocket的区别</span>
 </a> </p>
@@ -829,7 +829,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span></code></pre></div><p>  虽然不大清楚，为什么这里反序列化后的内容中会有大量的**\0**，以及这个全新的类型ArraySegment到底是个什么鬼，不过程序员的一生无非都在纠结这样两个问题，“it works” 和 “it doesn&rsquo;t works&quot;，就像人生里会让你纠结的无非是”她喜欢你“和”她不喜欢我“这样的问题。有时候，这样的问题简直就是玄学，五柳先生好读书而不求甚解，我想这个道理在这里同样适用，截止到我写这篇博客前，这个代码一直工作得很好，所以，这两个问题我们可以暂时先放在一边，因为眼下还有比这更为重要的事情。</p>
 <p>  通过这篇<a href="https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/websockets?view=aspnetcore-2.1">文档</a>，我们可以非常容易地构建出一个”实时应用“，可是它离我们这篇文章中的目标依然有点距离，如果各位足够细心的话，就会发现这样一个问题，即示例中的代码都是写在<strong>app.Use()<strong>方法中的，这样会使我们的Startup类显得臃肿，而熟悉OWIN或者ASP.NET Core的朋友，就会知道Startup类是一个非常重要的东西，我们通常会在这里配置相关的组件。在ASP.NET Core中，我们可以通过</strong>Configure()<strong>方法来为</strong>IApplicationBuilder</strong>增加相关组件，这种组件通常被称为中间件。那么，什么是中间件呢？</p>
-<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fzixy9ja6ij20go0ao3z9.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fzixy9ja6ij20go0ao3z9.jpg" data-caption="中间件示意图">
+<p><a  class="img-fancybox" href="https://ww1.sinaimg.cn/large/4c36074fly1fzixy9ja6ij20go0ao3z9.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fzixy9ja6ij20go0ao3z9.jpg" data-caption="中间件示意图">
     <img src="https://ww1.sinaimg.cn/large/4c36074fly1fzixy9ja6ij20go0ao3z9.jpg" alt="中间件示意图"  class="post-img" loading="lazy">
     <span class="post-img-tip">中间件示意图</span>
 </a> </p>
@@ -852,7 +852,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="k">await</span> <span class="n">next</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span></code></pre></div><p>  通过Postman或者任意客户端发起请求，我们就可以得到下面的结果，现在想象一下，如果我们在第一种中间件中不调用next()会怎么样呢？答案是中间件之间的链路会被打断，这意味着后续的第二个、第三个中间件都不会被执行。什么时候我们会遇到这种场景呢？当我们的认证中间件认为一个请求非法的时候，此时我们不应该让用户访问后续的资源，所以直接返回403对该请求进行拦截。在大多数情况下，我们需要让请求随着中间件的链路传播下去，所以，对于每一个中间件来说，除了完成自身的处理逻辑以外，还至少需要调用一次next()，以保证下一个中间件会被调用，这其实和职责链模式非常相近，可以让数据在不同的处理管道中进行传播。</p>
-<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05nfs2htj213t078mxj.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nfs2htj213t078mxj.jpg" data-caption="ASP.NET Core中间件示例">
+<p><a  class="img-fancybox" href="https://ww1.sinaimg.cn/large/4c36074fly1fz05nfs2htj213t078mxj.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nfs2htj213t078mxj.jpg" data-caption="ASP.NET Core中间件示例">
     <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05nfs2htj213t078mxj.jpg" alt="ASP.NET Core中间件示例"  class="post-img" loading="lazy">
     <span class="post-img-tip">ASP.NET Core中间件示例</span>
 </a> </p>
@@ -925,18 +925,18 @@ document.addEventListener("DOMContentLoaded", function () {
 </span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></span></code></pre></div><p>  下面是实际的运行效果，果然是非常简洁呢，哈哈:laughing:</p>
-<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05jy4qvpj20wa0flq50.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05jy4qvpj20wa0flq50.jpg" data-caption="WebSocket聊天室展示">
+<p><a  class="img-fancybox" href="https://ww1.sinaimg.cn/large/4c36074fly1fz05jy4qvpj20wa0flq50.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05jy4qvpj20wa0flq50.jpg" data-caption="WebSocket聊天室展示">
     <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05jy4qvpj20wa0flq50.jpg" alt="WebSocket聊天室展示"  class="post-img" loading="lazy">
     <span class="post-img-tip">WebSocket聊天室展示</span>
 </a> </p>
 <h2 id="再看websocket">再看Websocket</h2>
 <p>  好了，我们花了如此大的篇幅来讲WebSocket，那么你对WebSocket了解了多少呢？或许通过这个聊天室的实例，我们对WebSocket有了一个相对直观的认识，可你是否想过换一个角度来认识它呢？我们说过，WebSocket是以HTTP协议为基础的，那么至少可以在握手阶段捕获到相关请求吧！果断在Chrome中打开”开发者工具“，在面板上选择监听”WebSocket&quot;，然后我们就会得到下面的内容。</p>
-<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fz05docrh3j219i0cydgl.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05docrh3j219i0cydgl.jpg" data-caption="WebSocket的秘密-请求">
+<p><a  class="img-fancybox" href="https://ww1.sinaimg.cn/large/4c36074fly1fz05docrh3j219i0cydgl.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz05docrh3j219i0cydgl.jpg" data-caption="WebSocket的秘密-请求">
     <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz05docrh3j219i0cydgl.jpg" alt="WebSocket的秘密-请求"  class="post-img" loading="lazy">
     <span class="post-img-tip">WebSocket的秘密-请求</span>
 </a> </p>
 <p>  相比HTTP协议，WebSocket在握手阶段的请求有所变化，主要体现在Upgrade、Connection这两个字段，以及Sec-WebSocket系列的这些字段。下面来分别解释下这些字段的含义，Upgrade和Connection这两个字段，是最为关键的两个字段，它的目的是告诉Apache、Nginx这些服务器，这是一个WebSocket请求。接下来，是Sec-WebSocket-Key、Sec-WebSocket-Protocol和Sec-WebSocket-Version这三个字段，其中Sec-WebSocket-Key是一个由浏览器采用Base64算法随机生成的字符串，目的是验证服务器是否真的支持WebSocket；Sec-WebSocket-Protocol则是一个由用户指定的字符串，目的是区分同一URL下，不同服务所需要的协议；Sec-WebSocket-Version是告诉服务器浏览器支持的WebSocket版本，标准规定9-12的版本号是保留字段，所以在这里我们看到的版本号是13.</p>
-<p><a href="https://ww1.sinaimg.cn/large/4c36074fly1fz01z8ty8kj211l05xmx6.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz01z8ty8kj211l05xmx6.jpg" data-caption="WebSocket的秘密-响应">
+<p><a  class="img-fancybox" href="https://ww1.sinaimg.cn/large/4c36074fly1fz01z8ty8kj211l05xmx6.jpg" data-fancybox="gallery" data-src="https://ww1.sinaimg.cn/large/4c36074fly1fz01z8ty8kj211l05xmx6.jpg" data-caption="WebSocket的秘密-响应">
     <img src="https://ww1.sinaimg.cn/large/4c36074fly1fz01z8ty8kj211l05xmx6.jpg" alt="WebSocket的秘密-响应"  class="post-img" loading="lazy">
     <span class="post-img-tip">WebSocket的秘密-响应</span>
 </a> </p>
@@ -1166,7 +1166,7 @@ document.addEventListener("DOMContentLoaded", function () {
         相关推荐
       </span>
       
-      <span class="shuffle" onclick="window.location.href='\/posts\/352037321\/'">
+      <span class="shuffle" onclick="window.location.href='\/posts\/ne-zha-2\/'">
         随便逛逛
       </span>
       
@@ -1563,64 +1563,501 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="card-content">
     
   </div>
-</div> 
-
-<div class="tags-cloud s-card weidgets">
+</div> <div class="tags-cloud s-card weidgets">
   <div class="title">
     <i class="iconfont icon-hashtag"></i>
     <span class="title-name">热门标签</span>
   </div>
   <div class="all-tags">
     
+      <a href="/tags/vue/" class="tags">
+        <span class="name">Vue</span>
+        <sup class="num">6</sup>
+      </a>
+    
+      <a href="/tags/envoy/" class="tags">
+        <span class="name">Envoy</span>
+        <sup class="num">4</sup>
+      </a>
+    
+      <a href="/tags/.net-core/" class="tags">
+        <span class="name">.NET Core</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/unity3d/" class="tags">
+        <span class="name">Unity3D</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/%E5%89%8D%E7%AB%AF/" class="tags">
+        <span class="name">前端</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" class="tags">
+        <span class="name">微服务</span>
+        <sup class="num">3</sup>
+      </a>
+    
+      <a href="/tags/mock/" class="tags">
+        <span class="name">Mock</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/nginx/" class="tags">
+        <span class="name">Nginx</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%84%9F%E6%82%9F/" class="tags">
+        <span class="name">感悟</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%B8%B8%E6%88%8F/" class="tags">
+        <span class="name">游戏</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" class="tags">
+        <span class="name">游戏开发</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/%E7%BC%96%E7%A8%8B/" class="tags">
+        <span class="name">编程</span>
+        <sup class="num">2</sup>
+      </a>
+    
+      <a href="/tags/.net/" class="tags">
+        <span class="name">.NET</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/abp/" class="tags">
+        <span class="name">ABP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/agent/" class="tags">
+        <span class="name">Agent</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/apache/" class="tags">
+        <span class="name">Apache</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/cdn/" class="tags">
+        <span class="name">CDN</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/dlib/" class="tags">
+        <span class="name">Dlib</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/function-calling/" class="tags">
+        <span class="name">Function Calling</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/github/" class="tags">
+        <span class="name">Github</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/gpts/" class="tags">
+        <span class="name">GPTs</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/grafana/" class="tags">
+        <span class="name">Grafana</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hangfire/" class="tags">
+        <span class="name">Hangfire</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hashset/" class="tags">
+        <span class="name">HashSet</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/hexo/" class="tags">
+        <span class="name">Hexo</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/http/" class="tags">
+        <span class="name">HTTP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/httpclient/" class="tags">
+        <span class="name">HttpClient</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/jsdelivr/" class="tags">
+        <span class="name">JsDelivr</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/k-means/" class="tags">
+        <span class="name">K-Means</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/kindle/" class="tags">
+        <span class="name">Kindle</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/lambda/" class="tags">
+        <span class="name">Lambda</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/langchain/" class="tags">
+        <span class="name">LangChain</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/ldap/" class="tags">
+        <span class="name">LDAP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/linq/" class="tags">
+        <span class="name">Linq</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/linux/" class="tags">
+        <span class="name">Linux</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/llama/" class="tags">
+        <span class="name">LLaMA</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/love2d/" class="tags">
+        <span class="name">Love2D</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/mcp/" class="tags">
+        <span class="name">MCP</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/mono/" class="tags">
+        <span class="name">Mono</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/opencv/" class="tags">
+        <span class="name">OpenCV</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/prometheus/" class="tags">
+        <span class="name">Prometheus</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/python/" class="tags">
+        <span class="name">Python</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/rag/" class="tags">
+        <span class="name">RAG</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/rpg/" class="tags">
+        <span class="name">RPG</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/scikit-learn/" class="tags">
+        <span class="name">Scikit-Learn</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/semantic-kernel/" class="tags">
+        <span class="name">Semantic Kernel</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/signalr/" class="tags">
+        <span class="name">SignalR</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/svn/" class="tags">
+        <span class="name">SVN</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/ugui/" class="tags">
+        <span class="name">UGUI</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/websocket/" class="tags">
+        <span class="name">WebSocket</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BA%BA%E8%84%B8%E5%88%86%E7%B1%BB/" class="tags">
+        <span class="name">人脸分类</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BB%99%E5%89%91%E5%A5%87%E4%BE%A0%E4%BC%A0/" class="tags">
+        <span class="name">仙剑奇侠传</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E4%BD%8E%E4%BB%A3%E7%A0%81/" class="tags">
+        <span class="name">低代码</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%85%AB%E5%8D%A6/" class="tags">
+        <span class="name">八卦</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%88%86%E9%A1%B5/" class="tags">
+        <span class="name">分页</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%8A%A8%E6%BC%AB/" class="tags">
+        <span class="name">动漫</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" class="tags">
+        <span class="name">反向代理</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%93%AA%E5%90%92/" class="tags">
+        <span class="name">哪吒</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" class="tags">
+        <span class="name">图像处理</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%A4%8F%E7%9B%AE%E6%BC%B1%E7%9F%B3/" class="tags">
+        <span class="name">夏目漱石</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%AE%B9%E5%99%A8/" class="tags">
+        <span class="name">容器</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%B0%81%E7%A5%9E/" class="tags">
+        <span class="name">封神</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E5%BD%B1%E8%AF%84/" class="tags">
+        <span class="name">影评</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%80%9D%E8%80%83/" class="tags">
+        <span class="name">思考</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%88%91%E6%98%AF%E7%8C%AB/" class="tags">
+        <span class="name">我是猫</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%89%A9%E5%B1%95/" class="tags">
+        <span class="name">扩展</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%95%B0%E6%8D%AE/" class="tags">
+        <span class="name">数据</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%97%A5%E5%89%A7/" class="tags">
+        <span class="name">日剧</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%97%A5%E6%9C%AC%E6%96%87%E5%AD%A6/" class="tags">
+        <span class="name">日本文学</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="tags">
+        <span class="name">机器学习</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E6%BA%90%E7%A0%81/" class="tags">
+        <span class="name">源码</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%86%B5%E5%A2%9E%E5%AE%9A%E5%BE%8B/" class="tags">
+        <span class="name">熵增定律</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%88%B1%E6%83%85/" class="tags">
+        <span class="name">爱情</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/" class="tags">
+        <span class="name">版本控制</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%8A%B6%E6%80%81/" class="tags">
+        <span class="name">状态</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%94%9F%E6%B4%BB/" class="tags">
+        <span class="name">生活</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%94%B5%E5%BD%B1/" class="tags">
+        <span class="name">电影</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%9B%91%E6%8E%A7/" class="tags">
+        <span class="name">监控</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A0%94%E5%8F%91/" class="tags">
+        <span class="name">研发</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" class="tags">
+        <span class="name">程序员</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%A9%BF%E6%90%AD/" class="tags">
+        <span class="name">穿搭</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%AE%A1%E9%81%93/" class="tags">
+        <span class="name">管道</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E7%BD%91%E5%85%B3/" class="tags">
+        <span class="name">网关</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%81%9A%E7%B1%BB/" class="tags">
+        <span class="name">聚类</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%8C%E4%B8%9A/" class="tags">
+        <span class="name">行业</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%A8%E5%8D%95/" class="tags">
+        <span class="name">表单</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%91/" class="tags">
+        <span class="name">表达式树</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%AE%A4%E8%AF%81/" class="tags">
+        <span class="name">认证</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%AF%BB%E4%B9%A6/" class="tags">
+        <span class="name">读书</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" class="tags">
+        <span class="name">负载均衡</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B4%AA%E5%90%83%E8%9B%87/" class="tags">
+        <span class="name">贪吃蛇</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B7%A8%E5%B9%B3%E5%8F%B0/" class="tags">
+        <span class="name">跨平台</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%B7%AF%E7%94%B1/" class="tags">
+        <span class="name">路由</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E8%BF%81%E7%A7%BB/" class="tags">
+        <span class="name">迁移</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%9A%8F%E7%AC%94/" class="tags">
+        <span class="name">随笔</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%9D%A2%E8%AF%95/" class="tags">
+        <span class="name">面试</span>
+        <sup class="num">1</sup>
+      </a>
+    
+      <a href="/tags/%E9%AA%8C%E8%AF%81/" class="tags">
+        <span class="name">验证</span>
+        <sup class="num">1</sup>
+      </a>
+    
   </div>
   <a href="/tags" class="more-tags">查看全部</a>
-</div>
-
-
-
-<div class="tags-cloud s-card weidgets">
-    <div class="title">
-        <i class="iconfont icon-hashtag"></i>
-        <span class="title-name">日历</span>
-    </div>
-    <div class="all-tags">
-        <img id="calendar-cover" 
-             src="https://img.owspace.com/Public/uploads/Download/2025/0401.jpg" 
-             style="object-fit: cover; width: 100%; height: 100%; opacity: 0; transition: opacity 0.3s;"
-             onload="this.style.opacity = 1"
-             
-             alt="calendar cover" />
-    </div>
-</div>
-
-<style>
-.all-tags {
-    min-height: 200px;  
-}
-</style>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const eleImg = document.querySelector("#calendar-cover");
-    const getImageUrl = (date) => {
-        const currentYear = date.getFullYear();
-        const currentMonth = date.getMonth() + 1;
-        const currentDate = date.getDate();
-        
-        const formattedMonth = currentMonth < 10 ? `0${currentMonth}` : currentMonth;
-        const formattedDate = currentDate < 10 ? `0${currentDate}` : currentDate;
-        return `https://img.owspace.com/Public/uploads/Download/${currentYear}/${formattedMonth}${formattedDate}.jpg`
-    }
-
-    
-    if (document.location.pathname.startsWith('/posts')) {
-        const publishDate = eleImg.dataset.publishDate;
-        if (publishDate) {
-            eleImg.src = getImageUrl(new Date(publishDate));
-        }
-    }
-});
-</script><div class="site-data s-card weidgets">
+</div><div class="site-data s-card weidgets">
     <div class="title">
       <i class="iconfont icon-chart"></i>
       <span class="title-name">站点数据</span>
@@ -2112,25 +2549,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </footer>
-
-<script src="/js/search.min.f2af2dfa3be20e8e7e8c8989bab508289b71bf3730bc6e352738f2084973a1ab.js"></script>
-<script>
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        Search.init();
-    });
-</script>
-
-
-<script src="/js/theme.min.df71ca7373c5884a4022a354b524ddee31ff8069b6ff5151b5950296b2d3a7a8.js"></script>
-
-
-
-<script src="/js/mobile-menu.min.a6c5ea25099e55c871ee73532ed859d8db9223b277b6f3eb13126a95df5cec60.js"></script>
-
-
-
-<script src="/js/fancybox.min.05067c092bcbcfb5b923fec5d4e9b0544621c0831a707be573e3f8ce91a33d8e.js"></script><div class="modal search-modal" id="searchModal">
+<script type="module" src="/js/main.js"></script><div class="modal search-modal" id="searchModal">
   <div class="modal-container">
     <div class="modal-header">
       <div class="modal-title">

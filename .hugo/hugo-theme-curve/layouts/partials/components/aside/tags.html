@@ -1,12 +1,10 @@
-{{ $context := .context | default . }}
-
 <div class="tags-cloud s-card weidgets">
   <div class="title">
     <i class="iconfont icon-hashtag"></i>
     <span class="title-name">热门标签</span>
   </div>
   <div class="all-tags">
-    {{ range $context.Site.Taxonomies.tags.ByCount }}
+    {{ range site.Taxonomies.tags.ByCount }}
       <a href="{{ .Page.RelPermalink }}" class="tags">
         <span class="name">{{ .Page.Title }}</span>
         <sup class="num">{{ .Count }}</sup>

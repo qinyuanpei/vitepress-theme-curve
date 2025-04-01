@@ -1,0 +1,69 @@
+{{ define "body-class" }}
+{{ $TOCEnabled := default (default false .Site.Params.article.toc) .Params.toc }}
+{{- .Scratch.Set "hasTOC" (and (ge (len .TableOfContents) 100) $TOCEnabled) -}}
+article-page
+{{ end }}
+
+{{ define "container-class" }}
+on-phone--column {{ if .Site.Params.widgets.enabled }}extended{{ else }}compact{{ end }}
+{{ end }}
+
+{{ define "main" }}
+<header>
+    <div class="container">
+        <h1>{{ .Title }}</h1>
+        <p class="subtitle">{{ .Params.subtitle }}</p>
+    </div>
+</header>
+<article class="{{ if .Params.image }}has-image {{ end }}main-article">
+    <section class="article-content">
+        <!-- Refer to https://discourse.gohugo.io/t/responsive-tables-in-markdown/10639/5 -->
+        {{ $wrappedTable := printf "<div class=\"table-wrapper\">${1}</div>" }}
+        {{ .Content | replaceRE "(<table>(?:.|\n)+?</table>)" $wrappedTable | safeHTML }}
+    </section>
+    <section>
+        <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
+        <script src="/plugins/echarts-wordcloud.js"></script>
+        <input type="hidden" id="douban-books" value="{{ jsonify $.Site.Data.douban.books.statics }}" />
+        <input type="hidden" id="douban-movies" value="{{ jsonify $.Site.Data.douban.movies.statics }}" />
+        <div id="container" class="statics-container">
+            <div id="chart1" class="statics-chart-item"></div>
+            <div id="chart2" class="statics-chart-item"></div>
+            <div id="chart3" class="statics-chart-item"></div>
+            <div id="chart4" class="statics-chart-item" data-chart="{{ jsonify $.Site.Data.languages }}"></div>
+            {{- $doubanStatics := $.Site.Data.doubanSync.statics -}}
+            <div id="chart5" class="statics-chart-item" data-chart="{{ jsonify  $doubanStatics }}"></div>
+            <div id="chart6" class="statics-chart-item" data-chart="{{ jsonify  $.Site.Data.shanbay }}"></div>
+        </div>
+        {{- $opts := dict "minify" hugo.IsProduction -}}
+        {{- $staticsScript := resources.Get "ts/statics.ts" | js.Build $opts -}}
+        <script type="text/javascript" src="{{ $staticsScript.RelPermalink }}"></script>
+        <script>
+            var statics = window.statics
+            fetch('/api/posts-chart.json')
+                .then(function (res) {
+                    res.json().then(function (data) {
+                        document.getElementById('chart1').setAttribute('data-chart', JSON.stringify(data.yearly))
+                        document.getElementById('chart2').setAttribute('data-chart', JSON.stringify(data.categories))
+                        document.getElementById('chart3').setAttribute('data-chart', JSON.stringify(data.tags))
+   
+                        statics.handleYearlyChart('chart1');
+                        statics.handleCategoryChart('chart2');
+                        statics.handleTagsChart('chart3');
+                    });
+                })
+                .catch(function (err) {
+                    console.log('Fetch Error : %S', err);
+                })
+
+            statics.handleLanguagesChart('chart4');
+            statics.handleDoubanChart('chart5');
+            statics.handleShanbayChart('chart6');
+        </script>
+    </section>
+</article>
+
+{{ partialCached "footer/footer" . }}
+{{ partialCached "article/components/photoswipe" . }}
+
+{{ end }}
