@@ -8,7 +8,7 @@
 
 <div class="post-lists{{ if and (not $simple) $twoColumns }} layout-grid{{ end }}"{{ if and (not $simple) $twoColumns }} style="--grid-columns: 2; --grid-gap: 1rem"{{ end }}>
     {{ range $index, $post := $posts }}
-    <article class="post-item s-card{{ if not $simple }} hover{{ if $showCover }} cover cover-{{ $layoutType }}{{ end }}{{ else }} simple{{ end }}" 
+    <article class="post-item s-card{{ if not $simple }} hover{{ if $showCover }} cover cover-{{ $layoutType }}{{ end }}{{ else }} simple hover{{ end }}" 
              style="animation-delay: {{ add 0.4 (div $index 10) }}s"
              onclick="window.location.href='{{ .RelPermalink }}'">
         
