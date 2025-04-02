@@ -30,23 +30,39 @@
   --main-color-red: #ff3842;
   --main-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
     Cantarell, "Helvetica Neue", sans-serif;
+  --code-bg: #fff;
+  --code-border: #e1e4e8;
+  --code-line-number-color: #8b949e;
+  --code-line-number-border: #e1e4e8;
+  --code-header-bg: #f6f8fa;
+  --code-header-color: #424242;
+  --code-button-hover: #f3f4f6;
 }
 
-html.dark {
-  --main-color: #dfac46;
-  --main-color-bg: #f2b94b23;
-  --main-site-background: #18171d;
-  --main-card-background: #1b1c20;
-  --main-card-second-background: #21232a;
-  --main-font-color: #f7f7fa;
-  --main-font-second-color: #a1a2b8;
-  --main-card-border: #3d3d3f;
-  --main-border-shadow: #00000050;
-  --main-scrollbar-bar: rgba(200, 200, 223, 0.4);
-  --main-mask-background: rgba(0, 0, 0, 0.95);
-  --main-mask-Inverse-background: rgba(255, 255, 255, 0.08);
-  --main-mask-second-background: rgba(0, 0, 0, 0.45);
-  --main-color-opacity: rgba(0, 0, 0, 0.15);
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-color: #dfac46;
+    --main-color-bg: #f2b94b23;
+    --main-site-background: #18171d;
+    --main-card-background: #1b1c20;
+    --main-card-second-background: #21232a;
+    --main-font-color: #f7f7fa;
+    --main-font-second-color: #a1a2b8;
+    --main-card-border: #3d3d3f;
+    --main-border-shadow: #00000050;
+    --main-scrollbar-bar: rgba(200, 200, 223, 0.4);
+    --main-mask-background: rgba(0, 0, 0, 0.95);
+    --main-mask-Inverse-background: rgba(255, 255, 255, 0.08);
+    --main-mask-second-background: rgba(0, 0, 0, 0.45);
+    --main-color-opacity: rgba(0, 0, 0, 0.15);
+    --code-bg: #0d1117;
+    --code-border: #30363d;
+    --code-line-number-color: #8b949e;
+    --code-line-number-border: #30363d;
+    --code-header-bg: #161b22;
+    --code-header-color: #c9d1d9;
+    --code-button-hover: #21262d;
+  }
 }
 
 // 字体
@@ -56,6 +72,29 @@ html {
   }
   &.lxgw {
     --main-font-family: "LXGW WenKai Screen", sans-serif;
+  }
+  &.dark {
+    --main-color: #dfac46;
+    --main-color-bg: #f2b94b23;
+    --main-site-background: #18171d;
+    --main-card-background: #1b1c20;
+    --main-card-second-background: #21232a;
+    --main-font-color: #f7f7fa;
+    --main-font-second-color: #a1a2b8;
+    --main-card-border: #3d3d3f;
+    --main-border-shadow: #00000050;
+    --main-scrollbar-bar: rgba(200, 200, 223, 0.4);
+    --main-mask-background: rgba(0, 0, 0, 0.95);
+    --main-mask-Inverse-background: rgba(255, 255, 255, 0.08);
+    --main-mask-second-background: rgba(0, 0, 0, 0.45);
+    --main-color-opacity: rgba(0, 0, 0, 0.15);
+    --code-bg: #0d1117;
+    --code-border: #30363d;
+    --code-line-number-color: #8b949e;
+    --code-line-number-border: #30363d;
+    --code-header-bg: #161b22;
+    --code-header-color: #c9d1d9;
+    --code-button-hover: #21262d;
   }
   .iconfont {
     font-size: 1rem;
@@ -108,19 +147,6 @@ html {
   user-select: none;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  // 特殊情况
-  &.dark {
-    // 代码高亮
-    pre {
-      code {
-        .line {
-          span {
-            color: var(--shiki-dark) !important;
-          }
-        }
-      }
-    }
-  }
   // 全站置灰
   &.gray {
     filter: grayscale(100%);

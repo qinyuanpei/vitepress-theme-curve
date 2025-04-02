@@ -5,6 +5,7 @@ import { initSearch } from './modules/search.js';
 import { initScroll } from './modules/scroll.js';
 import { initNextPost } from './modules/next-post.js';
 import { initModal } from './modules/modal.js';
+import { initHighlight } from './modules/highlight.js';
 
 function domReady(fn) {
     if (document.readyState === 'loading') {
@@ -22,6 +23,7 @@ function initializeAll() {
     initScroll();
     initNextPost();
     initModal();
+    initHighlight();
 }
 
 domReady(initializeAll); 
