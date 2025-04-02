@@ -1,0 +1,30 @@
+{{ $reward := site.Params.article.reward }}
+<div class="reward-card">
+    <div class="thank">
+        {{ $reward.thank | default "感谢您的赞赏，您的支持是我创作的动力！" }}
+    </div>
+    <div class="qr">
+        {{ if $reward.alipay }}
+        <a class="qr-img" href="{{ $reward.alipay }}" target="_blank">
+            <img src="{{ $reward.alipay }}" alt="支付宝赞赏码">
+            <div class="tip">
+                <i class="iconfont icon-alipay"></i>
+                <span>支付宝</span>
+            </div>
+        </a>
+        {{ end }}
+        {{ if $reward.wechat }}
+        <a class="qr-img" href="{{ $reward.wechat }}" target="_blank">
+            <img src="{{ $reward.wechat }}" alt="微信赞赏码">
+            <div class="tip">
+                <i class="iconfont icon-wechat"></i>
+                <span>微信</span>
+            </div>
+        </a>
+        {{ end }}
+    </div>
+    <div class="all-list s-card hover">
+        <div class="title">赞赏记录</div>
+        <div class="tip">{{ $reward.tip | default "暂无赞赏记录" }}</div>
+    </div>
+</div> 

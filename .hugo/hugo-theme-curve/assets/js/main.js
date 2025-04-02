@@ -4,6 +4,7 @@ import { initFancybox } from './modules/fancybox.js';
 import { initSearch } from './modules/search.js';
 import { initScroll } from './modules/scroll.js';
 import { initNextPost } from './modules/next-post.js';
+import { initModal } from './modules/modal.js';
 
 function domReady(fn) {
     if (document.readyState === 'loading') {
@@ -20,6 +21,7 @@ function initializeAll() {
     initSearch();
     initScroll();
     initNextPost();
+    initModal();
 }
 
 domReady(initializeAll); 
