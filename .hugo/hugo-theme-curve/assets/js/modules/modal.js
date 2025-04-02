@@ -1,5 +1,5 @@
 // Modal 管理器
-const modalManager = {
+const ModalManager = {
     modals: new Map(),
     
     init() {
@@ -81,9 +81,9 @@ const modalManager = {
 };
 
 // 创建全局实例
-window.modal = modalManager;
+window.$Modal = ModalManager;
 
 // 导出初始化函数
 export function initModal() {
-    modalManager.init();
+    ModalManager.init();
 }

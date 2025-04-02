@@ -99,9 +99,6 @@
             <!-- 打赏按钮 -->
             {{ partial "components/post/reward.html" . }}
 
-            <!-- 上一篇/下一篇 -->
-            {{ partial "components/post/next-post.html" . }}
-
             <!-- 相关文章 -->
             {{ partial "components/post/related-post.html" . }}
 
@@ -109,6 +106,10 @@
             <div id="comments">
                 {{ partial "components/comments/include.html" . }}
             </div>
+
+            <!-- 上一篇/下一篇 -->
+            {{ partial "components/post/next-post.html" . }}
+            
         </article>
         <!-- 侧边栏 -->
         {{ partial "components/aside.html" (dict "context" . "showToc" true) }}

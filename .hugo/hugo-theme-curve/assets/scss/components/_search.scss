@@ -1,0 +1,120 @@
+// 搜索模态框
+.search-modal {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1rem;
+
+  // 搜索输入框
+  .search-input {
+    margin-bottom: 1rem;
+
+    input {
+      width: 100%;
+      height: 2.5rem;
+      padding: 0 1rem;
+      border: 1px solid var(--main-card-border);
+      border-radius: 6px;
+      background-color: var(--main-card-second-background);
+      color: var(--main-font-color);
+      font-size: 1rem;
+      transition: all 0.3s;
+
+      &:focus {
+        outline: none;
+        border-color: var(--main-color);
+        box-shadow: 0 0 0 2px var(--main-color-bg);
+      }
+
+      &::placeholder {
+        color: var(--main-font-second-color);
+      }
+    }
+  }
+
+  // 搜索结果
+  .search-results {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+
+    // 滚动条样式
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--main-scrollbar-bar);
+      border-radius: 3px;
+    }
+
+    // 搜索结果列表
+    .search-list {
+      .search-item {
+        padding: 0.8rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+          background-color: var(--main-color-bg);
+        }
+
+        .search-item-title {
+          font-size: 1rem;
+          color: var(--main-font-color);
+          margin-bottom: 0.5rem;
+        }
+
+        .search-item-content {
+          font-size: 0.9rem;
+          color: var(--main-font-second-color);
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      }
+    }
+
+    // 空结果提示
+    .search-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--main-font-second-color);
+
+      i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .search-hint {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+    opacity: 0.8;
+    font-size: 14px;
+
+    .powered_by {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 16px;
+        opacity: 0.6;
+        transition:
+            color 0.3s,
+            opacity 0.3s;
+    }
+}
+} 
