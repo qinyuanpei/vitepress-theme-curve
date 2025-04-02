@@ -35,13 +35,13 @@ menu:
       weight: 1
       parent: 书影音
       params:
-        icon: books
+        icon: book-fill
     - name: 观影
       url: /watching
       weight: 2
       parent: 书影音
       params:
-        icon: tv
+        icon: movies
     - name: 听歌
       url: /listening
       weight: 3
