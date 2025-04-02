@@ -1,105 +1,265 @@
-{{ if (.Scratch.Get "hasTOC") }}
-<div class="toc s-card">
+{{ if and (eq .Section "posts") (.Scratch.Get "hasTOC") }}
+<div class="toc s-card weidgets">
     <div class="toc-title">
         <i class="iconfont icon-toc"></i>
-        <span class="name">{{ T "article.tableOfContents" }}</span>
+        <span class="name">目录</span>
     </div>
-    <!-- 使用 Hugo 的 .TableOfContents 替代 Vue 的动态渲染 -->
     <div id="toc-all" class="toc-list">
-        {{ .TableOfContents }}
     </div>
 </div>
 
 <!-- 添加必要的 JavaScript -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const tocAll = document.getElementById('toc-all');
-    const bufferheight = 120;
-    
-    // 处理目录项点击
-    tocAll.addEventListener('click', function(e) {
-        if (e.target.tagName === 'A') {
-            e.preventDefault();
-            const href = e.target.getAttribute('href');
-            const headerDom = document.querySelector(href);
-            if (headerDom) {
-                const headerTop = headerDom.offsetTop;
-                window.scroll({ 
-                    top: headerTop - 80, 
-                    behavior: 'smooth' 
-                });
+    document.addEventListener('DOMContentLoaded', function () {
+        const tocData = [];
+        let postDom = null;
+        let activeHeader = null;
+        let activeTocHeight = 0;
+        const tocAllDom = document.getElementById("toc-all");
+
+        // 获取所有目录数据
+        const getAllTitle = () => {
+            try {
+                postDom = document.getElementById("page-content");
+                if (!postDom) return false;
+                // 所有标题
+                const headers = Array.from(postDom.querySelectorAll("h1, h2, h3, h4")).filter(
+                    (header) => header.parentElement.tagName.toLowerCase() === "div"
+                );
+                return headers;
+            } catch (error) {
+                console.error("获取所有目录数据出错：", error);
             }
-        }
-    });
+        };
 
-    // 滚动监听高亮
-    function activeTocItem() {
-        const headers = Array.from(document.querySelectorAll('h2, h3')).filter(
-            header => header.parentElement.tagName.toLowerCase() === 'div'
-        );
+        // 生成目录数据
+        const generateDirData = () => {
+            // 所有标题
+            const headers = getAllTitle();
+            if (!headers) return false;
 
-        headers.forEach(header => {
-            const rect = header.getBoundingClientRect();
-            if (rect.top - bufferheight <= 0 && rect.bottom + bufferheight >= 0) {
-                // 移除所有活动类
-                tocAll.querySelectorAll('a').forEach(a => {
-                    a.classList.remove('active');
-                });
-                // 添加当前活动类
-                const anchor = tocAll.querySelector(`a[href="#${header.id}"]`);
-                if (anchor) {
-                    anchor.classList.add('active');
+            // 清空现有目录
+            tocAllDom.innerHTML = '';
+
+            // 构造目录数据
+            headers.forEach((header, index) => {
+                const headerObj = {
+                    id: header.id,
+                    type: header.tagName,
+                    text: header.textContent?.replace(/\u200B/g, "").trim()
+                };
+
+                // 创建目录项DOM
+                const tocItem = document.createElement('span');
+                tocItem.id = 'toc-' + headerObj.id;
+                tocItem.className = `toc-item ${headerObj.type} ${index === 0 ? 'active' : ''}`;
+                tocItem.textContent = headerObj.text;
+                tocItem.addEventListener('click', () => scrollToHeader(headerObj.id));
+
+                tocAllDom.appendChild(tocItem);
+                tocData.push(headerObj);
+            });
+
+            if (headers && headers.length > 0) {
+                activeHeader = headers[0].id;
+            }
+        };
+
+        // 节流函数
+        const throttle = (func, limit) => {
+            let inThrottle;
+            return function () {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            };
+        };
+
+        // 高亮对应目录项
+        const activeTocItem = throttle(() => {
+            if (!tocData.length) return false;
+
+            // 所有标题
+            const headers = getAllTitle();
+            if (!headers) return false;
+
+            // 容错高度
+            const bufferheight = 120;
+
+            // 检查是否回到顶部
+            if (window.scrollY === 0) {
+                activeTocHeight = 0;
+                activeHeader = headers[0]?.id;
+                updateActiveToc();
+                return;
+            }
+
+            // 遍历所有标题
+            for (let header of headers) {
+                const rect = header.getBoundingClientRect();
+                // 检查标题是否在视口中
+                if (rect.top - bufferheight <= 0 && rect.bottom + bufferheight >= 0) {
+                    // 高亮对应标题
+                    if (activeHeader !== header.id) {
+                        activeHeader = header.id;
+                        updateActiveToc();
+                    }
                 }
             }
-        });
-    }
+        }, 100);
 
-    // 添加滚动监听
-    window.addEventListener('scroll', activeTocItem);
-});
+        // 更新活动目录项的样式和位置
+        const updateActiveToc = () => {
+            // 移除所有active类
+            document.querySelectorAll('.toc-item.active').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const activeTocItem = document.getElementById("toc-" + activeHeader);
+            if (!activeTocItem) return false;
+
+            // 添加active类
+            activeTocItem.classList.add('active');
+
+            // 计算滚动位置
+            activeTocHeight = activeTocItem.offsetTop - 2 || 0;
+            tocAllDom.style.setProperty('--height', activeTocHeight + 'px');
+            tocAllDom.scrollTo({ top: activeTocHeight - 80, behavior: "smooth" });
+        };
+
+        // 滚动标题至指定位置
+        const scrollToHeader = (id) => {
+            try {
+                const headerDom = document.getElementById(id);
+                if (!headerDom || !postDom) return false;
+                const headerTop = headerDom.offsetTop;
+                const scrollHeight = headerTop + postDom.offsetTop - 80;
+                window.scroll({ top: scrollHeight, behavior: "smooth" });
+            } catch (error) {
+                console.error("目录滚动失败：", error);
+            }
+        };
+
+        // 初始化
+        generateDirData();
+
+        // 滚动监听
+        window.addEventListener("scroll", activeTocItem);
+    });
 </script>
 
-<!-- 添加必要的样式 -->
-<style>
-.toc {
-    position: relative;
-    padding: 0 !important;
-    overflow: hidden;
-}
+<style lang="scss" scoped>
+    .toc {
+        position: relative;
+        padding: 0 !important;
+        overflow: hidden;
 
-/* ... 其他样式保持不变 ... */
+        .toc-title {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 18px;
+            height: 58px;
 
-.toc-list a {
-    display: block;
-    margin: 4px 0;
-    padding: 6px 12px;
-    border-radius: 8px;
-    opacity: 0.6;
-    transition: color 0.3s, opacity 0.3s, font-size 0.3s, background-color 0.3s;
-    cursor: pointer;
-    text-decoration: none;
-}
+            .iconfont {
+                margin-right: 8px;
+                font-weight: bold;
+                opacity: 0.6;
+            }
 
-.toc-list a.active {
-    opacity: 1;
-    color: var(--main-color);
-    background-color: var(--main-color-bg);
-}
+            .name {
+                font-weight: bold;
+            }
+        }
 
-.toc-list a:hover {
-    opacity: 1;
-    color: var(--main-color);
-    background-color: var(--main-color-bg);
-}
+        .toc-list {
+            position: relative;
+            padding: 20px;
+            padding-top: 0;
+            padding-left: 24px;
+            display: flex;
+            flex-direction: column;
+            max-height: calc(70vh - 58px);
+            overflow: auto;
 
-/* 调整 Hugo 生成的目录结构样式 */
-.toc-list nav#TableOfContents > ul > li > a {
-    font-weight: bold;
-}
+            .toc-item {
+                margin: 4px 0;
+                padding: 6px 12px;
+                border-radius: 8px;
+                opacity: 0.6;
+                transition:
+                    color 0.3s,
+                    opacity 0.3s,
+                    font-size 0.3s,
+                    background-color 0.3s;
+                cursor: pointer;
 
-.toc-list nav#TableOfContents > ul > li > ul > li > a {
-    font-size: 14px;
-    margin-left: 20px;
-}
+                &:first-child {
+                    margin-top: 0;
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                &.H2 {
+                    font-weight: bold;
+                }
+
+                &.H3 {
+                    font-size: 14px;
+                    margin-left: 20px;
+                }
+
+                &.active {
+                    opacity: 1;
+                    color: var(--main-color);
+                    background-color: var(--main-color-bg);
+
+                    &.H2 {
+                        font-size: 18px;
+                    }
+
+                    &.H3 {
+                        font-size: 16px;
+                    }
+                }
+
+                &:hover {
+                    opacity: 1;
+                    color: var(--main-color);
+                    background-color: var(--main-color-bg);
+                }
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                left: 12px;
+                top: var(--height);
+                width: 4px;
+                height: 20px;
+                margin: 8px 0;
+                background-color: var(--main-color);
+                border-radius: 8px;
+                transition: top 0.3s;
+            }
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            left: 12px;
+            bottom: 20px;
+            width: 4px;
+            height: calc(100% - 78px);
+            background-color: var(--main-card-border);
+            border-radius: 8px;
+        }
+    }
 </style>
-{{ end }} 
+{{ end }}
