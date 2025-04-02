@@ -38,3 +38,5 @@ posts/*
 
 .vercel
 .hugo/demo-site/public/*
+.hugo/demo-site/content/
+.hugo/demo-site/resources/_gen/

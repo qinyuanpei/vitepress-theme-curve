@@ -10,7 +10,7 @@
         {{ end }}
     </div>
     <div class="archives-list">
-        {{ range $postsByYear.Reverse }}
+        {{ range $postsByYear }}
         <div class="year-list">
             <span class="year">{{ .Key }}</span>
             <div class="posts">
