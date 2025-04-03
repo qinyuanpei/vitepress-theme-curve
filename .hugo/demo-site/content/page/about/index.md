@@ -30,6 +30,11 @@ lastmod: '2020-10-09'
 * [ ]FakeRPC
 * [x]LLM Agent 落地
 
+{{<recent-douban type="book" limit="5" more="/books" title="📖 近期阅读">}}
+
+{{<recent-douban type="movie" limit="5" more="/movies" title="📽 近期观影">}}
+
+{{<recent-netease id="47002864" limit="5" more="/musics" title="🎧 近期播放">}}
 
 
 
@@ -53,5 +58,6 @@ lastmod: '2020-10-09'
 
 年岁渐长，我逐渐意识到，人生中有太多东西注定会失去。当记忆越发模糊时，你唯一能做的，就是努力让自己不要忘记。因此，在时光如流水般奔涌不息的日子里，我依然希望留下一些痕迹，让未来的自己可以循迹回望。人生是由无数个过去“叠加”而成的，即使那些人或事早已面目全非，我却始终真实地存在于此刻。正如苏轼所言：“**人生到处知何似，应似飞鸿踏雪泥**”，为了不让那些雪泥鸿爪为时光掩埋，我选择在这里写下这些文字。无论是理性思维的技术文章，还是感性思维的生活感悟，这些或深或浅的思考，至少证明我曾真实地存在过，而这便是我坚持写博客的初心。如果这些自言自语能让你有所收获，那将是我莫大的欣慰与自豪。**谢谢你，在这世界的角落，找到我**。
 
+{{<meting server="netease" type="song" id="1472178723">}}
 
 本博客使用 [Hugo](https://www.gohugo.org/) 驱动，在 [Github Pages](https://pages.github.com) 与 [Vercel](https://vercel.com/) 双线部署，由 [Travis CI](https://travis-ci.org/) 和 [Github Actions](https://github.com/actions/starter-workflows) 提供持续集成服务，由 [不蒜子](http://busuanzi.ibruce.info/) 和 [LeanCloud](https://leancloud.cn/) 提供访客统计服务，由 [Waline](https://waline.js.org/) 提供评论服务，由 [jsDelivr](https://www.jsdelivr.com/) 提供 CDN 加速服务。如需订阅本博客，可以通过 [RSS](https://blog.yuanpei.me/atom.xml) 或者在 [Github](https://github.com/) 上 Watch [本项目](https://github.com/qinyuanpei/hugo-blog)，如需联系本人，请在博客中留言(**注意留下你的邮箱**) 或者 发送邮件至：qinyuanpei#163.com(**请自行将#替换为@**)。
