@@ -9,7 +9,7 @@
           <i class="iconfont icon-article"></i>
           文章总数
         </span>
-        <span class="num">277 篇</span>
+        <span class="num">{{len (where .Site.RegularPages "Section" "posts") }}</span>
       </div>
       <div class="data-item">
         <span class="name">
