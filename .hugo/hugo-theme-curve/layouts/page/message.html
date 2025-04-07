@@ -9,54 +9,71 @@
 <!-- 页面内容 -->
 <section>
     <div class="message-wrapper">
-        <div class="guide-text">
-            <p>这里有一封来自作者的信</p>
-            <p class="hint">点击红色火漆印章开启信封 ↓</p>
-        </div>
-        <div class="envelope-container">
-            <div class="envelope">
-                <div class="envelope-flap top-flap"></div>
-                <div class="envelope-flap left-flap"></div>
-                <div class="envelope-flap right-flap"></div>
-                <div class="envelope-flap bottom-flap"></div>
-                <div class="envelope-content"></div>
-                <div class="seal" id="seal">啟</div>
-            </div>
-        </div>
-
-        <div class="message-panel">
-            <div class="decorative-elements">
-                <svg class="postmark" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2" />
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2" />
-                    <text x="50" y="45" text-anchor="middle" fill="currentColor" opacity="0.2"
-                        style="font-size: 12px;">LETTER</text>
-                    <text x="50" y="60" text-anchor="middle" fill="currentColor" opacity="0.2"
-                        style="font-size: 10px;">{{ now.Format "2006" }}</text>
-                </svg>
-                <svg class="wild-geese" viewBox="0 0 100 50">
-                    <path d="M10,25 Q15,20 20,25 Q25,30 30,25" fill="none" stroke="currentColor" stroke-width="1"
-                        opacity="0.15" />
-                    <path d="M40,15 Q45,10 50,15 Q55,20 60,15" fill="none" stroke="currentColor" stroke-width="1"
-                        opacity="0.15" />
-                    <path d="M70,30 Q75,25 80,30 Q85,35 90,30" fill="none" stroke="currentColor" stroke-width="1"
-                        opacity="0.15" />
-                </svg>
-            </div>
-            <div class="letter-content">
-                <div class="recipient">亲爱的访客朋友：</div>
-                <div class="letter-body">
-                    {{ .Content }}
+        <div class="message-section envelope-section">
+            <div class="section-content">
+                <div class="envelope-container">
+                    <div class="envelope">
+                        <div class="envelope-flap top-flap"></div>
+                        <div class="envelope-flap left-flap"></div>
+                        <div class="envelope-flap right-flap"></div>
+                        <div class="envelope-flap bottom-flap"></div>
+                        <div class="envelope-content"></div>
+                        <div class="seal" id="seal">啟</div>
+                    </div>
                 </div>
-                <div class="signature-block">
-                    <div class="signature-date">{{ .Date.Format "2006年1月2日" }}</div>
-                    <div class="signature-name">{{ .Site.Params.siteMeta.author.name }}</div>
-                </div>
+                <div class="section-description">鸿雁传书</div>
             </div>
-            <span class="close-btn" title="关闭">&times;</span>
+        </div>
+        <div class="message-section consultation-section">
+            <div class="section-content">
+                <div class="consultation-placeholder">
+                    <a href="https://calendly.com" class="consultation-link" target="_blank" rel="noopener noreferrer">
+                        <div class="placeholder-image"></div>
+                    </a>
+                </div>
+                <div class="section-description">付费咨询</div>
+            </div>
         </div>
     </div>
+
+    <div class="message-panel">
+        <div class="decorative-elements">
+            <svg class="postmark" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2" />
+                <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2" />
+                <text x="50" y="45" text-anchor="middle" fill="currentColor" opacity="0.2"
+                    style="font-size: 12px;">LETTER</text>
+                <text x="50" y="60" text-anchor="middle" fill="currentColor" opacity="0.2"
+                    style="font-size: 10px;">{{ now.Format "2006" }}</text>
+            </svg>
+            <svg class="wild-geese" viewBox="0 0 100 50">
+                <path d="M10,25 Q15,20 20,25 Q25,30 30,25" fill="none" stroke="currentColor" stroke-width="1"
+                    opacity="0.15" />
+                <path d="M40,15 Q45,10 50,15 Q55,20 60,15" fill="none" stroke="currentColor" stroke-width="1"
+                    opacity="0.15" />
+                <path d="M70,30 Q75,25 80,30 Q85,35 90,30" fill="none" stroke="currentColor" stroke-width="1"
+                    opacity="0.15" />
+            </svg>
+        </div>
+        <div class="letter-content">
+            <div class="recipient">亲爱的访客朋友：</div>
+            <div class="letter-body">
+                {{ .Content }}
+            </div>
+            <div class="signature-block">
+                <div class="signature-date">{{ .Date.Format "2006-01-02" }}</div>
+                <div class="signature-name">{{ .Site.Params.siteMeta.author.name }}</div>
+            </div>
+        </div>
+        <span class="close-btn" title="关闭">&times;</span>
+    </div>
+
+                <!-- 评论 -->
+                <div id="comments" class="s-card">
+                    {{ partial "components/comments/include.html" . }}
+                </div>
 </section>
+
 
 <style>
     section {
@@ -71,7 +88,7 @@
         --expanded-height: 500px;
         --texture-color: rgba(0, 0, 0, 0.03);
         --letter-line-color: rgba(0, 0, 0, 0.08);
-        --letter-line-spacing: 2rem;
+        --letter-line-spacing: 1.8rem;
         --letter-indent: 2em;
         --banner-height: 300px;
         --banner-text-color: #fff;
@@ -93,12 +110,85 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 2rem;
         min-height: 50vh;
+        padding: 2rem;
+    }
+
+    .message-section {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 300px;
+        position: relative;
         border-radius: 16px;
-    background-color: var(--main-card-background);
-    border: 1px solid var(--main-card-border);
-    box-shadow: 0 8px 16px -4px var(--main-border-shadow);
-    padding: 2rem;
+        background-color: var(--main-card-background);
+        border: 1px solid var(--main-card-border);
+        box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+        padding: 2rem;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .message-section:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 20px -4px var(--main-border-shadow);
+    }
+
+    .message-section:first-child::after {
+        display: none;
+    }
+
+    .consultation-placeholder {
+        width: var(--envelope-width);
+        height: var(--envelope-height);
+        background-color: var(--envelope-color);
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .consultation-link {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        color: var(--text-color);
+        transition: transform 0.3s ease;
+    }
+
+    .consultation-link:hover {
+        transform: scale(1.02);
+    }
+
+    .placeholder-image {
+        width: 100%;
+        height: 100%;
+        background-color: var(--envelope-flap-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease;
+    }
+
+    .consultation-link:hover .placeholder-image {
+        background-color: var(--envelope-color);
+    }
+
+    .placeholder-text {
+        position: absolute;
+        bottom: 1rem;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 1.2em;
+        font-weight: 500;
+    }
+
+    .consultation-placeholder:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     .envelope-container {
@@ -225,7 +315,8 @@
         left: 50%;
         transform: translate(-50%, -50%) scale(0.8);
         width: var(--expanded-width);
-        height: var(--expanded-height);
+        height: fit-content;
+        max-height: var(--expanded-height);
         background-color: var(--content-bg);
         padding: 2rem;
         opacity: 0;
@@ -299,11 +390,12 @@
 
     .postmark {
         position: absolute;
-        top: 1rem;
+        bottom: 2rem;
         right: 2rem;
         width: 80px;
         height: 80px;
         color: var(--text-color);
+        transform: rotate(15deg);
     }
 
     .wild-geese {
@@ -319,7 +411,7 @@
     .letter-content {
         position: relative;
         padding: 2rem;
-        line-height: 2;
+        line-height: 1.8;
         background-image:
             linear-gradient(transparent calc(var(--letter-line-spacing) - 1px),
                 var(--letter-line-color) calc(var(--letter-line-spacing) - 1px),
@@ -455,64 +547,168 @@
 
     /* 响应式调整 */
     @media (max-width: 768px) {
-        :root {
-            --envelope-width: 280px;
-            --envelope-height: 186px;
-            --expanded-width: min(90vw, 600px);
-            --expanded-height: min(80vh, 400px);
-            --letter-line-spacing: 1.8rem;
-            --letter-indent: 1.5em;
-            --banner-height: 200px;
-            --section-padding: 1rem;
+        .message-wrapper {
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .message-section {
+            width: 100%;
+            min-height: auto;
+            padding: 1.5rem;
+        }
+
+        .envelope-container {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .envelope {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3/2;
+        }
+
+        .consultation-placeholder {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            aspect-ratio: 3/2;
+        }
+
+        .envelope-flap {
+            border: none;
+        }
+
+        .top-flap {
+            clip-path: none;
+        }
+
+        .left-flap {
+            clip-path: none;
+        }
+
+        .right-flap {
+            clip-path: none;
+        }
+
+        .bottom-flap {
+            clip-path: none;
+        }
+
+        .top-flap.open {
+            transform: none;
+        }
+
+        .envelope-content {
+            position: relative;
         }
 
         .seal {
-            width: 50px;
-            height: 50px;
-            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
         }
 
         .message-panel {
-            padding: 1.5rem;
+            padding: 1rem;
+            width: 95vw;
+            height: fit-content;
+            max-height: 85vh;
+            max-width: none;
         }
 
         .postmark {
-            width: 60px;
-            height: 60px;
-            top: 0.5rem;
-            right: 1rem;
+            width: 50px;
+            height: 50px;
+            bottom: 1.5rem;
+            right: 1.5rem;
         }
 
         .wild-geese {
-            width: 80px;
-            height: 40px;
-            bottom: 1rem;
-            left: 1rem;
+            width: 60px;
+            height: 30px;
+            bottom: 0.5rem;
+            left: 0.5rem;
         }
 
         .letter-content {
-            padding: 1.5rem;
+            padding: 1rem;
+            font-size: 0.9em;
         }
 
         .recipient {
-            font-size: 1.1em;
-            margin-bottom: 1.5rem;
+            font-size: 1em;
+            margin-bottom: 1rem;
         }
 
         .signature-block {
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .signature-name {
-            font-size: 1em;
+            font-size: 0.9em;
         }
 
         .close-btn {
-            right: 1rem;
-            top: 1rem;
-            width: 28px;
-            height: 28px;
-            font-size: 24px;
+            right: 0.5rem;
+            top: 0.5rem;
+            width: 24px;
+            height: 24px;
+            font-size: 20px;
+        }
+
+        .banner-content .title {
+            font-size: 1.8rem;
+        }
+
+        .banner-content .desc {
+            font-size: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.1em;
+            margin-top: 0.8rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .message-wrapper {
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .message-section {
+            padding: 1rem;
+        }
+
+        .envelope-container {
+            max-width: 260px;
+        }
+
+        .consultation-placeholder {
+            max-width: 260px;
+        }
+
+        .seal {
+            width: 35px;
+            height: 35px;
+            font-size: 18px;
+        }
+
+        .message-panel {
+            padding: 0.75rem;
+        }
+
+        .letter-content {
+            padding: 0.75rem;
+            font-size: 0.85em;
+        }
+
+        .section-description {
+            font-size: 1em;
+            margin-top: 0.6rem;
         }
     }
 
@@ -523,46 +719,21 @@
         /* 防止滚动条消失导致页面抖动 */
     }
 
-    .guide-text {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    color: var(--text-color);
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
-}
-
-.guide-text p {
-    margin: 0;
-    line-height: 1.6;
-}
-
-.guide-text .hint {
-    font-size: 0.9em;
-    margin-top: 0.5rem;
-    color: var(--text-color);
-    opacity: 0.6;
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
+    .section-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
     }
-    40% {
-        transform: translateY(-10px);
-    }
-    60% {
-        transform: translateY(-5px);
-    }
-}
 
-.message-wrapper.show-message .guide-text {
-    opacity: 0;
-    pointer-events: none;
-}
+    .section-description {
+        color: var(--main-font-color);
+        font-size: 1.2em;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 1rem;
+    }
 </style>
 
 <script>

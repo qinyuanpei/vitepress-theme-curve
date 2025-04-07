@@ -1,3 +1,13 @@
+{{ $posts := where .Site.RegularPages "Section" "posts" }}
+{{ $firstPost := index ($posts.ByDate) 0 }}
+{{ $days := div (sub now.Unix $firstPost.Date.Unix) 86400 }}
+{{ $statistics := dict
+  "posts" (len $posts)
+  "days" $days
+  "pv" 0
+  "uv" 0
+}}
+
 <div class="site-data s-card weidgets">
     <div class="title">
       <i class="iconfont icon-chart"></i>
@@ -9,14 +19,14 @@
           <i class="iconfont icon-article"></i>
           文章总数
         </span>
-        <span class="num">{{len (where .Site.RegularPages "Section" "posts") }}</span>
+        <span class="num">{{ $statistics.posts }} 篇</span>
       </div>
       <div class="data-item">
         <span class="name">
           <i class="iconfont icon-date"></i>
           建站天数
         </span>
-        <span class="num">200 天</span>
+        <span class="num">{{ $statistics.days }} 天</span>
       </div>
       <div class="data-item">
         <span class="name">
