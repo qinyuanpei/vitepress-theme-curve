@@ -3,10 +3,10 @@
 
 <div class="link">
     <!-- 顶部横幅 -->
-    <div class="banner-page">
+    <div class="page-banner">
         <div class="banner-content">
-            <h1 class="title">友情链接</h1>
-            <p class="desc"></p>
+            <h1 class="title">{{ .Title }}</h1>
+            <p class="desc">{{ .Params.subtitle }}</p>
         </div>
     </div>
 
@@ -30,91 +30,6 @@
 .link {
     margin-bottom: 4rem;
 }
-
-.link .banner-page {
-    position: relative;
-    width: 100%;
-    min-height: auto;
-    padding: 3rem 2rem;
-    margin-bottom: 2rem;
-    background-color: var(--main-card-background);
-    border-radius: 12px;
-    border: 1px solid var(--main-card-border);
-}
-
-.link .banner-page .banner-content {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.link .banner-page .title {
-    font-size: 2rem;
-    margin: 0 0 1rem 0;
-}
-
-.link .banner-page .desc {
-    color: var(--main-font-second-color);
-    margin: 0;
-}
-
-.link .banner-page .menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: flex-start;
-    margin-top: 2rem;
-}
-
-.link .banner-page .menu .menu-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 46px;
-    padding: 12px 18px;
-    border-radius: 8px;
-    background-color: var(--main-card-second-background);
-    border: 1px solid var(--main-card-border);
-    box-shadow: 0 8px 16px -4px var(--main-border-shadow);
-    transition: all 0.3s;
-    cursor: pointer;
-}
-
-.link .banner-page .menu .menu-item .iconfont {
-    font-size: 18px;
-    margin-right: 8px;
-    transition: color 0.3s;
-}
-
-.link .banner-page .menu .menu-item.random {
-    color: var(--main-color);
-}
-
-.link .banner-page .menu .menu-item.random .iconfont {
-    color: var(--main-color);
-}
-
-.link .banner-page .menu .menu-item.add {
-    margin-left: 20px;
-    color: var(--main-card-second-background);
-    background-color: var(--main-font-color);
-}
-
-.link .banner-page .menu .menu-item.add .iconfont {
-    font-size: 22px;
-    margin-right: 6px;
-    color: var(--main-card-second-background);
-}
-
-.link .banner-page .menu .menu-item:hover {
-    color: #fff;
-    background-color: var(--main-color);
-    box-shadow: 0 8px 16px -4px var(--main-color-bg);
-}
-
-.link .banner-page .menu .menu-item:hover .iconfont {
-    color: #fff;
-}
-
 .post-content {
     margin-top: 2rem;
     padding: 2rem;

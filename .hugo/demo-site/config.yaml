@@ -31,19 +31,19 @@ menu:
     - name: 书影音
       weight: 2
     - name: 读书
-      url: /reading
+      url: /books
       weight: 1
       parent: 书影音
       params:
         icon: book-fill
     - name: 观影
-      url: /watching
+      url: /movies
       weight: 2
       parent: 书影音
       params:
         icon: movies
     - name: 听歌
-      url: /listening
+      url: /musics
       weight: 3
       parent: 书影音
       params:

@@ -1,46 +1,12 @@
-// douban-collection-styles
 .hexo-douban-container  {
-    background-color: var(--card-background);
-    border-radius: var(--card-border-radius);
-    box-shadow: var(--shadow-l1);
-    padding: var(--card-padding);
-}
-
-.hexo-douban-cover {
-    height: 250px; 
-    width: 100%;
-    background-size: cover;
-    backdrop-filter: blur(2.5px);
-    filter:blur(2.5px);
-    transition: backdrop-filter 0.3s ease-in-out;
-    transition: filter 0.3s ease-in-out;
-}
-
-.hexo-douban-cover:hover {
-    backdrop-filter: none;
-    filter:none;
-    cursor: pointer;
-}
-
-.hexo-douban-tabs {
-    margin-bottom: 15px;
-    margin-top: 15px;
-    text-align: center; /* 新增 */
-}
-
-.hexo-douban-tab {
-    color: #303f9f; /* 新增 */
-    padding: 5px;
-}
-
-/* 新增 .hexo-douban-tab:hover */
-.hexo-douban-tab:hover {
-    color: #ff4081;
+    border-radius: 16px;
+    background-color: var(--main-card-background);
+    border: 1px solid var(--main-card-border);
+    box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+    padding: 2rem;
 }
 
 .hexo-douban-active {
-    /* background: #657b83; */
-    /* color: #fff; */
     color: #ff4081;
 }
 
@@ -83,14 +49,13 @@
 }
 
 .hexo-douban-meta {
-    font-size: 12px;
+    font-size: 0.8rem;
     padding-right: 10px;
     margin: 2.5px 0 2.5px;
 }
 
 .hexo-douban-comments {
-    font-size: 12px;
-    max-height: 75px;
+    font-size: 0.8rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
@@ -110,9 +75,7 @@
 }
 
 .hexo-douban-button:hover {
-    /* background: #657b83; */
-    /* color: #fff; */
-    color: #ff4081;
+    color:var(--main-color)
 }
 
 .hexo-douban-hide {
@@ -152,3 +115,4 @@
     background-repeat: repeat;
     background-image: url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MDguMSAzNTMuMWwtMjUzLjktMzYuOUw1NDAuNyA4Ni4xYy0zLjEtNi4zLTguMi0xMS40LTE0LjUtMTQuNS0xNS44LTcuOC0zNS0xLjMtNDIuOSAxNC41TDM2OS44IDMxNi4ybC0yNTMuOSAzNi45Yy03IDEtMTMuNCA0LjMtMTguMyA5LjMtMTIuMyAxMi43LTEyLjEgMzIuOS42IDQ1LjNsMTgzLjcgMTc5LjEtNDMuNCAyNTIuOWMtMS4yIDYuOS0uMSAxNC4xIDMuMiAyMC4zIDguMiAxNS42IDI3LjYgMjEuNyA0My4yIDEzLjRMNTEyIDc1NGwyMjcuMSAxMTkuNGM2LjIgMy4zIDEzLjQgNC40IDIwLjMgMy4yIDE3LjQtMyAyOS4xLTE5LjUgMjYuMS0zNi45bC00My40LTI1Mi45IDE4My43LTE3OS4xYzUtNC45IDguMy0xMS4zIDkuMy0xOC4zIDIuNy0xNy41LTkuNS0zMy43LTI3LTM2LjN6TTY2NC44IDU2MS42bDM2LjEgMjEwLjNMNTEyIDY3Mi43IDMyMy4xIDc3MmwzNi4xLTIxMC4zLTE1Mi44LTE0OUw0MTcuNiAzODIgNTEyIDE5MC43IDYwNi40IDM4MmwyMTEuMiAzMC43LTE1Mi44IDE0OC45eiIgZmlsbD0iI2Y5OWIwMSIvPjwvc3ZnPg==);
   }
+  

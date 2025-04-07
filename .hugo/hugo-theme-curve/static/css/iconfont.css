@@ -291,11 +291,3 @@
   .icon-volume-down:before {
     content: "\e064";
   }
-
-  .icon-moon:before {
-    content: "\e867";
-  }
-
-  .icon-sun:before {
-    content: "\e886"
-  }

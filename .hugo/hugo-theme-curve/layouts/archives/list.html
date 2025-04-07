@@ -2,6 +2,14 @@
 {{ $posts := where .Site.RegularPages "Section" "posts" }}
 {{ $postsByYear := $posts.GroupByDate "2006" }}
 
+<!-- 页面头部 -->
+<div class="page-banner">
+    <div class="banner-content">
+        <h1 class="title">{{ .Title }}</h1>
+        <p class="desc">{{ .Params.subtitle }}</p>
+    </div>
+</div>
+<!-- 页面内容 -->
 <div class="archives s-card">
     <div class="title">
         <h1 class="name">文章</h1>
@@ -26,8 +34,8 @@
                         <div class="categories">
                             <i class="iconfont icon-folder"></i>
                             {{ range . }}
-                            <a href="{{ "/categories/" | relLangURL }}{{ . | urlize }}" 
-                               onclick="event.stopPropagation()">
+                            <a href="{{ " /categories/" | relLangURL }}{{ . | urlize }}"
+                                onclick="event.stopPropagation()">
                                 {{ . }}
                             </a>
                             {{ end }}
@@ -37,8 +45,7 @@
                         <div class="tags">
                             <i class="iconfont icon-hashtag"></i>
                             {{ range . }}
-                            <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" 
-                               onclick="event.stopPropagation()">
+                            <a href="{{ " /tags/" | relLangURL }}{{ . | urlize }}" onclick="event.stopPropagation()">
                                 {{ . }}
                             </a>
                             {{ end }}
@@ -54,129 +61,131 @@
 </div>
 
 <style>
-.archives {
-    padding: 2rem;
-}
-
-.archives .title {
-    display: flex;
-    margin-bottom: 1rem;
-}
-
-.archives .title .name {
-    margin: 0;
-    border-bottom: none;
-}
-
-.archives .title .num {
-    margin-left: 8px;
-    font-size: 20px;
-    font-weight: bold;
-    opacity: 0.6;
-}
-
-.archives .archives-list .year-list {
-    margin-bottom: 2rem;
-}
-
-.archives .archives-list .year-list .year {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-left: 6px;
-    padding-left: 12px;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-.archives .archives-list .year-list .year::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 4px;
-    height: 70%;
-    background-color: var(--main-color);
-    border-radius: 8px;
-}
-
-.archives .archives-list .year-list .posts {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
-
-.archives .archives-list .year-list .posts .posts-item {
-    padding: 20px;
-    cursor: pointer;
-}
-
-.archives .archives-list .year-list .posts .posts-item .title {
-    display: block;
-    margin-bottom: 16px;
-    font-size: 18px;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-.archives .archives-list .year-list .posts .posts-item .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    font-size: 14px;
-    color: var(--main-font-second-color);
-}
-
-.archives .archives-list .year-list .posts .posts-item .meta > div {
-    display: flex;
-    align-items: center;
-}
-
-.archives .archives-list .year-list .posts .posts-item .meta .iconfont {
-    margin-right: 4px;
-    opacity: 0.6;
-}
-
-.archives .archives-list .year-list .posts .posts-item .meta a {
-    color: var(--main-font-second-color);
-    transition: color 0.3s;
-    margin-right: 8px;
-}
-
-.archives .archives-list .year-list .posts .posts-item .meta a:hover {
-    color: var(--main-color);
-}
-
-.archives .archives-list .year-list .posts .posts-item:hover .title {
-    color: var(--main-color);
-}
-
-.archives .archives-list .year-list:last-child {
-    margin-bottom: 0;
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-    .archives .archives-list .year-list .posts {
-        grid-template-columns: 1fr;
+    .archives {
+        padding: 2rem;
     }
 
-    .archives .archives-list .year-list .posts .posts-item .meta {
-        /* 在移动端只显示日期 */
-        .categories, .tags {
-            display: none;
-        }
+    .archives .title {
+        display: flex;
+        margin-bottom: 1rem;
+    }
+
+    .archives .title .name {
+        margin: 0;
+        border-bottom: none;
+    }
+
+    .archives .title .num {
+        margin-left: 8px;
+        font-size: 20px;
+        font-weight: bold;
+        opacity: 0.6;
+    }
+
+    .archives .archives-list .year-list {
+        margin-bottom: 2rem;
+    }
+
+    .archives .archives-list .year-list .year {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-left: 6px;
+        padding-left: 12px;
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .archives .archives-list .year-list .year::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 4px;
+        height: 70%;
+        background-color: var(--main-color);
+        border-radius: 8px;
+    }
+
+    .archives .archives-list .year-list .posts {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
     }
 
     .archives .archives-list .year-list .posts .posts-item {
-        padding: 15px;
+        padding: 20px;
+        cursor: pointer;
     }
 
     .archives .archives-list .year-list .posts .posts-item .title {
-        font-size: 16px;
-        margin-bottom: 8px;
+        display: block;
+        margin-bottom: 16px;
+        font-size: 18px;
+        font-weight: bold;
+        transition: color 0.3s;
     }
-}
+
+    .archives .archives-list .year-list .posts .posts-item .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 14px;
+        color: var(--main-font-second-color);
+    }
+
+    .archives .archives-list .year-list .posts .posts-item .meta>div {
+        display: flex;
+        align-items: center;
+    }
+
+    .archives .archives-list .year-list .posts .posts-item .meta .iconfont {
+        margin-right: 4px;
+        opacity: 0.6;
+    }
+
+    .archives .archives-list .year-list .posts .posts-item .meta a {
+        color: var(--main-font-second-color);
+        transition: color 0.3s;
+        margin-right: 8px;
+    }
+
+    .archives .archives-list .year-list .posts .posts-item .meta a:hover {
+        color: var(--main-color);
+    }
+
+    .archives .archives-list .year-list .posts .posts-item:hover .title {
+        color: var(--main-color);
+    }
+
+    .archives .archives-list .year-list:last-child {
+        margin-bottom: 0;
+    }
+
+    /* 移动端适配 */
+    @media (max-width: 768px) {
+        .archives .archives-list .year-list .posts {
+            grid-template-columns: 1fr;
+        }
+
+        .archives .archives-list .year-list .posts .posts-item .meta {
+
+            /* 在移动端只显示日期 */
+            .categories,
+            .tags {
+                display: none;
+            }
+        }
+
+        .archives .archives-list .year-list .posts .posts-item {
+            padding: 15px;
+        }
+
+        .archives .archives-list .year-list .posts .posts-item .title {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+    }
 </style>
-{{ end }} 
+{{ end }}

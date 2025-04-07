@@ -2,11 +2,11 @@
 {{ $taxonomies := index .Site.Taxonomies $type }}
 
 <div class="cat-or-tag">
-    <div class="title">
-        <h1 class="title-name">{{ if eq $type "categories" }}全部分类{{ else }}全部标签{{ end }}</h1>
-        <span class="title-num">
-            共有 {{ len $taxonomies }} 个{{ if eq $type "categories" }}分类{{ else }}标签{{ end }}
-        </span>
+    <div class="page-banner">
+        <div class="banner-content">
+            <h1 class="title">{{ if eq $type "categories" }}全部分类{{ else }}全部标签{{ end }}</h1>
+            <p class="desc">共有 {{ len $taxonomies }} 个{{ if eq $type "categories" }}分类{{ else }}标签{{ end }}</p>
+        </div>
     </div>
 
     <div class="type-lists">
