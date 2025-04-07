@@ -1,0 +1,660 @@
+{{ define "main" }}
+<!-- 页面头部 -->
+<div class="page-banner">
+    <div class="banner-content">
+        <h1 class="title">{{ .Title }}</h1>
+        <p class="desc">{{ .Params.subtitle }}</p>
+    </div>
+</div>
+<!-- 页面内容 -->
+<section>
+    <div class="message-wrapper">
+        <div class="guide-text">
+            <p>这里有一封来自作者的信</p>
+            <p class="hint">点击红色火漆印章开启信封 ↓</p>
+        </div>
+        <div class="envelope-container">
+            <div class="envelope">
+                <div class="envelope-flap top-flap"></div>
+                <div class="envelope-flap left-flap"></div>
+                <div class="envelope-flap right-flap"></div>
+                <div class="envelope-flap bottom-flap"></div>
+                <div class="envelope-content"></div>
+                <div class="seal" id="seal">啟</div>
+            </div>
+        </div>
+
+        <div class="message-panel">
+            <div class="decorative-elements">
+                <svg class="postmark" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2" />
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2" />
+                    <text x="50" y="45" text-anchor="middle" fill="currentColor" opacity="0.2"
+                        style="font-size: 12px;">LETTER</text>
+                    <text x="50" y="60" text-anchor="middle" fill="currentColor" opacity="0.2"
+                        style="font-size: 10px;">{{ now.Format "2006" }}</text>
+                </svg>
+                <svg class="wild-geese" viewBox="0 0 100 50">
+                    <path d="M10,25 Q15,20 20,25 Q25,30 30,25" fill="none" stroke="currentColor" stroke-width="1"
+                        opacity="0.15" />
+                    <path d="M40,15 Q45,10 50,15 Q55,20 60,15" fill="none" stroke="currentColor" stroke-width="1"
+                        opacity="0.15" />
+                    <path d="M70,30 Q75,25 80,30 Q85,35 90,30" fill="none" stroke="currentColor" stroke-width="1"
+                        opacity="0.15" />
+                </svg>
+            </div>
+            <div class="letter-content">
+                <div class="recipient">亲爱的访客朋友：</div>
+                <div class="letter-body">
+                    {{ .Content }}
+                </div>
+                <div class="signature-block">
+                    <div class="signature-date">{{ .Date.Format "2006年1月2日" }}</div>
+                    <div class="signature-name">{{ .Site.Params.siteMeta.author.name }}</div>
+                </div>
+            </div>
+            <span class="close-btn" title="关闭">&times;</span>
+        </div>
+    </div>
+</section>
+
+<style>
+    section {
+        --seal-color: #e74c3c;
+        --envelope-color: #f5f5f5;
+        --envelope-flap-color: #e8e8e8;
+        --text-color: #333;
+        --content-bg: #fff;
+        --envelope-width: 300px;
+        --envelope-height: 200px;
+        --expanded-width: 800px;
+        --expanded-height: 500px;
+        --texture-color: rgba(0, 0, 0, 0.03);
+        --letter-line-color: rgba(0, 0, 0, 0.08);
+        --letter-line-spacing: 2rem;
+        --letter-indent: 2em;
+        --banner-height: 300px;
+        --banner-text-color: #fff;
+        --section-max-width: 1200px;
+        --section-padding: 2rem;
+    }
+
+    [data-theme="dark"] {
+        --envelope-color: #2c3e50;
+        --envelope-flap-color: #34495e;
+        --text-color: #ecf0f1;
+        --content-bg: #34495e;
+        --texture-color: rgba(255, 255, 255, 0.03);
+        --letter-line-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .message-wrapper {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 50vh;
+        border-radius: 16px;
+    background-color: var(--main-card-background);
+    border: 1px solid var(--main-card-border);
+    box-shadow: 0 8px 16px -4px var(--main-border-shadow);
+    padding: 2rem;
+    }
+
+    .envelope-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1000px;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .envelope-container.hidden {
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.8);
+    }
+
+    .envelope {
+        position: relative;
+        width: var(--envelope-width);
+        height: var(--envelope-height);
+        background-color: var(--envelope-color);
+        border: none;
+        transform-style: preserve-3d;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .envelope-flap {
+        position: absolute;
+        background-color: var(--envelope-flap-color);
+        border: 2px solid var(--text-color);
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+    }
+
+    .top-flap {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        clip-path: polygon(0 0, 100% 0, 50% 50%);
+        transform-origin: top;
+        z-index: 3;
+    }
+
+    .left-flap {
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+        z-index: 1;
+    }
+
+    .right-flap {
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 100%;
+        clip-path: polygon(0 50%, 100% 0, 100% 100%);
+        z-index: 1;
+    }
+
+    .bottom-flap {
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        clip-path: polygon(0 0, 50% 100%, 100% 0);
+        z-index: 1;
+    }
+
+    .top-flap.open {
+        transform: rotateX(180deg);
+        z-index: 1;
+    }
+
+    .envelope-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--envelope-color);
+        z-index: 2;
+    }
+
+    .seal {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background-color: var(--seal-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        z-index: 4;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+    }
+
+    .seal:hover {
+        transform: translate(-50%, -50%) scale(1.1);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .seal.hidden {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+        pointer-events: none;
+    }
+
+    .message-panel {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        width: var(--expanded-width);
+        height: var(--expanded-height);
+        background-color: var(--content-bg);
+        padding: 2rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        z-index: 100;
+        border-radius: 4px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .message-panel.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .message-panel::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .message-panel::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+    }
+
+    .message-panel::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+    }
+
+    [data-theme="dark"] .message-panel::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    [data-theme="dark"] .message-panel::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .paper-texture {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        opacity: 0.7;
+        background-image:
+            repeating-linear-gradient(-45deg,
+                var(--texture-color) 0px,
+                var(--texture-color) 1px,
+                transparent 1px,
+                transparent 3px),
+            repeating-linear-gradient(45deg,
+                var(--texture-color) 0px,
+                var(--texture-color) 1px,
+                transparent 1px,
+                transparent 3px);
+        background-size: 4px 4px;
+    }
+
+    .decorative-elements {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .postmark {
+        position: absolute;
+        top: 1rem;
+        right: 2rem;
+        width: 80px;
+        height: 80px;
+        color: var(--text-color);
+    }
+
+    .wild-geese {
+        position: absolute;
+        bottom: 2rem;
+        left: 2rem;
+        width: 120px;
+        height: 60px;
+        color: var(--text-color);
+        transform: rotate(-5deg);
+    }
+
+    .letter-content {
+        position: relative;
+        padding: 2rem;
+        line-height: 2;
+        background-image:
+            linear-gradient(transparent calc(var(--letter-line-spacing) - 1px),
+                var(--letter-line-color) calc(var(--letter-line-spacing) - 1px),
+                var(--letter-line-color) var(--letter-line-spacing),
+                transparent var(--letter-line-spacing));
+        background-size: 100% var(--letter-line-spacing);
+        min-height: 100%;
+    }
+
+    .recipient {
+        font-size: 1.2em;
+        margin-bottom: 2rem;
+        color: var(--text-color);
+        font-weight: 500;
+    }
+
+    .letter-body {
+        text-indent: var(--letter-indent);
+        color: var(--text-color);
+        margin-bottom: 1.5rem;
+    }
+
+    .letter-body p {
+        text-indent: var(--letter-indent);
+        margin-bottom: 1rem;
+    }
+
+    .letter-body p:last-child {
+        margin-bottom: 0;
+    }
+
+    .signature-block {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-top: 1.5rem;
+        color: var(--text-color);
+    }
+
+    .signature-date {
+        font-style: normal;
+        color: var(--text-color);
+    }
+
+    .signature-name {
+        font-size: 1.1em;
+        font-weight: 500;
+    }
+
+    .close-btn {
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        cursor: pointer;
+        color: var(--text-color);
+        background-color: transparent;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        z-index: 101;
+    }
+
+    .close-btn:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        transform: scale(1.1);
+    }
+
+    [data-theme="dark"] .close-btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* 遮罩层移到wrapper上 */
+    .message-wrapper::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 99;
+    }
+
+    .message-wrapper.show-message::after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* 页面头部样式 */
+    .page-banner {
+        position: relative;
+        width: 100%;
+        height: var(--banner-height);
+        background-color: var(--envelope-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .banner-content {
+        max-width: var(--section-max-width);
+        padding: 0 var(--section-padding);
+        color: var(--text-color);
+    }
+
+    .banner-content .title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+
+    .banner-content .desc {
+        font-size: 1.2rem;
+        opacity: 0.8;
+    }
+
+    /* 内容区域样式 */
+    section {
+        max-width: var(--section-max-width);
+        margin: 0 auto;
+        padding: 0 var(--section-padding);
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+        :root {
+            --envelope-width: 280px;
+            --envelope-height: 186px;
+            --expanded-width: min(90vw, 600px);
+            --expanded-height: min(80vh, 400px);
+            --letter-line-spacing: 1.8rem;
+            --letter-indent: 1.5em;
+            --banner-height: 200px;
+            --section-padding: 1rem;
+        }
+
+        .seal {
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+        }
+
+        .message-panel {
+            padding: 1.5rem;
+        }
+
+        .postmark {
+            width: 60px;
+            height: 60px;
+            top: 0.5rem;
+            right: 1rem;
+        }
+
+        .wild-geese {
+            width: 80px;
+            height: 40px;
+            bottom: 1rem;
+            left: 1rem;
+        }
+
+        .letter-content {
+            padding: 1.5rem;
+        }
+
+        .recipient {
+            font-size: 1.1em;
+            margin-bottom: 1.5rem;
+        }
+
+        .signature-block {
+            margin-top: 2rem;
+        }
+
+        .signature-name {
+            font-size: 1em;
+        }
+
+        .close-btn {
+            right: 1rem;
+            top: 1rem;
+            width: 28px;
+            height: 28px;
+            font-size: 24px;
+        }
+    }
+
+    /* 当信件打开时禁用页面滚动 */
+    body.message-open {
+        overflow: hidden;
+        padding-right: var(--scrollbar-width, 0px);
+        /* 防止滚动条消失导致页面抖动 */
+    }
+
+    .guide-text {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: var(--text-color);
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+}
+
+.guide-text p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.guide-text .hint {
+    font-size: 0.9em;
+    margin-top: 0.5rem;
+    color: var(--text-color);
+    opacity: 0.6;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.message-wrapper.show-message .guide-text {
+    opacity: 0;
+    pointer-events: none;
+}
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const wrapper = document.querySelector('.message-wrapper');
+        const envelopeContainer = document.querySelector('.envelope-container');
+        const seal = document.getElementById('seal');
+        const messagePanel = document.querySelector('.message-panel');
+        const closeBtn = document.querySelector('.close-btn');
+        const topFlap = document.querySelector('.top-flap');
+        const body = document.body;
+
+        // 计算滚动条宽度
+        function getScrollbarWidth() {
+            const outer = document.createElement('div');
+            outer.style.visibility = 'hidden';
+            outer.style.overflow = 'scroll';
+            document.body.appendChild(outer);
+
+            const inner = document.createElement('div');
+            outer.appendChild(inner);
+
+            const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+            outer.parentNode.removeChild(outer);
+
+            return scrollbarWidth;
+        }
+
+        // 设置CSS变量
+        document.documentElement.style.setProperty('--scrollbar-width', getScrollbarWidth() + 'px');
+
+        function openEnvelope() {
+            // 1. 先让蜡封消失
+            seal.classList.add('hidden');
+
+            // 2. 等蜡封完全消失后，再翻转三角形
+            setTimeout(() => {
+                topFlap.classList.add('open');
+
+                // 3. 等三角形翻转完成后，显示信件内容
+                setTimeout(() => {
+                    body.classList.add('message-open');
+                    envelopeContainer.classList.add('hidden');
+                    wrapper.classList.add('show-message');
+
+                    setTimeout(() => {
+                        messagePanel.classList.add('show');
+                    }, 300);
+                }, 600);
+            }, 300);
+        }
+
+        function closeEnvelope() {
+            // 1. 隐藏信件内容
+            messagePanel.classList.remove('show');
+
+            setTimeout(() => {
+                // 2. 隐藏遮罩并恢复页面滚动
+                wrapper.classList.remove('show-message');
+                body.classList.remove('message-open');
+
+                // 3. 显示信封
+                setTimeout(() => {
+                    envelopeContainer.classList.remove('hidden');
+
+                    // 4. 翻转三角形到下面
+                    topFlap.classList.remove('open');
+
+                    // 5. 等三角形翻转完成后，再显示蜡封
+                    setTimeout(() => {
+                        seal.classList.remove('hidden');
+                    }, 600);
+                }, 300);
+            }, 300);
+        }
+
+        // 点击遮罩层也可以关闭
+        wrapper.addEventListener('click', function (e) {
+            if (e.target === wrapper && wrapper.classList.contains('show-message')) {
+                closeEnvelope();
+            }
+        });
+
+        seal.addEventListener('click', openEnvelope);
+        closeBtn.addEventListener('click', closeEnvelope);
+
+        // ESC键关闭
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && wrapper.classList.contains('show-message')) {
+                closeEnvelope();
+            }
+        });
+    });
+</script>
+{{ end }}

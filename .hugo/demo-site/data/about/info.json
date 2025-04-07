@@ -1,0 +1,77 @@
+{
+  "name": "無名",
+  "title": "前端开发工程师、独立开发者、博主",
+  "pursuit": {
+    "title": "追求",
+    "items": [
+      "源于",
+      "热爱而去开发",
+      "优秀的作品"
+    ]
+  },
+  "character": {
+    "title": "性格",
+    "type": "物流师",
+    "mbti": "ISTJ-A / ISTJ-T",
+    "mbtiLink": "https://www.16personalities.com/ch/istj-%E4%BA%BA%E6%A0%BC",
+    "mbtiSite": "https://www.16personalities.com/ch/"
+  },
+  "motto": {
+    "title": "座右铭",
+    "items": [
+      "脚踏实地，",
+      "一丝不苟。"
+    ]
+  },
+  "career": {
+    "title": "生涯",
+    "motto": "無限進步",
+    "items": [
+      {
+        "name": "ZZRVTC · 计算机应用技术",
+        "color": "#357ef5"
+      },
+      {
+        "name": "FE · 前端开发工程师",
+        "color": "#eb372a"
+      }
+    ]
+  },
+  "preferences": {
+    "tech": {
+      "title": "关注偏好",
+      "name": "数码科技",
+      "desc": "手机、电脑及软硬件"
+    },
+    "music": {
+      "title": "音乐偏好",
+      "name": "欧美、华语流行、纯音乐、ACG",
+      "desc": "一起欣赏更多音乐"
+    }
+  },
+  "location": {
+    "text": "我现在住在",
+    "place": "中国，河南省"
+  },
+  "personal": {
+    "birth": {
+      "name": "生于",
+      "value": "2001",
+      "color": "#43a6c6"
+    },
+    "occupation": {
+      "name": "现在职业",
+      "value": "前端开发工程师",
+      "color": "#dfac46"
+    }
+  },
+  "story": {
+    "title": "心路历程",
+    "question": "为什么建站？",
+    "paragraphs": [
+      "创建这个站的时候，想要就是能够有一个自己能够积累知识、积累兴趣的地方。和他人分享，会让这些成为积累和沉淀。如果能够帮助到更多的人，帮助更多人解决问题，那一定是非常棒的事情。",
+      "这里大多都是技术向的文章，可能不太会有很多人看，权当是做个自我记录吧。当然，如果某篇文章能够帮助到你，那我也是很开心的。",
+      "这些就是创造这个小站的本意，也是我分享生活的方式。有幸能和你相遇在这里，相信我们能共同留下一段美好记忆。"
+    ]
+  }
+} 

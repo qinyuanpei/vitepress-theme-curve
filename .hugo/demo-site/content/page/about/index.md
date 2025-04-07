@@ -2,6 +2,7 @@
 toc: false
 slug: about
 title: 关于
+layout: about
 description: 
 date: '2022-02-03'
 license: CC BY-NC-ND

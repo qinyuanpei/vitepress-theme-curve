@@ -1,0 +1,183 @@
+{{ define "main" }}
+<!-- 页面头部 -->
+<div class="page-banner">
+    <div class="banner-content">
+        <h1 class="title">{{ .Title }}</h1>
+        <p class="desc">{{ .Params.subtitle }}</p>
+    </div>
+</div>
+<!-- 页面内容 -->
+<div class="about">
+  <div class="about-content" style="grid-template-columns: 3fr 2fr">
+    <!-- 介绍 -->
+    <div class="about-item hello">
+      <span class="text1">你好，很高兴认识你👋</span>
+      <span class="text2 title2">我是 {{ .Site.Data.about.info.name }}</span>
+      <span class="text3">是一名 {{ .Site.Data.about.info.title }}</span>
+    </div>
+    <!-- 追求 -->
+    <div class="about-item pursuit">
+      <span class="tip">{{ .Site.Data.about.info.pursuit.title }}</span>
+      {{ range .Site.Data.about.info.pursuit.items }}
+      <span class="title2">{{ . }}</span>
+      {{ end }}
+    </div>
+  </div>
+  <div class="about-content" style="grid-template-columns: 2fr 3fr">
+    <!-- 技能 -->
+    <div class="about-item skills">
+      <span class="tip">技能</span>
+      <span class="title2">开启创造力</span>
+      <div class="skills-list">
+        {{ range .Site.Data.about.skills }}
+        <a
+          style="--color: {{ .color }}"
+          href="{{ .link }}"
+          class="skills-item"
+          target="_blank"
+        >
+          <div class="skills-logo">
+            <i class="iconfont icon-{{ .icon }}"></i>
+          </div>
+          <span class="skills-name">{{ .name }}</span>
+        </a>
+        {{ end }}
+      </div>
+    </div>
+    <!-- 生涯 -->
+    <div class="about-item career">
+      <span class="tip">{{ .Site.Data.about.info.career.title }}</span>
+      <span class="title2">
+        <i>{{ .Site.Data.about.info.career.motto }}</i>
+      </span>
+      <div class="list">
+        {{ range .Site.Data.about.info.career.items }}
+        <span class="list-item" style="--color: {{ .color }}">{{ .name }}</span>
+        {{ end }}
+      </div>
+      <img
+        class="career-img"
+        src="{{ .Site.Data.about.images.career }}"
+        alt="career"
+      />
+    </div>
+  </div>
+  <div class="about-content" style="grid-template-columns: 3fr 2fr">
+    <!-- 性格 -->
+    <div class="about-item character" style="--color: #4298b4">
+      <span class="tip">{{ .Site.Data.about.info.character.title }}</span>
+      <span class="title2">{{ .Site.Data.about.info.character.type }}</span>
+      <span class="title2" style="color: var(--color)">{{ .Site.Data.about.info.character.mbti }}</span>
+      <span class="more">
+        在
+        <a href="{{ .Site.Data.about.info.character.mbtiSite }}" target="_blank">16personalities</a>
+        了解更多关于
+        <a href="{{ .Site.Data.about.info.character.mbtiLink }}" target="_blank">
+          {{ .Site.Data.about.info.character.type }}
+        </a>
+      </span>
+      <img
+        src="{{ .Site.Data.about.images.character }}"
+        alt="male"
+        class="male"
+      />
+    </div>
+    <!-- 座右铭 -->
+    <div class="about-item">
+      <span class="tip">{{ .Site.Data.about.info.motto.title }}</span>
+      {{ range .Site.Data.about.info.motto.items }}
+      <span class="title2">{{ . }}</span>
+      {{ end }}
+    </div>
+  </div>
+  <div class="about-content" style="grid-template-columns: 1fr 1fr">
+    <div
+      class="about-item like image"
+      style="
+        --color: #0c0e20;
+        background-image: url({{ .Site.Data.about.images.tech }});
+      "
+    >
+      <div class="image-content">
+        <span class="tip">{{ .Site.Data.about.info.preferences.tech.title }}</span>
+        <span class="title2">{{ .Site.Data.about.info.preferences.tech.name }}</span>
+        <div class="image-desc">
+          <span class="left">{{ .Site.Data.about.info.preferences.tech.desc }}</span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="about-item like image"
+      style="
+        --color: #7b3c25;
+        background-image: url({{ .Site.Data.about.images.music }});
+      "
+    >
+      <div class="image-content">
+        <span class="tip">{{ .Site.Data.about.info.preferences.music.title }}</span>
+        <span class="title2">{{ .Site.Data.about.info.preferences.music.name }}</span>
+        <div class="image-desc">
+          <span class="left">{{ .Site.Data.about.info.preferences.music.desc }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="about-content" style="grid-template-columns: 2fr 3fr">
+    <!-- 数据 -->
+    <div
+      class="about-item static image"
+      style="
+        --color: #0f1114;
+        background-image: url({{ .Site.Data.about.images.statistics }});
+      "
+    >
+      <div class="image-content">
+        <span class="tip">数据</span>
+        <span class="title2">访问统计</span>
+        <div class="static-data">
+          {{ range $key, $value := .Site.Data.about.statistics }}
+          <div class="static-item">
+            <span class="static-name">{{ $key }}</span>
+            <span class="static-num">{{ $value }}</span>
+          </div>
+          {{ end }}
+        </div>
+        <div class="image-desc opacity">
+          <span class="left">
+            统计信息来自 <a href="https://v6.51.la/" target="_blank">51la</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- 信息 -->
+    <div class="about-item child">
+      <div
+        class="about-item map image"
+        style="background-image: url({{ .Site.Data.about.images.map }})"
+      >
+        <span class="position">{{ .Site.Data.about.info.location.text }} <strong>{{ .Site.Data.about.info.location.place }}</strong></span>
+      </div>
+      <div class="about-item info">
+        <div class="info-item">
+          <span class="info-name">{{ .Site.Data.about.info.personal.birth.name }}</span>
+          <span class="info-num" style="--color: {{ .Site.Data.about.info.personal.birth.color }}">{{ .Site.Data.about.info.personal.birth.value }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-name">{{ .Site.Data.about.info.personal.occupation.name }}</span>
+          <span class="info-num" style="--color: {{ .Site.Data.about.info.personal.occupation.color }}">{{ .Site.Data.about.info.personal.occupation.value }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 心路历程 -->
+  <div class="about-content" style="display: flex">
+    <div class="about-item">
+      <span class="tip">{{ .Site.Data.about.info.story.title }}</span>
+      <span class="title2">{{ .Site.Data.about.info.story.question }}</span>
+      {{ range .Site.Data.about.info.story.paragraphs }}
+      <p class="text">{{ . | safeHTML }}</p>
+      {{ end }}
+    </div>
+  </div>
+</div>
+{{ end }}
