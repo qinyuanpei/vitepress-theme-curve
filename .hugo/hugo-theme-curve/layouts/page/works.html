@@ -1,21 +1,14 @@
 {{ define "main" }}
-
-<header>
-    <div class="container">
-        <h1>{{ .Title }}</h1>
-        <p class="subtitle">{{ .Params.subtitle }}</p>
+<!-- 页面头部 -->
+<div class="page-banner">
+    <div class="banner-content">
+        <h1 class="title">{{ .Title }}</h1>
+        <p class="desc">{{ .Params.subtitle }}</p>
     </div>
-</header>
-
+</div>
+<!-- 页面内容 -->
 <section>
-    {{ $works := .Site.Data.portfolio.items }}
-    {{ partial "works/works.html" $works }}
+    {{ $portfolio := .Site.Data.works.portfolio }}
+    {{ partial "components/works/index.html" $portfolio }}
 </section>
-
-{{ partialCached "footer/footer" . }}
-
-{{ end }}
-
-{{ define "right-sidebar" }}
-    {{ partialCached "sidebar/right.html" . }}
 {{ end }}

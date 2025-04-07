@@ -1,0 +1,25 @@
+    <div class="portfolio-container hover">
+        {{ range (sort . "date" "desc") }}
+        <div class="portfolio-card">
+            <div class="cover-container">
+                <img src="{{ .cover }}"
+                    alt="{{ .title }}" class="cover-image">
+            </div>
+            <div class="content-container">
+                <div class="meta">
+                    <div class="date">{{ .date }}</div>
+                    <h2 class="title">{{ .title }}</h2>
+                </div>
+                <p class="description">
+                   {{ .description }}
+                </p>
+                <div class="tags-container">
+                    {{ range .tags }}
+                    <span class="tag">{{ . }}</span>
+                    {{ end }}
+                </div>
+                <a href="{{ .link }}" class="link-button" target="_blank">立即查看</a>
+            </div>
+        </div>
+        {{ end}}
+    </div>

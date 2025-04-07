@@ -9,12 +9,12 @@ menu:
   main:
     - name: 文库
       weight: 1
-    - name: 文章列表
+    - name: 归档
       url: /archives
       weight: 1
       parent: 文库
       params:
-        icon: home
+        icon: guidang
     - name: 全部分类
       url: /categories
       weight: 2
@@ -49,30 +49,41 @@ menu:
       params:
         icon: music
     
-    - name: 友链
+    - name: 页面
       weight: 3
     - name: 友情链接
       url: /links
       weight: 1
-      parent: 友链
+      parent: 页面
       params:
         icon: people
+    - name: 个人作品
+      url: /works
+      weight: 2
+      parent: 页面
+      params:
+        icon: people
+    - name: 站点统计
+      url: /statics
+      weight: 33
+      parent: 页面
+      params:
+        icon: tongji
     
-    - name: 关于
+    - name: 更多
       weight: 4
     - name: 留言板
-      url: /guestbook
+      url: /message
       weight: 1
-      parent: 关于
+      parent: 更多
       params:
         icon: chat
     - name: 关于本站
       url: /about
       weight: 2
-      parent: 关于
+      parent: 更多
       params:
         icon: contacts
-
 params:
   mainSections:
     - posts

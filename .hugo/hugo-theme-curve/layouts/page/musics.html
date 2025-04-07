@@ -1,0 +1,49 @@
+{{ define "main" }}
+<!-- 页面头部 -->
+<div class="page-banner">
+    <div class="banner-content">
+        <h1 class="title">{{ .Title }}</h1>
+        <p class="desc">{{ .Params.subtitle }}</p>
+    </div>
+</div>
+<!-- 页面内容 -->
+<section>
+    {{ $weekData := $.Site.Data.netease.weekData }}
+    <div class="container">
+        <div class="left-panel">
+            <h2 class="section-title">最近在听</h2>
+            <div class="cover-wall">
+                {{ range (first 10 $weekData.recentPlayed) }}
+                <a href="{{ .url }}" class="cover-item" target="_blank">
+                    <img src="{{ .cover_url }}" alt="{{ .name }}" class="cover-image">
+                    <div class="cover-mask"></div>
+                    <div class="song-info">
+                        <div class="song-title">{{ .name}}</div>
+                        <div class="song-artist">{{ .artist }}</div>
+                    </div>
+                </a>
+                {{ end }}
+            </div>
+        </div>
+        <div class="right-panel">
+            <h2 class="section-title">我喜欢听</h2>
+            <div class="meting-container">
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+                <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+                <meting-js 
+                    server="netease" 
+                    type="playlist" 
+                    id="42062293" 
+                    autoplay="false" 
+                    theme="#2980b9"  
+                    fixed="false"
+                    mini="false"
+                    loop="false"
+                >
+                </meting-js>
+            </div>
+        </div>
+    </div>
+</section>
+{{ end }}

@@ -20,15 +20,9 @@
     border-bottom: 1px #ddd solid;
 }
 
-@media screen and (max-width: 600px) {
-    .hexo-douban-item {
-        width: 100%;
-    }
-}
-
 @media screen and (max-width: 480px) {
     .hexo-douban-comments {
-        display: none;
+        display: none !important;
     }
 }
 
