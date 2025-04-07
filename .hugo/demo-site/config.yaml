@@ -72,15 +72,6 @@ menu:
       parent: 关于
       params:
         icon: contacts
-  more:
-    - name: 博客
-      weight: 1
-    - name: 备用博客
-      url: https://qinyuanpei.github.io
-      weight: 1
-      parent: 博客
-    - name: 项目
-      weight: 2
 
 params:
   mainSections:
@@ -283,9 +274,11 @@ params:
      # 社交链接
     social:
       - icon: "github"
-        link: "https://github.com/yourusername"
+        link: "https://github.com/qinyuanpei"
       - icon: "weibo"
-        link: "https://twitter.com/yourusername"
+        link: "https://weibo.com/1278609231"
+      - icon: "rss"
+        link: "/index.xml"
       - icon: "email"
         link: "mailto:qinyuanpei@163.com"
       - icon: "douban"
