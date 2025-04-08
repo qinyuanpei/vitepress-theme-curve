@@ -73,7 +73,7 @@ menu:
     - name: 更多
       weight: 4
     - name: 留言板
-      url: /message
+      url: /comments
       weight: 1
       parent: 更多
       params:
