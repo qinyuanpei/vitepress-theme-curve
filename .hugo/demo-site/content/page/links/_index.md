@@ -3,6 +3,7 @@ title: "友情链接"
 layout: "links"
 slug: "links"
 url: "/links"
+type: page
 ---
 
 # 交换友链

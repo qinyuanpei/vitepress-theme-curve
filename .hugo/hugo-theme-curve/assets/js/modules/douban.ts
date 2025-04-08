@@ -76,7 +76,7 @@ class DoubanCard {
         const html = `
         <div class="douban-card" id="douban-card">
             <div class="card-content">
-                <h2 class="card-title">${model.title}</h2>
+                <div class="card-title">${model.title}</div>
                 <div class="card-meta">
                     <span class="card-rating">${model.vote}</span>
                     <div class="card-stars">
@@ -104,7 +104,7 @@ class DoubanCard {
         const html = `
         <div class="douban-card" id="douban-card">
             <div class="card-content">
-                <h2 class="card-title">${model.title}</h2>
+                <div class="card-title">${model.title}</div>
                 <div class="card-meta">
                     <span class="card-rating">${model.vote}</span>
                     <div class="card-stars">
