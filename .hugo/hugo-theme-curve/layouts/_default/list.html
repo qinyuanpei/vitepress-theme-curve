@@ -41,7 +41,7 @@
       
       <!-- 文章列表 -->
       {{ $postListData := dict 
-        "posts" .Paginator.Pages
+        "posts" (where .Paginator.Pages "Section" "posts")
         "simple" false
       }}
       {{ partial "components/post-list.html" $postListData }}
@@ -53,9 +53,9 @@
         "limit" $postSize
         "useParams" (or $showCategories $showTags)
         "routePath" (cond $showCategories 
-          (printf "/pages/categories/%s" $showCategories)
+          (printf "/categories/%s" $showCategories)
           (cond $showTags 
-            (printf "/pages/tags/%s" $showTags)
+            (printf "/tags/%s" $showTags)
             ""))
         "context" .
       }}

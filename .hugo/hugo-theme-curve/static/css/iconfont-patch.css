@@ -5,6 +5,34 @@
     url('/fonts/patch/iconfont.ttf?t=1743557141597') format('truetype');
 }
 
+.icon-Ubuntu:before {
+  content: "\edd3";
+}
+
+.icon-vscode:before {
+  content: "\e6b8";
+}
+
+.icon-postgresql:before {
+  content: "\ec5d";
+}
+
+.icon-dotnet:before {
+  content: "\e692";
+}
+
+.icon-CI-CD:before {
+  content: "\e680";
+}
+
+.icon-python:before {
+  content: "\e767";
+}
+
+.icon-Elastic:before {
+  content: "\e78a";
+}
+
 .icon-rss:before {
   content: "\e6eb";
 }
@@ -60,3 +88,4 @@
 .icon-sun:before {
   content: "\e886";
 }
+

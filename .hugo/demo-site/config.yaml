@@ -286,12 +286,12 @@ params:
     social:
       - icon: "github"
         link: "https://github.com/qinyuanpei"
-      - icon: "weibo"
-        link: "https://weibo.com/1278609231"
-      - icon: "rss"
-        link: "/index.xml"
       - icon: "email"
         link: "mailto:qinyuanpei@163.com"
+      - icon: "rss"
+        link: "/index.xml"
+      - icon: "weibo"
+        link: "https://weibo.com/1278609231"
       - icon: "douban"
         link: "https://www.douban.com/people/60029335/"
       - icon: "zhihu"
@@ -347,7 +347,7 @@ params:
       - text: "页面"
         items:
           - text: "畅所欲言"
-            link: "/guest"
+            link: "/comments"
             newTab: false
           - text: "阅读记录"
             link: "/books"
